@@ -7,6 +7,7 @@ namespace Library.Core.Contracts
     public interface IRenderer
     {
         string Input();
+        string InputParametersParse(string parameterName);
         void Output(string output);
     }
 }

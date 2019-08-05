@@ -52,9 +52,9 @@ namespace Library.Models.Models
             }
             set
             {
-                if (value.Length < 1 || value.Length > 40)
+                if (value.Length < 1 || value.Length > 100)
                 {
-                    throw new ArgumentOutOfRangeException("The title should be between 1 and 40 symbols!");
+                    throw new ArgumentOutOfRangeException("The title should be between 1 and 100 symbols!");
                 }
                 this.title = value;
             }
@@ -70,9 +70,9 @@ namespace Library.Models.Models
             }
             set
             {
-                if (value.Length < 1 || value.Length > 20)
+                if (value.Length < 1 || value.Length > 40)
                 {
-                    throw new ArgumentOutOfRangeException("The genre should be between 1 and 20 symbols!");
+                    throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
                 }
                 this.genre = value;
             }

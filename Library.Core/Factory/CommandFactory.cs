@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Core
+namespace Library.Core.Factory
 {
     public class CommandFactory : ICommandFactory
     {

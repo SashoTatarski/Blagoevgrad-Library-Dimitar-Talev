@@ -18,5 +18,12 @@ namespace Library.Core
         {
             Console.WriteLine(output);
         }
+
+        public string InputParametersParse(string parameterName)
+        {
+            this.Output($"Enter {parameterName}: ");
+            return this.Input();
+        }
+
     }
 }

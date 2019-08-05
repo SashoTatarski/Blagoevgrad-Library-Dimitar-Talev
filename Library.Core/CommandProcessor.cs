@@ -9,7 +9,7 @@ namespace Library.Core
 {
     public class CommandProcessor : ICommandProcessor
     {
-        private const char SplitCommandSymbol = ' ';
+        private const char SplitCommandSymbol = ',';
 
         private readonly ICommandFactory _commandFactory;
         private string _name;

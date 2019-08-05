@@ -14,6 +14,8 @@ namespace Library.CLI
 
             var engine = container.Resolve<IEngine>();
             engine.Start();
+
+            //addbook,Sasho Tatarski, My First Title,383838383, Some Category, Retard Sensation Publishing,2019,100
         }
     }
 }
