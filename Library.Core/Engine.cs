@@ -1,7 +1,5 @@
 ﻿using Library.Core.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core
 {
@@ -16,23 +14,23 @@ namespace Library.Core
             _commandProcessor = commandProcessor;
         }
 
-
         public void Start()
         {
             while (true)
             {
-                var input = _renderer.Input();
+                var input = _renderer.Input().ToLower();
 
-                if (input.Length == 0) break;
+                if (input.Length == 0)
+                    break;
 
-                //try
-                //{
-                    _renderer.Output(_commandProcessor.ProcessCommands(input));
-                //}
-                //catch (Exception ex)
-                //{
-                //    _renderer.Output(ex.Message);
-                //}
+                try
+                {
+                    _renderer.Output(_commandProcessor.ParseCommand(input).Execute());
+                }
+                catch (Exception ex)
+                {
+                    _renderer.Output(ex.Message);
+                }
             }
         }
     }

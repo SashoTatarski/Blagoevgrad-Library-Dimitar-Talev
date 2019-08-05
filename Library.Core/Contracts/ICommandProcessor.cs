@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library.Core.Contracts
+﻿namespace Library.Core.Contracts
 {
     public interface ICommandProcessor
     {
-        string Name { get; }
+        string ProcessCommand(ICommand command);
 
-        List<string> Parameters { get; }
-
-        string ProcessCommands(string input);
+        ICommand ParseCommand(string commandAsString);
     }
 }

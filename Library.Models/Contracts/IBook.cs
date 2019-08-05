@@ -4,6 +4,7 @@ namespace Library.Models.Contracts
 {
     public interface IBook
     {
+        int ID { get; }
         string Author { get; }
         string Title { get; }
         string ISBN { get; }

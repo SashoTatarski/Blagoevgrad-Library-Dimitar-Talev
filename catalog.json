@@ -1,7 +1,7 @@
 [
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 0,
+    "ID": 1,
     "Author": "Jordan Peterson",
     "Title": "12 Rules For Life",
     "ISBN": "345816021",
@@ -13,7 +13,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 1,
+    "ID": 2,
     "Author": "Milo Yiannaopoulos",
     "Title": "Dangerous",
     "ISBN": "069289344X",
@@ -25,7 +25,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 2,
+    "ID": 3,
     "Author": "Jordan Peterson",
     "Title": "Maps of Meaning: The Architecture of Belief",
     "ISBN": "B00BW54XVO",
@@ -37,7 +37,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 3,
+    "ID": 4,
     "Author": "Ben Shapiro",
     "Title": "The Right Side of History",
     "ISBN": "62857908",
@@ -49,7 +49,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 4,
+    "ID": 5,
     "Author": "Sue Lilly",
     "Title": "Tree Essence",
     "ISBN": "1861630840",
@@ -61,7 +61,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 5,
+    "ID": 6,
     "Author": "Steven Kotler",
     "Title": "The Rise of Superman: Decoding the Science of Ultimate Human Performance",
     "ISBN": "B00BW54XVO",
@@ -73,7 +73,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 6,
+    "ID": 7,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book 2",
     "ISBN": "615724892",
@@ -85,7 +85,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 7,
+    "ID": 8,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book: Myths Magic Media and Mindscapes",
     "ISBN": "1463764006",
@@ -97,7 +97,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 8,
+    "ID": 9,
     "Author": "Andrew Troelsen",
     "Title": "Pro C# 7: With .NET and .NET Core",
     "ISBN": "1484230175",
@@ -109,7 +109,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 9,
+    "ID": 10,
     "Author": "Clotaire Rapaille",
     "Title": "The Culture Code: An Ingenious Way to Understand Why People Around the World Live and Buy as They Do",
     "ISBN": "767920570",
@@ -121,7 +121,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 10,
+    "ID": 11,
     "Author": "Bill Maher",
     "Title": " New Rules",
     "ISBN": " 1594862958",
@@ -133,7 +133,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 11,
+    "ID": 12,
     "Author": "Sasho Tatarski",
     "Title": "My First Title",
     "ISBN": "383838383",
@@ -145,7 +145,7 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 12,
+    "ID": 13,
     "Author": "asfd",
     "Title": "asdf",
     "ISBN": "asfd",
@@ -153,6 +153,30 @@
     "Publisher": "asdf",
     "Year": 12,
     "Rack": 23,
+    "Status": 0
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "ID": 14,
+    "Author": "Tolkien",
+    "Title": "Hobbit",
+    "ISBN": "123DF56X4",
+    "Genre": "Fantasy",
+    "Publisher": "Ciela",
+    "Year": 2016,
+    "Rack": 10,
+    "Status": 0
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "ID": 15,
+    "Author": "Tolkien",
+    "Title": "Hobbit",
+    "ISBN": "asdf12345",
+    "Genre": "Fantasy",
+    "Publisher": "Ciela",
+    "Year": 2019,
+    "Rack": 12,
     "Status": 0
   }
 ]

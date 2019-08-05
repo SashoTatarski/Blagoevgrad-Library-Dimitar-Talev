@@ -1,69 +1,25 @@
-﻿using Library.Core.Contracts;
-using Library.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Autofac;
+using Library.Core.Contracts;
 
 namespace Library.Core
 {
     public class CommandProcessor : ICommandProcessor
     {
-        private const char SplitCommandSymbol = ',';
+        private readonly IComponentContext _componentContext;
 
-        private readonly ICommandFactory _commandFactory;
-        private string _name;
-        private List<string> _parameters;
-
-        public CommandProcessor(ICommandFactory commandFactory)
+        public CommandProcessor(IComponentContext componentContext)
         {
-            _commandFactory = commandFactory;
+            this._componentContext = componentContext;
         }
 
-        public string Name
+        public ICommand ParseCommand(string input)
         {
-            get => _name;
-
-            private set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentNullException(GlobalConstants.NullOrEmptyNameErrorMessage);
-                }
-
-                _name = value;
-            }
+            return  _componentContext.ResolveNamed<ICommand>(input);
         }
 
-        public List<string> Parameters
+        public string ProcessCommand(ICommand command)
         {
-            get => new List<string>(_parameters);
-
-            private set
-            {
-                if (value == null)
-                    throw new ArgumentNullException(GlobalConstants.NullCollectionOfParameters);
-
-                _parameters = value;
-            }
+            return command.Execute();
         }
-
-        public string ProcessCommands(string input)
-        {
-            this.TranslateInput(input);
-            var command = _commandFactory.Create(this.Name);
-            var commandResult = command.Execute(Parameters);
-
-            return commandResult;
-        }
-
-        private void TranslateInput(string input)
-        {
-            var indexOfFirstSeparator = input.IndexOf(SplitCommandSymbol);
-
-            this.Name = input.Substring(0, indexOfFirstSeparator);
-            this.Parameters = input.Substring(indexOfFirstSeparator + 1).Split(new[] { SplitCommandSymbol }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
-
     }
 }
