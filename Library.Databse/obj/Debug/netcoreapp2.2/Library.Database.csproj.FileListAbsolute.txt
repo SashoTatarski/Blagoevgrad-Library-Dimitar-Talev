@@ -1,9 +1,0 @@
-C:\Users\O\source\repos\Library\Library.Databse\bin\Debug\netcoreapp2.2\Library.Database.deps.json
-C:\Users\O\source\repos\Library\Library.Databse\bin\Debug\netcoreapp2.2\Library.Database.dll
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.csprojAssemblyReference.cache
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.csproj.CoreCompileInputs.cache
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.AssemblyInfoInputs.cache
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.AssemblyInfo.cs
-C:\Users\O\source\repos\Library\Library.Databse\bin\Debug\netcoreapp2.2\Library.Database.pdb
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.dll
-C:\Users\O\source\repos\Library\Library.Databse\obj\Debug\netcoreapp2.2\Library.Database.pdb
