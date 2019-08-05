@@ -25,14 +25,14 @@ namespace Library.Core
 
                 if (input.Length == 0) break;
 
-                try
-                {
+                //try
+                //{
                     _renderer.Output(_commandProcessor.ProcessCommands(input));
-                }
-                catch (Exception ex)
-                {
-                    _renderer.Output(ex.Message);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    _renderer.Output(ex.Message);
+                //}
             }
         }
     }

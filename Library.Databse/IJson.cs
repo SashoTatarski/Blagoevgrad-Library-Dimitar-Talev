@@ -6,11 +6,9 @@ using System.Text;
 
 namespace Library.Database
 {
-    public interface IDatabase
+    public interface IJson
     {
-        IEnumerable<IBook> Books { get; }
-
-        void AddBookToList(IBook book);
-        void WriteToJson(IEnumerable<IBook> books);
+        List<Book> ReadBooks();
+        void WriteBooks(IEnumerable<IBook> books);
     }
 }
