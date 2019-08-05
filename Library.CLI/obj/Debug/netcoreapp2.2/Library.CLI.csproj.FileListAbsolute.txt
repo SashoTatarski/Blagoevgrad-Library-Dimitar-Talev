@@ -1,0 +1,16 @@
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.CLI.deps.json
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.CLI.runtimeconfig.json
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.CLI.runtimeconfig.dev.json
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.CLI.dll
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.csprojAssemblyReference.cache
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.csproj.CoreCompileInputs.cache
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.AssemblyInfoInputs.cache
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.AssemblyInfo.cs
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.CLI.pdb
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.Core.dll
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.Models.dll
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.Core.pdb
+C:\Users\O\source\repos\Library\Library.CLI\bin\Debug\netcoreapp2.2\Library.Models.pdb
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.csproj.CopyComplete
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.dll
+C:\Users\O\source\repos\Library\Library.CLI\obj\Debug\netcoreapp2.2\Library.CLI.pdb

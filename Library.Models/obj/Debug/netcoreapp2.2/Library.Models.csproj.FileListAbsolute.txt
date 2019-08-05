@@ -1,0 +1,9 @@
+C:\Users\O\source\repos\Library\Library.Models\bin\Debug\netcoreapp2.2\Library.Models.deps.json
+C:\Users\O\source\repos\Library\Library.Models\bin\Debug\netcoreapp2.2\Library.Models.dll
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.csproj.CoreCompileInputs.cache
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.AssemblyInfoInputs.cache
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.AssemblyInfo.cs
+C:\Users\O\source\repos\Library\Library.Models\bin\Debug\netcoreapp2.2\Library.Models.pdb
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.csprojAssemblyReference.cache
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.dll
+C:\Users\O\source\repos\Library\Library.Models\obj\Debug\netcoreapp2.2\Library.Models.pdb

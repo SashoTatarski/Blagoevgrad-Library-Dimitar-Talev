@@ -1,0 +1,12 @@
+C:\Users\O\source\repos\Library\Library.Core\bin\Debug\netcoreapp2.2\Library.Core.deps.json
+C:\Users\O\source\repos\Library\Library.Core\bin\Debug\netcoreapp2.2\Library.Core.dll
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.csproj.CoreCompileInputs.cache
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.AssemblyInfoInputs.cache
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.AssemblyInfo.cs
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.csprojAssemblyReference.cache
+C:\Users\O\source\repos\Library\Library.Core\bin\Debug\netcoreapp2.2\Library.Core.pdb
+C:\Users\O\source\repos\Library\Library.Core\bin\Debug\netcoreapp2.2\Library.Models.dll
+C:\Users\O\source\repos\Library\Library.Core\bin\Debug\netcoreapp2.2\Library.Models.pdb
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.csproj.CopyComplete
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.dll
+C:\Users\O\source\repos\Library\Library.Core\obj\Debug\netcoreapp2.2\Library.Core.pdb
