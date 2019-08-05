@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library.Models.Enums
+﻿namespace Library.Models.Enums
 {
     public enum BookStatus
     {

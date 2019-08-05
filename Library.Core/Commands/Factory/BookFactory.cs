@@ -9,6 +9,6 @@ namespace Library.Core.Commands.Factory
 {
     public class BookFactory : IBookFactory
     {
-        public IBook CreateBook(int id, string author, string title, string isbn, string subject, string publisher, int year, int rack, BookStatus status) => new Book(id, author, title, isbn, subject, publisher, year, rack, status);
+        public IBook CreateBook(string author, string title, string isbn, string subject, string publisher, int year, int rack, BookStatus status) => new Book(author, title, isbn, subject, publisher, year, rack, status);
     }
 }

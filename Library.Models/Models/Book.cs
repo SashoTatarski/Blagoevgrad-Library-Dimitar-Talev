@@ -6,7 +6,7 @@ namespace Library.Models.Models
 {
     public class Book : IBook
     {
-        private static int currentId = 0;
+        private static int currentId = 1;
         private string author;
         private string title;
         private string genre;
