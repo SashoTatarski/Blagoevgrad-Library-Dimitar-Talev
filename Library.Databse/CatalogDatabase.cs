@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Library.Database
 {
-    public class Database : IDatabase
+    public class CatalogDatabase : IDatabase
     {
         private readonly List<Book> _books;
         private readonly IJson _json;
 
-        public Database(IJson json)
+        public CatalogDatabase(IJson json)
         {
             _json = json;
             _books = _json.ReadBooks();

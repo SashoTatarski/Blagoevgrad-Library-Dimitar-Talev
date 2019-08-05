@@ -21,25 +21,24 @@ namespace Library.Core.Commands
             _renderer = renderer;
         }
 
-        public string Execute(List<string> arguments)
+        public string Execute()
         {
 
-            var authorName = _renderer.InputParametersParse("author name");
-            var title = _renderer.InputParametersParse("title");
-            var isbn = _renderer.InputParametersParse("isbn");
-            var category = _renderer.InputParametersParse("category");
-            var publisher = _renderer.InputParametersParse("publisher");
-            var year = int.Parse(_renderer.InputParametersParse("year"));
-            var rack = int.Parse(_renderer.InputParametersParse("rack"));
-            var bookStatus = BookStatus.Available;
+            var authorName = _renderer.InputParameters("author name");
+            var title = _renderer.InputParameters("title");
+            var isbn = _renderer.InputParameters("ISBN code");
+            var category = _renderer.InputParameters("category");
+            var publisher = _renderer.InputParameters("publisher");
+            var year = int.Parse(_renderer.InputParameters("year"));
+            var rack = int.Parse(_renderer.InputParameters("rack"));
 
-            var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack, bookStatus);
+            var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
 
             _database.AddBookToList(bookToCreate);
 
             _database.WriteToJson(_database.Books);
 
-            return $"Successfully added a book";
+            return $"Successfully added a book with ID {bookToCreate.ID}";
         }
     }
 }

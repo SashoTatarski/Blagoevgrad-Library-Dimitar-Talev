@@ -13,7 +13,7 @@ namespace Library.Models.Models
         private string publisher;
         private int year;
 
-        public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack, BookStatus status)
+        public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
             this.ID = currentId++;
             this.Author = author;
@@ -23,7 +23,7 @@ namespace Library.Models.Models
             this.Publisher = publisher;
             this.Year = year;
             this.Rack = rack;
-            this.Status = status;
+            this.Status = BookStatus.Available;
         }
 
         public int ID { get; }
