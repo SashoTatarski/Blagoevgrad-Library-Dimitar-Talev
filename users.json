@@ -1,6 +1,5 @@
 [
-  {
-    "$type": "Library.Roles.User, Library",
+  {    
     "Username": "osama",
     "Password": "allah",
     "CheckedOutBooks": [],
@@ -9,8 +8,7 @@
     "LateFees": 0.0,
     "OverdueMessage": null
   },
-  {
-    "$type": "Library.Roles.User, Library",
+  {    
     "Username": "asdf",
     "Password": "asdf",
     "CheckedOutBooks": [],
@@ -19,8 +17,7 @@
     "LateFees": 0.0,
     "OverdueMessage": null
   },
-  {
-    "$type": "Library.Roles.User, Library",
+  {    
     "Username": "asdf",
     "Password": "adf",
     "CheckedOutBooks": [],
@@ -29,49 +26,16 @@
     "LateFees": 0.0,
     "OverdueMessage": null
   },
-  {
-    "$type": "Library.Roles.User, Library",
+  {   
     "Username": "ivan",
     "Password": "ivan",
     "CheckedOutBooks": [],
-    "ReservedBooks": [
-      {
-        "$type": "Library.Models.Book, Library",
-        "Id": 12,
-        "Author": "Sasho Tatarski",
-        "Title": "My First Title",
-        "ISBN": "383838383",
-        "Subject": "Some Category",
-        "Publisher": "Retard Sensation Publishing",
-        "Year": 2019,
-        "Rack": 100,
-        "Status": 0,
-        "CheckoutDate": "2019-08-01T15:03:33.5213587+03:00",
-        "DueDate": "2019-08-08T15:03:33.5213587+03:00",
-        "ResevedDate": "0001-01-01T00:00:00"
-      },
-      {
-        "$type": "Library.Models.Book, Library",
-        "Id": 12,
-        "Author": "Sasho Tatarski",
-        "Title": "My First Title",
-        "ISBN": "383838383",
-        "Subject": "Some Category",
-        "Publisher": "Retard Sensation Publishing",
-        "Year": 2019,
-        "Rack": 100,
-        "Status": 0,
-        "CheckoutDate": "2019-08-05T11:54:03.9202984+03:00",
-        "DueDate": "2019-08-12T11:54:03.9202984+03:00",
-        "ResevedDate": "0001-01-01T00:00:00"
-      }
-    ],
+    "ReservedBooks": [],
     "ReservedBookMessage": [],
     "LateFees": 0.0,
     "OverdueMessage": null
   },
-  {
-    "$type": "Library.Roles.User, Library",
+  {    
     "Username": "sasho",
     "Password": "sasho",
     "CheckedOutBooks": [],

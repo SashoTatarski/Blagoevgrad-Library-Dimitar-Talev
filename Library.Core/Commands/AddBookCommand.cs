@@ -37,7 +37,7 @@ namespace Library.Core.Commands
 
             _database.AddBookToList(bookToCreate);
 
-            _database.WriteToJson(_database.Books);
+            _database.WriteBooksToJson(_database.Books);
 
             return $"Successfully added a book";
         }

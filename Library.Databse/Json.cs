@@ -10,10 +10,13 @@ namespace Library.Database
 {
     public class Json  : IJson
     {
+        private const string _catalogFilepath = @"..\..\..\..\catalog.json";
+        private const string _usersFilepath = @"..\..\..\..\users.json";
+
         public List<Book> ReadBooks()
         {
             string content;
-            using (var reader = new StreamReader(@"..\..\..\..\catalog.json"))
+            using (var reader = new StreamReader(_catalogFilepath))
             {
                 content = reader.ReadToEnd();
             }
@@ -32,7 +35,7 @@ namespace Library.Database
                 TypeNameHandling = TypeNameHandling.Objects,
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
             };
-            using (var sw = new StreamWriter(@"..\..\..\..\catalog.json"))
+            using (var sw = new StreamWriter(_catalogFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
@@ -41,35 +44,35 @@ namespace Library.Database
             }
         }
 
-        //public  List<IUser> ReadUsers()
-        //{
-        //    string content;
-        //    using (var reader = new StreamReader("users.json"))
-        //    {
-        //        content = reader.ReadToEnd();
-        //    }
-        //    return JsonConvert.DeserializeObject<List<IUser>>(content, new JsonSerializerSettings
-        //    {
-        //        TypeNameHandling = TypeNameHandling.Auto
-        //    });
-        //}
+        public List<User> ReadUsers()
+        {
+            string content;
+            using (var reader = new StreamReader(_usersFilepath))
+            {
+                content = reader.ReadToEnd();
+            }
+            return JsonConvert.DeserializeObject<List<User>>(content, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+        }
 
-        //public static void WriteUsers(List<IUser> users)
-        //{
-        //    var serializer = new JsonSerializer
-        //    {
-        //        Formatting = Formatting.Indented,
-        //        TypeNameHandling = TypeNameHandling.Objects,
-        //        TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-        //    };
-        //    using (var sw = new StreamWriter("users.json"))
-        //    {
-        //        using (JsonWriter writer = new JsonTextWriter(sw))
-        //        {
-        //            serializer.Serialize(writer, users);
-        //        }
-        //    }
-        //}
+        public void WriteUsers(IEnumerable<IUser> users)
+        {
+            var serializer = new JsonSerializer
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+            };
+            using (var sw = new StreamWriter(_usersFilepath))
+            {
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, users);
+                }
+            }
+        }
 
     }
 }

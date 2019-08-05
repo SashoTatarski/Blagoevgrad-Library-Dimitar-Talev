@@ -11,6 +11,12 @@ namespace Library.Database
         IEnumerable<IBook> Books { get; }
 
         void AddBookToList(IBook book);
-        void WriteToJson(IEnumerable<IBook> books);
+
+        void AddUserToList(IUser user);
+
+        void WriteBooksToJson(IEnumerable<IBook> books);
+
+        void WriteUsersToJson(IEnumerable<IUser> users);
+
     }
 }
