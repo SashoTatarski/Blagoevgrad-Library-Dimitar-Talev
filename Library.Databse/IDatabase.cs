@@ -8,15 +8,37 @@ namespace Library.Database
 {
     public interface IDatabase
     {
-        IEnumerable<IBook> Books { get; }
+        List<Book> ReadBooks();
 
-        void AddBookToList(IBook book);
+        List<User> ReadUsers();
 
-        void AddUserToList(IUser user);
+        void WriteBooks(IEnumerable<IBook> books);
 
-        void WriteBooksToJson(IEnumerable<IBook> books);
-
-        void WriteUsersToJson(IEnumerable<IUser> users);
+        void WriteUsers(IEnumerable<IUser> users);
 
     }
+
+
+    //interface IDatabase<T>
+    //{
+    //    void Create(T x);
+    //    void Read(T x);
+    //    void Update(T x);
+    //    void Delete(T x)
+    //}
+    //class UserDatabase<User> : IDatabase<User>
+    //{
+    //    public void Create(User x) => throw new NotImplementedException();
+    //    public void Delete(User x) => throw new NotImplementedException();
+    //    public void Read(User x) => throw new NotImplementedException();
+    //    public void Update(User x) => throw new NotImplementedException();
+    //}
+    //class BookDatabase<Book> : IDatabase<Book>
+    //{
+    //    public void Create(Book x) => throw new NotImplementedException();
+    //    public void Delete(Book x) => throw new NotImplementedException();
+    //    public void Read(Book x) => throw new NotImplementedException();
+    //    public void Update(Book x) => throw new NotImplementedException();
+    //}
+
 }

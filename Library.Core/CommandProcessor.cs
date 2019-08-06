@@ -9,7 +9,7 @@ namespace Library.Core
 
         public CommandProcessor(IComponentContext componentContext)
         {
-            this._componentContext = componentContext;
+            _componentContext = componentContext;
         }
 
         public ICommand ParseCommand(string input)

@@ -133,50 +133,14 @@
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 12,
-    "Author": "Sasho Tatarski",
-    "Title": "My First Title",
-    "ISBN": "383838383",
-    "Genre": "Some Category",
-    "Publisher": "Retard Sensation Publishing",
-    "Year": 2019,
-    "Rack": 100,
-    "Status": 0
-  },
-  {
-    "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 13,
-    "Author": "asfd",
-    "Title": "asdf",
-    "ISBN": "asfd",
-    "Genre": "sadf",
-    "Publisher": "asdf",
-    "Year": 12,
-    "Rack": 23,
-    "Status": 0
-  },
-  {
-    "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 14,
-    "Author": "Tolkien",
-    "Title": "Hobbit",
-    "ISBN": "123DF56X4",
-    "Genre": "Fantasy",
-    "Publisher": "Ciela",
-    "Year": 2016,
-    "Rack": 10,
-    "Status": 0
-  },
-  {
-    "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 15,
-    "Author": "Tolkien",
-    "Title": "Hobbit",
-    "ISBN": "asdf12345",
-    "Genre": "Fantasy",
-    "Publisher": "Ciela",
-    "Year": 2019,
-    "Rack": 12,
+    "ID": 11,
+    "Author": "asdfas",
+    "Title": "asdfsa",
+    "ISBN": "fas",
+    "Genre": "fas",
+    "Publisher": "asfd",
+    "Year": 33,
+    "Rack": 22,
     "Status": 0
   }
 ]
