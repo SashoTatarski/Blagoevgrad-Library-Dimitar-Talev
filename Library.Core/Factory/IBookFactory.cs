@@ -7,6 +7,6 @@ namespace Library.Core.Factory
 {
     public interface IBookFactory
     {
-        IBook CreateBook(string author, string title, string isbn, string subject, string publisher, int year, int rack);
+        IBook CreateBook(int currentId, string author, string title, string isbn, string subject, string publisher, int year, int rack);
     }
 }

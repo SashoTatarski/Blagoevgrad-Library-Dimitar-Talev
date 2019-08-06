@@ -4,11 +4,12 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Library.Database
 {
-    public class Json  : IJson
+    public class Database : IDatabase
     {
         private const string _catalogFilepath = @"..\..\..\..\catalog.json";
         private const string _usersFilepath = @"..\..\..\..\users.json";
@@ -24,7 +25,7 @@ namespace Library.Database
             return JsonConvert.DeserializeObject<List<Book>>(content, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto
-            });
+            });/*.Cast<IBook>().ToList();*/
         }
 
         public void WriteBooks(IEnumerable<IBook> books)

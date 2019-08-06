@@ -1,32 +1,31 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Library.Models.Models
 {
-    public class User : IUser
+    public class User : Account, IUser
     {
-        public User(string username, string password)
+        public User(string username, string password) : base(username, password)
         {
-            Username = username;
-            Password = password;
-            CheckedOutBooks = CheckedOutBooks;
-            ReservedBooks = ReservedBooks;
-            ReservedBookMessage = ReservedBookMessage;
-        }
+            this.Status = MemberStatus.Active;
+            this.CheckedOutBooks = new List<IBook>();
+            this.ReservedBooks = new List<IBook>();
+        }         
 
-        public string Username { get; }
-        public string Password { get; }
+        public MemberStatus Status { get; set; }
 
-        public List<IBook> CheckedOutBooks { get; } = new List<IBook>();
+        public List<IBook> CheckedOutBooks { get; }
 
-        public List<IBook> ReservedBooks { get; } = new List<IBook>();
+        public List<IBook> ReservedBooks { get; }
 
         public List<string> ReservedBookMessage { get; } = new List<string>();
 
+        public string OverdueMessage { get; set; }
+
         public decimal LateFees { get; set; }
 
-        public string OverdueMessage { get; set; }
     }
 }

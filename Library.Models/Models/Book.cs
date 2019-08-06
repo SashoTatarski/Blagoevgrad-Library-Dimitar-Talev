@@ -6,16 +6,15 @@ namespace Library.Models.Models
 {
     public class Book : IBook
     {
-        private static int currentId = 1;
         private string author;
         private string title;
         private string genre;
         private string publisher;
         private int year;
 
-        public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
+        public Book(int Id,string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
-            this.ID = currentId++;
+            this.ID = Id;
             this.Author = author;
             this.Title = title;
             this.ISBN = isbn;

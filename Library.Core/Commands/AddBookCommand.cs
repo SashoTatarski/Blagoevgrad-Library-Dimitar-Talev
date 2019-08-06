@@ -4,41 +4,52 @@ using Library.Database;
 using Library.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Library.Core.Commands
 {
     public class AddBookCommand : ICommand
     {
-        private readonly IDatabase _database;
+        private readonly IService _service;
         private readonly IBookFactory _factory;
         private readonly IRenderer _renderer;
 
-        public AddBookCommand(IDatabase database, IBookFactory factory, IRenderer renderer)
+        public AddBookCommand(IService database, IBookFactory factory, IRenderer renderer)
         {
-            _database = database;
+            _service = database;
             _factory = factory;
             _renderer = renderer;
         }
 
         public string Execute()
         {
+            var authorName = _renderer.InputParameters("author name", 
+                s => s.Length < 1 || s.Length > 40);
 
-            var authorName = _renderer.InputParameters("author name");
-            var title = _renderer.InputParameters("title");
+            var title = _renderer.InputParameters("title",
+                s => s.Length < 1 || s.Length > 100);
+
             var isbn = _renderer.InputParameters("ISBN code");
-            var category = _renderer.InputParameters("category");
-            var publisher = _renderer.InputParameters("publisher");
-            var year = int.Parse(_renderer.InputParameters("year"));
-            var rack = int.Parse(_renderer.InputParameters("rack"));
 
-            var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
+            var category = _renderer.InputParameters("genre",
+                g => g.Length < 1 || g.Length > 40);
 
-            _database.AddBookToList(bookToCreate);
+            var publisher = _renderer.InputParameters("publisher",
+                g => g.Length < 1 || g.Length > 40);
 
-            _database.WriteBooksToJson(_database.Books);
+            var year = int.Parse(_renderer.InputParameters("year", y => int.Parse(y) < 1 || int.Parse(y) > DateTime.Now.Year));
 
-            return $"Successfully added a book with ID {bookToCreate.ID}";
+            var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
+
+
+            // Read books ids
+            var currentId = _service.ReadBooks().Max(x => x.ID);
+            var bookToCreate = _factory.CreateBook(currentId++, authorName, title, isbn, category, publisher, year, rack);
+
+            _service.AddBook(bookToCreate);        
+
+            return $"Successfully added a book {bookToCreate.Title} - {bookToCreate.Author}";
         }
     }
 }
