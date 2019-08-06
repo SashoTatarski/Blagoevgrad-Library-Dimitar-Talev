@@ -1,9 +1,7 @@
 ﻿namespace Library.Core.Contracts
 {
-    public interface ICommandProcessor
+    public interface ICommandParser
     {
-        string ProcessCommand(ICommand command);
-
         ICommand ParseCommand(string commandAsString);
     }
 }

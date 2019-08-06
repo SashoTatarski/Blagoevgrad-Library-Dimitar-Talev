@@ -6,6 +6,7 @@ namespace Library.Models.Models
     {
         public Librarian(string username, string password) : base(username, password)
         {
+
         }
     }
 }

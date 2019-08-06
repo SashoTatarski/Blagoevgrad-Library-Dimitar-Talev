@@ -3,11 +3,11 @@ using Library.Core.Contracts;
 
 namespace Library.Core
 {
-    public class CommandProcessor : ICommandProcessor
+    public class CommandParser : ICommandParser
     {
         private readonly IComponentContext _componentContext;
 
-        public CommandProcessor(IComponentContext componentContext)
+        public CommandParser(IComponentContext componentContext)
         {
             _componentContext = componentContext;
         }
@@ -15,11 +15,6 @@ namespace Library.Core
         public ICommand ParseCommand(string input)
         {
             return  _componentContext.ResolveNamed<ICommand>(input);
-        }
-
-        public string ProcessCommand(ICommand command)
-        {
-            return command.Execute();
         }
     }
 }

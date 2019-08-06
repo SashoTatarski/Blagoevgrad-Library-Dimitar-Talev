@@ -46,6 +46,6 @@ namespace Library.Models.Models
             }
         }
 
-        public IEnumerable<string> AllowedCommands { get; }
+        public virtual IEnumerable<string> AllowedCommands { get; }
     }
 }

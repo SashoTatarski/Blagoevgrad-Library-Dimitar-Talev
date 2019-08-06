@@ -13,8 +13,15 @@ namespace Library.Models.Models
             this.Status = MemberStatus.Active;
             this.CheckedOutBooks = new List<IBook>();
             this.ReservedBooks = new List<IBook>();
-        }         
+            this.AllowedCommands = new List<string>
+            {
+                "CheckOutBook",
+                "ReturnBook",
+                "ReserveBook"
+            };
+        }
 
+        public override IEnumerable<string> AllowedCommands { get; }
         public MemberStatus Status { get; set; }
 
         public List<IBook> CheckedOutBooks { get; }

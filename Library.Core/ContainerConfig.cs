@@ -18,9 +18,10 @@ namespace Library.Core
             containerBuilder.RegisterType<Service>().As<IService>().SingleInstance();
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();
             containerBuilder.RegisterType<ConsoleRenderer>().As<IRenderer>();
-            containerBuilder.RegisterType<CommandProcessor>().As<ICommandProcessor>();
+            containerBuilder.RegisterType<CommandParser>().As<ICommandParser>();
             containerBuilder.RegisterType<Database.Database>().As<IDatabase>().SingleInstance();
             containerBuilder.RegisterType<AccountManager>().As<IAccountManager>().SingleInstance();
+            containerBuilder.RegisterType<MenuFactory>().As<IMenuFactory>();
 
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<LoginCommand>().Named<ICommand>("login");
