@@ -12,6 +12,7 @@ namespace Library.Models.Models
         private string genre;
         private string publisher;
         private int year;
+        private int rack;
 
         public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
@@ -102,15 +103,29 @@ namespace Library.Models.Models
             }
             set
             {
-                if (value < 1 || value > 2019)
+                if (value < 1 || value > DateTime.Now.Year)
                 {
-                    throw new ArgumentOutOfRangeException("The publication year should be between 1 and 2019");
+                    throw new ArgumentOutOfRangeException($"The publication year should be between 1 and {DateTime.Now.Year}");
                 }
                 this.year = value;
             }
         }
 
-        public int Rack { get; }
+        public int Rack
+        {
+            get
+            {
+                return this.rack;
+            }
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentOutOfRangeException($"The rack cannot be zero or negative");
+                }
+                this.rack = value;
+            }
+        }
 
         public BookStatus Status { get; set; }
 
