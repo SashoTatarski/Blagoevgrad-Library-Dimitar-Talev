@@ -25,12 +25,7 @@ namespace Library.Core
 
                 try
                 {
-                    // ASK
-                    //var command = _commandProcessor.ParseCommand(input);
-                    //_renderer.Output(_commandProcessor.ProcessCommand(command));
-
-
-                    _renderer.Output(_commandProcessor.ParseCommand(input).Execute();
+                    _renderer.Output(_commandProcessor.ParseCommand(input).Execute());
                 }
                 catch (Exception ex)
                 {

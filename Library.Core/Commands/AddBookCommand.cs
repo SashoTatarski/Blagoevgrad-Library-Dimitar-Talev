@@ -42,7 +42,6 @@ namespace Library.Core.Commands
 
             var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
 
-
             // Read books ids
             var currentId = _service.ReadBooks().Max(x => x.ID);
             var bookToCreate = _factory.CreateBook(currentId++, authorName, title, isbn, category, publisher, year, rack);

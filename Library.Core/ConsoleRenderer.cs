@@ -1,7 +1,5 @@
 ﻿using Library.Core.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core
 {
@@ -17,6 +15,20 @@ namespace Library.Core
         public void Output(string output)
         {
             Console.WriteLine(output);
+        }
+
+        public string InputParameters(string parameterName, Func<string, bool> validator)
+        {
+            this.Output($"Enter {parameterName}: ");
+
+            var input = this.Input();
+
+            while (validator(input))
+            {
+                input = this.Input();
+            }
+
+            return input;
         }
 
         public string InputParameters(string parameterName)
