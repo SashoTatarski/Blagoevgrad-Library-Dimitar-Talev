@@ -130,17 +130,5 @@
     "Year": 2005,
     "Rack": 111,
     "Status": 0
-  },
-  {
-    "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 11,
-    "Author": "asdfas",
-    "Title": "asdfsa",
-    "ISBN": "fas",
-    "Genre": "fas",
-    "Publisher": "asfd",
-    "Year": 33,
-    "Rack": 22,
-    "Status": 0
   }
 ]

@@ -2,7 +2,7 @@
 
 namespace Library.Core.Contracts
 {
-    public interface IRenderer
+    public interface IConsoleRenderer
     {
         string Input();
         void Output(string output);

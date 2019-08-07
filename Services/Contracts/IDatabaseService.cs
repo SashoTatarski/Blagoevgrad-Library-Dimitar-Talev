@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Database
+namespace Library.Services.Contracts
 {
-    public interface IService
+    public interface IDatabaseService
     {
         void AddBook(IBook book);
 
@@ -15,5 +15,9 @@ namespace Library.Database
         IAccount FindAccount(string userName);
         int CurrentID();
         List<Book> ReadBooks();
+        void ListAllBooks();
+        void WriteBooks(List<Book> books);
+        void WriteUsers(List<User> users);
+        List<User> ReadUsers();
     }
 }

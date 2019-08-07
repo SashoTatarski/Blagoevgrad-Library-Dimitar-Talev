@@ -19,5 +19,7 @@ namespace Library.Models.Contracts
         decimal LateFees { get; set; }
 
         string OverdueMessage { get; set; }
+        void AddToCheckoutBooks(IBook book);
+        void RemoveFromReservedBooks(IBook book);
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Library.Core.Contracts;
+using Library.Models.Models;
 using System;
 
 namespace Library.Core
 {
-    public class ConsoleRenderer : IRenderer
+    public class ConsoleRenderer : IConsoleRenderer
     {
         public string Input()
         {

@@ -2,6 +2,7 @@
 using Library.Core.Factory;
 using Library.Database;
 using Library.Models.Enums;
+using Library.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace Library.Core.Commands
 {
     public class AddBookCommand : ICommand
     {
-        private readonly IService _service;
+        private readonly IDatabaseService _service;
         private readonly IBookFactory _factory;
-        private readonly IRenderer _renderer;
+        private readonly IConsoleRenderer _renderer;
 
-        public AddBookCommand(IService database, IBookFactory factory, IRenderer renderer)
+        public AddBookCommand(IDatabaseService database, IBookFactory factory, IConsoleRenderer renderer)
         {
             _service = database;
             _factory = factory;
@@ -46,7 +47,7 @@ namespace Library.Core.Commands
             var currentId = _service.ReadBooks().Max(x => x.ID);
             var bookToCreate = _factory.CreateBook(currentId++, authorName, title, isbn, category, publisher, year, rack);
 
-            _service.AddBook(bookToCreate);        
+            _service.AddBook(bookToCreate);      
 
             return $"Successfully added a book {bookToCreate.Title} - {bookToCreate.Author}";
         }

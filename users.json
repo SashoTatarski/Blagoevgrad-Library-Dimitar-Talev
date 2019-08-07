@@ -1,29 +1,65 @@
 [
-  {    
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "checkoutbook",
+      "returnbook",
+      "renewbook",
+      "reserveBook",
+      "removereservation",
+      "search",
+      "viewaccount",
+      "logout"
+    ],
+    "Status": 0,
+    "CheckedOutBooks": [],
+    "ReservedBooks": [],
+    "ReservedBookMessage": [],
+    "OverdueMessage": null,
+    "LateFees": 0.0,
     "Username": "hrisi",
-    "Password": "hrisi",
+    "Password": "hrisi"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "checkoutbook",
+      "returnbook",
+      "renewbook",
+      "reserveBook",
+      "removereservation",
+      "search",
+      "viewaccount",
+      "logout"
+    ],
+    "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "ReservedBookMessage": [],
+    "OverdueMessage": null,
     "LateFees": 0.0,
-    "OverdueMessage": null
-  },
-  {   
     "Username": "ivan",
-    "Password": "ivan",
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "LateFees": 0.0,
-    "OverdueMessage": null
+    "Password": "ivan"
   },
-  {    
-    "Username": "sasho",
-    "Password": "sasho",
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "checkoutbook",
+      "returnbook",
+      "renewbook",
+      "reserveBook",
+      "removereservation",
+      "search",
+      "viewaccount",
+      "logout"
+    ],
+    "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "ReservedBookMessage": [],
+    "OverdueMessage": null,
     "LateFees": 0.0,
-    "OverdueMessage": null
+    "Username": "sasho",
+    "Password": "sasho"
   }
 ]

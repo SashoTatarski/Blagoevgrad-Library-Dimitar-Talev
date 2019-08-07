@@ -12,24 +12,23 @@ namespace Library.Models.Models
         {
             this.Status = MemberStatus.Active;
             this.CheckedOutBooks = new List<IBook>();
-            this.ReservedBooks = new List<IBook>();
-            this.AllowedCommands = new List<string>
-            {
-                "CheckOutBook",
-                "ReturnBook",
-                "RenewBook",
-                "ReserveBook",
-                "RemoveReservation",
-                "Search",
-                "ViewAccount",
-                "LogOut"
-            };
+            this.ReservedBooks = new List<IBook>();            
         }
 
-        public override IEnumerable<string> AllowedCommands { get; }
+        public override IEnumerable<string> AllowedCommands => new List<string>
+            {
+                "checkoutbook",
+                "returnbook",
+                "renewbook",
+                "reserveBook",
+                "removereservation",
+                "search",
+                "viewaccount",
+                "logout"
+            };
         public MemberStatus Status { get; set; }
 
-        public List<IBook> CheckedOutBooks { get; }
+        public List<IBook> CheckedOutBooks { get; private set; }
 
         public List<IBook> ReservedBooks { get; }
 
@@ -38,6 +37,14 @@ namespace Library.Models.Models
         public string OverdueMessage { get; set; }
 
         public decimal LateFees { get; set; }
+
+        public void AddToCheckoutBooks(IBook book)
+        {
+            this.CheckedOutBooks.Add(book);
+            book.Status = BookStatus.Checkedout;
+        }
+
+        public void RemoveFromReservedBooks(IBook book) => this.ReservedBooks.Remove(book);
 
     }
 }

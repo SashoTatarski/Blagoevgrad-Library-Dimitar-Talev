@@ -6,8 +6,9 @@ namespace Library.Models.Models
     public class Librarian : Account, ILibrarian, IAccount
     {
         public Librarian(string username, string password) : base(username, password)
-        {
-            this.AllowedCommands = new List<string>
+        {             
+        }
+        public override IEnumerable<string> AllowedCommands => new List<string>
             {
                 "AddBook",
                 "EditBook",
@@ -19,7 +20,5 @@ namespace Library.Models.Models
                 "Search",
                 "LogOut"
             };
-        }
-        public override IEnumerable<string> AllowedCommands { get; }
     }
 }

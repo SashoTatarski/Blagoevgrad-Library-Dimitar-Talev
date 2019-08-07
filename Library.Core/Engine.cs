@@ -8,11 +8,11 @@ namespace Library.Core
     public sealed class Engine : IEngine
     {
         private readonly ICommandParser _commandParser;
-        private readonly IRenderer _renderer;
+        private readonly IConsoleRenderer _renderer;
         private readonly IMenuFactory _menuFactory;
         private readonly IAccountManager _account;
 
-        public Engine(IRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAccountManager account)
+        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAccountManager account)
         {
             _renderer = renderer;
             _commandParser = commandParser;

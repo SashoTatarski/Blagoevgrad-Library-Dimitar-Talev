@@ -1,5 +1,6 @@
 ﻿using Library.Core.Contracts;
 using Library.Database;
+using Library.Services.Contracts;
 using Services;
 using Services.Contracts;
 using System;
@@ -10,10 +11,10 @@ namespace Library.Core.Commands
 {
     public class LoginCommand : ICommand
     {
-        private readonly IService _service;
+        private readonly IDatabaseService _service;
         private readonly IAccountManager _account;
 
-        public LoginCommand(IService service, IAccountManager account)
+        public LoginCommand(IDatabaseService service, IAccountManager account)
         {
             _service = service;
             _account = account;
