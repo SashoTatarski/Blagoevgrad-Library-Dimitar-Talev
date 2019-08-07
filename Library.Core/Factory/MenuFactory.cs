@@ -48,10 +48,24 @@ namespace Library.Core.Factory
                     throw new ArgumentException("Invalid Command");
                 }
             }
-            else if (!_account.CurrentAccount.AllowedCommands.Contains(commandAsString.ToLower()))
+            else
             {
-                throw new ArgumentException("Invalid Command");
+                bool check = false;
+                foreach (var command in _account.CurrentAccount.AllowedCommands)
+                {
+                    if (command.Replace(" ", "").ToLower() == commandAsString)
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check)
+                {
+                    throw new ArgumentException("Invalid Command");
+                }
             }
         }
+
+
     }
 }

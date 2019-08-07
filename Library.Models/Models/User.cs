@@ -18,14 +18,14 @@ namespace Library.Models.Models
 
         public override IEnumerable<string> AllowedCommands => new List<string>
             {
-                "checkoutbook",
-                "returnbook",
-                "renewbook",
-                "reservebook",
-                "removereservation",
-                "search",
-                "viewaccount",
-                "logout"
+                "Check Out Book",
+                "Return Book",
+                "Renew Book",
+                "Reserve Book",
+                "Remove Reservation",
+                "Search",
+                "View Account",
+                "Log Out"
             };
         public MemberStatus Status { get; set; }
 

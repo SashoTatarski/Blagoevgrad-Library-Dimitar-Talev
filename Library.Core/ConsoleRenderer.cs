@@ -1,5 +1,4 @@
 ﻿using Library.Core.Contracts;
-using Library.Models.Models;
 using System;
 
 namespace Library.Core
@@ -15,7 +14,7 @@ namespace Library.Core
 
         public void Output(string output)
         {
-            Console.WriteLine(output);
+            Console.Write(output);
         }
 
         public string InputParameters(string parameterName, Func<string, bool> validator)
