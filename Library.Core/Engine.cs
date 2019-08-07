@@ -33,6 +33,7 @@ namespace Library.Core
 
                 try
                 {
+                    _menuFactory.CheckAuthenticationForCommand(input);
                     _renderer.Output(_commandParser.ParseCommand(input).Execute());
                 }
                 catch (Exception ex)

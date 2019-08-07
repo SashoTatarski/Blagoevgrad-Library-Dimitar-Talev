@@ -9,11 +9,11 @@ namespace Library.Database
     public interface IDatabase
     {
         List<Book> ReadBooks();
-
+        List<Librarian> ReadLibrarians();
         List<User> ReadUsers();
 
         void WriteBooks(IEnumerable<IBook> books);
-
+        void WriteLibrarians(IEnumerable<ILibrarian> librarians);
         void WriteUsers(IEnumerable<IUser> users);
 
     }

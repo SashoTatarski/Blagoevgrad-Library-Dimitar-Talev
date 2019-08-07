@@ -2,6 +2,7 @@
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Library.Core.Factory
@@ -21,6 +22,7 @@ namespace Library.Core.Factory
             {
                 strBuilder.AppendLine();
                 strBuilder.AppendLine("1. LogIn");
+                strBuilder.AppendLine("2. Exit");
                 return strBuilder.ToString();
             }
             else
@@ -31,9 +33,24 @@ namespace Library.Core.Factory
                 foreach (var command in _account.CurrentAccount.AllowedCommands)
                 {
                     strBuilder.AppendLine($"{counter}. {command}");
-                    counter ++;
+                    counter++;
                 }
                 return strBuilder.ToString();
+            }
+        }
+
+        public void CheckAuthenticationForCommand(string commandAsString)
+        {
+            if (_account.CurrentAccount is null)
+            {
+                if (commandAsString.ToLower() != "exit" && commandAsString.ToLower() != "login")
+                {
+                    throw new ArgumentException("Invalid Command");
+                }
+            }
+            else if (!_account.CurrentAccount.AllowedCommands.Contains(commandAsString.ToLower()))
+            {
+                throw new ArgumentException("Invalid Command");
             }
         }
     }

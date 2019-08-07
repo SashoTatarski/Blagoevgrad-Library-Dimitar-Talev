@@ -17,9 +17,12 @@ namespace Library.Models.Models
             {
                 "CheckOutBook",
                 "ReturnBook",
+                "RenewBook",
                 "ReserveBook",
+                "RemoveReservation",
                 "Search",
-                ""
+                "ViewAccount",
+                "LogOut"
             };
         }
 

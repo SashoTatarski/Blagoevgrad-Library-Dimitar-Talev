@@ -1,4 +1,4 @@
 ﻿namespace Library.Models.Contracts
 {
-    interface ILibrarian : IAccount { }
+    public interface ILibrarian : IAccount { }
 }

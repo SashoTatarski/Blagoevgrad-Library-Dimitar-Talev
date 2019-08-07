@@ -13,6 +13,7 @@ namespace Library.Database
     {
         private const string _catalogFilepath = @"..\..\..\..\catalog.json";
         private const string _usersFilepath = @"..\..\..\..\users.json";
+        private const string _librariansFilepath = @"..\..\..\..\librarians.json";
 
         public List<Book> ReadBooks()
         {
@@ -71,6 +72,36 @@ namespace Library.Database
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
                     serializer.Serialize(writer, users);
+                }
+            }
+        }
+
+        public List<Librarian> ReadLibrarians()
+        {
+            string content;
+            using (var reader = new StreamReader(_librariansFilepath))
+            {
+                content = reader.ReadToEnd();
+            }
+            return JsonConvert.DeserializeObject<List<Librarian>>(content, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            });
+        }
+
+        public void WriteLibrarians(IEnumerable<ILibrarian> librarians)
+        {
+            var serializer = new JsonSerializer
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+            };
+            using (var sw = new StreamWriter(_usersFilepath))
+            {
+                using (JsonWriter writer = new JsonTextWriter(sw))
+                {
+                    serializer.Serialize(writer, librarians);
                 }
             }
         }

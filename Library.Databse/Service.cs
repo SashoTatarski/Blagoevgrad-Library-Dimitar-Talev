@@ -47,7 +47,25 @@ namespace Library.Database
 
         public IAccount FindAccount(string userName)
         {
-            return _database.ReadUsers().FirstOrDefault(u => u.Username == userName);
+            var user =  _database.ReadUsers().FirstOrDefault(u => u.Username == userName);
+            var librarian = _database.ReadLibrarians().FirstOrDefault(l => l.Username == userName);
+
+            if (user is null)
+            {
+                if (librarian is null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return librarian;
+                }
+            }
+            else
+            {
+                return user;
+            }
+
         }
     }
 }
