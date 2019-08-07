@@ -13,5 +13,8 @@ namespace Library.Models.Contracts
         int Year { get; }
         int Rack { get; }
         BookStatus Status { get; set; }
+        System.DateTime CheckoutDate { get; set; }
+        System.DateTime DueDate { get; set; }
+        System.DateTime ResevedDate { get; set; }
     }
 }

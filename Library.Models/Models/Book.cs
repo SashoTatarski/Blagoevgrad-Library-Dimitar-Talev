@@ -128,8 +128,8 @@ namespace Library.Models.Models
 
         public BookStatus Status { get; set; }
 
-        DateTime CheckoutDate { get; set; }
-        DateTime DueDate { get; set; }
-        DateTime ResevedDate { get; set; }
+        public DateTime CheckoutDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime ResevedDate { get; set; }
     }
 }

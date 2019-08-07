@@ -12,7 +12,7 @@ namespace Library.Models.Models
         {
             this.Status = MemberStatus.Active;
             this.CheckedOutBooks = new List<IBook>();
-            this.ReservedBooks = new List<IBook>();            
+            this.ReservedBooks = new List<IBook>();
         }
 
         public override IEnumerable<string> AllowedCommands => new List<string>
@@ -42,9 +42,14 @@ namespace Library.Models.Models
         {
             this.CheckedOutBooks.Add(book);
             book.Status = BookStatus.Checkedout;
+            book.CheckoutDate = DateTime.Today;
+            book.DueDate = DateTime.Today.AddDays(10);
         }
 
-        public void RemoveFromReservedBooks(IBook book) => this.ReservedBooks.Remove(book);
-
+        public void RemoveFromReservedBooks(IBook book)
+        {
+            this.ReservedBooks.Remove(book);
+            book.ResevedDate = DateTime.MinValue;
+        }
     }
 }
