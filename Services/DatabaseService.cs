@@ -51,6 +51,24 @@ namespace Library.Services
             _database.WriteUsers(users);
         }
 
+        public void RemoveUser(string user)
+        {
+            var users = _database.ReadUsers();
+
+            var userToRemove = users.Find(x => x.Username == user);
+            userToRemove.Status = MemberStatus.Inactive;
+
+            _database.WriteUsers(users);
+        }
+
+        public void AddLibrarian(ILibrarian librarian)
+        {
+            var librarians = _database.ReadLibrarians();
+            librarians.Add((Librarian)librarian);
+
+            _database.WriteLibrarians(librarians);
+        }
+
         public List<User> ReadUsers() => _database.ReadUsers();
         
         public void WriteUsers(List<User> users) => _database.WriteUsers(users);

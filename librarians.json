@@ -1,10 +1,50 @@
 [
-  {    
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "addbook",
+      "editbook",
+      "removebook",
+      "registeruser",
+      "registerlibrarian",
+      "cancelaccount",
+      "viewaccounts",
+      "search",
+      "logOut"
+    ],
     "Username": "Librarian",
-    "Password": "123",
+    "Password": "123"
   },
-{    
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "addbook",
+      "editbook",
+      "removebook",
+      "registeruser",
+      "registerlibrarian",
+      "cancelaccount",
+      "viewaccounts",
+      "search",
+      "logOut"
+    ],
     "Username": "osama",
-    "Password": "osama",
+    "Password": "osama"
+  },
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "addbook",
+      "editbook",
+      "removebook",
+      "registeruser",
+      "registerlibrarian",
+      "cancelaccount",
+      "viewaccounts",
+      "search",
+      "logOut"
+    ],
+    "Username": "Mohammad",
+    "Password": "Mohammad"
   }
 ]

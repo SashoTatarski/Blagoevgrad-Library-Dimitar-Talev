@@ -6,8 +6,8 @@ namespace Library.Models.Models
 {
     public abstract class Account : IAccount
     {
-        private string username;
-        private string password;
+        private string _username;
+        private string _password;
 
         public Account(string username, string password)
         {
@@ -17,32 +17,24 @@ namespace Library.Models.Models
 
         public virtual string Username
         {
-            get
-            {
-                return this.username;
-            }
+            get => _username;
             private set
             {
                 if (value.Length < 1 || value.Length > 30)
-                {
                     throw new ArgumentException("The name should be between 1 and 30 characters");
-                }
-                this.username = value;
+
+                _username = value;
             }
         }
         public virtual string Password
         {
-            get
-            {
-                return this.password;
-            }
+            get => _password;
             private set
             {
                 if (value.Length < 3 || value.Length > 20)
-                {
                     throw new ArgumentException("The password should be between 3 and 20 characters");
-                }
-                this.password = value;
+
+                _password = value;
             }
         }
 

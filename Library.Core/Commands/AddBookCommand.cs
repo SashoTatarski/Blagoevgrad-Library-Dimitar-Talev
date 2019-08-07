@@ -50,6 +50,6 @@ namespace Library.Core.Commands
             _service.AddBook(bookToCreate);      
 
             return $"Successfully added a book {bookToCreate.Title} - {bookToCreate.Author}";
-        }
+        }        
     }
 }

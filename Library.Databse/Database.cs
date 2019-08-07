@@ -97,7 +97,7 @@ namespace Library.Database
                 TypeNameHandling = TypeNameHandling.Objects,
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
             };
-            using (var sw = new StreamWriter(_usersFilepath))
+            using (var sw = new StreamWriter(_librariansFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
