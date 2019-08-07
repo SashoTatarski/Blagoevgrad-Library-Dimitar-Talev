@@ -1,8 +1,5 @@
 ﻿using Library.Core.Contracts;
 using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core.Commands
 {
@@ -17,11 +14,11 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            var user = _account.CurrentAccount.Username;
+            var user = _account.CurrentAccount;
 
             _account.LogOut();
 
-            return $"{user} succefully logged!";
+            return $"{user.Username} succefully logged out!";
         }
     }
 }

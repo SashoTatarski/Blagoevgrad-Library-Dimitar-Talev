@@ -1,11 +1,7 @@
 ﻿using Library.Core.Contracts;
-using Library.Database;
 using Library.Services.Contracts;
-using Services;
 using Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core.Commands
 {
@@ -13,32 +9,32 @@ namespace Library.Core.Commands
     {
         private readonly IDatabaseService _service;
         private readonly IAccountManager _account;
+        private readonly IConsoleRenderer _renderer;
 
-        public LoginCommand(IDatabaseService service, IAccountManager account)
+        public LoginCommand(IDatabaseService service, IAccountManager account, IConsoleRenderer renderer)
         {
             _service = service;
             _account = account;
+            _renderer = renderer;
         }
 
         public string Execute()
         {
-            Console.WriteLine("Enter username: ");
-            var userName = Console.ReadLine();
-            Console.WriteLine("Enter password: ");
-            var password = Console.ReadLine();
+
+            var userName = _renderer.InputParameters("username");
+            var password = _renderer.InputParameters("password");
 
             var loggedUser = _service.FindAccount(userName);
 
             if (loggedUser == null)
-                throw new ArgumentException("No such username, douchebag");
+                throw new ArgumentException("No such username!");
 
             if (loggedUser.Password != password)
-                throw new ArgumentException("Wrong password");
+                throw new ArgumentException("Wrong password!");
 
             _account.LogIn(loggedUser);
 
             return $"{loggedUser.Username} succefully logged!";
-
         }
     }
 }
