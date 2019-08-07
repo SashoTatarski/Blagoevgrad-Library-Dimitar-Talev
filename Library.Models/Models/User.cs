@@ -2,6 +2,7 @@
 using Library.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Library.Models.Models
@@ -30,7 +31,7 @@ namespace Library.Models.Models
 
         public List<IBook> CheckedOutBooks { get; private set; }
 
-        public List<IBook> ReservedBooks { get; }
+        public List<IBook> ReservedBooks { get; private set; }
 
         public List<string> ReservedBookMessage { get; } = new List<string>();
 
@@ -50,6 +51,13 @@ namespace Library.Models.Models
         {
             this.ReservedBooks.Remove(book);
             book.ResevedDate = DateTime.MinValue;
+        }
+
+        public void RemovedFromCheckedoutBooks(IBook book)
+        {
+            this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
+            book.Status = BookStatus.Available;
+            book.CheckoutDate = DateTime.MinValue;
         }
     }
 }

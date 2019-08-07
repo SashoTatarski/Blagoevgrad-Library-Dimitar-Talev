@@ -9,7 +9,10 @@
     "Publisher": "Random House of Canada",
     "Year": 2018,
     "Rack": 11,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -21,7 +24,10 @@
     "Publisher": "Ingram",
     "Year": 2007,
     "Rack": 22,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -33,7 +39,10 @@
     "Publisher": "Routledge",
     "Year": 2019,
     "Rack": 33,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -45,7 +54,10 @@
     "Publisher": "Broadside",
     "Year": 2019,
     "Rack": 44,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -57,7 +69,10 @@
     "Publisher": "Capall Bann Publishing",
     "Year": 2001,
     "Rack": 55,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -69,7 +84,10 @@
     "Publisher": "Amazon Publishing",
     "Year": 2014,
     "Rack": 66,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -81,7 +99,10 @@
     "Publisher": "Sync Book Press",
     "Year": 2012,
     "Rack": 77,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -93,7 +114,10 @@
     "Publisher": "Sync Book Press",
     "Year": 2011,
     "Rack": 88,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -105,7 +129,10 @@
     "Publisher": "Apress",
     "Year": 2017,
     "Rack": 99,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -117,7 +144,10 @@
     "Publisher": "Crown Business",
     "Year": 2007,
     "Rack": 100,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
@@ -129,6 +159,9 @@
     "Publisher": "Rodale Books",
     "Year": 2005,
     "Rack": 111,
-    "Status": 0
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "2019-08-17T00:00:00+03:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   }
 ]

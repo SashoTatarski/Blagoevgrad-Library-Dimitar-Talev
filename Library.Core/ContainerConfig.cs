@@ -28,7 +28,9 @@ namespace Library.Core
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<LoginCommand>().Named<ICommand>("login");
             containerBuilder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
-            containerBuilder.RegisterType<CheckOutBook>().Named<ICommand>("checkoutbook");
+            containerBuilder.RegisterType<CheckOutBookCommand>().Named<ICommand>("checkoutbook");
+            containerBuilder.RegisterType<ReturnBookCommand>().Named<ICommand>("returnbook");
+
 
             return containerBuilder.Build();
         }

@@ -11,12 +11,12 @@ using System.Text;
 
 namespace Library.Core.Commands
 {
-    public class CheckOutBook : ICommand
+    public class CheckOutBookCommand : ICommand
     {
         private readonly IAccountManager _account;
         private readonly IDatabaseService _service;
         private readonly IConsoleRenderer _renderer;
-        public CheckOutBook(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
+        public CheckOutBookCommand(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
         {
             _account = account;
             _service = service;
@@ -67,7 +67,6 @@ namespace Library.Core.Commands
 
             // Update user database
             _service.WriteUsers(allUsers);
-
 
             return $"You have successfully checked out {bookToCheckOut.Title} - {bookToCheckOut.Author}";
         }

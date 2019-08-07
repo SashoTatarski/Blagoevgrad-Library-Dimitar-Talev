@@ -21,5 +21,6 @@ namespace Library.Models.Contracts
         string OverdueMessage { get; set; }
         void AddToCheckoutBooks(IBook book);
         void RemoveFromReservedBooks(IBook book);
+        void RemovedFromCheckedoutBooks(IBook book);
     }
 }
