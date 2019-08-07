@@ -2,14 +2,14 @@
   {
     "$type": "Library.Models.Models.User, Library.Models",
     "AllowedCommands": [
-      "checkoutbook",
-      "returnbook",
-      "renewbook",
-      "reserveBook",
-      "removereservation",
-      "search",
-      "viewaccount",
-      "logout"
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Remove Reservation",
+      "Search",
+      "View Account",
+      "Log Out"
     ],
     "Status": 0,
     "CheckedOutBooks": [],
@@ -23,14 +23,14 @@
   {
     "$type": "Library.Models.Models.User, Library.Models",
     "AllowedCommands": [
-      "checkoutbook",
-      "returnbook",
-      "renewbook",
-      "reserveBook",
-      "removereservation",
-      "search",
-      "viewaccount",
-      "logout"
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Remove Reservation",
+      "Search",
+      "View Account",
+      "Log Out"
     ],
     "Status": 0,
     "CheckedOutBooks": [],
@@ -44,14 +44,14 @@
   {
     "$type": "Library.Models.Models.User, Library.Models",
     "AllowedCommands": [
-      "checkoutbook",
-      "returnbook",
-      "renewbook",
-      "reserveBook",
-      "removereservation",
-      "search",
-      "viewaccount",
-      "logout"
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Remove Reservation",
+      "Search",
+      "View Account",
+      "Log Out"
     ],
     "Status": 0,
     "CheckedOutBooks": [],
