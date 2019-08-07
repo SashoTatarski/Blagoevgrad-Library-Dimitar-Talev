@@ -19,10 +19,7 @@ namespace Library.Services
             _database = database;
         }
 
-        public int CurrentID()
-        {
-            return _database.ReadBooks().Count();
-        }
+        public int CurrentID() => _database.ReadBooks().Count();
 
 
         public void AddBook(IBook book)
@@ -33,10 +30,15 @@ namespace Library.Services
             _database.WriteBooks(books);
         }
 
-        public List<Book> ReadBooks()
+        public void RemoveBook(IBook book)
         {
-            return _database.ReadBooks();
+            var books = _database.ReadBooks();
+            books.RemoveAll(x => x.ID == book.ID);
+
+            _database.WriteBooks(books);
         }
+
+        public List<Book> ReadBooks() => _database.ReadBooks();
 
         public void WriteBooks(List<Book> books) => _database.WriteBooks(books);
 

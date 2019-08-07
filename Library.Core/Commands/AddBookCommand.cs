@@ -45,7 +45,7 @@ namespace Library.Core.Commands
 
             // Read books ids
             var currentId = _service.ReadBooks().Max(x => x.ID);
-            var bookToCreate = _factory.CreateBook(currentId++, authorName, title, isbn, category, publisher, year, rack);
+            var bookToCreate = _factory.CreateBook(++currentId, authorName, title, isbn, category, publisher, year, rack);
 
             _service.AddBook(bookToCreate);      
 

@@ -10,15 +10,15 @@ namespace Library.Models.Models
         }
         public override IEnumerable<string> AllowedCommands => new List<string>
             {
-                "AddBook",
-                "EditBook",
-                "RemoveBook",
-                "AddUser",
-                "AddLibrarian",
-                "CancelAccount",
-                "ViewAccount",
-                "Search",
-                "LogOut"
+                "addbook",
+                "editbook",
+                "removebook",
+                "adduser",
+                "addlibrarian",
+                "cancelaccount",
+                "viewaccounts",
+                "search",
+                "logOut"
             };
     }
 }

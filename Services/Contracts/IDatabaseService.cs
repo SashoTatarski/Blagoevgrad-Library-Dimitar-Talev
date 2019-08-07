@@ -19,5 +19,6 @@ namespace Library.Services.Contracts
         void WriteBooks(List<Book> books);
         void WriteUsers(List<User> users);
         List<User> ReadUsers();
+        void RemoveBook(IBook book);
     }
 }

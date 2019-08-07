@@ -21,7 +21,7 @@ namespace Library.Models.Models
                 "checkoutbook",
                 "returnbook",
                 "renewbook",
-                "reserveBook",
+                "reservebook",
                 "removereservation",
                 "search",
                 "viewaccount",

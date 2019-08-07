@@ -9,13 +9,16 @@ namespace Library.CLI
     {
         public static void Main()
         {
+            ProgramStart();
+        }
+
+        private static void ProgramStart()
+        {
             var containerConfig = new ContainerConfig();
             var container = containerConfig.Build();
 
             var engine = container.Resolve<IEngine>();
             engine.Start();
-
-            //addbook,Sasho Tatarski, My First Title,383838383, Some Category, Retard Sensation Publishing,2019,100
         }
     }
 }

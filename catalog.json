@@ -163,5 +163,20 @@
     "CheckoutDate": "0001-01-01T00:00:00",
     "DueDate": "2019-08-17T00:00:00+03:00",
     "ResevedDate": "0001-01-01T00:00:00"
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "ID": 12,
+    "Author": "pesho",
+    "Title": "adf",
+    "ISBN": "asdf",
+    "Genre": "asdf",
+    "Publisher": "1111",
+    "Year": 111,
+    "Rack": 11,
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00"
   }
 ]

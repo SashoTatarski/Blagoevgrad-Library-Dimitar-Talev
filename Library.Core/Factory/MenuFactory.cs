@@ -12,7 +12,7 @@ namespace Library.Core.Factory
         private readonly IAccountManager _account;
         public MenuFactory(IAccountManager account)
         {
-            this._account = account;
+            _account = account;
         }
         public string GenerateMenu(IAccount account)
         {

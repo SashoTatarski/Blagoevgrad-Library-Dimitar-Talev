@@ -26,6 +26,11 @@ namespace Library.Core
             containerBuilder.RegisterType<MenuFactory>().As<IMenuFactory>();
 
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
+            containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");
+            containerBuilder.RegisterType<EditBookCommand>().Named<ICommand>("editbook");
+            containerBuilder.RegisterType<ViewAccountsCommand>().Named<ICommand>("viewaccounts");
+
+
             containerBuilder.RegisterType<LoginCommand>().Named<ICommand>("login");
             containerBuilder.RegisterType<LogoutCommand>().Named<ICommand>("logout");
             containerBuilder.RegisterType<CheckOutBookCommand>().Named<ICommand>("checkoutbook");
