@@ -1,25 +1,7 @@
 [
   {    
-    "Username": "osama",
-    "Password": "allah",
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "LateFees": 0.0,
-    "OverdueMessage": null
-  },
-  {    
-    "Username": "asdf",
-    "Password": "asdf",
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "LateFees": 0.0,
-    "OverdueMessage": null
-  },
-  {    
-    "Username": "asdf",
-    "Password": "adf",
+    "Username": "hrisi",
+    "Password": "hrisi",
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "ReservedBookMessage": [],
