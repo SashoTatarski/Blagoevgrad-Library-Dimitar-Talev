@@ -1,40 +1,40 @@
 ﻿using Library.Core.Contracts;
-using Library.Core.Factory;
+using Library.Models.Contracts;
 using Library.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class RemoveUserCommand : ICommand
     {
-        private readonly IDatabaseService _service;
-        private readonly IUserFactory _userfactory;
+        private readonly IConsoleRenderer _renderer;
+        private readonly IAccountManager _accountManager;
 
-        public RemoveUserCommand(IUserFactory userfactory, IDatabaseService service)
+        public RemoveUserCommand(IConsoleRenderer renderer, IAccountManager accountManager)
         {
-            _userfactory = userfactory;
-            _service = service;
+            _renderer = renderer;
+            _accountManager = accountManager;
         }
 
         public string Execute()
         {
-            var allusers = _service.ReadUsers();
+            _accountManager.ListAllUsers();
 
-            if (!allusers.Any())
-                throw new ArgumentNullException("There are no users!");
+            var username = _renderer.InputParameters("username");
 
-            foreach (var user in allusers)
-                Console.WriteLine($"\r\nUsername: {user.Username} || Password: {user.Password}");
+            var userToRemove = (IUser)_accountManager.FindAccount(username);
+            if (userToRemove is null)
+            {
+                throw new ArgumentException("Invalid username!");
+            }
+            if (userToRemove.CheckedOutBooks.Count != 0 || userToRemove.ReservedBooks.Count != 0)
+            {
+                throw new ArgumentException("You cannot remove user who has checkedout/reserved books");
+            }
 
-            Console.Write("\r\nSelect username to delete or type 'exit' to go back: ");
-            var input = Console.ReadLine();
+            _accountManager.RemoveUser(userToRemove);
 
-            _service.RemoveUser(input);
-
-            return $"User {input} removed!";
+            return $"The user {userToRemove.Username} is removed!";
         }
     }
 }

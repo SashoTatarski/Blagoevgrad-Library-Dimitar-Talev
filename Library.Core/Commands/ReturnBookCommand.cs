@@ -11,11 +11,11 @@ namespace Library.Core.Commands
 {
     public class ReturnBookCommand : ICommand
     {
-        private readonly IAccountManager _account;
+        private readonly IAuthenticationManager _account;
         private readonly IDatabaseService _service;
         private readonly IConsoleRenderer _renderer;
 
-        public ReturnBookCommand(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
+        public ReturnBookCommand(IAuthenticationManager account, IDatabaseService service, IConsoleRenderer renderer)
         {
             _account = account;
             _service = service;
@@ -24,26 +24,27 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            var currentAccount = (IUser)_account.CurrentAccount;
-            var users = _service.ReadUsers();
-            var books = _service.ReadBooks();
+            //var currentAccount = (IUser)_account.CurrentAccount;
+            //var users = _service.ReadUsers();
+            //var books = _service.ReadBooks();
 
-            if (!currentAccount.CheckedOutBooks.Any())
-                throw new ArgumentException("There are no books to return!");
+            //if (!currentAccount.CheckedOutBooks.Any())
+            //    throw new ArgumentException("There are no books to return!");
 
-            DisplayCheckedoutBooks(currentAccount);
-            var input = int.Parse(_renderer.InputParameters("ID"));
+            //DisplayCheckedoutBooks(currentAccount);
+            //var input = int.Parse(_renderer.InputParameters("ID"));
 
-            var user = users.FirstOrDefault(u => u.Username == currentAccount.Username);
-            var bookToReturn = books.FirstOrDefault(b => b.ID == input);
+            //var user = users.FirstOrDefault(u => u.Username == currentAccount.Username);
+            //var bookToReturn = books.FirstOrDefault(b => b.ID == input);
 
-            user.RemovedFromCheckedoutBooks(bookToReturn);
+            //user.RemovedFromCheckedoutBooks(bookToReturn);
 
-            _service.WriteBooks(books);
-            _service.WriteUsers(users);
+            //_service.WriteBooks(books);
+            //_service.WriteUsers(users);
 
-            var currBook = books.Where(b => b.ID == input).FirstOrDefault();
-            return $"Successfully returned : {currBook.Title} - {currBook.Author}";
+            //var currBook = books.Where(b => b.ID == input).FirstOrDefault();
+            //return $"Successfully returned : {currBook.Title} - {currBook.Author}";
+            return "fix";
         }
 
         private static void DisplayCheckedoutBooks(IUser user)

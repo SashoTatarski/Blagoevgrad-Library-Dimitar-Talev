@@ -18,6 +18,6 @@ namespace Library.Models.Contracts
         DateTime DueDate { get; }
         DateTime ResevedDate { get; }
         void Update(IBook otherBook);
-        void Update(BookStatus checkedout, DateTime today, DateTime dateTime);
+        void Update(BookStatus status, DateTime today, DateTime dueDate);
     }
 }

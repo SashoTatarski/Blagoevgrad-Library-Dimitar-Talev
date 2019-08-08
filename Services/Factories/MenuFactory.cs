@@ -9,9 +9,9 @@ namespace Library.Services.Factory
 {
     public class MenuFactory : IMenuFactory
     {
-        private readonly IAccountManager _account;
+        private readonly IAuthenticationManager _account;
 
-        public MenuFactory(IAccountManager account)
+        public MenuFactory(IAuthenticationManager account)
         {
             _account = account;
         }

@@ -5,18 +5,18 @@ namespace Library.Core.Commands
 {
     public class LogoutCommand : ICommand
     {
-        private readonly IAccountManager _account;
+        private readonly IAuthenticationManager _authentication;
 
-        public LogoutCommand(IAccountManager account)
-        {            
-            _account = account;
+        public LogoutCommand(IAuthenticationManager authentication)
+        {
+            _authentication = authentication;
         }
 
         public string Execute()
         {
-            var user = _account.CurrentAccount;
+            var user = _authentication.CurrentAccount;
 
-            _account.LogOut();
+            _authentication.LogOut();
 
             return $"{user.Username} succefully logged out!";
         }

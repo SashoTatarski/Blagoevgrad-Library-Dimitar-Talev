@@ -1,15 +1,14 @@
 ﻿using Library.Models.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Services.Contracts
+namespace Library.Services.Contracts
 {
     public interface IAccountManager
     {
-        IAccount CurrentAccount { get; }
-
-        void LogIn(IAccount account);
-        void LogOut();
+        void AddLibrarian(ILibrarian librarian);
+        void AddUser(IUser user);
+        IAccount FindAccount(string userName);
+        void ListAllUsers();
+        void RemoveUser(IUser user);
+        void UpdateUser(IUser user);
     }
 }

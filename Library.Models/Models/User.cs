@@ -1,5 +1,6 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Library.Models.Models
             this.Status = MemberStatus.Active;
             this.CheckedOutBooks = new List<IBook>();
             this.ReservedBooks = new List<IBook>();
+            this.ReservedBookMessages = new List<string>();
+            this.OverdueMessages = new List<string>();
         }
 
         public override IEnumerable<string> AllowedCommands => new List<string>
@@ -33,32 +36,38 @@ namespace Library.Models.Models
 
         public List<IBook> ReservedBooks { get; private set; }
 
-        public List<string> ReservedBookMessage { get; } = new List<string>();
+        public List<string> ReservedBookMessages { get; set; }
 
-        public string OverdueMessage { get; set; }
+        public List<string> OverdueMessages { get; set; }
 
         public decimal LateFees { get; set; }
 
-        public void AddToCheckoutBooks(IBook book)
+        public void AddBookToCheckoutBooks(IBook book)
         {
             this.CheckedOutBooks.Add(book);
-            book.Update(BookStatus.Checkedout, DateTime.Today, DateTime.Today.AddDays(10));
-            //book.Status = BookStatus.Checkedout;
-            //book.CheckoutDate = DateTime.Today;
-            //book.DueDate = DateTime.Today.AddDays(10);
         }
 
         public void RemoveFromReservedBooks(IBook book)
         {
             this.ReservedBooks.Remove(book);
-            book.ResevedDate = DateTime.MinValue;
         }
 
         public void RemovedFromCheckedoutBooks(IBook book)
         {
-            this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
-            book.Status = BookStatus.Available;
-            book.CheckoutDate = DateTime.MinValue;
+            //FIX
+            //this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
+            //book.Status = BookStatus.Available;
+            //book.CheckoutDate = DateTime.MinValue;
+        }
+
+        public void Update(IUser otherUser)
+        {
+            this.Status = otherUser.Status;
+            this.CheckedOutBooks = otherUser.CheckedOutBooks;
+            this.ReservedBooks = otherUser.ReservedBooks;
+            this.ReservedBookMessages = otherUser.ReservedBookMessages;
+            this.OverdueMessages = otherUser.OverdueMessages;
+            this.LateFees = otherUser.LateFees;
         }
     }
 }

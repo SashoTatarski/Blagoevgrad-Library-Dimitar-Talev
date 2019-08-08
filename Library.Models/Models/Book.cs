@@ -126,35 +126,30 @@ namespace Library.Models.Models
             }
         }
 
-        public BookStatus Status { get; private set; }
-
-        public DateTime CheckoutDate
-        {
-            get; private set;
-        }
-        public DateTime DueDate { get; private set; }
-        public DateTime ResevedDate { get; private set; }
+        public BookStatus Status { get; set; }
+        public DateTime CheckoutDate { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime ResevedDate { get; set; }
 
         public void Update(IBook otherBook)
         {
             this.Title = otherBook.Title;
             this.Author = otherBook.Author;
+            this.ISBN = otherBook.ISBN;
             this.Genre = otherBook.Genre;
             this.Publisher = otherBook.Publisher;
-            this.ResevedDate = otherBook.ResevedDate;
-            this.CheckoutDate = otherBook.CheckoutDate;
-            this.DueDate = otherBook.DueDate;
             this.Year = otherBook.Year;
             this.Rack = otherBook.Rack;
             this.Status = otherBook.Status;
-            this.ISBN = otherBook.ISBN;
-
+            this.CheckoutDate = otherBook.CheckoutDate;
+            this.ResevedDate = otherBook.ResevedDate;
+            this.DueDate = otherBook.DueDate;
         }
 
-        public void Update(BookStatus status, DateTime checkoutDate, DateTime dueDate)
+        public void Update(BookStatus status, DateTime today, DateTime dueDate)
         {
             this.Status = status;
-            this.CheckoutDate = checkoutDate;
+            this.CheckoutDate = today;
             this.DueDate = dueDate;
         }
     }

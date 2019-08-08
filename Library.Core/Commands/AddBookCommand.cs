@@ -1,22 +1,21 @@
 ﻿using Library.Core.Contracts;
-using Library.Core.Factory;
 using Library.Services.Contracts;
+using Library.Services.Factory;
 using System;
-using System.Linq;
 
 namespace Library.Core.Commands
 {
     public class AddBookCommand : ICommand
     {
-        private readonly IDatabaseService _service;
         private readonly IBookFactory _factory;
         private readonly IConsoleRenderer _renderer;
+        private readonly IBookManager _bookManager;
 
-        public AddBookCommand(IDatabaseService service, IBookFactory factory, IConsoleRenderer renderer)
+        public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager)
         {
-            _service = service;
             _factory = factory;
             _renderer = renderer;
+            _bookManager = bookManager;
         }
 
         public string Execute()
@@ -42,11 +41,11 @@ namespace Library.Core.Commands
                 r => int.Parse(r) < 1));
 
             // Get the ID of the new book
-            var bookID = _service.ReadBooks().Max(x => x.ID) + 1;
-
+            var bookID = _bookManager.GetLastBookID() + 1;
+            // Create book with given parameters
             var bookToCreate = _factory.CreateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
-
-            _service.AddBook(bookToCreate);
+            // Add book to Database
+            _bookManager.AddBook(bookToCreate);
 
             return $"Successfully added the book {bookToCreate.Title} - {bookToCreate.Author}";
         }

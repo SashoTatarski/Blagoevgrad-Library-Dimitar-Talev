@@ -1,42 +1,38 @@
 ﻿using Library.Core.Contracts;
-using Library.Core.Factory;
-using Library.Models.Contracts;
-using Library.Models.Models;
 using Library.Services.Contracts;
+using Library.Services.Factory;
 using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class RegisterUserCommand : ICommand
-    {        
-        private readonly IDatabaseService _service;    
-        private readonly IUserFactory _userfactory;
+    {
+        private readonly IUserFactory _userFactory;
+        private readonly IConsoleRenderer _renderer;
+        private readonly IAccountManager _accountManager;
+        private readonly IAuthenticationManager _authentication;
 
-        public RegisterUserCommand(IUserFactory userfactory, IDatabaseService service)
+        public RegisterUserCommand(IUserFactory userFactory, IConsoleRenderer renderer, IAccountManager accountManager, IAuthenticationManager authentication)
         {
-            _userfactory = userfactory;           
-            _service = service;            
+            _userFactory = userFactory;
+            _renderer = renderer;
+            _accountManager = accountManager;
+            _authentication = authentication;
         }
 
         public string Execute()
         {
-            // Both of these should be useless
-            // var currentAccount = (ILibrarian)_account.CurrentAccount;
-            // var users = _service.ReadUsers();
+            var username = _renderer.InputParameters("username",
+                s => s.Length < 1 || s.Length > 30);
+            var password = _renderer.InputParameters("password",
+                s => s.Length < 3 || s.Length > 20);
 
-            Console.WriteLine("Enter new username: ");
-            var username = Console.ReadLine();
-            Console.WriteLine("Enter new password: ");
-            var password = Console.ReadLine();
+            _authentication.CheckForExistingUsername(username);
+            var newUser = _userFactory.CreateUser(username, password);
 
-            var newUser = _userfactory.CreateUser(username, password);
+            _accountManager.AddUser(newUser);
 
-            _service.AddUser(newUser);
-
-            return $"Successfully created {newUser.Username}";
+            return $"Successfully created new user account: {newUser.Username}";
         }
     }
 }

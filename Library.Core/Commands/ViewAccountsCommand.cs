@@ -12,11 +12,11 @@ namespace Library.Core.Commands
 {
     public class ViewAccountsCommand : ICommand
     {
-        private readonly IAccountManager _account;
+        private readonly IAuthenticationManager _account;
         private readonly IDatabaseService _service;
         private readonly IConsoleRenderer _renderer;
 
-        public ViewAccountsCommand(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
+        public ViewAccountsCommand(IAuthenticationManager account, IDatabaseService service, IConsoleRenderer renderer)
         {
             _account = account;
             _service = service;
@@ -25,16 +25,16 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            var currentAccount = (ILibrarian)_account.CurrentAccount;
+            //var currentAccount = (ILibrarian)_account.CurrentAccount;
 
-            var allUsers = _service.ReadUsers();
+            //var allUsers = _service.ReadUsers();
 
-            foreach (var user in allUsers)
-            {
-                CheckedoutBooks(user);
-                ReservedBooks(user);
-                Fees(user);
-            }
+            //foreach (var user in allUsers)
+            //{
+            //    CheckedoutBooks(user);
+            //    ReservedBooks(user);
+            //    Fees(user);
+            //}
 
             return "";
         }
