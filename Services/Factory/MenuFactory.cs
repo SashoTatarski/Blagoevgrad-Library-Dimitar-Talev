@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Library.Core.Factory
+namespace Library.Services.Factory
 {
     public class MenuFactory : IMenuFactory
     {
         private readonly IAccountManager _account;
+
         public MenuFactory(IAccountManager account)
         {
             _account = account;

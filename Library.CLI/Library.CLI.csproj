@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.3" />
+    <PackageReference Include="Dawn.Guard" Version="1.8.0" />
   </ItemGroup>
 
   <ItemGroup>

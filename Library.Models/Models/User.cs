@@ -42,9 +42,10 @@ namespace Library.Models.Models
         public void AddToCheckoutBooks(IBook book)
         {
             this.CheckedOutBooks.Add(book);
-            book.Status = BookStatus.Checkedout;
-            book.CheckoutDate = DateTime.Today;
-            book.DueDate = DateTime.Today.AddDays(10);
+            book.Update(BookStatus.Checkedout, DateTime.Today, DateTime.Today.AddDays(10));
+            //book.Status = BookStatus.Checkedout;
+            //book.CheckoutDate = DateTime.Today;
+            //book.DueDate = DateTime.Today.AddDays(10);
         }
 
         public void RemoveFromReservedBooks(IBook book)

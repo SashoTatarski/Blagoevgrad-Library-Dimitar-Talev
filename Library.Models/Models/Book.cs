@@ -13,7 +13,7 @@ namespace Library.Models.Models
         private int year;
         private int rack;
 
-        public Book(int Id,string author, string title, string isbn, string genre, string publisher, int year, int rack)
+        public Book(int Id, string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
             this.ID = Id;
             this.Author = author;
@@ -34,7 +34,7 @@ namespace Library.Models.Models
             {
                 return this.author;
             }
-            set
+            private set
             {
                 if (value.Length < 1 || value.Length > 40)
                 {
@@ -50,7 +50,7 @@ namespace Library.Models.Models
             {
                 return this.title;
             }
-            set
+            private set
             {
                 if (value.Length < 1 || value.Length > 100)
                 {
@@ -60,7 +60,7 @@ namespace Library.Models.Models
             }
         }
 
-        public string ISBN { get; }
+        public string ISBN { get; private set; }
 
         public string Genre
         {
@@ -68,7 +68,7 @@ namespace Library.Models.Models
             {
                 return this.genre;
             }
-            set
+            private set
             {
                 if (value.Length < 1 || value.Length > 40)
                 {
@@ -84,7 +84,7 @@ namespace Library.Models.Models
             {
                 return this.publisher;
             }
-            set
+            private set
             {
                 if (value.Length < 1 || value.Length > 40)
                 {
@@ -100,7 +100,7 @@ namespace Library.Models.Models
             {
                 return this.year;
             }
-            set
+            private set
             {
                 if (value < 1 || value > DateTime.Now.Year)
                 {
@@ -116,7 +116,7 @@ namespace Library.Models.Models
             {
                 return this.rack;
             }
-            set
+            private set
             {
                 if (value < 1)
                 {
@@ -126,10 +126,36 @@ namespace Library.Models.Models
             }
         }
 
-        public BookStatus Status { get; set; }
+        public BookStatus Status { get; private set; }
 
-        public DateTime CheckoutDate { get; set; }
-        public DateTime DueDate { get; set; }
-        public DateTime ResevedDate { get; set; }
+        public DateTime CheckoutDate
+        {
+            get; private set;
+        }
+        public DateTime DueDate { get; private set; }
+        public DateTime ResevedDate { get; private set; }
+
+        public void Update(IBook otherBook)
+        {
+            this.Title = otherBook.Title;
+            this.Author = otherBook.Author;
+            this.Genre = otherBook.Genre;
+            this.Publisher = otherBook.Publisher;
+            this.ResevedDate = otherBook.ResevedDate;
+            this.CheckoutDate = otherBook.CheckoutDate;
+            this.DueDate = otherBook.DueDate;
+            this.Year = otherBook.Year;
+            this.Rack = otherBook.Rack;
+            this.Status = otherBook.Status;
+            this.ISBN = otherBook.ISBN;
+
+        }
+
+        public void Update(BookStatus status, DateTime checkoutDate, DateTime dueDate)
+        {
+            this.Status = status;
+            this.CheckoutDate = checkoutDate;
+            this.DueDate = dueDate;
+        }
     }
 }

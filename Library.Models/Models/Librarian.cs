@@ -20,5 +20,7 @@ namespace Library.Models.Models
                 "Search",
                 "Log Out"
             };
+
+        public void UpdateBook(IBook book) => throw new System.NotImplementedException();
     }
 }

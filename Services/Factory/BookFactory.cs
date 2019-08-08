@@ -1,7 +1,7 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Models;
 
-namespace Library.Core.Factory
+namespace Library.Services.Factory
 {
     public class BookFactory : IBookFactory
     {

@@ -2,6 +2,7 @@
 using Library.Core.Factory;
 using Library.Models.Contracts;
 using Library.Services.Contracts;
+using Library.Services.Factory;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,15 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IAccountManager _account;
         private readonly IBookFactory _factory;
+        private readonly IBookManager _bookManager;
 
-        public EditBookCommand(IDatabaseService database, IConsoleRenderer renderer, IAccountManager account, IBookFactory factory)
+        public EditBookCommand(IDatabaseService database, IConsoleRenderer renderer, IAccountManager account, IBookFactory factory, IBookManager bookManager)
         {
             _service = database;
             _renderer = renderer;
             _account = account;
             _factory = factory;
+            _bookManager = bookManager;
         }
 
         public string Execute()
@@ -33,12 +36,12 @@ namespace Library.Core.Commands
             // Show all the books so user can select
             _service.ListAllBooks();
 
-            var input = int.Parse(_renderer.InputParameters("ID"));
-            if (input > books.Count || input < 1)
+            var bookId = int.Parse(_renderer.InputParameters("ID"));
+            if (bookId > books.Count || bookId < 1)
                 throw new ArgumentException("Enter proper ID");
 
-            var bookToEdit = books.Find(b => b.ID == input);
-
+            var bookToEdit = books.Find(b => b.ID == bookId);
+            
             // TODO: ask how to optimize all that shit
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
@@ -58,10 +61,13 @@ namespace Library.Core.Commands
 
             var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
 
-            var bookToRemove = books.Find(b => b.ID == input);
+            _bookManager.UpdateBook(bookId, authorName, title, isbn, category, publisher, year, rack);
+
+            var bookToRemove = books.Find(b => b.ID == bookId);
             _service.RemoveBook(bookToRemove);        
 
             var bookToCreate = _factory.CreateBook(bookToRemove.ID, authorName, title, isbn, category, publisher, year, rack);
+
             _service.AddBook(bookToCreate);
 
             return $"Successfully edited a book {bookToCreate.Title} - {bookToCreate.Author}";

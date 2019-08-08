@@ -15,6 +15,7 @@ namespace Library.Core.Commands
         private readonly IAccountManager _account;
         private readonly IDatabaseService _service;
         private readonly IConsoleRenderer _renderer;
+
         public ViewAccountsCommand(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
         {
             _account = account;

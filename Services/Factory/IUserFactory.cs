@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Core.Factory
+namespace Library.Services.Factory
 {
     public interface IUserFactory
     {

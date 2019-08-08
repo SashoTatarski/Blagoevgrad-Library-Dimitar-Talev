@@ -1,4 +1,5 @@
 ﻿using Library.Models.Enums;
+using System;
 
 namespace Library.Models.Contracts
 {
@@ -12,9 +13,11 @@ namespace Library.Models.Contracts
         string Publisher { get; }
         int Year { get; }
         int Rack { get; }
-        BookStatus Status { get; set; }
-        System.DateTime CheckoutDate { get; set; }
-        System.DateTime DueDate { get; set; }
-        System.DateTime ResevedDate { get; set; }
+        BookStatus Status { get; }
+        DateTime CheckoutDate { get; }
+        DateTime DueDate { get; }
+        DateTime ResevedDate { get; }
+        void Update(IBook otherBook);
+        void Update(BookStatus checkedout, DateTime today, DateTime dateTime);
     }
 }

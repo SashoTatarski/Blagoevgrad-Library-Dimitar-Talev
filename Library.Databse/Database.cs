@@ -31,12 +31,7 @@ namespace Library.Database
 
         public void WriteBooks(IEnumerable<IBook> books)
         {
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            };
+            var serializer = this.CreateSerializer();
             using (var sw = new StreamWriter(_catalogFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
@@ -61,12 +56,7 @@ namespace Library.Database
 
         public void WriteUsers(IEnumerable<IUser> users)
         {
-            var serializer = new JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            };
+            var serializer = this.CreateSerializer();
             using (var sw = new StreamWriter(_usersFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
@@ -74,6 +64,16 @@ namespace Library.Database
                     serializer.Serialize(writer, users);
                 }
             }
+        }
+
+        private  JsonSerializer CreateSerializer()
+        {
+            return new JsonSerializer
+            {
+                Formatting = Formatting.Indented,
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
+            };
         }
 
         public List<Librarian> ReadLibrarians()

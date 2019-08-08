@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Factory
+﻿namespace Library.Services.Factory
 {
     public interface IMenuFactory
     {
