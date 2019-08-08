@@ -1,12 +1,8 @@
 ﻿using Library.Core.Contracts;
 using Library.Core.Factory;
-using Library.Database;
-using Library.Models.Enums;
 using Library.Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Core.Commands
 {
@@ -16,16 +12,16 @@ namespace Library.Core.Commands
         private readonly IBookFactory _factory;
         private readonly IConsoleRenderer _renderer;
 
-        public AddBookCommand(IDatabaseService database, IBookFactory factory, IConsoleRenderer renderer)
+        public AddBookCommand(IDatabaseService service, IBookFactory factory, IConsoleRenderer renderer)
         {
-            _service = database;
+            _service = service;
             _factory = factory;
             _renderer = renderer;
         }
 
         public string Execute()
         {
-            var authorName = _renderer.InputParameters("author name", 
+            var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
 
             var title = _renderer.InputParameters("title",
@@ -39,17 +35,20 @@ namespace Library.Core.Commands
             var publisher = _renderer.InputParameters("publisher",
                 g => g.Length < 1 || g.Length > 40);
 
-            var year = int.Parse(_renderer.InputParameters("year", y => int.Parse(y) < 1 || int.Parse(y) > DateTime.Now.Year));
+            var year = int.Parse(_renderer.InputParameters("year",
+                y => int.Parse(y) < 1 || int.Parse(y) > DateTime.Now.Year));
 
-            var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
+            var rack = int.Parse(_renderer.InputParameters("rack",
+                r => int.Parse(r) < 1));
 
-            // Read books ids
-            var currentId = _service.ReadBooks().Max(x => x.ID);
-            var bookToCreate = _factory.CreateBook(++currentId, authorName, title, isbn, category, publisher, year, rack);
+            // Get the ID of the new book
+            var bookID = _service.ReadBooks().Max(x => x.ID) + 1;
 
-            _service.AddBook(bookToCreate);      
+            var bookToCreate = _factory.CreateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
 
-            return $"Successfully added a book {bookToCreate.Title} - {bookToCreate.Author}";
-        }        
+            _service.AddBook(bookToCreate);
+
+            return $"Successfully added the book {bookToCreate.Title} - {bookToCreate.Author}";
+        }
     }
 }

@@ -28,13 +28,10 @@ namespace Library.Core
 
                 var input = _renderer.Input().ToLower();
 
-                if (input.Length == 0)
-                    break;
-
                 try
                 {
-                    _menuFactory.CheckAuthenticationForCommand(input);
-                    _renderer.Output(_commandParser.ParseCommand(input).Execute());
+                   // _menuFactory.CheckAuthenticationForCommand(input);
+                    _renderer.Output(_commandParser.GetTheCommandByNumber(int.Parse(input)).Execute());
                 }
                 catch (Exception ex)
                 {

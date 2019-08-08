@@ -1,8 +1,5 @@
 ﻿using Library.Models.Contracts;
 using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Services
 {
@@ -12,12 +9,12 @@ namespace Services
 
         public void LogIn(IAccount account)
         {
-            CurrentAccount = account;
+            this.CurrentAccount = account;
         }
 
         public void LogOut()
         {
-            CurrentAccount = null;
+            this.CurrentAccount = null;
         }
     }
 }
