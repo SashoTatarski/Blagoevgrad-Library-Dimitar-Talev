@@ -15,7 +15,8 @@ namespace Library.Models.Contracts
         List<string> OverdueMessages { get; }
         void AddBookToCheckoutBooks(IBook book);
         void RemoveFromReservedBooks(IBook book);
-        void RemovedFromCheckedoutBooks(IBook book);
+        void RemoveFromCheckedoutBooks(IBook book);
         void Update(IUser otherUser);
+        string DisplayCheckedoutBooks();
     }
 }

@@ -31,12 +31,16 @@ namespace Library.Services
             }
         }
 
+        // 1. Take the user from the DB -> .Get
+        // 2. Update user in the User class
+        // 3. Save modified user in the DB
         public void UpdateUser(IUser user)
         {
             var userToUpdate = _userDB.Get(user.Username);
             Guard.Argument(userToUpdate, nameof(userToUpdate)).NotNull(message: "User to update is null");
 
-            _userDB.Update(user);
+            userToUpdate.Update(user);
+            _userDB.Update(userToUpdate);
         }
 
         public void RemoveUser(IUser user)

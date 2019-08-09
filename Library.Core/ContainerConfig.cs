@@ -24,7 +24,7 @@ namespace Library.Core
             containerBuilder.RegisterType<LibrarianDataBase>().As<ILibrarianDataBase>().SingleInstance();
             containerBuilder.RegisterType<BookDatabase>().As<IBookDatabase>().SingleInstance();
 
-            // to remove
+            // !!!to remove!!!
             containerBuilder.RegisterType<DatabaseService>().As<IDatabaseService>().SingleInstance();
             containerBuilder.RegisterType<Database.Database>().As<IDatabase>().SingleInstance();
             containerBuilder.RegisterType<Search>().As<ISearch>();
