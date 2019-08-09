@@ -2,15 +2,15 @@
   {
     "$type": "Library.Models.Models.Librarian, Library.Models",
     "AllowedCommands": [
-      "addbook",
-      "editbook",
-      "removebook",
-      "registeruser",
-      "registerlibrarian",
-      "cancelaccount",
-      "viewaccounts",
-      "search",
-      "logOut"
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
     ],
     "Username": "Librarian",
     "Password": "123"
@@ -18,15 +18,15 @@
   {
     "$type": "Library.Models.Models.Librarian, Library.Models",
     "AllowedCommands": [
-      "addbook",
-      "editbook",
-      "removebook",
-      "registeruser",
-      "registerlibrarian",
-      "cancelaccount",
-      "viewaccounts",
-      "search",
-      "logOut"
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
     ],
     "Username": "osama",
     "Password": "osama"
@@ -34,17 +34,65 @@
   {
     "$type": "Library.Models.Models.Librarian, Library.Models",
     "AllowedCommands": [
-      "addbook",
-      "editbook",
-      "removebook",
-      "registeruser",
-      "registerlibrarian",
-      "cancelaccount",
-      "viewaccounts",
-      "search",
-      "logOut"
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
     ],
     "Username": "Mohammad",
     "Password": "Mohammad"
+  },
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
+    ],
+    "Username": "NewLib",
+    "Password": "123"
+  },
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
+    ],
+    "Username": "Librarian",
+    "Password": "12345"
+  },
+  {
+    "$type": "Library.Models.Models.Librarian, Library.Models",
+    "AllowedCommands": [
+      "Add Book",
+      "Edit Book",
+      "Remove Book",
+      "Register User",
+      "Register Librarian",
+      "Remove User",
+      "View Accounts",
+      "Search",
+      "Log Out"
+    ],
+    "Username": "lib",
+    "Password": "lib"
   }
 ]

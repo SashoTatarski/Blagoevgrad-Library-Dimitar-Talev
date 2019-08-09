@@ -1,39 +1,38 @@
 ﻿using Library.Core.Contracts;
-using Library.Core.Factory;
 using Library.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Library.Services.Factory;
+using Services.Contracts;
 
 namespace Library.Core.Commands
 {
     public class RegisterLibrarianCommand : ICommand
     {
-        private readonly IDatabaseService _service;
         private readonly ILibrarianFactory _librarianfactory;
+        private readonly IConsoleRenderer _renderer;
+        private readonly IAccountManager _accountManager;
+        private readonly IAuthenticationManager _authentication;
 
-        public RegisterLibrarianCommand(ILibrarianFactory librarianfactory, IDatabaseService service)
+        public RegisterLibrarianCommand(ILibrarianFactory librarianfactory, IConsoleRenderer renderer, IAccountManager accountManager, IAuthenticationManager authentication)
         {
             _librarianfactory = librarianfactory;
-            _service = service;
+            _renderer = renderer;
+            _accountManager = accountManager;
+            _authentication = authentication;
         }
 
         public string Execute()
         {
-            // Both of these should be useless
-            // var currentAccount = (ILibrarian)_account.CurrentAccount;
-            // var users = _service.ReadUsers();
+            var username = _renderer.InputParameters("username",
+                s => s.Length < 1 || s.Length > 30);
+            var password = _renderer.InputParameters("password",
+                s => s.Length < 3 || s.Length > 20);
 
-            Console.WriteLine("Enter new Librarian username: ");
-            var username = Console.ReadLine();
-            Console.WriteLine("Enter new Librarian password: ");
-            var password = Console.ReadLine();
-
+            _authentication.CheckForExistingUsername(username);
             var newLibrarian = _librarianfactory.CreateLibrarian(username, password);
 
-            _service.AddLibrarian(newLibrarian);
+            _accountManager.AddLibrarian(newLibrarian);
 
-            return $"Successfully created {newLibrarian.Username}";
+            return $"Successfully created new librarian account: {newLibrarian.Username}";
         }
     }
 }

@@ -12,10 +12,26 @@
       "Log Out"
     ],
     "Status": 0,
-    "CheckedOutBooks": [],
+    "CheckedOutBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 15,
+        "Author": "J.K.Rowling",
+        "Title": "Harry Potter",
+        "ISBN": "0987",
+        "Genre": "Fun",
+        "Publisher": "Fut",
+        "Year": 2001,
+        "Rack": 189,
+        "Status": 1,
+        "CheckoutDate": "2019-08-08T00:00:00+03:00",
+        "DueDate": "2019-08-18T00:00:00+03:00",
+        "ResevedDate": "0001-01-01T00:00:00"
+      }
+    ],
     "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "OverdueMessage": null,
+    "ReservedBookMessages": [],
+    "OverdueMessages": [],
     "LateFees": 0.0,
     "Username": "hrisi",
     "Password": "hrisi"
@@ -35,8 +51,8 @@
     "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "OverdueMessage": null,
+    "ReservedBookMessages": [],
+    "OverdueMessages": [],
     "LateFees": 0.0,
     "Username": "ivan",
     "Password": "ivan"
@@ -53,13 +69,34 @@
       "View Account",
       "Log Out"
     ],
-    "Status": 0,
+    "Status": 1,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
-    "ReservedBookMessage": [],
-    "OverdueMessage": null,
+    "ReservedBookMessages": [],
+    "OverdueMessages": [],
     "LateFees": 0.0,
     "Username": "sasho",
     "Password": "sasho"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Remove Reservation",
+      "Search",
+      "View Account",
+      "Log Out"
+    ],
+    "Status": 1,
+    "CheckedOutBooks": [],
+    "ReservedBooks": [],
+    "ReservedBookMessages": [],
+    "OverdueMessages": [],
+    "LateFees": 0.0,
+    "Username": "kiro",
+    "Password": "kiro"
   }
 ]

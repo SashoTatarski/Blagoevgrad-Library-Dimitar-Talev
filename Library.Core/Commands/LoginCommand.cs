@@ -7,24 +7,23 @@ namespace Library.Core.Commands
 {
     public class LoginCommand : ICommand
     {
-        private readonly IDatabaseService _service;
-        private readonly IAccountManager _account;
+        private readonly IAuthenticationManager _authentication;
         private readonly IConsoleRenderer _renderer;
+        private readonly IAccountManager _accountManager;
 
-        public LoginCommand(IDatabaseService service, IAccountManager account, IConsoleRenderer renderer)
+        public LoginCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IAccountManager accountManager)
         {
-            _service = service;
-            _account = account;
+            _authentication = authentication;
             _renderer = renderer;
+            _accountManager = accountManager;
         }
 
         public string Execute()
         {
-
             var userName = _renderer.InputParameters("username");
             var password = _renderer.InputParameters("password");
 
-            var loggedUser = _service.FindAccount(userName);
+            var loggedUser = _accountManager.FindAccount(userName);
 
             if (loggedUser == null)
                 throw new ArgumentException("No such username!");
@@ -32,7 +31,7 @@ namespace Library.Core.Commands
             if (loggedUser.Password != password)
                 throw new ArgumentException("Wrong password!");
 
-            _account.LogIn(loggedUser);
+            _authentication.LogIn(loggedUser);
 
             return $"{loggedUser.Username} succefully logged!";
         }

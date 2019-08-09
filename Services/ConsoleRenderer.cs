@@ -1,7 +1,7 @@
-﻿using Library.Core.Contracts;
+﻿using Library.Services.Contracts;
 using System;
 
-namespace Library.Core
+namespace Library.Services
 {
     public class ConsoleRenderer : IConsoleRenderer
     {

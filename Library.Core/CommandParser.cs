@@ -9,9 +9,9 @@ namespace Library.Core
     public class CommandParser : ICommandParser
     {
         private readonly IComponentContext _componentContext;
-        private readonly IAccountManager _accountManager;
+        private readonly IAuthenticationManager _accountManager;
 
-        public CommandParser(IComponentContext componentContext, IAccountManager accountManager)
+        public CommandParser(IComponentContext componentContext, IAuthenticationManager accountManager)
         {
             this._componentContext = componentContext;
             this._accountManager = accountManager;

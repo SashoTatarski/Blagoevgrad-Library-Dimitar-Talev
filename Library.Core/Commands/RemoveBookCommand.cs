@@ -1,45 +1,44 @@
 ﻿using Library.Core.Contracts;
-using Library.Core.Factory;
-using Library.Models.Contracts;
+using Library.Models.Enums;
 using Library.Services.Contracts;
-using Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class RemoveBookCommand : ICommand
     {
-        private readonly IDatabaseService _service;        
         private readonly IConsoleRenderer _renderer;
-        private readonly IAccountManager _account;
+        private readonly IBookManager _bookManager;
 
-        public RemoveBookCommand(IDatabaseService database, IConsoleRenderer renderer, IAccountManager account)
+        public RemoveBookCommand(IConsoleRenderer renderer, IBookManager bookManager)
         {
-            _service = database;         
             _renderer = renderer;
-            _account = account;
+            _bookManager = bookManager;
         }
 
         public string Execute()
         {
-            var currentAccount = (ILibrarian)_account.CurrentAccount;
-            
-            var books = _service.ReadBooks();
+            // Show all the books user can select from
+            _bookManager.ListAllBooks();
 
-            // Show all the books so user can select
-            _service.ListAllBooks();
+            // BookID Input
+            var bookID = int.Parse(_renderer.InputParameters("ID"));
+            // BookID validation
+            if (bookID < 1 || bookID > _bookManager.GetLastBookID())
+            {
+                throw new ArgumentException("Invalid ID");
+            }
 
-            var input = int.Parse(_renderer.InputParameters("ID"));
-            if (input > books.Count || input < 1)
-                throw new ArgumentException("Enter proper ID");
-            
-            var bookToRemove = books.Find(b => b.ID == input);
-            _service.RemoveBook(bookToRemove);
+            var bookToRemove = _bookManager.FindBook(bookID);
 
-            return $"You have successfully removed {bookToRemove.Title} - {bookToRemove.Author}";
+            if (bookToRemove.Status== BookStatus.CheckedOut || bookToRemove.Status == BookStatus.Reserved)
+            {
+                throw new ArgumentException("Cannot remove chechedout/reserved book!");
+            }
+
+            _bookManager.RemoveBook(bookToRemove);
+
+            return $"You have successfully removed the book: {bookToRemove.Title} - {bookToRemove.Author}";
         }
     }
 }

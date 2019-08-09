@@ -1,72 +1,71 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Contracts;
 using Library.Models.Enums;
-using Library.Models.Models;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class CheckOutBookCommand : ICommand
     {
-        private readonly IAccountManager _account;
-        private readonly IDatabaseService _service;
+        private readonly IAuthenticationManager _authentication;
         private readonly IConsoleRenderer _renderer;
-        public CheckOutBookCommand(IAccountManager account, IDatabaseService service, IConsoleRenderer renderer)
+        private readonly IBookManager _bookManager;
+        private readonly IAccountManager _accountManager;
+
+        public CheckOutBookCommand(IAuthenticationManager authentication,IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager)
         {
-            _account = account;
-            _service = service;
+            _authentication = authentication;
             _renderer = renderer;
+            _bookManager = bookManager;
+            _accountManager = accountManager;
         }
 
         public string Execute()
         {
-            var currentAccount = (IUser)_account.CurrentAccount;
+            var user = (IUser)_authentication.CurrentAccount;
 
-            var allUsers = _service.ReadUsers();
-            var books = _service.ReadBooks();
+            // Show all the books user can select from
+            _bookManager.ListAllBooks();
 
-            // Show all the books so user can select
-            _service.ListAllBooks();
+            // BookID Input
+            var bookID = int.Parse(_renderer.InputParameters("ID"));
+            // BookID validation
+            if (bookID < 1 || bookID > _bookManager.GetLastBookID())
+            {
+                throw new ArgumentException("Invalid ID");
+            }
 
-            //TODO validation ask instructor
-            var input = int.Parse(_renderer.InputParameters("ID"));
-            if (input > books.Count || input < 1)
-                throw new ArgumentException("Enter proper ID");
-
-            var user = allUsers.FirstOrDefault(u => u.Username == currentAccount.Username);
-            var bookToCheckOut = books.FirstOrDefault(b => b.ID == input);
+            var bookToCheckOut = _bookManager.FindBook(bookID);
 
             // Check Book Status 
-            // TODO ask trainer how to impore
             if (bookToCheckOut.Status == BookStatus.Available)
             {
-                user.AddToCheckoutBooks(bookToCheckOut);
+                user.AddBookToCheckoutBooks(bookToCheckOut);
+                _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(10));
+                _accountManager.UpdateUser(user);
             }
             else if (bookToCheckOut.Status == BookStatus.Reserved)
             {
-                if (currentAccount.ReservedBooks.Contains(bookToCheckOut))
+                var suchBookInReservedBooks = user.ReservedBooks.FirstOrDefault(b => b.ID == bookToCheckOut.ID);
+
+                if (suchBookInReservedBooks != null)
                 {
-                    user.AddToCheckoutBooks(bookToCheckOut);
-                    user.RemoveFromReservedBooks(bookToCheckOut);
+                    user.AddBookToCheckoutBooks(bookToCheckOut);
+                    user.RemoveFromReservedBooks(suchBookInReservedBooks);
+                    _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(10));
+                    _accountManager.UpdateUser(user);
                 }
                 else
-                    throw new ArgumentException("Book is already reserved");
+                    throw new ArgumentException("Book is already reserved!");
             }
             else
             {
-                throw new ArgumentException("Book is already checked out");
+                throw new ArgumentException("Book is already checked out!");
             }
-
-            // Update books database         
-            _service.WriteBooks(books);
-
-            // Update user database
-            _service.WriteUsers(allUsers);
 
             return $"You have successfully checked out {bookToCheckOut.Title} - {bookToCheckOut.Author}";
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Library.Models
+﻿namespace Library.Models.Utils
 {
     public static class GlobalConstants
     {
@@ -11,5 +7,11 @@ namespace Library.Models
         public const string NullCollectionOfParameters = "Collection of parameteres cannot be null";
         public const string InvalidCommandErrorMessage = "Invalid command name: {0}";
         public const string CompanyExistsErrorMessage = "Company {0} already exists";
+
+        //Json Paths
+        public const string catalogFilepath = @"..\..\..\..\catalog.json";
+        public const string usersFilepath = @"..\..\..\..\users.json";
+        public const string librariansFilepath = @"..\..\..\..\librarians.json";
+
     }
 }

@@ -3,7 +3,7 @@
     public enum BookStatus
     {
         Available,
-        Checkedout,
+        CheckedOut,
         Reserved
     }
 }

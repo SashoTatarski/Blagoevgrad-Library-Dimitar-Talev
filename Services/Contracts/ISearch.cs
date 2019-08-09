@@ -7,11 +7,11 @@ namespace Services.Contracts
 {
     public interface ISearch
     {
-        void DisplaySearchResults(IEnumerable<Book> searchResults);
-        void ListAllBooks();
-        void SearchByAuthor();
-        void SearchBySubject();
-        void SearchByTitle();
-        void SearchByYear();
+        //void DisplaySearchResults(IEnumerable<Book> searchResults);
+        //void ListAllBooks();
+        //void SearchByAuthor();
+        //void SearchBySubject();
+        //void SearchByTitle();
+        //void SearchByYear();
     }
 }

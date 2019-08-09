@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library.Core.Contracts
+namespace Library.Services.Contracts
 {
     public interface IConsoleRenderer
     {
