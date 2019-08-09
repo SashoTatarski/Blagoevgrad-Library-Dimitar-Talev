@@ -1,4 +1,4 @@
-# Regional Library in Blagoevgrad, Bulgaria
+﻿# Regional Library in Blagoevgrad, Bulgaria
 
 ## Team project of **TEAM 1**
 ### Hristina Stanoeva and Aleksandar Tatarski
@@ -12,7 +12,8 @@
          - Interlibrary loan;
          - Supporting and coordinating the activities of libraries in the region.
 
-        Regional Library - Blagoevgrad is the largest non-metropolitan library in Western Bulgaria by quantity and quality of library stock, by structure, by activity and by the level of automation achieved.
+        Regional Library - Blagoevgrad is the largest non-metropolitan library in Western Bulgaria by quantity and quality
+of library stock, by structure, by activity and by the level of automation achieved.
 
 ### **The following project is one step further in developing the great automation system of the library.**
 
