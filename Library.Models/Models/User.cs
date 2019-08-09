@@ -73,7 +73,7 @@ namespace Library.Models.Models
 
             if (this.CheckedOutBooks.Count == 0)
             {
-                strBuilder.AppendLine("There are no checked out books!");
+                throw new ArgumentException("There are no checked out books!");
             }
 
             else
@@ -86,7 +86,7 @@ namespace Library.Models.Models
                     if (book.DueDate < VirtualDate.VirtualToday)
                         Console.ForegroundColor = ConsoleColor.Red;
 
-                    strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+                    strBuilder.AppendLine($"ID: {book.ID} || Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
 
                     Console.ResetColor();
                 }
