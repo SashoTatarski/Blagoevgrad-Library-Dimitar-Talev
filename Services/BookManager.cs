@@ -20,6 +20,7 @@ namespace Library.Services
             _factory = bookfactory;
         }
 
+        // Edit Book
         public void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack)
         {
             var bookToUpdate = _database.Get(bookId);
@@ -30,6 +31,7 @@ namespace Library.Services
             _database.Update(updated);
         }
 
+        // CheckOut Book, Reserve Book, Return Book....
         public void UpdateBook(int bookId, BookStatus status, DateTime today, DateTime dueDate)
         {
             var bookToUpdate = _database.Get(bookId);

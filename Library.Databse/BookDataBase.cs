@@ -11,7 +11,7 @@ namespace Library.Database
 {
     public class BookDatabase : IBookDatabase
     {
-        private IList<IBook> _internal;
+        private readonly IList<IBook> _internal;
 
         public BookDatabase()
         {

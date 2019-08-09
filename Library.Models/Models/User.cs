@@ -52,12 +52,9 @@ namespace Library.Models.Models
             this.ReservedBooks.Remove(book);
         }
 
-        public void RemovedFromCheckedoutBooks(IBook book)
+        public void RemoveFromCheckedoutBooks(IBook book)
         {
-            //FIX
-            //this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
-            //book.Status = BookStatus.Available;
-            //book.CheckoutDate = DateTime.MinValue;
+            this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
         }
 
         public void Update(IUser otherUser)
@@ -68,6 +65,33 @@ namespace Library.Models.Models
             this.ReservedBookMessages = otherUser.ReservedBookMessages;
             this.OverdueMessages = otherUser.OverdueMessages;
             this.LateFees = otherUser.LateFees;
+        }
+
+        public string DisplayCheckedoutBooks()
+        {
+            var strBuilder = new StringBuilder();
+
+            if (this.CheckedOutBooks.Count == 0)
+            {
+                strBuilder.AppendLine("There are no checked out books!");
+            }
+
+            else
+            {
+                strBuilder.AppendLine("Books you have checked out:");
+
+                foreach (var book in this.CheckedOutBooks)
+                {
+                    // If a book is overdue it's printed in red
+                    if (book.DueDate < VirtualDate.VirtualToday)
+                        Console.ForegroundColor = ConsoleColor.Red;
+
+                    strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+
+                    Console.ResetColor();
+                }
+            }
+            return strBuilder.ToString();
         }
     }
 }
