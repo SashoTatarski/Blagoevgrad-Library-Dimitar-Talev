@@ -15,5 +15,6 @@ namespace Library.Services.Contracts
         IBook FindBook(int id);
         void RemoveBook(IBook book);
         List<IBook> GetSearchResult(string searchByParameter, string searchByText);
+        void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation);
     }
 }

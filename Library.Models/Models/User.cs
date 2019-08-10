@@ -47,6 +47,11 @@ namespace Library.Models.Models
             this.CheckedOutBooks.Add(book);
         }
 
+        public void AddBookToReservedBooks(IBook book)
+        {
+            this.ReservedBooks.Add(book);
+        }
+
         public void RemoveFromReservedBooks(IBook book)
         {
             this.ReservedBooks.Remove(book);

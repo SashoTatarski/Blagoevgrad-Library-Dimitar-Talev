@@ -4,6 +4,7 @@
     {
         Available,
         CheckedOut,
-        Reserved
+        Reserved,
+        CheckedOut_and_Reserved
     }
 }

@@ -33,13 +33,23 @@ namespace Library.Services
             _database.Update(updated);
         }
 
-        // CheckOut Book, Reserve Book, Return Book....
-        public void UpdateBook(int bookId, BookStatus status, DateTime today, DateTime dueDate)
+        // CheckOut Book
+        public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
             var bookToUpdate = _database.Get(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
 
-            bookToUpdate.Update(status, today, dueDate);
+            bookToUpdate.Update(status, checkoutDate, dueDate);
+            _database.Update(bookToUpdate);
+        }
+
+        // Reserve Book
+        public void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation)
+        {
+            var bookToUpdate = _database.Get(bookId);
+            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
+
+            bookToUpdate.Update(status, reservationDate, reservationDueDate, true);
             _database.Update(bookToUpdate);
         }
 

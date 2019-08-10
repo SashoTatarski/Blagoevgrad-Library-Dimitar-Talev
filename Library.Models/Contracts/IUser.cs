@@ -18,5 +18,6 @@ namespace Library.Models.Contracts
         void RemoveFromCheckedoutBooks(IBook book);
         void Update(IUser otherUser);
         string DisplayCheckedoutBooks();
+        void AddBookToReservedBooks(IBook book);
     }
 }

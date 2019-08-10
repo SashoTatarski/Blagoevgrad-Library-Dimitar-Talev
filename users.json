@@ -12,8 +12,58 @@
       "Log Out"
     ],
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
+    "CheckedOutBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 3,
+        "Author": "Jordan Peterson",
+        "Title": "Maps of Meaning: The Architecture of Belief",
+        "ISBN": "B00BW54XVO",
+        "Genre": "Behavioural Psychology",
+        "Publisher": "Routledge",
+        "Year": 2019,
+        "Rack": 33,
+        "Status": 3,
+        "CheckoutDate": "2019-08-10T00:00:00+03:00",
+        "DueDate": "2019-08-20T00:00:00+03:00",
+        "ResevedDate": "2019-08-10T00:00:00+03:00",
+        "ResevationDueDate": "9999-12-31T23:59:59.9999999"
+      }
+    ],
+    "ReservedBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 1,
+        "Author": "Jordan Peterson",
+        "Title": "12 Rules For Life",
+        "ISBN": "345816021",
+        "Genre": "Philosophy / SelfHelp",
+        "Publisher": "Random House of Canada",
+        "Year": 2018,
+        "Rack": 11,
+        "Status": 2,
+        "CheckoutDate": "2019-08-10T00:00:00+03:00",
+        "DueDate": "2019-08-15T00:00:00+03:00",
+        "ResevedDate": "0001-01-01T00:00:00",
+        "ResevationDueDate": "0001-01-01T00:00:00"
+      },
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 2,
+        "Author": "Milo Yiannaopoulos",
+        "Title": "Dangerous",
+        "ISBN": "069289344X",
+        "Genre": "Political Humor",
+        "Publisher": "Instagram",
+        "Year": 2007,
+        "Rack": 22,
+        "Status": 2,
+        "CheckoutDate": "2019-08-10T00:00:00+03:00",
+        "DueDate": "2019-08-15T00:00:00+03:00",
+        "ResevedDate": "0001-01-01T00:00:00",
+        "ResevationDueDate": "0001-01-01T00:00:00"
+      }
+    ],
     "ReservedBookMessages": [],
     "OverdueMessages": [],
     "LateFees": 0.0,
@@ -34,7 +84,24 @@
     ],
     "Status": 0,
     "CheckedOutBooks": [],
-    "ReservedBooks": [],
+    "ReservedBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 3,
+        "Author": "Jordan Peterson",
+        "Title": "Maps of Meaning: The Architecture of Belief",
+        "ISBN": "B00BW54XVO",
+        "Genre": "Behavioural Psychology",
+        "Publisher": "Routledge",
+        "Year": 2019,
+        "Rack": 33,
+        "Status": 3,
+        "CheckoutDate": "2019-08-10T00:00:00+03:00",
+        "DueDate": "2019-08-20T00:00:00+03:00",
+        "ResevedDate": "2019-08-10T00:00:00+03:00",
+        "ResevationDueDate": "9999-12-31T23:59:59.9999999"
+      }
+    ],
     "ReservedBookMessages": [],
     "OverdueMessages": [],
     "LateFees": 0.0,

@@ -130,6 +130,7 @@ namespace Library.Models.Models
         public DateTime CheckoutDate { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime ResevedDate { get; set; }
+        public DateTime ResevationDueDate { get; set; }
 
         public void Update(IBook otherBook)
         {
@@ -146,11 +147,18 @@ namespace Library.Models.Models
             this.DueDate = otherBook.DueDate;
         }
 
-        public void Update(BookStatus status, DateTime today, DateTime dueDate)
+        public void Update(BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
             this.Status = status;
-            this.CheckoutDate = today;
+            this.CheckoutDate = checkoutDate;
             this.DueDate = dueDate;
+        }
+
+        public void Update(BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool ifReservation)
+        {
+            this.Status = status;
+            this.ResevedDate = reservationDate;
+            this.ResevationDueDate = reservationDueDate;
         }
     }
 }
