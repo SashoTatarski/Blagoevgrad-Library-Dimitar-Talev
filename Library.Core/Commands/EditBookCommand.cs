@@ -28,13 +28,12 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
+
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
             {
                 throw new ArgumentException("Invalid ID");
-            }
-
-            var bookToEdit = _bookManager.FindBook(bookID);
+            }           
 
             // TODO
             var authorName = _renderer.InputParameters("author name",
@@ -56,6 +55,8 @@ namespace Library.Core.Commands
             var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
 
             _bookManager.UpdateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
+
+            var bookToEdit = _bookManager.FindBook(bookID);
 
             return $"Successfully edited the book {bookToEdit.Title} - {bookToEdit.Author}";
         }
