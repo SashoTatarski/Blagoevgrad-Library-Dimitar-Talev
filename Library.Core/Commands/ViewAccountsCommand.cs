@@ -3,23 +3,19 @@ using Library.Models.Contracts;
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class ViewAccountsCommand : ICommand
     {
         private readonly IAuthenticationManager _account;
-        private readonly IDatabaseService _service;
         private readonly IConsoleRenderer _renderer;
 
-        public ViewAccountsCommand(IAuthenticationManager account, IDatabaseService service, IConsoleRenderer renderer)
+        public ViewAccountsCommand(IAuthenticationManager account,IConsoleRenderer renderer)
         {
             _account = account;
-            _service = service;
             _renderer = renderer;
         }
 

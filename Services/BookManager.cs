@@ -5,7 +5,9 @@ using Library.Models.Enums;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Library.Services
 {
@@ -81,6 +83,37 @@ namespace Library.Services
 
                 Console.ResetColor();
             }
+        }
+
+        public List<IBook> GetSearchResult(string searchByParameter, string searchByText)
+        {
+            var strBuilder = new StringBuilder();
+            var books = _database.Load();
+            var sortedBooks = new List<IBook>();
+
+            switch (searchByParameter.ToLower())
+            {
+                case "author":
+                    sortedBooks = books.Where(b => b.Author.Contains(searchByText)).ToList();
+                    break;
+                case "title":
+                    sortedBooks = books.Where(b => b.Title.Contains(searchByText)).ToList();
+                    break;
+                case "genre":
+                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+                    break;
+                case "year":
+                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+                    break;
+                case "publisher":
+                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+                    break;
+                case "show all":
+                    return books;
+                default:
+                    break;
+            }
+            return sortedBooks;
         }
     }
 }

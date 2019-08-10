@@ -6,6 +6,7 @@ namespace Services.Contracts
     {
         IAccount CurrentAccount { get; }
 
+        void CheckAuthenticationForCommand(string commandAsString);
         void CheckForExistingUsername(string username);
         void LogIn(IAccount account);
         void LogOut();

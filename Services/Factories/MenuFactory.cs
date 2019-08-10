@@ -40,33 +40,21 @@ namespace Library.Services.Factory
             }
         }
 
-        public void CheckAuthenticationForCommand(string commandAsString)
+        public string GenerateMenu(List<string> parameters)
         {
-            if (_account.CurrentAccount is null)
+            var strBuilder = new StringBuilder();
+            var counter = 1;
+
+            foreach (var param in parameters)
             {
-                if (commandAsString.ToLower() != "exit" && commandAsString.ToLower() != "login")
-                {
-                    throw new ArgumentException("Invalid Command");
-                }
+                strBuilder.AppendLine($"{counter}. {param}");
+                counter++;
             }
-            else
-            {
-                bool check = false;
-                foreach (var command in _account.CurrentAccount.AllowedCommands)
-                {
-                    if (command.Replace(" ", "").ToLower() == commandAsString)
-                    {
-                        check = true;
-                        break;
-                    }
-                }
-                if (!check)
-                {
-                    throw new ArgumentException("Invalid Command");
-                }
-            }
+            return strBuilder.ToString();
         }
 
+        
 
+        
     }
 }

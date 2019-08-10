@@ -34,7 +34,6 @@ namespace Library.Core
 
                 try
                 {
-                   // _menuFactory.CheckAuthenticationForCommand(input);
                     _renderer.Output(_commandParser.GetTheCommandByNumber(int.Parse(input)).Execute());
                 }
                 catch (Exception ex)

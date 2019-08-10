@@ -17,11 +17,6 @@ namespace Library.Core
             this._accountManager = accountManager;
         }
 
-        public ICommand ParseCommand(string input)
-        {
-            return _componentContext.ResolveNamed<ICommand>(input);
-        }
-
         public ICommand GetTheCommandByNumber(int number)
         {
             if (_accountManager.CurrentAccount is null)

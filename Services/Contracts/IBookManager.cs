@@ -1,6 +1,7 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace Library.Services.Contracts
 {
@@ -13,5 +14,6 @@ namespace Library.Services.Contracts
         void ListAllBooks();
         IBook FindBook(int id);
         void RemoveBook(IBook book);
+        List<IBook> GetSearchResult(string searchByParameter, string searchByText);
     }
 }

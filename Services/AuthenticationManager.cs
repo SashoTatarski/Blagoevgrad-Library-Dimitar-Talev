@@ -33,5 +33,34 @@ namespace Services
                 throw new ArgumentException("This username is already taken");
             }
         }
+
+        public void CheckAuthenticationForCommand(string commandAsString)
+        {
+            if (this.CurrentAccount is null)
+            {
+                if (commandAsString.ToLower() != "exit" && commandAsString.ToLower() != "login")
+                {
+                    throw new ArgumentException("Invalid Command");
+                }
+            }
+            else
+            {
+                bool check = false;
+                foreach (var command in this.CurrentAccount.AllowedCommands)
+                {
+                    if (command.Replace(" ", "").ToLower() == commandAsString)
+                    {
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check)
+                {
+                    throw new ArgumentException("Invalid Command");
+                }
+            }
+        }
+
+        
     }
 }

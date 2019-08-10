@@ -1,8 +1,11 @@
-﻿namespace Library.Services.Factory
+﻿using Library.Models.Contracts;
+using System.Collections.Generic;
+
+namespace Library.Services.Factory
 {
     public interface IMenuFactory
     {
-        void CheckAuthenticationForCommand(string commandAsString);
-        string GenerateMenu(Models.Contracts.IAccount account);
+        string GenerateMenu(IAccount account);
+        string GenerateMenu(List<string> parameters);
     }
 }

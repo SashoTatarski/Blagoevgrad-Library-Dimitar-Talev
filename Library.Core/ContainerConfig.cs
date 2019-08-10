@@ -18,34 +18,23 @@ namespace Library.Core
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();
-
             //DataBase
             containerBuilder.RegisterType<UserDataBase>().As<IUserDataBase>().SingleInstance();
             containerBuilder.RegisterType<LibrarianDataBase>().As<ILibrarianDataBase>().SingleInstance();
             containerBuilder.RegisterType<BookDatabase>().As<IBookDatabase>().SingleInstance();
-
-            // !!!to remove!!!
-            containerBuilder.RegisterType<DatabaseService>().As<IDatabaseService>().SingleInstance();
-            containerBuilder.RegisterType<Database.Database>().As<IDatabase>().SingleInstance();
-            containerBuilder.RegisterType<Search>().As<ISearch>();
-
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();
             containerBuilder.RegisterType<UserFactory>().As<IUserFactory>();
             containerBuilder.RegisterType<MenuFactory>().As<IMenuFactory>();
             containerBuilder.RegisterType<LibrarianFactory>().As<ILibrarianFactory>();
-
             // Providers
             containerBuilder.RegisterType<ConsoleRenderer>().As<IConsoleRenderer>();
             containerBuilder.RegisterType<CommandParser>().As<ICommandParser>();
-           
+            containerBuilder.RegisterType<Formatter>().As<IFormatter>();
             // Service Managers
             containerBuilder.RegisterType<AuthenticationManager>().As<IAuthenticationManager>().SingleInstance();
             containerBuilder.RegisterType<AccountManager>().As<IAccountManager>();
             containerBuilder.RegisterType<BookManager>().As<IBookManager>();
-
-            
-            
             // Commands
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");

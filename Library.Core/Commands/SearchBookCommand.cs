@@ -1,60 +1,53 @@
 ﻿using Library.Core.Contracts;
 using Library.Services.Contracts;
-using Services.Contracts;
+using Library.Services.Factory;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Core.Commands
 {
     public class SearchBookCommand : ICommand
     {
-        private readonly ISearch _search;
+        private readonly IMenuFactory _menuFactory;
+        private readonly IConsoleRenderer _renderer;
+        private readonly IBookManager _bookManager;
+        private readonly IFormatter _formatter;
 
-        public SearchBookCommand(ISearch search)
-        {            
-            _search = search;
+        public SearchBookCommand(IMenuFactory menuFactory, IConsoleRenderer renderer, IBookManager bookManager, IFormatter formatter)
+        {
+            _menuFactory = menuFactory;
+            _renderer = renderer;
+            _bookManager = bookManager;
+            _formatter = formatter;
         }
 
         public string Execute()
         {
-            //string input;
-            //do
-            //{
-            //    Console.WriteLine("\n\r=============================================================");
-            //    Console.WriteLine("1.Search by Author");
-            //    Console.WriteLine("2.Search by Title");
-            //    Console.WriteLine("3.Search by Year");
-            //    Console.WriteLine("4.Search by Subject");
-            //    Console.WriteLine("5.List all books in the library");
-            //    Console.WriteLine("6.Exit Search Engine");
-            //    Console.WriteLine("=============================================================");
-            //    input = Console.ReadLine();
+            var searchParameters = new List<string> { "Title", "Author", "Genre", "Publisher", "Year", "Show all", "Exit" };
+            _renderer.Output(_menuFactory.GenerateMenu(searchParameters));
 
-            //    switch (input)
-            //    {
-            //        case "1":
-            //            _search.SearchByAuthor();
-            //            break;
-            //        case "2":
-            //            _search.SearchByTitle();
-            //            break;
-            //        case "3":
-            //            _search.SearchByYear();
-            //            break;
-            //        case "4":
-            //            _search.SearchBySubject();
-            //            break;
-            //        case "5":
-            //            _search.ListAllBooks();
-            //            break;
-            //        default:
-            //            break;
-            //    }
+            var number = int.Parse(_renderer.Input());
+            var parameter = this.GetSearchParameterByNumber(number, searchParameters);
 
-            //} while (input != "6");          
+            string searchBy = String.Empty;
 
-            return "";
+            if (parameter!=searchParameters[5])
+            {
+                searchBy = _renderer.InputParameters("search pattern");
+            }
+
+            var searchResult = _bookManager.GetSearchResult(parameter, searchBy);
+
+            return _formatter.FormatListOfBooks(searchResult);
+        }
+
+        public string GetSearchParameterByNumber(int number, List<string> parameters)
+        {
+            if (number < 0 || number > parameters.Count - 1)
+            {
+                throw new ArgumentException("Invalid parameter!");
+            }
+            return parameters[number - 1];
         }
     }
 }
