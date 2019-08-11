@@ -36,7 +36,7 @@ namespace Library.Core
         {
             var strBuilder = new StringBuilder();
 
-            if (books.Count==0)
+            if (books.Count == 0)
             {
                 return "There are no books!";
             }

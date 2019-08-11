@@ -23,14 +23,12 @@ namespace Library.Core.Commands
             var username = _renderer.InputParameters("username");
 
             var userToRemove = (IUser)_accountManager.FindAccount(username);
+
             if (userToRemove is null)
-            {
                 throw new ArgumentException("Invalid username!");
-            }
+
             if (userToRemove.CheckedOutBooks.Count != 0 || userToRemove.ReservedBooks.Count != 0)
-            {
                 throw new ArgumentException("You cannot remove user who has checkedout/reserved books");
-            }
 
             _accountManager.RemoveUser(userToRemove);
 

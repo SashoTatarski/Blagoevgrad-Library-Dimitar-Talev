@@ -31,10 +31,8 @@ namespace Library.Core.Commands
 
             string searchBy = String.Empty;
 
-            if (parameter!=searchParameters[5])
-            {
+            if (parameter != searchParameters[5])
                 searchBy = _renderer.InputParameters("search pattern");
-            }
 
             var searchResult = _bookManager.GetSearchResult(parameter, searchBy);
 
@@ -44,9 +42,8 @@ namespace Library.Core.Commands
         public string GetSearchParameterByNumber(int number, List<string> parameters)
         {
             if (number < 0 || number > parameters.Count - 1)
-            {
                 throw new ArgumentException("Invalid parameter!");
-            }
+
             return parameters[number - 1];
         }
     }

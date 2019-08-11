@@ -30,9 +30,7 @@ namespace Library.Core.Commands
             var user = (IUser)_authentication.CurrentAccount;
 
             if (user.ReservedBooks.Count == 5)
-            {
                 throw new ArgumentException("You have reached the max quota of 5 reserved books!");
-            }
 
             _bookManager.ListAllBooks();
 
@@ -41,9 +39,7 @@ namespace Library.Core.Commands
 
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            {
                 throw new ArgumentException("Invalid ID");
-            }
 
             var bookToReserve = _bookManager.FindBook(bookID);
 
@@ -72,9 +68,7 @@ namespace Library.Core.Commands
                 var suchBookInReservedBooks = user.ReservedBooks.FirstOrDefault(b => b.ID == bookToReserve.ID);
 
                 if (suchBookInReservedBooks != null)
-                {
-                    return  "You have already reserved this book!";
-                }
+                    return "You have already reserved this book!";
                 else
                     return "Book is already reserved by another user!";
             }

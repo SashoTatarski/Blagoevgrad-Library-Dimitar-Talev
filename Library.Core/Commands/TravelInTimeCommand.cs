@@ -7,6 +7,7 @@ namespace Library.Core.Commands
     public class TravelInTimeCommand : ICommand
     {
         private readonly IConsoleRenderer _renderer;
+
         public TravelInTimeCommand(IConsoleRenderer renderer)
         {
             _renderer = renderer;

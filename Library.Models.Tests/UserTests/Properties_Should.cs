@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Models.Tests.AccountTests
+namespace Library.Models.Tests.UserTests
 {
     [TestClass]
     public class Properties_Should

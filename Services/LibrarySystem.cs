@@ -10,13 +10,13 @@ namespace Library.Services
 {
     public class LibrarySystem : ILibrarySystem
     {
-        private readonly IBookManager _bookManager;
         private readonly IAccountManager _accountManager;
-        public LibrarySystem(IBookManager bookManager, IAccountManager accountManager)
+
+        public LibrarySystem(IAccountManager accountManager)
         {
-            _bookManager = bookManager;
             _accountManager = accountManager;
         }
+
         public void CheckForOverdueBooks()
         {
             var usersWithCheckoutBooks = _accountManager.GetAllUsers().Where(users => users.CheckedOutBooks.Any()).ToList();
@@ -29,7 +29,7 @@ namespace Library.Services
                 {
                     foreach (var book in overdueBooks)
                     {
-                        int overdueDays = (int)((VirtualDate.VirtualToday - book.DueDate).TotalDays);
+                        int overdueDays = (int)(VirtualDate.VirtualToday - book.DueDate).TotalDays;
                         this.AssignFee(user, overdueDays);
                         this.AddOverdueMessage(user, overdueDays, book);
                     }
@@ -47,7 +47,7 @@ namespace Library.Services
                 user.OverdueMessages = null;
                 foreach (var book in overdueBooks)
                 {
-                    int overdueDays = (int)((VirtualDate.VirtualToday - book.DueDate).TotalDays);
+                    int overdueDays = (int)(VirtualDate.VirtualToday - book.DueDate).TotalDays;
                     this.AssignFee(user, overdueDays);
                     this.AddOverdueMessage(user, overdueDays, book);
                 }

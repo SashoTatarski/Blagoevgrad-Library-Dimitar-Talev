@@ -11,20 +11,20 @@ namespace Library.Models.Tests.BookTests
     [TestClass]
     public class Update_Should
     {
-        [TestMethod]
-        public void Update()
-        {
-            var book = new Book(1, "author", "title", "0123456789", "genre", "publisher", 2019, 10);
+        //[TestMethod]
+        //public void Update()
+        //{
+        //    var book = new Book(1, "author", "title", "0123456789", "genre", "publisher", 2019, 10);
 
-            var otherBook = new Mock<IBook>();
+        //    var otherBook = new Mock<IBook>();
             
 
-            var mockUpdate = new Mock<IBook>();
-            mockUpdate.Setup(u => u.Update(otherBook.Object));
+        //    var mockUpdate = new Mock<IBook>();
+        //    mockUpdate.Setup(u => u.Update(otherBook.Object));
 
-            book.Update(otherBook.Object);
+        //    book.Update(otherBook.Object);
            
-            mockUpdate.Verify(u => u.Update(otherBook.Object), Times.Once);            
-        }
+        //    mockUpdate.Verify(u => u.Update(otherBook.Object), Times.Once);            
+        //}
     }
 }
