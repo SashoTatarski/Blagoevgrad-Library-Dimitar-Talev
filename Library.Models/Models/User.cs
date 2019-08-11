@@ -94,6 +94,19 @@ namespace Library.Models.Models
             this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
         }
 
+        // TODO Hrisi
+        public void RemoveAllOverdueReservations()
+        {
+            //foreach (var book in this.OverdueReservations)
+            //{
+            //    if (book.Status == BookStatus.Reserved)
+            //    {
+
+            //    }
+            //}
+            this.OverdueReservations.Clear();
+        }
+
         public void Update(IUser otherUser)
         {
             this.Status = otherUser.Status;
@@ -127,6 +140,22 @@ namespace Library.Models.Models
 
                     Console.ResetColor();
                 }
+            }
+            return strBuilder.ToString();
+        }
+
+        public string DisplayOverdueBooks()
+        {
+            var strBuilder = new StringBuilder();
+
+            foreach (var book in this.OverdueBooks)
+            {
+                // Printed in red
+                    Console.ForegroundColor = ConsoleColor.Red;
+
+                strBuilder.AppendLine($"ID: {book.ID} || Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+
+                Console.ResetColor();
             }
             return strBuilder.ToString();
         }

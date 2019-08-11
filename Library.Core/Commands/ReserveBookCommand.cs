@@ -16,7 +16,9 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IAccountManager _accountManager;
         private readonly IConsoleFormatter _formatter;
-        public ReserveBookCommand(IAuthenticationManager authentication, IBookManager bookManager, IConsoleRenderer renderer, IAccountManager accounManager, IConsoleFormatter formatter)
+        private readonly ILibrarySystem _system;
+
+        public ReserveBookCommand(IAuthenticationManager authentication, IBookManager bookManager, IConsoleRenderer renderer, IAccountManager accounManager, IConsoleFormatter formatter, ILibrarySystem system)
 
         {
             _authentication = authentication;
@@ -24,15 +26,15 @@ namespace Library.Core.Commands
             _renderer = renderer;
             _accountManager = accounManager;
             _formatter = formatter;
+            _system = system;
         }
+
         public string Execute()
         {
             var user = (IUser)_authentication.CurrentAccount;
 
-            if (user.ReservedBooks.Count == 5)
-            {
-                throw new ArgumentException("You have reached the max quota of 5 reserved books!");
-            }
+            // check if user has reserved 5 books already
+            _system.CheckIfMaxQuotaReached(user.ReservedBooks);
 
             _bookManager.ListAllBooks();
 

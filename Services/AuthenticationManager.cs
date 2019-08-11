@@ -2,6 +2,7 @@
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
+using System.Collections.Generic;
 
 namespace Services
 {
@@ -12,6 +13,7 @@ namespace Services
         public AuthenticationManager(IAccountManager accountManager)
         {
             _accountManager = accountManager;
+            this.CurrentAccount = null;
         }
         public IAccount CurrentAccount { get; private set; }
 
@@ -35,33 +37,32 @@ namespace Services
             }
         }
 
-        public void CheckAuthenticationForCommand(string commandAsString)
+        public List<string> GetAllowedCommands()
         {
             if (this.CurrentAccount is null)
             {
-                if (commandAsString.ToLower() != "exit" && commandAsString.ToLower() != "login")
-                {
-                    throw new ArgumentException("Invalid Command");
-                }
+                return new List<string> { "Log In", "Exit" };
             }
             else
             {
-                bool check = false;
-                foreach (var command in this.CurrentAccount.AllowedCommands)
-                {
-                    if (command.Replace(" ", "").ToLower() == commandAsString)
-                    {
-                        check = true;
-                        break;
-                    }
-                }
-                if (!check)
-                {
-                    throw new ArgumentException("Invalid Command");
-                }
+                return (List<string>)this.CurrentAccount.AllowedCommands;
             }
         }
 
-        
+        public string GetCurrentAccountType()
+        {
+            if (this.CurrentAccount is null)
+            {
+                return null;
+            }
+            else if (this.CurrentAccount.GetType() == typeof(ILibrarian))
+            {
+                return "Librarian";
+            }
+            else
+            {
+                return "User";
+            }
+        }
     }
 }

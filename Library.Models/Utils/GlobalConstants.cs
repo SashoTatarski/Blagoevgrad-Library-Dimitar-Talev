@@ -15,9 +15,11 @@
 
         //Numbers
         public const decimal Fee = 0.5m;
+        public const int MaxBookQuota = 5;
 
         //Messages
         public const string OverdueMessage = "You have overdue book!\r\nID: {0} || Title: {1} || Author: {2}\r\nYou are late to return it by {3} days!";
+        public const string MaxQuotaReached = "You have reached the max quota of 5 books!";
 
     }
 }

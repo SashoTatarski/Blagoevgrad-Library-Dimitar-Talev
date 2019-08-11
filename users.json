@@ -13,61 +13,10 @@
       "Log Out"
     ],
     "Status": 0,
-    "CheckedOutBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 3,
-        "Author": "Jordan Peterson",
-        "Title": "Maps of Meaning: The Architecture of Belief",
-        "ISBN": "B00BW54XVO",
-        "Genre": "Behavioural Psychology",
-        "Publisher": "Routledge",
-        "Year": 2019,
-        "Rack": 33,
-        "Status": 1,
-        "CheckoutDate": "2019-08-11T00:00:00+03:00",
-        "DueDate": "2019-08-21T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
-    "ReservedBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 8,
-        "Author": "Alan Abbadessa",
-        "Title": "The Sync Book: Myths Magic Media and Mindscapes",
-        "ISBN": "1463764006",
-        "Genre": "Mysticism",
-        "Publisher": "Sync Book Press",
-        "Year": 2011,
-        "Rack": 88,
-        "Status": 2,
-        "CheckoutDate": "2019-08-23T00:00:00+03:00",
-        "DueDate": "2019-08-28T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
+    "CheckedOutBooks": [],
+    "ReservedBooks": [],
     "OverdueReservations": [],
-    "OverdueBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 3,
-        "Author": "Jordan Peterson",
-        "Title": "Maps of Meaning: The Architecture of Belief",
-        "ISBN": "B00BW54XVO",
-        "Genre": "Behavioural Psychology",
-        "Publisher": "Routledge",
-        "Year": 2019,
-        "Rack": 33,
-        "Status": 1,
-        "CheckoutDate": "2019-08-11T00:00:00+03:00",
-        "DueDate": "2019-08-21T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
+    "OverdueBooks": [],
     "LateFees": 0.0,
     "Username": "hrisi",
     "Password": "hrisi"
@@ -107,7 +56,7 @@
       "Travel In Time",
       "Log Out"
     ],
-    "Status": 1,
+    "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "OverdueReservations": [],
@@ -129,7 +78,7 @@
       "Travel In Time",
       "Log Out"
     ],
-    "Status": 1,
+    "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "OverdueReservations": [],

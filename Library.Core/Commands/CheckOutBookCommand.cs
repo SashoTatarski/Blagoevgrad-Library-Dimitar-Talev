@@ -15,13 +15,15 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
         private readonly IAccountManager _accountManager;
+        private readonly ILibrarySystem _system;
 
-        public CheckOutBookCommand(IAuthenticationManager authentication,IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager)
+        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system)
         {
             _authentication = authentication;
             _renderer = renderer;
             _bookManager = bookManager;
             _accountManager = accountManager;
+            _system = system;
         }
 
         public string Execute()
@@ -29,10 +31,7 @@ namespace Library.Core.Commands
             var user = (IUser)_authentication.CurrentAccount;
 
             // If the User has checked out 5 books already
-            if (user.CheckedOutBooks.Count == 5)
-            {
-                throw new ArgumentException("You have reached the max quota of 5 checkedout books!");
-            }
+            _system.CheckIfMaxQuotaReached(user.CheckedOutBooks);
 
             // Show all the books user can select from
             _bookManager.ListAllBooks();

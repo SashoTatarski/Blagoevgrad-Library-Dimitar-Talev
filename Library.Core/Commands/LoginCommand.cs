@@ -34,6 +34,8 @@ namespace Library.Core.Commands
             _authentication.LogIn(loggedUser);
 
             return $"{loggedUser.Username} succefully logged!";
+
+
         }
     }
 }

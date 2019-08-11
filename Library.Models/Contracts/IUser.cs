@@ -25,5 +25,7 @@ namespace Library.Models.Contracts
         void AddOverdueBooks(List<IBook> overdueBooks);
         void AddOverdueReservations(List<IBook> overdueReservations);
         void RemoveFromOverdueReservations(IBook book);
+        void RemoveFromOverdueBooks(IBook book);
+        void RemoveAllOverdueReservations();
     }
 }

@@ -17,34 +17,16 @@ namespace Library.Core
             this._accountManager = accountManager;
         }
 
-        public ICommand GetTheCommandByNumber(int number)
+        public ICommand GetCommandByNumber(int number, List<string> commands)
         {
-            if (_accountManager.CurrentAccount is null)
-            {
-                if (number == 1)
-                {
-                    return _componentContext.ResolveNamed<ICommand>("login");
-                }
-                else if (number == 2)
-                {
-                    throw new ArgumentException("Bye!");
-                }
-                else
-                    throw new ArgumentException("Invalid input");
-            }
-            else
-            {
-                var commandAsList = (List<string>)_accountManager.CurrentAccount.AllowedCommands;
-
-                if (number < 1 || number > commandAsList.Count)
+                if (number < 1 || number > commands.Count)
                 {
                     throw new ArgumentException("Invalid input");
                 }
 
-                var commandAsString = commandAsList[number - 1].Replace(" ", "").ToLower();
+                var commandAsString = commands[number - 1].Replace(" ", "").ToLower();
 
                 return _componentContext.ResolveNamed<ICommand>(commandAsString);
-            }
         }
     }
 }
