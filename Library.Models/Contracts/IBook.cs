@@ -17,6 +17,8 @@ namespace Library.Models.Contracts
         DateTime CheckoutDate { get; }
         DateTime DueDate { get; }
         DateTime ResevedDate { get; }
+        DateTime ResevationDueDate { get; set; }
+
         void Update(IBook otherBook);
         void Update(BookStatus status, DateTime today, DateTime dueDate);
         void Update(BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool ifReservation);

@@ -28,6 +28,12 @@ namespace Library.Core.Commands
         {
             var user = (IUser)_authentication.CurrentAccount;
 
+            // If the User has checked out 5 books already
+            if (user.CheckedOutBooks.Count == 5)
+            {
+                throw new ArgumentException("You have reached the max quota of 5 checkedout books!");
+            }
+
             // Show all the books user can select from
             _bookManager.ListAllBooks();
 

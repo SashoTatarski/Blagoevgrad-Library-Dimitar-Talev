@@ -125,5 +125,10 @@ namespace Library.Services
             }
             return sortedBooks;
         }
+
+        public List<IBook> GetAllBooks()
+        {
+            return _database.Load();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Library.Models.Contracts
         List<IBook> ReservedBooks { get; }
         List<string> ReservedBookMessages { get; }
         decimal LateFees { get; set; }
-        List<string> OverdueMessages { get; }
+        List<string> OverdueMessages { get; set; }
         void AddBookToCheckoutBooks(IBook book);
         void RemoveFromReservedBooks(IBook book);
         void RemoveFromCheckedoutBooks(IBook book);

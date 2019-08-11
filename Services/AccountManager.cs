@@ -3,6 +3,7 @@ using Library.Database.Contracts;
 using Library.Models.Contracts;
 using Library.Models.Enums;
 using Library.Services.Contracts;
+using System.Collections.Generic;
 
 namespace Library.Services
 {
@@ -73,6 +74,10 @@ namespace Library.Services
             }
             else
                 return user;
+        }
+        public List<IUser> GetAllUsers()
+        {
+            return _userDB.Load();
         }
     }
 }

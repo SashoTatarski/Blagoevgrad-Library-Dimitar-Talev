@@ -28,6 +28,7 @@ namespace Library.Models.Models
                 "Remove Reservation",
                 "Search",
                 "View Account",
+                "Travel In Time",
                 "Log Out"
             };
         public MemberStatus Status { get; set; }
