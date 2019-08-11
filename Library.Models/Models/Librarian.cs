@@ -16,12 +16,10 @@ namespace Library.Models.Models
                 "Register User",
                 "Register Librarian",
                 "Remove User",
-                "View Accounts",
                 "Search",
+                "View Accounts",
+                "Travel In Time",
                 "Log Out"
             };
-
-        // TODO: koi tui sia
-        public void UpdateBook(IBook book) => throw new System.NotImplementedException();
     }
 }

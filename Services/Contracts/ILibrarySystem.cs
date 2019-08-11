@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Library.Services.Contracts
 {
-    interface ILibrarySystem
+    public interface ILibrarySystem
     {
     }
 }

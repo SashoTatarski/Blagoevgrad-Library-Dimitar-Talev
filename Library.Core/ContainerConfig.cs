@@ -49,6 +49,7 @@ namespace Library.Core
             containerBuilder.RegisterType<CheckOutBookCommand>().Named<ICommand>("checkoutbook");
             containerBuilder.RegisterType<ReturnBookCommand>().Named<ICommand>("returnbook");
             containerBuilder.RegisterType<ReserveBookCommand>().Named<ICommand>("reservebook");
+            containerBuilder.RegisterType<TravelInTimeCommand>().Named<ICommand>("travelintime");
 
             return containerBuilder.Build();
         }

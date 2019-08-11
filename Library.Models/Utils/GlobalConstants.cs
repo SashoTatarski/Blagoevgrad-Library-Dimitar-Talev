@@ -13,5 +13,11 @@
         public const string usersFilepath = @"..\..\..\..\users.json";
         public const string librariansFilepath = @"..\..\..\..\librarians.json";
 
+        //Numbers
+        public const decimal Fee = 0.5m;
+
+        //Messages
+        public const string OverdueMessage = "You have overdue book!\r\nID: {0} || Title: {1} || Author: {2}\r\nYou are late to return it by {3} days!";
+
     }
 }
