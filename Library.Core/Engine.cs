@@ -13,18 +13,23 @@ namespace Library.Core
         private readonly IConsoleRenderer _renderer;
         private readonly IMenuFactory _menuFactory;
         private readonly IAuthenticationManager _authentication;
+        private readonly ILibrarySystem _system;
 
-        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication)
+        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system)
         {
             _renderer = renderer;
             _commandParser = commandParser;
             _menuFactory = menuFactory;
             _authentication = authentication;
+            _system = system;
         }
 
         public void Start()
         {
             VirtualDate.StartVirtualTime();
+            _system.CheckForOverdueBooks();
+            _system.CheckForOverdueReservations();
+
 
             while (true)
             {

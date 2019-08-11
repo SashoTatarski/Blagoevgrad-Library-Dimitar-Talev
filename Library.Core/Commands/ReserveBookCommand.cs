@@ -15,8 +15,8 @@ namespace Library.Core.Commands
         private readonly IBookManager _bookManager;
         private readonly IConsoleRenderer _renderer;
         private readonly IAccountManager _accountManager;
-        private readonly IFormatter _formatter;
-        public ReserveBookCommand(IAuthenticationManager authentication, IBookManager bookManager, IConsoleRenderer renderer, IAccountManager accounManager, IFormatter formatter)
+        private readonly IConsoleFormatter _formatter;
+        public ReserveBookCommand(IAuthenticationManager authentication, IBookManager bookManager, IConsoleRenderer renderer, IAccountManager accounManager, IConsoleFormatter formatter)
         {
             _authentication = authentication;
             _bookManager = bookManager;

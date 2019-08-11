@@ -11,9 +11,9 @@ namespace Library.Core.Commands
         private readonly IMenuFactory _menuFactory;
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
-        private readonly IFormatter _formatter;
+        private readonly IConsoleFormatter _formatter;
 
-        public SearchBookCommand(IMenuFactory menuFactory, IConsoleRenderer renderer, IBookManager bookManager, IFormatter formatter)
+        public SearchBookCommand(IMenuFactory menuFactory, IConsoleRenderer renderer, IBookManager bookManager, IConsoleFormatter formatter)
         {
             _menuFactory = menuFactory;
             _renderer = renderer;

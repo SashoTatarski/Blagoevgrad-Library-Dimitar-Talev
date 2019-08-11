@@ -15,8 +15,8 @@ namespace Library.Models.Models
             this.Status = MemberStatus.Active;
             this.CheckedOutBooks = new List<IBook>();
             this.ReservedBooks = new List<IBook>();
-            this.ReservedBookMessages = new List<string>();
-            this.OverdueMessages = new List<string>();
+            this.OverdueReservations = new List<IBook>();
+            this.OverdueBooks = new List<IBook>();
         }
 
         public override IEnumerable<string> AllowedCommands => new List<string>
@@ -37,9 +37,9 @@ namespace Library.Models.Models
 
         public List<IBook> ReservedBooks { get; private set; }
 
-        public List<string> ReservedBookMessages { get; set; }
+        public List<IBook> OverdueReservations { get; set; }
 
-        public List<string> OverdueMessages { get; set; }
+        public List<IBook> OverdueBooks { get; set; }
 
         public decimal LateFees { get; set; }
 
@@ -63,13 +63,33 @@ namespace Library.Models.Models
             this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
         }
 
+        public void AddOverdueBooks(List<IBook> overdueBooks)
+        {
+            foreach (var book in overdueBooks)
+            {
+                if (this.OverdueBooks.FindAll(b => b.ID == book.ID).SingleOrDefault() is null)
+                {
+                    this.OverdueBooks.Add(book);
+                }
+            }
+        }
+
+        public void AddOverdueReservations(List<IBook> overdueReservations)
+        {
+            foreach (var book in overdueReservations)
+            {
+                this.OverdueReservations.Add(book);
+                this.RemoveFromReservedBooks(book);
+            }
+        }
+
         public void Update(IUser otherUser)
         {
             this.Status = otherUser.Status;
             this.CheckedOutBooks = otherUser.CheckedOutBooks;
             this.ReservedBooks = otherUser.ReservedBooks;
-            this.ReservedBookMessages = otherUser.ReservedBookMessages;
-            this.OverdueMessages = otherUser.OverdueMessages;
+            this.OverdueReservations = otherUser.OverdueReservations;
+            this.OverdueBooks = otherUser.OverdueBooks;
             this.LateFees = otherUser.LateFees;
         }
 

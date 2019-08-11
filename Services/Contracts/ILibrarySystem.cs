@@ -6,5 +6,7 @@ namespace Library.Services.Contracts
 {
     public interface ILibrarySystem
     {
+        void CheckForOverdueBooks();
+        void CheckForOverdueReservations();
     }
 }

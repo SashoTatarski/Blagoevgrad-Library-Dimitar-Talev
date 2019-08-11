@@ -99,5 +99,6 @@ namespace Library.Database
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
             };
         }
+
     }
 }
