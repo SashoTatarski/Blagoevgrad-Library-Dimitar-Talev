@@ -8,6 +8,7 @@ namespace Services
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly IAccountManager _accountManager;
+
         public AuthenticationManager(IAccountManager accountManager)
         {
             _accountManager = accountManager;

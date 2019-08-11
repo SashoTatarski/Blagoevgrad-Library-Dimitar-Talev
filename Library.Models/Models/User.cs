@@ -70,8 +70,14 @@ namespace Library.Models.Models
                 if (this.OverdueBooks.FindAll(b => b.ID == book.ID).SingleOrDefault() is null)
                 {
                     this.OverdueBooks.Add(book);
+                    this.RemoveFromCheckedoutBooks(book);
                 }
             }
+        }
+
+        public void RemoveFromOverdueBooks(IBook book)
+        {
+            this.OverdueBooks.RemoveAll(b => b.ID == book.ID);
         }
 
         public void AddOverdueReservations(List<IBook> overdueReservations)
@@ -81,6 +87,11 @@ namespace Library.Models.Models
                 this.OverdueReservations.Add(book);
                 this.RemoveFromReservedBooks(book);
             }
+        }
+
+        public void RemoveFromOverdueReservations(IBook book)
+        {
+            this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
         }
 
         public void Update(IUser otherUser)
