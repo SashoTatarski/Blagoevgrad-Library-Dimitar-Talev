@@ -11,6 +11,7 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
 
+        //TODO IAuthenticationManager account?
         public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager)
         {
             _factory = factory;
@@ -42,8 +43,10 @@ namespace Library.Core.Commands
 
             // Get the ID of the new book
             var bookID = _bookManager.GetLastBookID() + 1;
+
             // Create book with given parameters
             var bookToCreate = _factory.CreateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
+
             // Add book to Database
             _bookManager.AddBook(bookToCreate);
 
