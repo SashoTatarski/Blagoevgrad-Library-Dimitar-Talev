@@ -11,6 +11,7 @@ namespace Library.Services
         private readonly IUserDataBase _userDB;
         private readonly ILibrarianDataBase _librarianDB;
         private readonly IConsoleRenderer _renderer;
+
         public AccountManager(IUserDataBase userDB, ILibrarianDataBase librarianDB, IConsoleRenderer renderer)
         {
             _userDB = userDB;

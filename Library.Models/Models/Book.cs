@@ -6,12 +6,13 @@ namespace Library.Models.Models
 {
     public class Book : IBook
     {
-        private string author;
-        private string title;
-        private string genre;
-        private string publisher;
-        private int year;
-        private int rack;
+        private string _author;
+        private string _title;
+        private string _isbn;
+        private string _genre;
+        private string _publisher;
+        private int _year;
+        private int _rack;
 
         public Book(int Id, string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
@@ -30,99 +31,89 @@ namespace Library.Models.Models
 
         public string Author
         {
-            get
-            {
-                return this.author;
-            }
+            get => _author;
             private set
             {
                 if (value.Length < 1 || value.Length > 40)
-                {
                     throw new ArgumentOutOfRangeException("The author name should be between 1 and 40 symbols!");
-                }
-                this.author = value;
+
+                _author = value;
             }
         }
 
         public string Title
         {
-            get
-            {
-                return this.title;
-            }
+            get => _title;
             private set
             {
                 if (value.Length < 1 || value.Length > 100)
                 {
                     throw new ArgumentOutOfRangeException("The title should be between 1 and 100 symbols!");
                 }
-                this.title = value;
+                _title = value;
             }
         }
 
-        public string ISBN { get; private set; }
+        public string ISBN
+        {
+            get => _isbn;
+            private set
+            {
+                if (value.Length != 10 && value.Length != 13)
+                    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
+
+                _isbn = value;
+            }
+
+        }
+
 
         public string Genre
         {
-            get
-            {
-                return this.genre;
-            }
+            get => _genre;
             private set
             {
                 if (value.Length < 1 || value.Length > 40)
-                {
                     throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
-                }
-                this.genre = value;
+
+                _genre = value;
             }
         }
 
         public string Publisher
         {
-            get
-            {
-                return this.publisher;
-            }
+            get => _publisher;
             private set
             {
                 if (value.Length < 1 || value.Length > 40)
-                {
                     throw new ArgumentOutOfRangeException("The publisher name should be between 1 and 40 symbols!");
-                }
-                this.publisher = value;
+
+                _publisher = value;
             }
         }
 
         public int Year
         {
-            get
-            {
-                return this.year;
-            }
+            get => _year;
             private set
             {
-                if (value < 1 || value > DateTime.Now.Year)
-                {
+                // First book ever printed was in 1629
+                if (value < 1629 || value > DateTime.Now.Year)
                     throw new ArgumentOutOfRangeException($"The publication year should be between 1 and {DateTime.Now.Year}");
-                }
-                this.year = value;
+
+                _year = value;
             }
         }
 
         public int Rack
         {
-            get
-            {
-                return this.rack;
-            }
+            get => _rack;
             private set
             {
                 if (value < 1)
-                {
                     throw new ArgumentOutOfRangeException($"The rack cannot be zero or negative");
-                }
-                this.rack = value;
+
+                _rack = value;
             }
         }
 

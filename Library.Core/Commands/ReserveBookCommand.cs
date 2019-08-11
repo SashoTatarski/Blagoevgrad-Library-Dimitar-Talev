@@ -16,6 +16,7 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IAccountManager _accountManager;
         private readonly IFormatter _formatter;
+
         public ReserveBookCommand(IAuthenticationManager authentication, IBookManager bookManager, IConsoleRenderer renderer, IAccountManager accounManager, IFormatter formatter)
         {
             _authentication = authentication;
@@ -37,6 +38,7 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
+
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
             {
