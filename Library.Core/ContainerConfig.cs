@@ -15,6 +15,7 @@ namespace Library.Core
     {
         public IContainer Build()
         {
+            // SOLID: Single Reponsibility
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();

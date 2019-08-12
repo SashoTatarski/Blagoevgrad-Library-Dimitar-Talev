@@ -6,15 +6,14 @@ using System.Collections.Generic;
 
 namespace Library.Core
 {
+    // SOLID: Single Responsibility
     public class CommandParser : ICommandParser
     {
-        private readonly IComponentContext _componentContext;
-        private readonly IAuthenticationManager _accountManager;
+        private readonly IComponentContext _componentContext;       
 
-        public CommandParser(IComponentContext componentContext, IAuthenticationManager accountManager)
+        public CommandParser(IComponentContext componentContext)
         {
             _componentContext = componentContext;
-            _accountManager = accountManager;
         }
 
         public ICommand GetCommandByNumber(int number, List<string> commands)

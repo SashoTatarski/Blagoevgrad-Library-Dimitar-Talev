@@ -12,7 +12,7 @@ namespace Library.Database
 {
     public class LibrarianDataBase : ILibrarianDataBase
     {
-        private IList<ILibrarian> _internal;
+        private readonly IList<ILibrarian> _internal;
 
         public LibrarianDataBase()
         {

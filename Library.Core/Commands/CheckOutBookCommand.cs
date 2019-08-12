@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Library.Core.Commands
 {
+    // SOLID: DI principle - we program against Interfaces. High-level modules, which provide complex logic, should be easily reusable and unaffected by changes in low-level modules
     public class CheckOutBookCommand : ICommand
     {
         private readonly IAuthenticationManager _authentication;

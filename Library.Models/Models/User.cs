@@ -10,6 +10,8 @@ namespace Library.Models.Models
 {
     public class User : Account, IUser
     {
+        // OOP: User class inherits Account base class
+        // OOP: Encapsulation - properties with private set 
         public User(string username, string password) : base(username, password)
         {
             this.Status = MemberStatus.Active;
@@ -151,7 +153,7 @@ namespace Library.Models.Models
             foreach (var book in this.OverdueBooks)
             {
                 // Printed in red
-                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
 
                 strBuilder.AppendLine($"ID: {book.ID} || Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
 
@@ -172,9 +174,7 @@ namespace Library.Models.Models
         public bool HasOverdueReservations()
         {
             if (this.OverdueReservations.Count != 0)
-            {
                 return true;
-            }
             else return false;
         }
     }

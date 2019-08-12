@@ -4,12 +4,15 @@ using System.Collections.Generic;
 
 namespace Library.Models.Models
 {
+    // SOLID: Liskov - we can add substitute for another type of account
+    // SOLID: OPEN/CLOSED - we can can add more accounts without breaking our code
+    // OOP: Abstraction - Account class is abstract, User "is a" Account
     public abstract class Account : IAccount
     {
         private string _username;
         private string _password;
 
-        // Change "public" to protected (abstract type should not have public contructors)
+        // Changed "public" to protected (abstract type should not have public contructors)
         protected Account(string username, string password)
         {
             this.Username = username;

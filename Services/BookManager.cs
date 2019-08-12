@@ -36,6 +36,7 @@ namespace Library.Services
         }
 
         // CheckOut Book
+        // OOP: Polymorphism - method overloading static polymorphism. In static polym. identification of the overloaded method to be executed is carried out at compile time
         public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
             var bookToUpdate = _database.Get(bookId);

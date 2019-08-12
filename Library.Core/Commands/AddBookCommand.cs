@@ -5,6 +5,7 @@ using System;
 
 namespace Library.Core.Commands
 {
+    // SOLID: OPEN/CLOSE - We can add more commands, thus making the code open for extension
     public class AddBookCommand : ICommand
     {
         private readonly IBookFactory _factory;
