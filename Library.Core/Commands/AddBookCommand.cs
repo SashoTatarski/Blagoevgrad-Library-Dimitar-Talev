@@ -10,12 +10,14 @@ namespace Library.Core.Commands
         private readonly IBookFactory _factory;
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
+        private readonly IConsoleFormatter _formatter;
 
-        public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager)
+        public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager, IConsoleFormatter formatter)
         {
             _factory = factory;
             _renderer = renderer;
             _bookManager = bookManager;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -49,7 +51,7 @@ namespace Library.Core.Commands
             // Add book to Database
             _bookManager.AddBook(bookToCreate);
 
-            return $"Successfully added the book {bookToCreate.Title} - {bookToCreate.Author}";
+            return _formatter.Format(bookToCreate);
         }
     }
 }

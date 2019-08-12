@@ -17,7 +17,7 @@ namespace Library.Services
         private readonly IBookFactory _factory;
         private readonly IConsoleFormatter _formatter;
 
-        public BookManager(IBookDatabase database, IBookFactory bookfactory, IConsoleRenderer renderer, IConsoleFormatter formatter)
+        public BookManager(IBookDatabase database, IBookFactory bookfactory, IConsoleFormatter formatter)
         {
             _database = database;
             _factory = bookfactory;

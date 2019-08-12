@@ -8,6 +8,14 @@ namespace Library.Services
 {
     public class ConsoleFormatter : IConsoleFormatter
     {
+        public string Format(IAccount account)
+        {
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine($"Username: {account.Username}");
+
+            return strBuilder.ToString();
+        }
+
         public string Format(IBook book)
         {
             var strBuilder = new StringBuilder();

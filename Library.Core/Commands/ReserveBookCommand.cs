@@ -55,7 +55,7 @@ namespace Library.Core.Commands
                 _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(5));
                 _accountManager.UpdateUser(user);
 
-                return $"You have reserved the book:\r\n{_formatter.Format(bookToReserve)}";
+                return $"{GlobalConstants.ReservedBookSuccessMsg}{_formatter.Format(bookToReserve)}";
             }
             // if the book is already checked out
             else if (bookToReserve.Status == BookStatus.CheckedOut)
@@ -65,20 +65,20 @@ namespace Library.Core.Commands
                 _bookManager.UpdateBook(bookID, BookStatus.CheckedOut_and_Reserved, VirtualDate.VirtualToday, DateTime.MaxValue, true);
                 _accountManager.UpdateUser(user);
 
-                return $"You have reserved the book:\r\n{_formatter.Format(bookToReserve)}";
+                return $"{GlobalConstants.ReservedBookSuccessMsg}{_formatter.Format(bookToReserve)}";
             }
             else if (bookToReserve.Status == BookStatus.Reserved)
             {
                 var suchBookInReservedBooks = user.ReservedBooks.FirstOrDefault(b => b.ID == bookToReserve.ID);
 
                 if (suchBookInReservedBooks != null)
-                    return "You have already reserved this book!";
+                    return GlobalConstants.ReservedBookAlreadyReserved;
                 else
-                    return "Book is already reserved by another user!";
+                    return GlobalConstants.ReservedBookAlreadyReservedOther;
             }
             else
             {
-                return "Book is already checked out and reserved for another user afterwards!";
+                return GlobalConstants.ReserveBookAlreadyCheckedout;
             }
         }
     }

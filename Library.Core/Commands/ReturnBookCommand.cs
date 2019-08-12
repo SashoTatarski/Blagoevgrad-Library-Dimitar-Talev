@@ -15,14 +15,16 @@ namespace Library.Core.Commands
         private readonly IBookManager _bookManager;
         private readonly IAccountManager _accountManager;
         private readonly ILibrarySystem _system;
+        private readonly IConsoleFormatter _formatter;
 
-        public ReturnBookCommand(IAuthenticationManager account, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system)
+        public ReturnBookCommand(IAuthenticationManager account, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system, IConsoleFormatter formatter)
         {
             _account = account;
             _renderer = renderer;
             _bookManager = bookManager;
             _accountManager = accountManager;
             _system = system;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -75,7 +77,7 @@ namespace Library.Core.Commands
 
             _accountManager.UpdateUser(user);
 
-            return $"Successfully returned : {bookToReturn.Title} - {bookToReturn.Author}";
+            return $"{ GlobalConstants.ReturnBookSuccessMsg}{ _formatter.Format(bookToReturn)}";
         }
     }
 }

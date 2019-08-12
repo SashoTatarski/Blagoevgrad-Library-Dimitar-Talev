@@ -51,17 +51,17 @@ namespace Library.Services
 
         public void DisplayMessageForOverdueBooks(IUser user)
         {
-            //var strBuilder = new StringBuilder();
-            //strBuilder.AppendLine("You have overdue books!");
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine("You have overdue books!");
 
-            //foreach (var book in user.OverdueBooks)
-            //{
-            //    strBuilder.AppendLine(_formatter.Format(book));
-            //}
+            foreach (var book in user.OverdueBooks)
+            {
+                strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
+            }
 
-            //strBuilder.AppendLine("Return the books to be able to use the services of the library!");
+            strBuilder.AppendLine("Return the books to be able to use the services of the library!");
 
-            //_renderer.Output(strBuilder.ToString());
+            _renderer.Output(strBuilder.ToString());
         }
 
 
