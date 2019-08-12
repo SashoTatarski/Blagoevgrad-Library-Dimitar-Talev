@@ -11,19 +11,10 @@ namespace Library.Services
     public class LibrarySystem : ILibrarySystem
     {
         private readonly IAccountManager _accountManager;
-<<<<<<< HEAD
-
-        public LibrarySystem(IAccountManager accountManager)
-=======
         private readonly IConsoleFormatter _formatter;
         private readonly IConsoleRenderer _renderer;
 
-<<<<<<< HEAD
-        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter)
->>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
-=======
         public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter, IConsoleRenderer renderer)
->>>>>>> 2a1c34753d68ec88c965f3170e6869d397d5c72a
         {
             _accountManager = accountManager;
             _formatter = formatter;
@@ -38,22 +29,12 @@ namespace Library.Services
             {
                 var overdueBooks = user.CheckedOutBooks.Where(b => b.DueDate < VirtualDate.VirtualToday).ToList();
 
-<<<<<<< HEAD
-                if (overdueBooks.Count != 0)
-                {
-                    foreach (var book in overdueBooks)
-                    {
-                        int overdueDays = (int)(VirtualDate.VirtualToday - book.DueDate).TotalDays;
-                        this.AssignFee(user, overdueDays);
-                        this.AddOverdueMessage(user, overdueDays, book);
-                    }
-                }
-=======
                 user.AddOverdueBooks(overdueBooks);
                 _accountManager.UpdateUser(user);
->>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
             }
+
         }
+
 
         public void CheckForOverdueReservations()
         {
@@ -61,37 +42,30 @@ namespace Library.Services
 
             foreach (var user in usersWithReservations)
             {
-<<<<<<< HEAD
-                user.LateFees = 0;
-                user.OverdueMessages = null;
-                foreach (var book in overdueBooks)
-                {
-                    int overdueDays = (int)(VirtualDate.VirtualToday - book.DueDate).TotalDays;
-                    this.AssignFee(user, overdueDays);
-                    this.AddOverdueMessage(user, overdueDays, book);
-                }
-=======
                 var overdueReservations = user.ReservedBooks.Where(b => b.ResevationDueDate < VirtualDate.VirtualToday).ToList();
                 user.AddOverdueReservations(overdueReservations);
                 _accountManager.UpdateUser(user);
->>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
             }
         }
+
 
         public void DisplayMessageForOverdueBooks(IUser user)
         {
-            var strBuilder = new StringBuilder();
-            strBuilder.AppendLine("You have overdue books!");
+            //var strBuilder = new StringBuilder();
+            //strBuilder.AppendLine("You have overdue books!");
 
-            foreach (var book in user.OverdueBooks)
-            {
-                strBuilder.AppendLine(_formatter.Format(book));
-            }
+            //foreach (var book in user.OverdueBooks)
+            //{
+            //    strBuilder.AppendLine(_formatter.Format(book));
+            //}
 
-            strBuilder.AppendLine("Return the books to be able to use the services of the library!");
+            //strBuilder.AppendLine("Return the books to be able to use the services of the library!");
 
-            _renderer.Output(strBuilder.ToString());
+            //_renderer.Output(strBuilder.ToString());
         }
+
+
+
 
         public void DisplayMessageForOverdueReservations(IUser user)
         {
@@ -128,3 +102,4 @@ namespace Library.Services
         }
     }
 }
+
