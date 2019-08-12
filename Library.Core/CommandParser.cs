@@ -13,8 +13,8 @@ namespace Library.Core
 
         public CommandParser(IComponentContext componentContext, IAuthenticationManager accountManager)
         {
-            this._componentContext = componentContext;
-            this._accountManager = accountManager;
+            _componentContext = componentContext;
+            _accountManager = accountManager;
         }
 
         public ICommand GetCommandByNumber(int number, List<string> commands)
