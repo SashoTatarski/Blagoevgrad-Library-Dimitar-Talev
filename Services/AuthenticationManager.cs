@@ -61,26 +61,10 @@ namespace Services
                     }
                     if (user.HasOverdueReservations())
                     {
-                        _system.DisplayMessageForOverdueReservations(user);
+                        _system.PurgeOverdueReservations(user);
                     }
                 }
                 return allowedCommand;
-            }
-        }
-
-        public string GetCurrentAccountType()
-        {
-            if (this.CurrentAccount is null)
-            {
-                return null;
-            }
-            else if (this.CurrentAccount.GetType() == typeof(ILibrarian))
-            {
-                return "Librarian";
-            }
-            else
-            {
-                return "User";
             }
         }
     }

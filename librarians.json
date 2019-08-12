@@ -8,8 +8,9 @@
       "Register User",
       "Register Librarian",
       "Remove User",
-      "View Accounts",
       "Search",
+      "View Accounts",
+      "Travel In Time",
       "Log Out"
     ],
     "Username": "Librarian",
@@ -24,11 +25,12 @@
       "Register User",
       "Register Librarian",
       "Remove User",
-      "View Accounts",
       "Search",
+      "View Accounts",
+      "Travel In Time",
       "Log Out"
     ],
-    "Username": "osama",
-    "Password": "osama"
+    "Username": "lib",
+    "Password": "lib"
   }
 ]

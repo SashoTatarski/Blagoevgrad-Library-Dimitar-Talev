@@ -21,6 +21,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.RemoveBook);
+
             // Show all the books user can select from
             _bookManager.ListAllBooks();
 
@@ -29,19 +31,19 @@ namespace Library.Core.Commands
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
             {
-                throw new ArgumentException("Invalid ID");
+                throw new ArgumentException(GlobalConstants.InvalidID);
             }
 
             var bookToRemove = _bookManager.FindBook(bookID);
 
-            if (bookToRemove.Status== BookStatus.CheckedOut || bookToRemove.Status == BookStatus.Reserved)
+            if (bookToRemove.Status == BookStatus.CheckedOut || bookToRemove.Status == BookStatus.Reserved)
             {
-                throw new ArgumentException("Cannot remove chechedout/reserved book!");
+                throw new ArgumentException(GlobalConstants.CannotRemoveIssuedBook);
             }
 
             _bookManager.RemoveBook(bookToRemove);
 
-            return $"{GlobalConstants.RemoveBookSuccess}{_formatter.Format(bookToRemove)}";
+            return _formatter.FormatCommandMessage(GlobalConstants.RemoveBookSuccess, _formatter.Format(bookToRemove));
         }
     }
 }

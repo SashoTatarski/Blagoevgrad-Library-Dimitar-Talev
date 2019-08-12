@@ -23,6 +23,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.LogIn);
+
             var userName = _renderer.InputParameters("username");
             var password = _renderer.InputParameters("password");
 
@@ -36,7 +38,7 @@ namespace Library.Core.Commands
 
             _authentication.LogIn(loggedUser);
 
-            return $"{_formatter.Format(loggedUser)} {GlobalConstants.SuccessLogIn}";
+            return _formatter.FormatCommandMessage(GlobalConstants.SuccessLogIn, _formatter.Format(loggedUser));
         }
     }
 }

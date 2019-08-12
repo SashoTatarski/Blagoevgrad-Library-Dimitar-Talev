@@ -7,15 +7,19 @@ namespace Library.Core.Commands
     public class TravelInTimeCommand : ICommand
     {
         private readonly IConsoleRenderer _renderer;
-        private readonly ILibrarySystem _system;      
+        private readonly ILibrarySystem _system;
+        private readonly IConsoleFormatter _formatter;
 
-        public TravelInTimeCommand(IConsoleRenderer renderer, ILibrarySystem system)
+        public TravelInTimeCommand(IConsoleRenderer renderer, ILibrarySystem system, IConsoleFormatter formatter)
         {
             _renderer = renderer;
             _system = system;
+            _formatter = formatter;
         }
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.Travel);
+
             var days = int.Parse(_renderer.InputParameters("how many days you want to skip", d => int.Parse(d) < 1));
 
             VirtualDate.SkipDays(days);
@@ -23,7 +27,7 @@ namespace Library.Core.Commands
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();
 
-            return $"Success!\r\nToday is {VirtualDate.VirtualToday.ToString("dd-MM-yyyy")}";
+            return _formatter.FormatCommandMessage(GlobalConstants.TravelSuccess, (VirtualDate.VirtualToday.ToString("dd-MM-yyyy") + "\r\n"));
         }
     }
 }

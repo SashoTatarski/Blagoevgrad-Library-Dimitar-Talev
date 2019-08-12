@@ -11,5 +11,9 @@ namespace Library.Services.Contracts
         string FormatListOfBooks(List<IBook> books);
         string FormatReservedBook(IBook book);
         string Format(IAccount account);
+        string FormatCommandMessage(string message, string modelInfo);
+        string FormatCommandMessage(string message);
+        string FormatListOfUsers(List<IUser> users);
+        string FormatListOfUsersShort(List<IUser> users);
     }
 }

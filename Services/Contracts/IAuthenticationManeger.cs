@@ -10,6 +10,5 @@ namespace Services.Contracts
         void CheckForExistingUsername(string username);
         void LogIn(IAccount account);
         void LogOut();
-        string GetCurrentAccountType();
     }
 }

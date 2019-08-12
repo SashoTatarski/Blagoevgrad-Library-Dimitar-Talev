@@ -129,11 +129,6 @@ namespace Library.Services
             return sortedBooks;
         }
 
-        public List<IBook> GetAllBooks()
-        {
-            return _database.Load();
-        }
-
         public string GetCheckedoutBooksInfo(IUser user)
         {
             var strBuilder = new StringBuilder();
@@ -162,17 +157,6 @@ namespace Library.Services
             foreach (var book in user.OverdueBooks)
             {
                 strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-            }
-            return strBuilder.ToString();
-        }
-
-        public string GetOverdueReservationsInfo(IUser user)
-        {
-            var strBuilder = new StringBuilder();
-
-            foreach (var book in user.OverdueBooks)
-            {
-                strBuilder.AppendLine(_formatter.FormatReservedBook(book));
             }
             return strBuilder.ToString();
         }

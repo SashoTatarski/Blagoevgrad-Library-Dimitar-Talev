@@ -29,6 +29,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.ReturnBook);
+
             var user = (IUser)_account.CurrentAccount;
 
             //Check if there are overdue books
@@ -72,12 +74,12 @@ namespace Library.Core.Commands
             }
             if (bookToReturn.Status == BookStatus.CheckedOut_and_Reserved)
             {
-                _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(5));
+                _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxReserveDays), true);
             }
 
             _accountManager.UpdateUser(user);
 
-            return $"{ GlobalConstants.ReturnBookSuccessMsg}{ _formatter.Format(bookToReturn)}";
+            return _formatter.FormatCommandMessage(GlobalConstants.ReturnBookSuccessMsg, _formatter.Format(bookToReturn));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Library.Services.Contracts
         void AddUser(IUser user);
         IAccount FindAccount(string userName);
         List<IUser> GetAllUsers();
-        void ListAllUsers();
+        void GetListAllUsers();
         void RemoveUser(IUser user);
         void UpdateUser(IUser user);
     }

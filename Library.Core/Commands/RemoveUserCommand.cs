@@ -21,21 +21,23 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _accountManager.ListAllUsers();
+            _renderer.Output(GlobalConstants.RemoveUser);
+
+            _accountManager.GetListAllUsers();
 
             var username = _renderer.InputParameters("username");
 
             var userToRemove = (IUser)_accountManager.FindAccount(username);
 
             if (userToRemove is null)
-                throw new ArgumentException();
+                throw new ArgumentException(GlobalConstants.NoSuchUser);
 
             if (userToRemove.CheckedOutBooks.Count != 0 || userToRemove.ReservedBooks.Count != 0)
                 throw new ArgumentException(GlobalConstants.RemoveUserError);
 
             _accountManager.RemoveUser(userToRemove);
 
-            return $"The user {_formatter.Format(userToRemove)} is removed!";
+            return _formatter.FormatCommandMessage(GlobalConstants.RemoveUserSuccess, _formatter.Format(userToRemove));
         }
     }
 }

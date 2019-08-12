@@ -31,6 +31,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.ReserveBook);
+
             var user = (IUser)_authentication.CurrentAccount;
 
             // check if user has reserved 5 books already
@@ -43,7 +45,7 @@ namespace Library.Core.Commands
 
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-                throw new ArgumentException("Invalid ID");
+                throw new ArgumentException(GlobalConstants.InvalidID);
 
             var bookToReserve = _bookManager.FindBook(bookID);
 
@@ -52,10 +54,10 @@ namespace Library.Core.Commands
             if (bookToReserve.Status == BookStatus.Available)
             {
                 user.AddBookToReservedBooks(bookToReserve);
-                _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(5));
+                _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(5), true);
                 _accountManager.UpdateUser(user);
 
-                return $"{GlobalConstants.ReservedBookSuccessMsg}{_formatter.Format(bookToReserve)}";
+                return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookSuccessMsg, _formatter.Format(bookToReserve));
             }
             // if the book is already checked out
             else if (bookToReserve.Status == BookStatus.CheckedOut)
@@ -65,20 +67,20 @@ namespace Library.Core.Commands
                 _bookManager.UpdateBook(bookID, BookStatus.CheckedOut_and_Reserved, VirtualDate.VirtualToday, DateTime.MaxValue, true);
                 _accountManager.UpdateUser(user);
 
-                return $"{GlobalConstants.ReservedBookSuccessMsg}{_formatter.Format(bookToReserve)}";
+                return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookSuccessMsg, _formatter.Format(bookToReserve));
             }
             else if (bookToReserve.Status == BookStatus.Reserved)
             {
                 var suchBookInReservedBooks = user.ReservedBooks.FirstOrDefault(b => b.ID == bookToReserve.ID);
 
                 if (suchBookInReservedBooks != null)
-                    return GlobalConstants.ReservedBookAlreadyReserved;
+                    return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookAlreadyReserved);
                 else
-                    return GlobalConstants.ReservedBookAlreadyReservedOther;
+                    return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookAlreadyReservedOther);
             }
             else
             {
-                return GlobalConstants.ReserveBookAlreadyCheckedout;
+                return _formatter.FormatCommandMessage(GlobalConstants.ReserveBookAlreadyCheckedout);
             }
         }
     }

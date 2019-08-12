@@ -25,9 +25,7 @@ namespace Library.Models.Models
                 "Return Book",
                 "Renew Book",
                 "Reserve Book",
-                "Remove Reservation",
                 "Search",
-                "View Account",
                 "Travel In Time",
                 "Log Out"
             };
@@ -94,16 +92,8 @@ namespace Library.Models.Models
             this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
         }
 
-        // TODO Hrisi
         public void RemoveAllOverdueReservations()
         {
-            //foreach (var book in this.OverdueReservations)
-            //{
-            //    if (book.Status == BookStatus.Reserved)
-            //    {
-
-            //    }
-            //}
             this.OverdueReservations.Clear();
         }
 

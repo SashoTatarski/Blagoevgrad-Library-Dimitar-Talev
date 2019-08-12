@@ -1,7 +1,6 @@
 ﻿using Library.Core.Contracts;
-using Library.Models.Contracts;
+using Library.Models.Utils;
 using Library.Services.Contracts;
-using Services.Contracts;
 using System;
 
 namespace Library.Core.Commands
@@ -21,6 +20,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.EditBook);
+
             // Show all the books user can select from
             _bookManager.ListAllBooks();
 
@@ -29,7 +30,7 @@ namespace Library.Core.Commands
 
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-                throw new ArgumentException("Invalid ID");
+                throw new ArgumentException(GlobalConstants.InvalidID);
 
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
@@ -53,7 +54,7 @@ namespace Library.Core.Commands
 
             var bookToEdit = _bookManager.FindBook(bookID);
 
-            return _formatter.Format(bookToEdit);
+            return _formatter.FormatCommandMessage(GlobalConstants.EditBookSuccess, _formatter.Format(bookToEdit));
         }
     }
 }

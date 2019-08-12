@@ -1,4 +1,5 @@
 ﻿using Library.Core.Contracts;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using System;
@@ -22,6 +23,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.AddBook);
+
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
 
@@ -51,7 +54,7 @@ namespace Library.Core.Commands
             // Add book to Database
             _bookManager.AddBook(bookToCreate);
 
-            return _formatter.Format(bookToCreate);
+            return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));
         }
     }
 }

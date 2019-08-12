@@ -6,9 +6,7 @@
       "Return Book",
       "Renew Book",
       "Reserve Book",
-      "Remove Reservation",
       "Search",
-      "View Account",
       "Travel In Time",
       "Log Out"
     ],
@@ -16,25 +14,8 @@
     "CheckedOutBooks": [],
     "ReservedBooks": [],
     "OverdueReservations": [],
-    "OverdueBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 13,
-        "Author": "Astrid Lindgren",
-        "Title": "Pippi Longstocking",
-        "ISBN": "125LpokH",
-        "Genre": "Children",
-        "Publisher": "Swed",
-        "Year": 1997,
-        "Rack": 15,
-        "Status": 1,
-        "CheckoutDate": "2019-08-12T00:00:00+03:00",
-        "DueDate": "2019-08-22T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
-    "LateFees": 0.0,
+    "OverdueBooks": [],
+    "LateFees": 1.5,
     "Username": "hrisi",
     "Password": "hrisi"
   },
@@ -45,53 +26,12 @@
       "Return Book",
       "Renew Book",
       "Reserve Book",
-      "Remove Reservation",
       "Search",
-      "View Account",
       "Travel In Time",
       "Log Out"
     ],
     "Status": 0,
     "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "OverdueReservations": [],
-    "OverdueBooks": [],
-    "LateFees": 0.0,
-    "Username": "ivan",
-    "Password": "ivan"
-  },
-  {
-    "$type": "Library.Models.Models.User, Library.Models",
-    "AllowedCommands": [
-      "Check Out Book",
-      "Return Book",
-      "Renew Book",
-      "Reserve Book",
-      "Remove Reservation",
-      "Search",
-      "View Account",
-      "Travel In Time",
-      "Log Out"
-    ],
-    "Status": 0,
-    "CheckedOutBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 12,
-        "Author": "J.K.Rowling",
-        "Title": "Harry Potter",
-        "ISBN": "0987",
-        "Genre": "Fun",
-        "Publisher": "Fut",
-        "Year": 2001,
-        "Rack": 12,
-        "Status": 1,
-        "CheckoutDate": "2019-08-26T00:00:00+03:00",
-        "DueDate": "2019-09-05T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
     "ReservedBooks": [],
     "OverdueReservations": [],
     "OverdueBooks": [],
@@ -106,36 +46,37 @@
       "Return Book",
       "Renew Book",
       "Reserve Book",
-      "Remove Reservation",
       "Search",
-      "View Account",
       "Travel In Time",
       "Log Out"
     ],
     "Status": 0,
     "CheckedOutBooks": [],
     "ReservedBooks": [],
-    "OverdueReservations": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 1,
-        "Author": "Jordan Peterson",
-        "Title": "12 Rules For Life",
-        "ISBN": "345816021",
-        "Genre": "Philosophy / SelfHelp",
-        "Publisher": "Random House of Canada",
-        "Year": 2018,
-        "Rack": 11,
-        "Status": 2,
-        "CheckoutDate": "2019-08-12T00:00:00+03:00",
-        "DueDate": "2019-08-17T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
+    "OverdueReservations": [],
     "OverdueBooks": [],
     "LateFees": 0.0,
     "Username": "kiro",
     "Password": "kiro"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Status": 0,
+    "CheckedOutBooks": [],
+    "ReservedBooks": [],
+    "OverdueReservations": [],
+    "OverdueBooks": [],
+    "LateFees": 0.5,
+    "Username": "edo",
+    "Password": "edo"
   }
 ]

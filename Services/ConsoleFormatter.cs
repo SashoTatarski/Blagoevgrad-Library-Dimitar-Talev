@@ -1,4 +1,6 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Enums;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using System.Collections.Generic;
 
@@ -72,10 +74,79 @@ namespace Library.Services
 
             strBuilder.AppendLine($"ID: {book.ID} || Status: {book.Status}");
             strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            strBuilder.AppendLine($"CheckedOut Date: {book.ResevedDate.ToString("dd MM yyyy")}");
+            strBuilder.AppendLine($"Reservation Date: {book.ResevedDate.ToString("dd MM yyyy")}");
             strBuilder.AppendLine($"Due Date: {book.ResevationDueDate.ToString("dd MM yyyy")}");
 
             return strBuilder.ToString();
         }
+
+        public string FormatCommandMessage(string message, string modelInfo)
+        {
+            var strBuilder = new StringBuilder();
+
+            strBuilder.AppendLine();
+            strBuilder.AppendLine(GlobalConstants.Delimiter);
+            strBuilder.AppendLine(message);
+            strBuilder.AppendLine(GlobalConstants.MiniDelimiter);
+            strBuilder.Append(modelInfo);
+            strBuilder.AppendLine(GlobalConstants.Delimiter);
+
+            return strBuilder.ToString();
+        }
+
+        public string FormatCommandMessage(string message)
+        {
+            var strBuilder = new StringBuilder();
+
+            strBuilder.AppendLine();
+            strBuilder.AppendLine(GlobalConstants.Delimiter);
+            strBuilder.AppendLine(message);
+            strBuilder.AppendLine(GlobalConstants.Delimiter);
+
+            return strBuilder.ToString();
+        }
+
+        public string FormatListOfUsers(List<IUser> users)
+        {
+            var strBuilder = new StringBuilder();
+
+            if (users.Count == 0)
+            {
+                return GlobalConstants.NoUsers;
+            }
+            foreach (var user in users)
+            {
+                if (user.Status!= MemberStatus.Inactive)
+                {
+                    strBuilder.Append(this.Format(user));
+                    strBuilder.AppendLine(GlobalConstants.MiniDelimiter);
+                }
+            }
+            return strBuilder.ToString();
+        }
+
+        public string FormatListOfUsersShort(List<IUser> users)
+        {
+            var strBuilder = new StringBuilder();
+
+            if (users.Count == 0)
+            {
+                return GlobalConstants.NoUsers;
+            }
+            foreach (var user in users)
+            {
+                if (user.Status != MemberStatus.Inactive)
+                {
+                    strBuilder.Append(this.FormatShort(user));
+                }
+            }
+            return strBuilder.ToString();
+        }
+
+        private string FormatShort(IUser user)
+        {
+            return $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
+        }
+
     }
 }

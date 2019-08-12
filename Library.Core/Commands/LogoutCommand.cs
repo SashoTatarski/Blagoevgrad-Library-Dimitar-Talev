@@ -22,7 +22,7 @@ namespace Library.Core.Commands
 
             _authentication.LogOut();
 
-            return $"{_formatter.Format(user)} {GlobalConstants.SuccessLogOut}";
+            return _formatter.FormatCommandMessage(GlobalConstants.SuccessLogOut, _formatter.Format(user));
         }
     }
 }

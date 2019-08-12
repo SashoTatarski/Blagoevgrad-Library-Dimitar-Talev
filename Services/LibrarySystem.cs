@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Enums;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using System;
@@ -13,12 +14,14 @@ namespace Library.Services
         private readonly IAccountManager _accountManager;
         private readonly IConsoleFormatter _formatter;
         private readonly IConsoleRenderer _renderer;
+        private readonly IBookManager _bookManager;
 
-        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter, IConsoleRenderer renderer)
+        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter, IConsoleRenderer renderer, IBookManager bookManager)
         {
             _accountManager = accountManager;
             _formatter = formatter;
             _renderer = renderer;
+            _bookManager = bookManager;
         }
 
         public void CheckForOverdueBooks()
@@ -35,7 +38,6 @@ namespace Library.Services
 
         }
 
-
         public void CheckForOverdueReservations()
         {
             var usersWithReservations = _accountManager.GetAllUsers().Where(users => users.ReservedBooks.Any()).ToList();
@@ -47,7 +49,6 @@ namespace Library.Services
                 _accountManager.UpdateUser(user);
             }
         }
-
 
         public void DisplayMessageForOverdueBooks(IUser user)
         {
@@ -64,9 +65,6 @@ namespace Library.Services
             _renderer.Output(strBuilder.ToString());
         }
 
-
-
-
         public void DisplayMessageForOverdueReservations(IUser user)
         {
             var strBuilder = new StringBuilder();
@@ -74,13 +72,10 @@ namespace Library.Services
 
             foreach (var book in user.OverdueReservations)
             {
-                strBuilder.AppendLine(_formatter.Format(book));
+                strBuilder.AppendLine(_formatter.FormatReservedBook(book));
             }
 
             strBuilder.AppendLine("has been expired!");
-
-            user.RemoveAllOverdueReservations();
-
             _renderer.Output(strBuilder.ToString());
         }
 
@@ -99,6 +94,26 @@ namespace Library.Services
             {
                 throw new ArgumentException(GlobalConstants.MaxQuotaReached);
             }
+        }
+
+        public void PurgeOverdueReservations(IUser user)
+        {
+            this.DisplayMessageForOverdueReservations(user);
+            this.ClearOverdueReservations(user);
+        }
+
+        private void ClearOverdueReservations(IUser user)
+        {
+            for (int i = 0; i < user.OverdueReservations.Count; i++)
+            {
+                if (user.OverdueReservations[i].Status == BookStatus.Reserved)
+                {
+                    var bookToUpdate = user.OverdueReservations[i];
+                    _bookManager.UpdateBook(bookToUpdate.ID, BookStatus.Available, DateTime.MinValue, DateTime.MinValue, true);
+                }
+            }
+            user.RemoveAllOverdueReservations();
+            _accountManager.UpdateUser(user);
         }
     }
 }

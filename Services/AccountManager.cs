@@ -12,25 +12,20 @@ namespace Library.Services
         private readonly IUserDataBase _userDB;
         private readonly ILibrarianDataBase _librarianDB;
         private readonly IConsoleRenderer _renderer;
+        private readonly IConsoleFormatter _formatter;
 
-        public AccountManager(IUserDataBase userDB, ILibrarianDataBase librarianDB, IConsoleRenderer renderer)
+        public AccountManager(IUserDataBase userDB, ILibrarianDataBase librarianDB, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
             _userDB = userDB;
             _librarianDB = librarianDB;
             _renderer = renderer;
+            _formatter = formatter;
         }
 
-        public void ListAllUsers()
+        public void GetListAllUsers()
         {
             var users = _userDB.Load();
-
-            foreach (var user in users)
-            {
-                if (user.Status == MemberStatus.Active)
-                {
-                    _renderer.Output($"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n");
-                }
-            }
+            _renderer.Output(_formatter.FormatListOfUsersShort(users));
         }
 
         // 1. Take the user from the DB -> .Get

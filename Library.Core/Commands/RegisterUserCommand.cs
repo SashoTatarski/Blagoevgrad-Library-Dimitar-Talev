@@ -25,6 +25,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.RegisterUser);
+
             var username = _renderer.InputParameters("username",
                 s => s.Length < 1 || s.Length > 30);
             var password = _renderer.InputParameters("password",
@@ -35,7 +37,7 @@ namespace Library.Core.Commands
 
             _accountManager.AddUser(newUser);
 
-            return $"{GlobalConstants.UserRegisterSuccess} {_formatter.Format(newUser)}";
+            return _formatter.FormatCommandMessage(GlobalConstants.UserRegisterSuccess, _formatter.Format(newUser));
         }
     }
 }

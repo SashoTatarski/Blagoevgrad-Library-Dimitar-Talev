@@ -25,6 +25,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.RegisterLibrarian);
+
             var username = _renderer.InputParameters("username",
                 s => s.Length < 1 || s.Length > 30);
             var password = _renderer.InputParameters("password",
@@ -35,7 +37,7 @@ namespace Library.Core.Commands
 
             _accountManager.AddLibrarian(newLibrarian);
 
-            return $"{GlobalConstants.LibrarianRegisterSuccess}{_formatter.Format(newLibrarian)}";
+            return _formatter.FormatCommandMessage(GlobalConstants.LibrarianRegisterSuccess, _formatter.Format(newLibrarian));
         }
     }
 }

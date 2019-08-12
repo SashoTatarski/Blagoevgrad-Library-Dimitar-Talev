@@ -1,4 +1,5 @@
 ﻿using Library.Core.Contracts;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using System;
@@ -23,6 +24,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
+            _renderer.Output(GlobalConstants.Search);
+
             var searchParameters = new List<string> { "Title", "Author", "Genre", "Publisher", "Year", "Show all", "Exit" };
             _renderer.Output(_menuFactory.GenerateMenu(searchParameters));
 
@@ -31,7 +34,10 @@ namespace Library.Core.Commands
 
             string searchBy = String.Empty;
 
-            if (parameter != searchParameters[5])
+            if (parameter == "Exit")
+                throw new ArgumentException("");
+
+            if (parameter != "Show all")
                 searchBy = _renderer.InputParameters("search pattern");
 
             var searchResult = _bookManager.GetSearchResult(parameter, searchBy);
@@ -39,10 +45,10 @@ namespace Library.Core.Commands
             return _formatter.FormatListOfBooks(searchResult);
         }
 
-        public string GetSearchParameterByNumber(int number, List<string> parameters)
+        private string GetSearchParameterByNumber(int number, List<string> parameters)
         {
-            if (number < 0 || number > parameters.Count - 1)
-                throw new ArgumentException("Invalid parameter!");
+            if (number < 0 || number > parameters.Count + 1)
+                throw new ArgumentException(GlobalConstants.InvalidParameter);
 
             return parameters[number - 1];
         }

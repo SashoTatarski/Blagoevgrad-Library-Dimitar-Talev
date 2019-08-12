@@ -11,5 +11,6 @@ namespace Library.Services.Contracts
         void CheckIfMaxQuotaReached(List<IBook> books);
         void DisplayMessageForOverdueBooks(IUser user);
         void DisplayMessageForOverdueReservations(IUser user);
+        void PurgeOverdueReservations(IUser user);
     }
 }
