@@ -19,24 +19,16 @@ namespace Services
         }
         public IAccount CurrentAccount { get; private set; }
 
-        public void LogIn(IAccount account)
-        {
-            this.CurrentAccount = account;
-        }
+        public void LogIn(IAccount account) => this.CurrentAccount = account;
 
-        public void LogOut()
-        {
-            this.CurrentAccount = null;
-        }
+        public void LogOut() => this.CurrentAccount = null;
 
         public void CheckForExistingUsername(string username)
         {
             var account = _accountManager.FindAccount(username);
 
             if (account != null)
-            {
                 throw new ArgumentException("This username is already taken");
-            }
         }
 
         public List<string> GetAllowedCommands()

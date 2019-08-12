@@ -10,6 +10,8 @@ namespace Library.Models.Models
 {
     public class User : Account, IUser
     {
+        // OOP: User class inherits Account base class
+        // OOP: Encapsulation - properties with private set 
         public User(string username, string password) : base(username, password)
         {
             this.Status = MemberStatus.Active;
@@ -41,27 +43,20 @@ namespace Library.Models.Models
 
         public decimal LateFees { get; set; }
 
-        public void AddBookToCheckoutBooks(IBook book)
-        {
-            this.CheckedOutBooks.Add(book);
-        }
 
-        public void AddBookToReservedBooks(IBook book)
-        {
-            this.ReservedBooks.Add(book);
-        }
 
-        public void RemoveFromReservedBooks(IBook book)
-        {
-            this.ReservedBooks.Remove(book);
-        }
+        public void RemoveFromCheckedoutBooks(IBook book) => this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
+        public void RemoveFromReservedBooks(IBook book) => this.ReservedBooks.Remove(book);
 
-        public void RemoveFromCheckedoutBooks(IBook book)
-        {
-            this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
-        }
+        public void RemoveFromOverdueBooks(IBook book) => this.OverdueBooks.RemoveAll(b => b.ID == book.ID);
 
-        public void AddOverdueBooks(List<IBook> overdueBooks)
+        public void RemoveFromOverdueReservations(IBook book) => this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
+
+        public void AddBookToCheckoutBooks(IBook book) => this.CheckedOutBooks.Add(book);
+
+        public void AddBookToReservedBooks(IBook book) => this.ReservedBooks.Add(book);
+
+        public void AddToOverdueBooks(List<IBook> overdueBooks)
         {
             foreach (var book in overdueBooks)
             {
@@ -73,11 +68,6 @@ namespace Library.Models.Models
             }
         }
 
-        public void RemoveFromOverdueBooks(IBook book)
-        {
-            this.OverdueBooks.RemoveAll(b => b.ID == book.ID);
-        }
-
         public void AddOverdueReservations(List<IBook> overdueReservations)
         {
             foreach (var book in overdueReservations)
@@ -85,11 +75,6 @@ namespace Library.Models.Models
                 this.OverdueReservations.Add(book);
                 this.RemoveFromReservedBooks(book);
             }
-        }
-
-        public void RemoveFromOverdueReservations(IBook book)
-        {
-            this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
         }
 
         public void RemoveAllOverdueReservations()
@@ -141,7 +126,7 @@ namespace Library.Models.Models
             foreach (var book in this.OverdueBooks)
             {
                 // Printed in red
-                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
 
                 strBuilder.AppendLine($"ID: {book.ID} || Title: {book.Title} || Author: {book.Author} || CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")} || Due Date: {book.DueDate.ToString("dd MM yyyy")}");
 
@@ -153,18 +138,14 @@ namespace Library.Models.Models
         public bool HasOverdueBooks()
         {
             if (this.OverdueBooks.Count != 0)
-            {
                 return true;
-            }
             else return false;
         }
 
         public bool HasOverdueReservations()
         {
             if (this.OverdueReservations.Count != 0)
-            {
                 return true;
-            }
             else return false;
         }
     }

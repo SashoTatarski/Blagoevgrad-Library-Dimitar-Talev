@@ -12,7 +12,7 @@ namespace Library.Database
 {
     public class UserDataBase : IUserDataBase
     {
-        private IList<IUser> _internal;
+        private readonly IList<IUser> _internal;
 
         public UserDataBase()
         {
@@ -31,10 +31,8 @@ namespace Library.Database
             this.Save();
         }
 
-        public IUser Get(string username)
-        {
-            return _internal.FirstOrDefault(u => u.Username == username);
-        }
+        public IUser Get(string username) => _internal.FirstOrDefault(u => u.Username == username);
+
         public void Update(IUser updatedUser)
         {
             var userToUpdate = _internal.FirstOrDefault(u => u.Username == updatedUser.Username);
@@ -43,9 +41,8 @@ namespace Library.Database
         }
         public List<IUser> Load()
         {
-            var filePath = GlobalConstants.usersFilepath;
             string content;
-            using (var reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(GlobalConstants.usersFilepath))
             {
                 content = reader.ReadToEnd();
             }
@@ -59,9 +56,8 @@ namespace Library.Database
 
         public void Save()
         {
-            var filePath = GlobalConstants.usersFilepath;
             var serializer = this.CreateSerializer();
-            using (var sw = new StreamWriter(filePath))
+            using (var sw = new StreamWriter(GlobalConstants.usersFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
@@ -69,7 +65,6 @@ namespace Library.Database
                 }
             }
         }
-
 
         private JsonSerializer CreateSerializer()
         {

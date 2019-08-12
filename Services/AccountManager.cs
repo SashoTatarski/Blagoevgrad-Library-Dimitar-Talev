@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Library.Services
 {
+    // SOLID: DI principle - we program against Interfaces. High-level modules, which provide complex logic, should be easily reusable and unaffected by changes in low-level modules
     public class AccountManager : IAccountManager
     {
         private readonly IUserDataBase _userDB;
@@ -26,7 +27,10 @@ namespace Library.Services
         {
             var users = _userDB.Load();
             _renderer.Output(_formatter.FormatListOfUsersShort(users));
+
         }
+
+        public List<IUser> GetAllUsers() => _userDB.Load();
 
         // 1. Take the user from the DB -> .Get
         // 2. Update user in the User class
@@ -46,15 +50,9 @@ namespace Library.Services
             _userDB.Delete(userToRemove);
         }
 
-        public void AddLibrarian(ILibrarian librarian)
-        {
-            _librarianDB.Create(librarian);
-        }
+        public void AddUser(IUser user) => _userDB.Create(user);
 
-        public void AddUser(IUser user)
-        {
-            _userDB.Create(user);
-        }
+        public void AddLibrarian(ILibrarian librarian) => _librarianDB.Create(librarian);
 
         public IAccount FindAccount(string userName)
         {
@@ -70,10 +68,6 @@ namespace Library.Services
             }
             else
                 return user;
-        }
-        public List<IUser> GetAllUsers()
-        {
-            return _userDB.Load();
         }
     }
 }

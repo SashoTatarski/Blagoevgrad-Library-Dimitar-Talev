@@ -4,6 +4,7 @@ using System;
 
 namespace Library.Models.Models
 {
+    // OOP: Encapsulation - properties with private set 
     public class Book : IBook
     {
         private string _author;
@@ -118,9 +119,13 @@ namespace Library.Models.Models
         }
 
         public BookStatus Status { get; set; }
+
         public DateTime CheckoutDate { get; set; }
+
         public DateTime DueDate { get; set; }
+
         public DateTime ResevedDate { get; set; }
+
         public DateTime ResevationDueDate { get; set; }
 
         public void Update(IBook otherBook)

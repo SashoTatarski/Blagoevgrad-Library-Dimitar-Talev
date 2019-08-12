@@ -22,7 +22,6 @@ namespace Library.Models.Utils
         // Commands     
         public const string NoSuchUserName = "No such username!";
         public const string InvalidPassword = "Wrong password!";
-
         public const string RemoveUserInvalidUserName = "Invalid username!";
         public const string ReserveBookAlreadyCheckedout = "Book is already checked out and reserved for another user afterwards!";
         public const string ReservedBookAlreadyReservedOther = "Book is already reserved by another user!";

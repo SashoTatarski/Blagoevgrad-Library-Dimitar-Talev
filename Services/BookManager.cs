@@ -36,6 +36,7 @@ namespace Library.Services
         }
 
         // CheckOut Book
+        // OOP: Polymorphism - method overloading static polymorphism. In static polym. identification of the overloaded method to be executed is carried out at compile time
         public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
             var bookToUpdate = _database.Get(bookId);
@@ -55,20 +56,13 @@ namespace Library.Services
             _database.Update(bookToUpdate);
         }
 
-        public void AddBook(IBook book)
-        {
-            _database.Create(book);
-        }
+        public void AddBook(IBook book) => _database.Create(book);
 
-        public void RemoveBook(IBook book)
-        {
-            _database.Delete(book);
-        }
+        public void RemoveBook(IBook book) => _database.Delete(book);
 
-        public IBook FindBook(int id)
-        {
-            return _database.Get(id);
-        }
+        public IBook FindBook(int id) => _database.Get(id);
+
+        public List<IBook> GetAllBooks() => _database.Load();
 
         public int GetLastBookID()
         {
@@ -83,14 +77,10 @@ namespace Library.Services
             foreach (var book in books)
             {
                 if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved)
-                {
                     Console.ForegroundColor = ConsoleColor.Red;
-                }
 
                 if (book.Status == BookStatus.Available)
-                {
                     Console.ForegroundColor = ConsoleColor.Green;
-                }
 
                 Console.WriteLine($"\r\nID: {book.ID} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
 
@@ -134,18 +124,13 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             if (user.CheckedOutBooks.Count == 0)
-            {
                 throw new ArgumentException("There are no checked out books!");
-            }
-
             else
             {
                 strBuilder.AppendLine("Books you have checked out:");
 
                 foreach (var book in user.CheckedOutBooks)
-                {
                     strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-                }
             }
             return strBuilder.ToString();
         }
@@ -155,9 +140,8 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             foreach (var book in user.OverdueBooks)
-            {
                 strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-            }
+
             return strBuilder.ToString();
         }
     }

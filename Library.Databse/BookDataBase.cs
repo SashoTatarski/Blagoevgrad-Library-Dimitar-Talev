@@ -44,27 +44,10 @@ namespace Library.Database
             this.Save();
         }
 
-        ////Kiro's work
-        //public void Load()
-        //{
-        //    var filePath = GlobalConstants.catalogFilepath;
-        //    string content;
-        //    using (var reader = new StreamReader(filePath))
-        //    {
-        //        content = reader.ReadToEnd();
-        //    }
-        //    _internal = JsonConvert
-        //        .DeserializeObject<List<Book>>(content, new JsonSerializerSettings
-        //        {
-        //            TypeNameHandling = TypeNameHandling.Auto
-        //        }).Cast<IBook>().ToList();
-        //}
-
         public List<IBook> Load()
-        {
-            var filePath = GlobalConstants.catalogFilepath;
+        {            
             string content;
-            using (var reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(GlobalConstants.catalogFilepath))
             {
                 content = reader.ReadToEnd();
             }
@@ -78,9 +61,8 @@ namespace Library.Database
 
         public void Save()
         {
-            var filePath = GlobalConstants.catalogFilepath;
             var serializer = this.CreateSerializer();
-            using (var sw = new StreamWriter(filePath))
+            using (var sw = new StreamWriter(GlobalConstants.catalogFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
