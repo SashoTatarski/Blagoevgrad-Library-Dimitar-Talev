@@ -28,8 +28,7 @@ namespace Library.Models.Models
                 "Renew Book",
                 "Reserve Book",
                 "Remove Reservation",
-                "Search",
-                "View Account",
+                "Search",                
                 "Travel In Time",
                 "Log Out"
             };

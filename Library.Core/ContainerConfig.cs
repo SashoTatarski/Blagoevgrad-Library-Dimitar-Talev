@@ -45,8 +45,7 @@ namespace Library.Core
             // Commands
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");
-            containerBuilder.RegisterType<EditBookCommand>().Named<ICommand>("editbook");
-            containerBuilder.RegisterType<ViewAccountsCommand>().Named<ICommand>("viewaccounts");
+            containerBuilder.RegisterType<EditBookCommand>().Named<ICommand>("editbook");            
             containerBuilder.RegisterType<SearchBookCommand>().Named<ICommand>("search");
             containerBuilder.RegisterType<RegisterUserCommand>().Named<ICommand>("registeruser");
             containerBuilder.RegisterType<RemoveUserCommand>().Named<ICommand>("removeuser");

@@ -21,8 +21,7 @@ namespace Library.Models.Models
                 "Register User",
                 "Register Librarian",
                 "Remove User",
-                "Search",
-                "View Accounts",
+                "Search",               
                 "Travel In Time",
                 "Log Out"
             };
