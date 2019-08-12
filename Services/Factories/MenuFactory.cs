@@ -15,6 +15,7 @@ namespace Library.Services.Factory
         {
             _account = account;
         }
+
         public string GenerateMenu(IAccount account)
         {
             var strBuilder = new StringBuilder();
@@ -52,9 +53,5 @@ namespace Library.Services.Factory
             }
             return strBuilder.ToString();
         }
-
-        
-
-        
     }
 }

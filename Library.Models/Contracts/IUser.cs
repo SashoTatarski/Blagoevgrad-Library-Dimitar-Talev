@@ -31,7 +31,7 @@ namespace Library.Models.Contracts
 
         void AddBookToReservedBooks(IBook book);
 
-        void AddOverdueBooks(List<IBook> overdueBooks);
+        void AddToOverdueBooks(List<IBook> overdueBooks);
 
         void AddOverdueReservations(List<IBook> overdueReservations);
 

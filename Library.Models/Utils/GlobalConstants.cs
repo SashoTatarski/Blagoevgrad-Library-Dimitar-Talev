@@ -5,7 +5,7 @@
         // Commands     
         public const string NoSuchUserName = "No such username!";
         public const string InvalidPassword = "Wrong password!";
-        public const string SuccessLogIn = "succefully logged!";
+        public const string SuccessLogIn = "Succefully logged!";
         public const string SuccessLogOut = "succefully logged out!";
         public const string LibrarianRegisterSuccess = "Successfully created new librarian account: ";
         public const string UserRegisterSuccess = "Successfully created new user account: ";

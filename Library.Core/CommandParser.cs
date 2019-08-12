@@ -9,7 +9,7 @@ namespace Library.Core
     // SOLID: Single Responsibility
     public class CommandParser : ICommandParser
     {
-        private readonly IComponentContext _componentContext;       
+        private readonly IComponentContext _componentContext;
 
         public CommandParser(IComponentContext componentContext)
         {
@@ -18,14 +18,12 @@ namespace Library.Core
 
         public ICommand GetCommandByNumber(int number, List<string> commands)
         {
-                if (number < 1 || number > commands.Count)
-                {
-                    throw new ArgumentException("Invalid input");
-                }
+            if (number < 1 || number > commands.Count)
+                throw new ArgumentException("Invalid input");
 
-                var commandAsString = commands[number - 1].Replace(" ", "").ToLower();
+            var commandAsString = commands[number - 1].Replace(" ", "").ToLower();
 
-                return _componentContext.ResolveNamed<ICommand>(commandAsString);
+            return _componentContext.ResolveNamed<ICommand>(commandAsString);
         }
     }
 }

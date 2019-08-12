@@ -74,24 +74,7 @@
       "Log Out"
     ],
     "Status": 0,
-    "CheckedOutBooks": [
-      {
-        "$type": "Library.Models.Models.Book, Library.Models",
-        "ID": 12,
-        "Author": "J.K.Rowling",
-        "Title": "Harry Potter",
-        "ISBN": "0987",
-        "Genre": "Fun",
-        "Publisher": "Fut",
-        "Year": 2001,
-        "Rack": 12,
-        "Status": 1,
-        "CheckoutDate": "2019-08-26T00:00:00+03:00",
-        "DueDate": "2019-09-05T00:00:00+03:00",
-        "ResevedDate": "0001-01-01T00:00:00",
-        "ResevationDueDate": "0001-01-01T00:00:00"
-      }
-    ],
+    "CheckedOutBooks": [],
     "ReservedBooks": [],
     "OverdueReservations": [],
     "OverdueBooks": [],

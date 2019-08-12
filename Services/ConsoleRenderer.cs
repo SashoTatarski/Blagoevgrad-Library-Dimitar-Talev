@@ -5,16 +5,14 @@ namespace Library.Services
 {
     public class ConsoleRenderer : IConsoleRenderer
     {
-        public string Input()
-        {
-            var currentLine = Console.ReadLine();
+        public string Input() => Console.ReadLine();
 
-            return currentLine;
-        }
+        public void Output(string output) => Console.Write(output);
 
-        public void Output(string output)
+        public string InputParameters(string parameterName)
         {
-            Console.Write(output);
+            this.Output($"Enter {parameterName}: ");
+            return this.Input();
         }
 
         public string InputParameters(string parameterName, Func<string, bool> validator)
@@ -24,17 +22,9 @@ namespace Library.Services
             var input = this.Input();
 
             while (validator(input))
-            {
-                input = this.Input();
-            }
-
+              input = this.Input();
+            
             return input;
-        }
-
-        public string InputParameters(string parameterName)
-        {
-            this.Output($"Enter {parameterName}: ");
-            return this.Input();
-        }
+        }      
     }
 }

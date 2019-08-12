@@ -45,27 +45,20 @@ namespace Library.Models.Models
 
         public decimal LateFees { get; set; }
 
-        public void AddBookToCheckoutBooks(IBook book)
-        {
-            this.CheckedOutBooks.Add(book);
-        }
 
-        public void AddBookToReservedBooks(IBook book)
-        {
-            this.ReservedBooks.Add(book);
-        }
 
-        public void RemoveFromReservedBooks(IBook book)
-        {
-            this.ReservedBooks.Remove(book);
-        }
+        public void RemoveFromCheckedoutBooks(IBook book) => this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
+        public void RemoveFromReservedBooks(IBook book) => this.ReservedBooks.Remove(book);
 
-        public void RemoveFromCheckedoutBooks(IBook book)
-        {
-            this.CheckedOutBooks.RemoveAll(b => b.ID == book.ID);
-        }
+        public void RemoveFromOverdueBooks(IBook book) => this.OverdueBooks.RemoveAll(b => b.ID == book.ID);
 
-        public void AddOverdueBooks(List<IBook> overdueBooks)
+        public void RemoveFromOverdueReservations(IBook book) => this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
+
+        public void AddBookToCheckoutBooks(IBook book) => this.CheckedOutBooks.Add(book);
+
+        public void AddBookToReservedBooks(IBook book) => this.ReservedBooks.Add(book);
+
+        public void AddToOverdueBooks(List<IBook> overdueBooks)
         {
             foreach (var book in overdueBooks)
             {
@@ -77,11 +70,6 @@ namespace Library.Models.Models
             }
         }
 
-        public void RemoveFromOverdueBooks(IBook book)
-        {
-            this.OverdueBooks.RemoveAll(b => b.ID == book.ID);
-        }
-
         public void AddOverdueReservations(List<IBook> overdueReservations)
         {
             foreach (var book in overdueReservations)
@@ -89,11 +77,6 @@ namespace Library.Models.Models
                 this.OverdueReservations.Add(book);
                 this.RemoveFromReservedBooks(book);
             }
-        }
-
-        public void RemoveFromOverdueReservations(IBook book)
-        {
-            this.OverdueReservations.RemoveAll(b => b.ID == book.ID);
         }
 
         // TODO Hrisi
@@ -165,9 +148,7 @@ namespace Library.Models.Models
         public bool HasOverdueBooks()
         {
             if (this.OverdueBooks.Count != 0)
-            {
                 return true;
-            }
             else return false;
         }
 

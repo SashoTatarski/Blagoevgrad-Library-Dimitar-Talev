@@ -6,6 +6,7 @@ namespace Library.Services.Factory
     public interface IMenuFactory
     {
         string GenerateMenu(IAccount account);
+
         string GenerateMenu(List<string> parameters);
     }
 }

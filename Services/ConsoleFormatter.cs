@@ -44,13 +44,11 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             if (books.Count == 0)
-            {
                 return "There are no books!";
-            }
+
             foreach (var book in books)
-            {
                 strBuilder.AppendLine(this.Format(book));
-            }
+
             return strBuilder.ToString();
         }
 

@@ -29,12 +29,10 @@ namespace Library.Services
             {
                 var overdueBooks = user.CheckedOutBooks.Where(b => b.DueDate < VirtualDate.VirtualToday).ToList();
 
-                user.AddOverdueBooks(overdueBooks);
+                user.AddToOverdueBooks(overdueBooks);
                 _accountManager.UpdateUser(user);
             }
-
         }
-
 
         public void CheckForOverdueReservations()
         {
@@ -48,24 +46,18 @@ namespace Library.Services
             }
         }
 
-
         public void DisplayMessageForOverdueBooks(IUser user)
         {
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine("You have overdue books!");
 
             foreach (var book in user.OverdueBooks)
-            {
                 strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-            }
 
             strBuilder.AppendLine("Return the books to be able to use the services of the library!");
 
             _renderer.Output(strBuilder.ToString());
         }
-
-
-
 
         public void DisplayMessageForOverdueReservations(IUser user)
         {
@@ -73,9 +65,7 @@ namespace Library.Services
             strBuilder.AppendLine("Your reservation for:");
 
             foreach (var book in user.OverdueReservations)
-            {
                 strBuilder.AppendLine(_formatter.Format(book));
-            }
 
             strBuilder.AppendLine("has been expired!");
 
@@ -96,9 +86,7 @@ namespace Library.Services
         public void CheckIfMaxQuotaReached(List<IBook> books)
         {
             if (books.Count == GlobalConstants.MaxBookQuota)
-            {
                 throw new ArgumentException(GlobalConstants.MaxQuotaReached);
-            }
         }
     }
 }
