@@ -15,11 +15,13 @@ namespace Library.Services
     {
         private readonly IBookDatabase _database;
         private readonly IBookFactory _factory;
+        private readonly IConsoleFormatter _formatter;
 
-        public BookManager(IBookDatabase database, IBookFactory bookfactory, IConsoleRenderer renderer)
+        public BookManager(IBookDatabase database, IBookFactory bookfactory, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
             _database = database;
             _factory = bookfactory;
+            _formatter = formatter;
         }
 
         // Edit Book
@@ -67,6 +69,7 @@ namespace Library.Services
         {
             return _database.Get(id);
         }
+
         public int GetLastBookID()
         {
             var books = _database.Load();
@@ -129,6 +132,49 @@ namespace Library.Services
         public List<IBook> GetAllBooks()
         {
             return _database.Load();
+        }
+
+        public string GetCheckedoutBooksInfo(IUser user)
+        {
+            var strBuilder = new StringBuilder();
+
+            if (user.CheckedOutBooks.Count == 0)
+            {
+                throw new ArgumentException("There are no checked out books!");
+            }
+
+            else
+            {
+                strBuilder.AppendLine("Books you have checked out:");
+
+                foreach (var book in user.CheckedOutBooks)
+                {
+                    strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
+                }
+            }
+            return strBuilder.ToString();
+        }
+
+        public string GetOverdueBooksInfo(IUser user)
+        {
+            var strBuilder = new StringBuilder();
+
+            foreach (var book in user.OverdueBooks)
+            {
+                strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
+            }
+            return strBuilder.ToString();
+        }
+
+        public string GetOverdueReservationsInfo(IUser user)
+        {
+            var strBuilder = new StringBuilder();
+
+            foreach (var book in user.OverdueBooks)
+            {
+                strBuilder.AppendLine(_formatter.FormatReservedBook(book));
+            }
+            return strBuilder.ToString();
         }
     }
 }

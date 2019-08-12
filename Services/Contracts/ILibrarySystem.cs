@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using System.Collections.Generic;
 
 namespace Library.Services.Contracts
 {
@@ -7,12 +8,8 @@ namespace Library.Services.Contracts
         void AssignFee(IUser user);
         void CheckForOverdueBooks();
         void CheckForOverdueReservations();
-        void CheckIfMaxQuotaReached(System.Collections.Generic.List<IBook> books);
-        string DisplayCheckedoutBooks(IUser user);
-        string DisplayOverdueBooks(IUser user);
-        string GetMessageForOverdueBooks(IUser user);
-        string GetMessageForOverdueReservations(IUser user);
-        bool HasOverdueBooks(IUser user);
-        bool HasOverdueReservations(IUser user);
+        void CheckIfMaxQuotaReached(List<IBook> books);
+        void DisplayMessageForOverdueBooks(IUser user);
+        void DisplayMessageForOverdueReservations(IUser user);
     }
 }

@@ -190,5 +190,21 @@
     "DueDate": "0001-01-01T00:00:00",
     "ResevedDate": "0001-01-01T00:00:00",
     "ResevationDueDate": "0001-01-01T00:00:00"
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "ID": 13,
+    "Author": "Astrid Lindgren",
+    "Title": "Pippi Longstocking",
+    "ISBN": "125LpokH",
+    "Genre": "Children",
+    "Publisher": "Swed",
+    "Year": 1997,
+    "Rack": 15,
+    "Status": 0,
+    "CheckoutDate": "0001-01-01T00:00:00",
+    "DueDate": "0001-01-01T00:00:00",
+    "ResevedDate": "0001-01-01T00:00:00",
+    "ResevationDueDate": "0001-01-01T00:00:00"
   }
 ]

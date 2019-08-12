@@ -29,17 +29,17 @@ namespace Library.Core.Commands
         {
             var user = (IUser)_account.CurrentAccount;
 
-            //Check if there sre overdue books
-            if (_system.HasOverdueBooks(user))
+            //Check if there are overdue books
+            if (user.HasOverdueBooks())
             {
                 _system.AssignFee(user);
 
-                _renderer.Output("Overdue books\r\n");
-                _renderer.Output(_system.DisplayOverdueBooks(user));
+                _renderer.Output("Overdue books:\r\n");
+                _renderer.Output(_bookManager.GetOverdueBooksInfo(user));
             }
             else
             {
-                _renderer.Output(_system.DisplayCheckedoutBooks(user));
+                _renderer.Output(_bookManager.GetCheckedoutBooksInfo(user));
             }
 
             //Enter ID:
@@ -54,7 +54,7 @@ namespace Library.Core.Commands
             var bookToReturn = _bookManager.FindBook(bookID);
 
             //Check if the book to remove is overdue, in order to know from where to delete it
-            if (_system.HasOverdueBooks(user))
+            if (user.HasOverdueBooks())
             {
                 user.RemoveFromOverdueBooks(bookToReturn);
             }

@@ -9,11 +9,12 @@ namespace Services
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly IAccountManager _accountManager;
+        private readonly ILibrarySystem _system;
 
-        public AuthenticationManager(IAccountManager accountManager)
+        public AuthenticationManager(IAccountManager accountManager, ILibrarySystem system)
         {
             _accountManager = accountManager;
-            this.CurrentAccount = null;
+            _system = system;
         }
         public IAccount CurrentAccount { get; private set; }
 
@@ -45,6 +46,20 @@ namespace Services
             }
             else
             {
+                if (this.CurrentAccount.GetType() == typeof(IUser))
+                {
+                    var user = (IUser)this.CurrentAccount;
+                    if (user.HasOverdueBooks())
+                    {
+                        _system.DisplayMessageForOverdueBooks(user);
+
+                        return new List<string> { "Return Book", "Log Out" };
+                    }
+                    if (user.HasOverdueReservations())
+                    {
+                        _system.DisplayMessageForOverdueReservations(user);
+                    }
+                }
                 return (List<string>)this.CurrentAccount.AllowedCommands;
             }
         }

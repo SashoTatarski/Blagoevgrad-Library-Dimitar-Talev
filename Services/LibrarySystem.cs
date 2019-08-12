@@ -12,11 +12,13 @@ namespace Library.Services
     {
         private readonly IAccountManager _accountManager;
         private readonly IConsoleFormatter _formatter;
+        private readonly IConsoleRenderer _renderer;
 
-        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter)
+        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter, IConsoleRenderer renderer)
         {
             _accountManager = accountManager;
             _formatter = formatter;
+            _renderer = renderer;
         }
         public void CheckForOverdueBooks()
         {
@@ -43,7 +45,7 @@ namespace Library.Services
             }
         }
 
-        public string GetMessageForOverdueBooks(IUser user)
+        public void DisplayMessageForOverdueBooks(IUser user)
         {
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine("You have overdue books!");
@@ -55,10 +57,10 @@ namespace Library.Services
 
             strBuilder.AppendLine("Return the books to be able to use the services of the library!");
 
-            return strBuilder.ToString();
+            _renderer.Output(strBuilder.ToString());
         }
 
-        public string GetMessageForOverdueReservations(IUser user)
+        public void DisplayMessageForOverdueReservations(IUser user)
         {
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine("Your reservation for:");
@@ -72,7 +74,7 @@ namespace Library.Services
 
             user.RemoveAllOverdueReservations();
 
-            return strBuilder.ToString();
+            _renderer.Output(strBuilder.ToString());
         }
 
         public void AssignFee(IUser user)
@@ -82,65 +84,6 @@ namespace Library.Services
                 var overdueDays = (VirtualDate.VirtualToday - book.DueDate).TotalDays;
                 user.LateFees += (decimal)overdueDays * GlobalConstants.Fee;
             }
-        }
-
-        public bool HasOverdueBooks(IUser user)
-        {
-            if (user.OverdueBooks.Count != 0)
-            {
-                return true;
-            }
-            else return false;
-        }
-
-        public bool HasOverdueReservations(IUser user)
-        {
-            if (user.OverdueReservations.Count != 0)
-            {
-                return true;
-            }
-            else return false;
-        }
-
-        public string DisplayCheckedoutBooks(IUser user)
-        {
-            var strBuilder = new StringBuilder();
-
-            if (user.CheckedOutBooks.Count == 0)
-            {
-                throw new ArgumentException("There are no checked out books!");
-            }
-
-            else
-            {
-                strBuilder.AppendLine("Books you have checked out:");
-
-                foreach (var book in user.CheckedOutBooks)
-                {
-                    strBuilder.AppendLine($"ID: {book.ID}");
-                    strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-                    strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
-                    strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
-                }
-            }
-            return strBuilder.ToString();
-        }
-
-        public string DisplayOverdueBooks(IUser user)
-        {
-            var strBuilder = new StringBuilder();
-
-            foreach (var book in user.OverdueBooks)
-            {
-                strBuilder.AppendLine($"ID: {book.ID}");
-                strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-                strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
-
-                Console.ForegroundColor = ConsoleColor.Red;
-                strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
-                Console.ResetColor();
-            }
-            return strBuilder.ToString();
         }
 
         public void CheckIfMaxQuotaReached(List<IBook> books)

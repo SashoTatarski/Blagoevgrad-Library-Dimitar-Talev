@@ -13,11 +13,45 @@
       "Log Out"
     ],
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
+    "CheckedOutBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 2,
+        "Author": "Milo Yiannaopoulos",
+        "Title": "Dangerous",
+        "ISBN": "069289344X",
+        "Genre": "Political Humor",
+        "Publisher": "Instagram",
+        "Year": 2007,
+        "Rack": 22,
+        "Status": 3,
+        "CheckoutDate": "2019-08-25T00:00:00+03:00",
+        "DueDate": "2019-09-04T00:00:00+03:00",
+        "ResevedDate": "2019-08-25T00:00:00+03:00",
+        "ResevationDueDate": "9999-12-31T23:59:59.9999999"
+      }
+    ],
+    "ReservedBooks": [
+      {
+        "$type": "Library.Models.Models.Book, Library.Models",
+        "ID": 2,
+        "Author": "Milo Yiannaopoulos",
+        "Title": "Dangerous",
+        "ISBN": "069289344X",
+        "Genre": "Political Humor",
+        "Publisher": "Instagram",
+        "Year": 2007,
+        "Rack": 22,
+        "Status": 3,
+        "CheckoutDate": "2019-08-25T00:00:00+03:00",
+        "DueDate": "2019-09-04T00:00:00+03:00",
+        "ResevedDate": "2019-08-25T00:00:00+03:00",
+        "ResevationDueDate": "9999-12-31T23:59:59.9999999"
+      }
+    ],
     "OverdueReservations": [],
     "OverdueBooks": [],
-    "LateFees": 0.0,
+    "LateFees": 1.5,
     "Username": "hrisi",
     "Password": "hrisi"
   },

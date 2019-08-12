@@ -1,12 +1,9 @@
 ﻿using Library.Core.Contracts;
-using Library.Models.Contracts;
-using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using Services.Contracts;
 using System;
-using System.Collections.Generic;
 
 namespace Library.Core
 {
@@ -17,16 +14,14 @@ namespace Library.Core
         private readonly IMenuFactory _menuFactory;
         private readonly IAuthenticationManager _authentication;
         private readonly ILibrarySystem _system;
-        private readonly IAccountManager _accountManager;
 
-        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system, IAccountManager accountManager)
+        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system)
         {
             _renderer = renderer;
             _commandParser = commandParser;
             _menuFactory = menuFactory;
             _authentication = authentication;
             _system = system;
-            _accountManager = accountManager;
         }
 
         public void Start()
@@ -39,21 +34,6 @@ namespace Library.Core
             while (true)
             {
                 var allowedcommands = _authentication.GetAllowedCommands();
-
-                if (_authentication.GetCurrentAccountType() == "User")
-                {
-                    var user = (IUser)_authentication.CurrentAccount;
-                    if (_system.HasOverdueBooks(user))
-                    {
-                        _renderer.Output(_system.GetMessageForOverdueBooks(user));
-
-                        allowedcommands = new List<string> { "Return Book", "Log Out" };
-                    }
-                    if (_system.HasOverdueReservations(user))
-                    {
-                        _renderer.Output(_system.GetMessageForOverdueReservations(user));
-                    }
-                }
 
                 _renderer.Output(_menuFactory.GenerateMenu(allowedcommands));
 

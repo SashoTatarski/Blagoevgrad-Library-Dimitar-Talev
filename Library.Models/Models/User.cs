@@ -159,5 +159,23 @@ namespace Library.Models.Models
             }
             return strBuilder.ToString();
         }
+
+        public bool HasOverdueBooks()
+        {
+            if (this.OverdueBooks.Count != 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool HasOverdueReservations()
+        {
+            if (this.OverdueReservations.Count != 0)
+            {
+                return true;
+            }
+            else return false;
+        }
     }
 }
