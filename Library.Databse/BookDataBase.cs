@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Library.Database
 {
+    // SOLID: Liskov - we can substitute JSON with another type of DB
     public class BookDatabase : IBookDatabase
     {
         private readonly IList<IBook> _internal;
