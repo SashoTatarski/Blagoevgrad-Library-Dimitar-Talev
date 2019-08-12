@@ -9,7 +9,8 @@ namespace Library.Models.Models
         private string _username;
         private string _password;
 
-        public Account(string username, string password)
+        // Change "public" to protected (abstract type should not have public contructors)
+        protected Account(string username, string password)
         {
             this.Username = username;
             this.Password = password;
