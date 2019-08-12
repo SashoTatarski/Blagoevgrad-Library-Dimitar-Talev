@@ -4,7 +4,6 @@ using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,6 +56,7 @@ namespace Library.Database
                 }).Cast<IUser>().ToList();
         }
 
+
         public void Save()
         {
             var filePath = GlobalConstants.usersFilepath;
@@ -70,6 +70,7 @@ namespace Library.Database
             }
         }
 
+
         private JsonSerializer CreateSerializer()
         {
             return new JsonSerializer
@@ -79,5 +80,6 @@ namespace Library.Database
                 TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
             };
         }
+
     }
 }

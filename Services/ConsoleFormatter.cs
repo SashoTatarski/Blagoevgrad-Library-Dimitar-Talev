@@ -1,13 +1,12 @@
-﻿using Library.Core.Contracts;
-using Library.Models.Contracts;
+﻿using Library.Models.Contracts;
 using Library.Services.Contracts;
 using System.Collections.Generic;
 
 using System.Text;
 
-namespace Library.Core
+namespace Library.Services
 {
-    public class ConsoleFormatter : IConsoleFormatter
+    public class Formatter : IConsoleFormatter
     {
         public string Format(IBook book)
         {
@@ -37,7 +36,7 @@ namespace Library.Core
         {
             var strBuilder = new StringBuilder();
 
-            if (books.Count == 0)
+            if (books.Count==0)
             {
                 return "There are no books!";
             }

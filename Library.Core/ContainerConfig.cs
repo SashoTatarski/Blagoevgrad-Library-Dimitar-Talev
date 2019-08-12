@@ -30,11 +30,12 @@ namespace Library.Core
             // Providers
             containerBuilder.RegisterType<ConsoleRenderer>().As<IConsoleRenderer>();
             containerBuilder.RegisterType<CommandParser>().As<ICommandParser>();
-            containerBuilder.RegisterType<Formatter>().As<IFormatter>();
+            containerBuilder.RegisterType<ConsoleFormatter>().As<IConsoleFormatter>();
             // Service Managers
             containerBuilder.RegisterType<AuthenticationManager>().As<IAuthenticationManager>().SingleInstance();
             containerBuilder.RegisterType<AccountManager>().As<IAccountManager>();
             containerBuilder.RegisterType<BookManager>().As<IBookManager>();
+            containerBuilder.RegisterType<LibrarySystem>().As<ILibrarySystem>();
             // Commands
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");

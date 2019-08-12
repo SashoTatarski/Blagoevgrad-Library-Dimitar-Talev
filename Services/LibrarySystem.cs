@@ -11,10 +11,17 @@ namespace Library.Services
     public class LibrarySystem : ILibrarySystem
     {
         private readonly IAccountManager _accountManager;
+<<<<<<< HEAD
 
         public LibrarySystem(IAccountManager accountManager)
+=======
+        private readonly IConsoleFormatter _formatter;
+
+        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter)
+>>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
         {
             _accountManager = accountManager;
+            _formatter = formatter;
         }
 
         public void CheckForOverdueBooks()
@@ -25,6 +32,7 @@ namespace Library.Services
             {
                 var overdueBooks = user.CheckedOutBooks.Where(b => b.DueDate < VirtualDate.VirtualToday).ToList();
 
+<<<<<<< HEAD
                 if (overdueBooks.Count != 0)
                 {
                     foreach (var book in overdueBooks)
@@ -34,15 +42,20 @@ namespace Library.Services
                         this.AddOverdueMessage(user, overdueDays, book);
                     }
                 }
+=======
+                user.AddOverdueBooks(overdueBooks);
+                _accountManager.UpdateUser(user);
+>>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
             }
         }
 
-        public void CheckForOverdueBooks(IUser user)
+        public void CheckForOverdueReservations()
         {
-            var overdueBooks = user.CheckedOutBooks.Where(b => b.DueDate < VirtualDate.VirtualToday).ToList();
+            var usersWithReservations = _accountManager.GetAllUsers().Where(users => users.ReservedBooks.Any()).ToList();
 
-            if (overdueBooks.Count != 0)
+            foreach (var user in usersWithReservations)
             {
+<<<<<<< HEAD
                 user.LateFees = 0;
                 user.OverdueMessages = null;
                 foreach (var book in overdueBooks)
@@ -51,29 +64,120 @@ namespace Library.Services
                     this.AssignFee(user, overdueDays);
                     this.AddOverdueMessage(user, overdueDays, book);
                 }
-            }
-        }
-
-        public void CheckForOverDueReservations()
-        {
-            var users = _accountManager.GetAllUsers();
-
-            foreach (var user in users)
-            {
+=======
                 var overdueReservations = user.ReservedBooks.Where(b => b.ResevationDueDate < VirtualDate.VirtualToday).ToList();
+                user.AddOverdueReservations(overdueReservations);
+                _accountManager.UpdateUser(user);
+>>>>>>> 577c83ee1bf19f6522d03062f01fbb692e35f41d
             }
         }
 
-        private void AssignFee(IUser user, int overdueDays)
+        public string GetMessageForOverdueBooks(IUser user)
         {
-            user.LateFees += overdueDays * GlobalConstants.Fee;
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine("You have overdue books!");
+
+            foreach (var book in user.OverdueBooks)
+            {
+                strBuilder.AppendLine(_formatter.Format(book));
+            }
+
+            strBuilder.AppendLine("Return the books to be able to use the services of the library!");
+
+            return strBuilder.ToString();
         }
 
-        private void AddOverdueMessage(IUser user, int overdueDays, IBook book)
+        public string GetMessageForOverdueReservations(IUser user)
         {
-            var message = (GlobalConstants.OverdueMessage, book.ID, book.Title, book.Author, overdueDays).ToString();
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine("Your reservation for:");
 
-            user.OverdueMessages.Add(message);
+            foreach (var book in user.OverdueReservations)
+            {
+                strBuilder.AppendLine(_formatter.Format(book));
+            }
+
+            strBuilder.AppendLine("has been expired!");
+
+            user.RemoveAllOverdueReservations();
+
+            return strBuilder.ToString();
+        }
+
+        public void AssignFee(IUser user)
+        {
+            foreach (var book in user.OverdueBooks)
+            {
+                var overdueDays = (VirtualDate.VirtualToday - book.DueDate).TotalDays;
+                user.LateFees += (decimal)overdueDays * GlobalConstants.Fee;
+            }
+        }
+
+        public bool HasOverdueBooks(IUser user)
+        {
+            if (user.OverdueBooks.Count != 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool HasOverdueReservations(IUser user)
+        {
+            if (user.OverdueReservations.Count != 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public string DisplayCheckedoutBooks(IUser user)
+        {
+            var strBuilder = new StringBuilder();
+
+            if (user.CheckedOutBooks.Count == 0)
+            {
+                throw new ArgumentException("There are no checked out books!");
+            }
+
+            else
+            {
+                strBuilder.AppendLine("Books you have checked out:");
+
+                foreach (var book in user.CheckedOutBooks)
+                {
+                    strBuilder.AppendLine($"ID: {book.ID}");
+                    strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
+                    strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
+                    strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+                }
+            }
+            return strBuilder.ToString();
+        }
+
+        public string DisplayOverdueBooks(IUser user)
+        {
+            var strBuilder = new StringBuilder();
+
+            foreach (var book in user.OverdueBooks)
+            {
+                strBuilder.AppendLine($"ID: {book.ID}");
+                strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
+                strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+                Console.ResetColor();
+            }
+            return strBuilder.ToString();
+        }
+
+        public void CheckIfMaxQuotaReached(List<IBook> books)
+        {
+            if (books.Count == GlobalConstants.MaxBookQuota)
+            {
+                throw new ArgumentException(GlobalConstants.MaxQuotaReached);
+            }
         }
     }
 }

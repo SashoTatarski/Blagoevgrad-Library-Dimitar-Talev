@@ -11,7 +11,6 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
 
-        //TODO IAuthenticationManager account?
         public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager)
         {
             _factory = factory;

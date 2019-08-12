@@ -59,8 +59,8 @@ namespace Library.Models.Models
             get => _isbn;
             private set
             {
-                if (value.Length != 10 && value.Length != 13)
-                    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
+                //if (value.Length != 10 && value.Length != 13)
+                //    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
 
                 _isbn = value;
             }

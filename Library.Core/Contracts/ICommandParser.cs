@@ -1,7 +1,9 @@
-﻿namespace Library.Core.Contracts
+﻿using System.Collections.Generic;
+
+namespace Library.Core.Contracts
 {
     public interface ICommandParser
     {
-        ICommand GetTheCommandByNumber(int number);
+        ICommand GetCommandByNumber(int number, List<string> commandsAsString);
     }
 }

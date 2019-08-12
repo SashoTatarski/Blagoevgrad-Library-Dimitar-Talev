@@ -42,27 +42,27 @@ namespace Library.Models.Tests.UserTests
             Assert.IsTrue(sut.ReservedBooks.Count > 0);
         }
 
-        [TestMethod]
-        public void ReservedBookMessages()
-        {
-            var mockBook = new Mock<IBook>();
+        //[TestMethod]
+        //public void ReservedBookMessages()
+        //{
+        //    var mockBook = new Mock<IBook>();
 
-            var sut = new User("username", "password");
-            sut.ReservedBookMessages.Add("late book message");
+        //    var sut = new User("username", "password");
+        //    sut.ReservedBookMessages.Add("late book message");
 
-            Assert.IsTrue(sut.ReservedBookMessages.Count > 0);
-        }
+        //    Assert.IsTrue(sut.ReservedBookMessages.Count > 0);
+        //}
 
-        [TestMethod]
-        public void OverDueMessages()
-        {
-            var mockBook = new Mock<IBook>();
+        //[TestMethod]
+        //public void OverDueMessages()
+        //{
+        //    var mockBook = new Mock<IBook>();
 
-            var sut = new User("username", "password");
-            sut.OverdueMessages.Add("late book message");
+        //    var sut = new User("username", "password");
+        //    sut.OverdueMessages.Add("late book message");
 
-            Assert.IsTrue(sut.OverdueMessages.Count > 0);
-        }
+        //    Assert.IsTrue(sut.OverdueMessages.Count > 0);
+        //}
 
         [TestMethod]
         public void LateFees()
