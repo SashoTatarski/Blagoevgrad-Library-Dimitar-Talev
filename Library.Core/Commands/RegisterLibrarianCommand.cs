@@ -1,4 +1,5 @@
 ﻿using Library.Core.Contracts;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using Services.Contracts;
@@ -11,13 +12,15 @@ namespace Library.Core.Commands
         private readonly IConsoleRenderer _renderer;
         private readonly IAccountManager _accountManager;
         private readonly IAuthenticationManager _authentication;
+        private readonly IConsoleFormatter _formatter;
 
-        public RegisterLibrarianCommand(ILibrarianFactory librarianfactory, IConsoleRenderer renderer, IAccountManager accountManager, IAuthenticationManager authentication)
+        public RegisterLibrarianCommand(ILibrarianFactory librarianfactory, IConsoleRenderer renderer, IAccountManager accountManager, IAuthenticationManager authentication, IConsoleFormatter formatter)
         {
             _librarianfactory = librarianfactory;
             _renderer = renderer;
             _accountManager = accountManager;
             _authentication = authentication;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -32,7 +35,7 @@ namespace Library.Core.Commands
 
             _accountManager.AddLibrarian(newLibrarian);
 
-            return $"Successfully created new librarian account: {newLibrarian.Username}";
+            return $"{GlobalConstants.LibrarianRegisterSuccess}{_formatter.Format(newLibrarian)}";
         }
     }
 }

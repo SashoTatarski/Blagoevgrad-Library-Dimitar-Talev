@@ -15,8 +15,6 @@ namespace Library.Database
 
         public BookDatabase()
         {
-            //Kiro's work
-            //_internal = new List<IBook>();
             _internal = this.Load();
         }
 

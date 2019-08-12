@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Models;
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
@@ -46,21 +47,24 @@ namespace Services
             }
             else
             {
-                if (this.CurrentAccount.GetType() == typeof(IUser))
+                List<string> allowedCommand = (List<string>)this.CurrentAccount.AllowedCommands;
+
+                if (this.CurrentAccount.GetType() == typeof(User))
                 {
                     var user = (IUser)this.CurrentAccount;
+
                     if (user.HasOverdueBooks())
                     {
                         _system.DisplayMessageForOverdueBooks(user);
 
-                        return new List<string> { "Return Book", "Log Out" };
+                        allowedCommand = new List<string> { "Return Book", "Log Out" };
                     }
                     if (user.HasOverdueReservations())
                     {
                         _system.DisplayMessageForOverdueReservations(user);
                     }
                 }
-                return (List<string>)this.CurrentAccount.AllowedCommands;
+                return allowedCommand;
             }
         }
 

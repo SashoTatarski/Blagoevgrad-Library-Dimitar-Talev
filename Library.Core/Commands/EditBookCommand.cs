@@ -9,14 +9,14 @@ namespace Library.Core.Commands
     public class EditBookCommand : ICommand
     {
         private readonly IConsoleRenderer _renderer;
-        private readonly IAuthenticationManager _account;
         private readonly IBookManager _bookManager;
+        private readonly IConsoleFormatter _formatter;
 
-        public EditBookCommand(IConsoleRenderer renderer, IAuthenticationManager account, IBookManager bookManager)
+        public EditBookCommand(IConsoleRenderer renderer, IBookManager bookManager, IConsoleFormatter formatter)
         {
             _renderer = renderer;
-            _account = account;
             _bookManager = bookManager;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -24,18 +24,13 @@ namespace Library.Core.Commands
             // Show all the books user can select from
             _bookManager.ListAllBooks();
 
-            var currentAccount = (ILibrarian)_account.CurrentAccount;
-
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
 
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            {
                 throw new ArgumentException("Invalid ID");
-            }           
 
-            // TODO
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
 
@@ -58,7 +53,7 @@ namespace Library.Core.Commands
 
             var bookToEdit = _bookManager.FindBook(bookID);
 
-            return $"Successfully edited the book {bookToEdit.Title} - {bookToEdit.Author}";
+            return _formatter.Format(bookToEdit);
         }
     }
 }

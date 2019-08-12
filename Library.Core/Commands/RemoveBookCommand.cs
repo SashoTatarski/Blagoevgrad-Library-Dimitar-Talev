@@ -1,5 +1,6 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Enums;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using System;
 
@@ -9,11 +10,13 @@ namespace Library.Core.Commands
     {
         private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
+        private readonly IConsoleFormatter _formatter;
 
-        public RemoveBookCommand(IConsoleRenderer renderer, IBookManager bookManager)
+        public RemoveBookCommand(IConsoleRenderer renderer, IBookManager bookManager, IConsoleFormatter formatter)
         {
             _renderer = renderer;
             _bookManager = bookManager;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -38,7 +41,7 @@ namespace Library.Core.Commands
 
             _bookManager.RemoveBook(bookToRemove);
 
-            return $"You have successfully removed the book: {bookToRemove.Title} - {bookToRemove.Author}";
+            return $"{GlobalConstants.RemoveBookSuccess}{_formatter.Format(bookToRemove)}";
         }
     }
 }

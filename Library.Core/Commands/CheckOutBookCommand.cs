@@ -16,14 +16,16 @@ namespace Library.Core.Commands
         private readonly IBookManager _bookManager;
         private readonly IAccountManager _accountManager;
         private readonly ILibrarySystem _system;
+        private readonly IConsoleFormatter _formatter;
 
-        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system)
+        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system,IConsoleFormatter formatter)
         {
             _authentication = authentication;
             _renderer = renderer;
             _bookManager = bookManager;
             _accountManager = accountManager;
             _system = system;
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -41,7 +43,7 @@ namespace Library.Core.Commands
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
             {
-                throw new ArgumentException("Invalid ID");
+                throw new ArgumentException(GlobalConstants.CheckoutBookInvalidID);
             }
 
             var bookToCheckOut = _bookManager.FindBook(bookID);
@@ -65,14 +67,14 @@ namespace Library.Core.Commands
                     _accountManager.UpdateUser(user);
                 }
                 else
-                    throw new ArgumentException("Book is already reserved!");
+                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
             }
             else
             {
-                throw new ArgumentException("Book is already checked out!");
+                throw new ArgumentException();
             }
 
-            return $"You have successfully checked out {bookToCheckOut.Title} - {bookToCheckOut.Author}";
+            return _formatter.Format(bookToCheckOut);
         }
     }
 }

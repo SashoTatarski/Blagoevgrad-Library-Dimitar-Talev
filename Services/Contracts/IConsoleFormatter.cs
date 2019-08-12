@@ -10,5 +10,6 @@ namespace Library.Services.Contracts
         string FormatCheckedoutBook(IBook book);
         string FormatListOfBooks(List<IBook> books);
         string FormatReservedBook(IBook book);
+        string Format(IAccount account);
     }
 }
