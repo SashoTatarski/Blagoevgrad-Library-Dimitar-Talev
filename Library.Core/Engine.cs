@@ -26,7 +26,9 @@ namespace Library.Core
 
         public void Start()
         {
+            // ASK: Should we/ how to improve this method
             VirtualDate.StartVirtualTime();
+
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();
 
@@ -38,11 +40,9 @@ namespace Library.Core
 
                 _renderer.Output(_menuFactory.GenerateMenu(allowedcommands));
 
-                var input = _renderer.Input();
-
                 try
                 {
-                    ICommand command = _commandParser.GetCommandByNumber(int.Parse(input), allowedcommands);
+                    ICommand command = _commandParser.GetCommandByNumber(int.Parse(_renderer.Input()), allowedcommands);
 
                     result = command.Execute();
                     _renderer.Output(result);

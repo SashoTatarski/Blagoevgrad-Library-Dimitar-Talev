@@ -49,6 +49,7 @@ namespace Library.Core.Commands
 
             var bookToReserve = _bookManager.FindBook(bookID);
 
+            // ASK: Improve this (by extracting a method) ?
             // Check Book Status 
             // if the status is Available
             if (bookToReserve.Status == BookStatus.Available)

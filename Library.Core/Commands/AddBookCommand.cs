@@ -26,6 +26,7 @@ namespace Library.Core.Commands
         {
             _renderer.Output(GlobalConstants.AddBook);
 
+            // ASK: How to improve this since it exists also in EditBookCommand
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
 

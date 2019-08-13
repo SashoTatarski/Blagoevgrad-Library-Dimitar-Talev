@@ -13,8 +13,10 @@ namespace Library.Core
 {
     public class ContainerConfig
     {
+
         public IContainer Build()
         {
+            // ASK: Should we/how to impore this method so that it's not so big?
             // SOLID: Single Reponsibility
             var containerBuilder = new ContainerBuilder();
 

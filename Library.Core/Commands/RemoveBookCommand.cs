@@ -28,18 +28,15 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
+
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            {
                 throw new ArgumentException(GlobalConstants.InvalidID);
-            }
 
             var bookToRemove = _bookManager.FindBook(bookID);
 
             if (bookToRemove.Status == BookStatus.CheckedOut || bookToRemove.Status == BookStatus.Reserved)
-            {
                 throw new ArgumentException(GlobalConstants.CannotRemoveIssuedBook);
-            }
 
             _bookManager.RemoveBook(bookToRemove);
 

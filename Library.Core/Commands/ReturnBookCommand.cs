@@ -46,6 +46,7 @@ namespace Library.Core.Commands
                 _renderer.Output(_bookManager.GetCheckedoutBooksInfo(user));
             }
 
+            // ASK: Method?
             //Enter ID:
             int bookID;
             do
@@ -59,23 +60,16 @@ namespace Library.Core.Commands
 
             //Check if the book to remove is overdue, in order to know from where to delete it
             if (user.HasOverdueBooks())
-            {
                 user.RemoveFromOverdueBooks(bookToReturn);
-            }
             else
-            {
                 user.RemoveFromCheckedoutBooks(bookToReturn);
-            }
 
             // Check which status to assign to the book after it get returned
             if (bookToReturn.Status == BookStatus.CheckedOut)
-            {
                 _bookManager.UpdateBook(bookID, BookStatus.Available, DateTime.MinValue, DateTime.MinValue);
-            }
+
             if (bookToReturn.Status == BookStatus.CheckedOut_and_Reserved)
-            {
                 _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxReserveDays), true);
-            }
 
             _accountManager.UpdateUser(user);
 

@@ -27,7 +27,7 @@ namespace Library.Core.Commands
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();
 
-            return _formatter.FormatCommandMessage(GlobalConstants.TravelSuccess, (VirtualDate.VirtualToday.ToString("dd-MM-yyyy") + "\r\n"));
+            return _formatter.FormatCommandMessage(GlobalConstants.TravelSuccess, VirtualDate.VirtualToday.ToString("dd-MM-yyyy") + "\r\n");
         }
     }
 }

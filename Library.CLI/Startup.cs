@@ -14,8 +14,7 @@ namespace Library.CLI
 
         private static void ProgramStart()
         {
-            var containerConfig = new ContainerConfig();
-            var container = containerConfig.Build();
+            var container = new ContainerConfig().Build();
 
             var engine = container.Resolve<IEngine>();
             engine.Start();

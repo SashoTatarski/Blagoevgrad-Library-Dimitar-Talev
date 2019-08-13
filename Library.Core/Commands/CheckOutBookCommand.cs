@@ -43,14 +43,14 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
+
             // BookID validation
             if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            {
                 throw new ArgumentException(GlobalConstants.InvalidID);
-            }
 
             var bookToCheckOut = _bookManager.FindBook(bookID);
 
+            // ASK: How to improve this (maybe extract it in methods?)
             // Check Book Status 
             if (bookToCheckOut.Status == BookStatus.Available)
             {
@@ -60,7 +60,7 @@ namespace Library.Core.Commands
             }
             else if (bookToCheckOut.Status == BookStatus.Reserved)
             {
-                var suchBookInReservedBooks = user.ReservedBooks.FirstOrDefault(b => b.ID == bookToCheckOut.ID);
+                var suchBookInReservedBooks = user.ReservedBooks.Find(b => b.ID == bookToCheckOut.ID);
 
                 if (suchBookInReservedBooks != null)
                 {

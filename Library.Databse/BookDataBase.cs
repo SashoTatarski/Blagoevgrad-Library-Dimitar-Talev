@@ -32,10 +32,7 @@ namespace Library.Database
             this.Save();
         }
 
-        public IBook Get(int bookId)
-        {
-            return _internal.FirstOrDefault(b => b.ID == bookId);
-        }
+        public IBook Get(int bookId) => _internal.FirstOrDefault(b => b.ID == bookId);
 
         public void Update(IBook book)
         {

@@ -25,9 +25,7 @@ namespace Library.Core.Commands
 
             _accountManager.GetListAllUsers();
 
-            var username = _renderer.InputParameters("username");
-
-            var userToRemove = (IUser)_accountManager.FindAccount(username);
+            var userToRemove = (IUser)_accountManager.FindAccount(_renderer.InputParameters("username"));
 
             if (userToRemove is null)
                 throw new ArgumentException(GlobalConstants.NoSuchUser);

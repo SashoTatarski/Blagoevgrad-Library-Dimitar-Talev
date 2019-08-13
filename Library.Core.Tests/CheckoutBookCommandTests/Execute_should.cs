@@ -11,6 +11,7 @@ using System.Text;
 
 namespace Library.Core.Tests.CheckoutBookCommandTests
 {
+    // ASK: How to propertly do this test?
     [TestClass]
     public class Execute_should
     {
