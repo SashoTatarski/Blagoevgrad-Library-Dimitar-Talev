@@ -77,10 +77,7 @@ namespace Library.Models.Models
             }
         }
 
-        public void RemoveAllOverdueReservations()
-        {
-            this.OverdueReservations.Clear();
-        }
+        public void RemoveAllOverdueReservations() => this.OverdueReservations.Clear();
 
         public void Update(IUser otherUser)
         {
@@ -97,9 +94,7 @@ namespace Library.Models.Models
             var strBuilder = new StringBuilder();
 
             if (this.CheckedOutBooks.Count == 0)
-            {
                 throw new ArgumentException("There are no checked out books!");
-            }
 
             else
             {
@@ -135,18 +130,8 @@ namespace Library.Models.Models
             return strBuilder.ToString();
         }
 
-        public bool HasOverdueBooks()
-        {
-            if (this.OverdueBooks.Count != 0)
-                return true;
-            else return false;
-        }
+        public bool HasOverdueBooks() => this.OverdueBooks.Count != 0 ? true : false;
 
-        public bool HasOverdueReservations()
-        {
-            if (this.OverdueReservations.Count != 0)
-                return true;
-            else return false;
-        }
+        public bool HasOverdueReservations() => this.OverdueReservations.Count != 0 ? true : false;
     }
 }

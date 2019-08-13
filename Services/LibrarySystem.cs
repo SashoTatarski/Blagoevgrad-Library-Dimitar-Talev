@@ -68,10 +68,7 @@ namespace Library.Services
             strBuilder.AppendLine("Your reservation for:");
 
             foreach (var book in user.OverdueReservations)
-
-            {
                 strBuilder.AppendLine(_formatter.FormatReservedBook(book));
-            }
 
             strBuilder.AppendLine("has been expired!");
             _renderer.Output(strBuilder.ToString());

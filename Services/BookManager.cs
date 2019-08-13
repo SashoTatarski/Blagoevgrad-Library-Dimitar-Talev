@@ -90,8 +90,7 @@ namespace Library.Services
         }
 
         public List<IBook> GetSearchResult(string searchByParameter, string searchByText)
-        {
-            var strBuilder = new StringBuilder();
+        {          
             var books = _database.Load();
             var sortedBooks = new List<IBook>();
 
@@ -125,7 +124,9 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             if (user.CheckedOutBooks.Count == 0)
+            {
                 throw new ArgumentException("There are no checked out books!");
+            }
             else
             {
                 strBuilder.AppendLine("Books you have checked out:");

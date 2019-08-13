@@ -27,7 +27,6 @@ namespace Library.Services
         {
             var users = _userDB.Load();
             _renderer.Output(_formatter.FormatListOfUsersShort(users));
-
         }
 
         public List<IUser> GetAllUsers() => _userDB.Load();
@@ -60,12 +59,7 @@ namespace Library.Services
             var librarian = _librarianDB.Get(userName);
 
             if (user is null || user.Status == MemberStatus.Inactive)
-            {
-                if (librarian is null)
-                    return null;
-                else
-                    return librarian;
-            }
+                return librarian ?? null;
             else
                 return user;
         }

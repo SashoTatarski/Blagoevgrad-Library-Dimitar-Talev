@@ -51,10 +51,9 @@ namespace Services
 
                         allowedCommand = new List<string> { "Return Book", "Log Out" };
                     }
+
                     if (user.HasOverdueReservations())
-                    {
                         _system.PurgeOverdueReservations(user);
-                    }
                 }
                 return allowedCommand;
             }

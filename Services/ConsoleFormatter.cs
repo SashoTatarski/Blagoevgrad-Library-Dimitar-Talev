@@ -5,6 +5,7 @@ using Library.Services.Contracts;
 using System.Collections.Generic;
 
 using System.Text;
+using System.Linq;
 
 namespace Library.Services
 {
@@ -109,12 +110,11 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             if (users.Count == 0)
-            {
                 return GlobalConstants.NoUsers;
-            }
+
             foreach (var user in users)
             {
-                if (user.Status!= MemberStatus.Inactive)
+                if (user.Status != MemberStatus.Inactive)
                 {
                     strBuilder.Append(this.Format(user));
                     strBuilder.AppendLine(GlobalConstants.MiniDelimiter);
@@ -128,23 +128,17 @@ namespace Library.Services
             var strBuilder = new StringBuilder();
 
             if (users.Count == 0)
-            {
                 return GlobalConstants.NoUsers;
-            }
+
             foreach (var user in users)
             {
                 if (user.Status != MemberStatus.Inactive)
-                {
                     strBuilder.Append(this.FormatShort(user));
-                }
             }
+
             return strBuilder.ToString();
         }
 
-        private string FormatShort(IUser user)
-        {
-            return $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
-        }
-
+        private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
     }
 }

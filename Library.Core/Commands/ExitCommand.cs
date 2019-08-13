@@ -5,9 +5,6 @@ namespace Library.Core.Commands
 {
     public class ExitCommand : ICommand
     {
-        public string Execute()
-        {
-            return GlobalConstants.Goodbye;
-        }
+        public string Execute() => GlobalConstants.Goodbye;
     }
 }

@@ -50,6 +50,7 @@ namespace Library.Core.Commands
 
             var rack = int.Parse(_renderer.InputParameters("rack", r => int.Parse(r) < 1));
 
+
             _bookManager.UpdateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
 
             var bookToEdit = _bookManager.FindBook(bookID);
