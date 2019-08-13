@@ -32,7 +32,8 @@ namespace Library.Services
 
             var updated = _factory.CreateBook(bookId, authorName, title, isbn, category, publisher, year, rack);
 
-            _database.Update(updated);
+            bookToUpdate.Update(updated);
+            _database.Update(bookToUpdate);
         }
 
         // CheckOut Book
