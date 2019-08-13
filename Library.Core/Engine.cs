@@ -30,8 +30,9 @@ namespace Library.Core
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();
 
+            string result = string.Empty;
 
-            while (true)
+            while (result != GlobalConstants.Goodbye)
             {
                 var allowedcommands = _authentication.GetAllowedCommands();
 
@@ -43,7 +44,8 @@ namespace Library.Core
                 {
                     ICommand command = _commandParser.GetCommandByNumber(int.Parse(input), allowedcommands);
 
-                    _renderer.Output(command.Execute());
+                    result = command.Execute();
+                    _renderer.Output(result);
                     _renderer.Output("\r\n");
                 }
                 catch (Exception ex)
