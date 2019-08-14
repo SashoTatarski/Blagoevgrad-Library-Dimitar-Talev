@@ -56,25 +56,13 @@ namespace Library.Database
 
         public void Save()
         {
-            var serializer = this.CreateSerializer();
             using (var sw = new StreamWriter(GlobalConstants.usersFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
-                    serializer.Serialize(writer, _internal);
+                    BookDatabase.CreateSerializer().Serialize(writer, _internal);
                 }
             }
         }
-
-        private JsonSerializer CreateSerializer()
-        {
-            return new JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            };
-        }
-
     }
 }

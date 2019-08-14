@@ -57,18 +57,17 @@ namespace Library.Database
         }
 
         public void Save()
-        {
-            var serializer = this.CreateSerializer();
+        {            
             using (var sw = new StreamWriter(GlobalConstants.catalogFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
-                    serializer.Serialize(writer, _internal);
+                    CreateSerializer().Serialize(writer, _internal);
                 }
             }
         }
 
-        private JsonSerializer CreateSerializer()
+        public static JsonSerializer CreateSerializer()
         {
             return new JsonSerializer
             {

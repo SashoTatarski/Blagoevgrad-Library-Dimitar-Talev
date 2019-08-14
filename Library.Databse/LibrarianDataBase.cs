@@ -26,19 +26,10 @@ namespace Library.Database
         }
 
         // TODO: ?
-        public void Update(ILibrarian librarian)
-        {
-            throw new NotImplementedException();
-        }
-        public void Delete(ILibrarian librarian)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(ILibrarian librarian) => throw new NotImplementedException();
+        public void Delete(ILibrarian librarian) => throw new NotImplementedException();
 
-        public ILibrarian Get(string username)
-        {
-            return _internal.FirstOrDefault(l => l.Username == username);
-        }
+        public ILibrarian Get(string username) => _internal.FirstOrDefault(l => l.Username == username);
 
         public List<ILibrarian> Load()
         {
@@ -58,23 +49,14 @@ namespace Library.Database
         public void Save()
         {
             var filePath = GlobalConstants.librariansFilepath;
-            var serializer = this.CreateSerializer();
+            
             using (var sw = new StreamWriter(filePath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
-                    serializer.Serialize(writer, _internal);
+                    BookDatabase.CreateSerializer().Serialize(writer, _internal);
                 }
             }
-        }
-        private JsonSerializer CreateSerializer()
-        {
-            return new JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            };
         }
     }
 }

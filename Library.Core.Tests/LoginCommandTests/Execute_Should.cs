@@ -14,38 +14,17 @@ namespace Library.Core.Tests.LoginCommandTests
     [TestClass]
     public class Execute_Should
     {
+        // ASK: It this a correct test?
         [TestMethod]
-        public void PassParameters()
+        public void LogInMethod_Proper()
         {
-            var username = "sasho";
-            var password = "pass";
+            var autheticMock = new Mock<IAuthenticationManager>();
+            
+            var sut = autheticMock.Object;
 
+            sut.LogIn(It.IsAny<IAccount>());
 
-
-            //var accountManagerMock = new Mock<IAccountManager>();
-            //accountManagerMock
-            //    .Setup(a => a.FindAccount())
-            //    .Returns(new Mock<IAccount>().Object);
-
-
-
-
-            //var loggedUserMock = new Mock<IAcc>();
-            //loggedUserMock
-            //    .Setup(u => u.CreateUser(It.IsAny<string>(), It.IsAny<string>()))
-            //    .Returns(new Mock<IAccount>().Object);
-
-
-            //var accountMock = new Mock<IAccountManager>();
-            //accountMock
-            //    .Setup(a => a.FindAccount("sasho"))
-            //    .Returns(new Mock<IAccount>().Object);
-
-            //var autheticMock = new Mock<IAuthenticationManager>();
-            //autheticMock.Setup(a => a.LogIn(It.IsAny<IAccount>()));
-
-            //autheticMock.Verify(a => a.LogIn(accountMock), Times.Once);
-
+            autheticMock.Verify(x => x.LogIn(It.IsAny<IAccount>()), Times.Once);
         }
     }
 }

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Core.Tests", "Libra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Models.Tests", "Library.Models.Tests\Library.Models.Tests.csproj", "{5A8A44A3-4BA0-49C6-9E39-20E83A11A271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Services.Tests", "Library.Services.Tests\Library.Services.Tests.csproj", "{6A849C5F-DA91-415F-AEF2-D792009C20BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library.Services.Tests", "Library.Services.Tests\Library.Services.Tests.csproj", "{6A849C5F-DA91-415F-AEF2-D792009C20BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
