@@ -1,7 +1,8 @@
 ﻿# Regional Library in Blagoevgrad, Bulgaria
 
-## Team project of **TEAM 1**
-### Hristina Stanoeva and Aleksandar Tatarski
+## Team project of **South-West**
+### **TeamLead:*8 Aleksandar Tatarski
+### **Team Members:** Hristina Stanoeva and Aleksandar Tatarski
 ---
 ### Link to Trello Board: https://trello.com/b/7QyCeeWB
         The Regional Library - Blagoevgrad was established in 1953. It is the main library for southwestern Bulgaria.
