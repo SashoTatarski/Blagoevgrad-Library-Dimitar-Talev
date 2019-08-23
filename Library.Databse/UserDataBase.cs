@@ -35,7 +35,7 @@ namespace Library.Database
             this.Save();
         }
 
-        public IUser Get(string username) => _internal.FirstOrDefault(u => u.Username == username);
+        public IUser Get(string username) => _context.Users.FirstOrDefault(u => u.Username == username); /*_internal.FirstOrDefault(u => u.Username == username); */
 
         public void Update(IUser updatedUser)
         {

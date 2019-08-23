@@ -38,6 +38,7 @@ namespace Library.Models.Utils
         public const string CannotRemoveIssuedBook = "Cannot remove chechedout/reserved book!";
         public const string RemoveUserError = "Cannot remove user who has checkedout/reserved books!";
         public const string BookToUpdateNull = "Book to update is null";
+        public const string UserNameTaken = "This username is already taken";
 
         //Success
         public const string CheckoutBookSuccess = "Successfully checked of the book:";

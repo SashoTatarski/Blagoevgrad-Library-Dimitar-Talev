@@ -131,5 +131,62 @@
     "ReservedBooks": null,
     "Username": "mohamed",
     "Password": "mohamed"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "sasho",
+    "Password": "sasho"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "hrisi",
+    "Password": "hrisi"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "pesho",
+    "Password": "pesho"
   }
 ]

@@ -1,5 +1,6 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Models;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
@@ -28,7 +29,7 @@ namespace Services
             var account = _accountManager.FindAccount(username);
 
             if (account != null)
-                throw new ArgumentException("This username is already taken");
+                throw new ArgumentException(GlobalConstants.UserNameTaken);
         }
 
         public List<string> GetAllowedCommands()

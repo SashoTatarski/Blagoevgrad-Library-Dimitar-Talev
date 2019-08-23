@@ -13,14 +13,19 @@ namespace Library.Database
     public class LibrarianDataBase : ILibrarianDataBase
     {
         private readonly IList<ILibrarian> _internal;
+        private readonly LibraryContext _context;
 
-        public LibrarianDataBase()
+
+        public LibrarianDataBase(LibraryContext context)
         {
             _internal = this.Load();
+            _context = context;
         }
 
         public void Create(ILibrarian librarian)
         {
+            _context.Librarians.Add((Librarian)librarian);
+            _context.SaveChanges();
             _internal.Add(librarian);
             this.Save();
         }
@@ -29,8 +34,8 @@ namespace Library.Database
         public void Update(ILibrarian librarian) => throw new NotImplementedException();
         public void Delete(ILibrarian librarian) => throw new NotImplementedException();
 
-        public ILibrarian Get(string username) => _internal.FirstOrDefault(l => l.Username == username);
-
+        public ILibrarian Get(string username) => _context.Librarians.FirstOrDefault(l => l.Username == username);
+        //_internal.FirstOrDefault(u => u.Username == username);
         public List<ILibrarian> Load()
         {
             var filePath = GlobalConstants.librariansFilepath;
