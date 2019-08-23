@@ -64,7 +64,7 @@ namespace Library.Core.Commands
             }
             else if (bookToCheckOut.Status == BookStatus.Reserved)
             {
-                if (_system.CheckIfUserReservedBook(user, bookToCheckOut) != null)
+                if (_system.ReservedByUser(user, bookToCheckOut))
                 {
                     _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
                                                                           //user.RemoveFromReservedBooks(suchBookInReservedBooks);

@@ -20,7 +20,7 @@ namespace Library.Core.Commands
         {
             _renderer.Output(GlobalConstants.Travel);
 
-            var days = int.Parse(_renderer.InputParameters("how many days you want to skip", d => int.Parse(d) < 1));
+            var days = int.Parse(_renderer.InputParameters(GlobalConstants.DaysToSkip, d => int.Parse(d) < 1));
 
             VirtualDate.SkipDays(days);
 

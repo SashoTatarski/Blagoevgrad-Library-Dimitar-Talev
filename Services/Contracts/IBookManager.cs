@@ -1,5 +1,6 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Models;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +24,7 @@ namespace Library.Services.Contracts
 
         int GetLastBookID();
 
-        List<IBook> GetSearchResult(string searchByParameter, string searchByText);
+        List<Book> GetSearchResult(string searchByParameter, string searchByText);
 
         string GetCheckedoutBooksInfo(IUser user);
 

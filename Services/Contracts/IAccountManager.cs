@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Models;
 using System.Collections.Generic;
 
 namespace Library.Services.Contracts
@@ -12,7 +13,7 @@ namespace Library.Services.Contracts
 
         void AddUser(IUser user);
 
-        List<IUser> GetAllUsers();
+        List<User> GetAllUsers();
 
         void GetListAllUsers();
 

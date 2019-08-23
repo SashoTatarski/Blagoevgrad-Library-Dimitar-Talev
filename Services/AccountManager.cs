@@ -2,6 +2,7 @@
 using Library.Database.Contracts;
 using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Models;
 using Library.Services.Contracts;
 using System.Collections.Generic;
 
@@ -29,7 +30,7 @@ namespace Library.Services
             _renderer.Output(_formatter.FormatListOfUsersShort(users));
         }
 
-        public List<IUser> GetAllUsers() => _userDB.Load();
+        public List<User> GetAllUsers() => _userDB.Load();
 
         // 1. Take the user from the DB -> .Get
         // 2. Update user in the User class

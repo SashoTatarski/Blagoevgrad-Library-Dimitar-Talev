@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Models;
 using System.Collections.Generic;
 
 namespace Library.Services.Contracts
@@ -13,7 +14,7 @@ namespace Library.Services.Contracts
 
         string FormatCheckedoutBook(IBook book);
 
-        string FormatListOfBooks(List<IBook> books);
+        string FormatListOfBooks(List<Book> books);
 
         string FormatReservedBook(IBook book);
 
@@ -23,6 +24,6 @@ namespace Library.Services.Contracts
 
         string FormatListOfUsers(List<IUser> users);
 
-        string FormatListOfUsersShort(List<IUser> users);
+        string FormatListOfUsersShort(List<User> users);
     }
 }

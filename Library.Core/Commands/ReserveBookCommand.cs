@@ -72,7 +72,7 @@ namespace Library.Core.Commands
             {
                 //var suchBookInReservedBooks =  user.ReservedBooks.FirstOrDefault(b => b.Id == bookToReserve.Id);
 
-                if (_system.CheckIfUserReservedBook(user, bookToReserve) != null)
+                if (_system.ReservedByUser(user, bookToReserve))
                     return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookAlreadyReserved);
                 else
                     return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookAlreadyReservedOther);

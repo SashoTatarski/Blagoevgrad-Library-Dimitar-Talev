@@ -75,6 +75,7 @@ namespace Library.Models.Utils
         public const string OverdueMessage = "You have overdue book!\r\nID: {0} || Title: {1} || Author: {2}\r\nYou are late to return it by {3} days!";
         public const string MaxQuotaReached = "You have reached the max quota of 5 books!";
         public const string Goodbye = "Goodbye!";
+        public const string DaysToSkip = "how many days you want to skip";
 
     }
 }

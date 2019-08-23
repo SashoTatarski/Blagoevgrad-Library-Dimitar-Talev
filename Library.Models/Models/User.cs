@@ -13,15 +13,13 @@ namespace Library.Models.Models
     public class User : Account, IUser
     {
         // OOP: User class inherits Account base class
-        // OOP: Encapsulation - properties with private set 
+        // OOP: Encapsulation - properties with private set         
 
         public User(string username, string password) : base(username, password)
         {
-            this.Status = AccountStatus.Active;
-            //this.CheckedOutBooks = new List<IBook>();
-            //this.ReservedBooks = new List<IBook>();
-            //this.OverdueReservations = new List<IBook>();
-            //this.OverdueBooks = new List<IBook>();
+            this.Status = AccountStatus.Active;            
+            this.OverdueReservations = new List<CheckoutBook>();
+            this.OverdueBooks = new List<CheckoutBook>();
         }
 
         [NotMapped]
@@ -35,23 +33,26 @@ namespace Library.Models.Models
                 "Travel In Time",
                 "Log Out"
             };
+
         public int Id { get; set; }
+
         public AccountStatus Status { get; set; }
+
         public decimal LateFees { get; set; }
+
         public IList<CheckoutBook> CheckedoutBooks { get; set; }
-        public IList<ReservedBook> ReservedBooks { get; set; }
 
-        //public List<IBook> CheckedOutBooks { get;  set; }
+        public IList<ReservedBook> ReservedBooks { get; set; }        
+       
+        [NotMapped]
+        public List<CheckoutBook> OverdueReservations { get; set; }
 
-        //public List<IBook> ReservedBooks { get;  set; }
-
-        //public List<IBook> OverdueReservations { get; set; }
-
-        //public List<IBook> OverdueBooks { get; set; }
-
+        [NotMapped]
+        public List<CheckoutBook> OverdueBooks { get; set; }
 
 
-        //public void RemoveFromCheckedoutBooks(IBook book) => this.CheckedOutBooks.RemoveAll(b => b.Id == book.Id);
+
+        
         //public void RemoveFromReservedBooks(IBook book) => this.ReservedBooks.Remove(book);
 
         //public void RemoveFromOverdueBooks(IBook book) => this.OverdueBooks.RemoveAll(b => b.Id == book.Id);
@@ -62,17 +63,19 @@ namespace Library.Models.Models
 
         //public void AddBookToReservedBooks(IBook book) => this.ReservedBooks.Add(book);
 
-        //public void AddToOverdueBooks(List<IBook> overdueBooks)
-        //{
-        //    foreach (var book in overdueBooks)
-        //    {
-        //        if (this.OverdueBooks.FindAll(b => b.Id == book.Id).SingleOrDefault() is null)
-        //        {
-        //            this.OverdueBooks.Add(book);
-        //            this.RemoveFromCheckedoutBooks(book);
-        //        }
-        //    }
-        //}
+        public void AddToOverdueBooks(List<CheckoutBook> overdueBooks)
+        {
+            //foreach (var book in overdueBooks)
+            //{
+            //    if (this.OverdueBooks.FindAll(b => b.BookId == book.BookId).SingleOrDefault() is null)
+            //    {
+            //        this.OverdueBooks.Add(book);
+            //        this.RemoveFromCheckedoutBooks(book);
+            //    }
+            //}
+        }
+
+       // public void RemoveFromCheckedoutBooks(CheckoutBook book) =>   //this.CheckedOutBooks.RemoveAll(b => b.Id == book.Id);
 
         //public void AddOverdueReservations(List<IBook> overdueReservations)
         //{

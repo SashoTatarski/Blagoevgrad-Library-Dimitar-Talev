@@ -15,10 +15,12 @@ namespace Library.Services.Contracts
         void CheckForOverdueReservations();
 
         void CheckIfMaxQuotaReached(IUser user);
-        ReservedBook CheckIfUserReservedBook(IUser user, IBook book);
+        bool ReservedByUser(IUser user, IBook book);
         void DisplayMessageForOverdueBooks(IUser user);
 
         void DisplayMessageForOverdueReservations(IUser user);
         void PurgeOverdueReservations(IUser user);
+        bool UserHasCheckedoutBooks(IUser user);
+        bool UserHasReservedBooks(IUser user);
     }
 }

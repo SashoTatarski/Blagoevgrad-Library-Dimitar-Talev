@@ -1,4 +1,5 @@
 ﻿using Library.Models.Contracts;
+using Library.Models.Models;
 using System.Collections.Generic;
 
 namespace Library.Database.Contracts
@@ -9,7 +10,7 @@ namespace Library.Database.Contracts
         IUser Get(string username);
         void Update(IUser user);
         void Delete(IUser user);
-        List<IUser> Load();
-        void Save();
+        List<User> Load();
+        
     }
 }

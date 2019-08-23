@@ -29,11 +29,11 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            //_renderer.Output(GlobalConstants.ReturnBook);
+            _renderer.Output(GlobalConstants.ReturnBook);
 
-            //var user = (IUser)_account.CurrentAccount;
+            var user = (IUser)_account.CurrentAccount;
 
-            ////Check if there are overdue books
+            //Check if there are overdue books
             //if (user.HasOverdueBooks())
             //{
             //    _system.AssignFee(user);
@@ -46,17 +46,17 @@ namespace Library.Core.Commands
             //    _renderer.Output(_bookManager.GetCheckedoutBooksInfo(user));
             //}
 
-            //// ASK: Method?
-            ////Enter ID:
-            //int bookID;
+            // ASK: Method?
+            //Enter ID:
+            //int bookId;
             //do
             //{
-            //    bookID = int.Parse(_renderer.InputParameters("ID"));
+            //    bookId = int.Parse(_renderer.InputParameters("ID"));
             //}
-            //while (user.CheckedOutBooks.FindAll(b => b.Id == bookID).Count == 0 && user.OverdueBooks.FindAll(b => b.Id == bookID).Count == 0);
+            //while (user.CheckedOutBooks.FindAll(b => b.Id == bookId).Count == 0 && user.OverdueBooks.FindAll(b => b.Id == bookId).Count == 0);
 
-            ////Find the book to remove
-            //var bookToReturn = _bookManager.FindBook(bookID);
+            //Find the book to remove
+           // var bookToReturn = _bookManager.FindBook(bookId);
 
             ////Check if the book to remove is overdue, in order to know from where to delete it
             //if (user.HasOverdueBooks())
@@ -64,16 +64,16 @@ namespace Library.Core.Commands
             //else
             //    user.RemoveFromCheckedoutBooks(bookToReturn);
 
-            //// Check which status to assign to the book after it get returned
+            // Check which status to assign to the book after it get returned
             //if (bookToReturn.Status == BookStatus.CheckedOut)
-            //    _bookManager.UpdateBook(bookID, BookStatus.Available, DateTime.MinValue, DateTime.MinValue);
+            //    _bookManager.UpdateBook(bookId, BookStatus.Available, DateTime.MinValue, DateTime.MinValue);
 
             //if (bookToReturn.Status == BookStatus.CheckedOut_and_Reserved)
-            //    _bookManager.UpdateBook(bookID, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxReserveDays), true);
+            //    _bookManager.UpdateBook(bookId, BookStatus.Reserved, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxReserveDays), true);
 
             //_accountManager.UpdateUser(user);
 
-            // return _formatter.FormatCommandMessage(GlobalConstants.ReturnBookSuccessMsg, _formatter.Format(bookToReturn));
+            //return _formatter.FormatCommandMessage(GlobalConstants.ReturnBookSuccessMsg, _formatter.Format(bookToReturn));
 
             return null;
         }

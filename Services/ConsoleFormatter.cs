@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 using System.Text;
 using System.Linq;
+using Library.Models.Models;
 
 namespace Library.Services
 {
@@ -42,7 +43,7 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string FormatListOfBooks(List<IBook> books)
+        public string FormatListOfBooks(List<Book> books)
         {
             var strBuilder = new StringBuilder();
 
@@ -123,7 +124,7 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string FormatListOfUsersShort(List<IUser> users)
+        public string FormatListOfUsersShort(List<User> users)
         {
             var strBuilder = new StringBuilder();
 

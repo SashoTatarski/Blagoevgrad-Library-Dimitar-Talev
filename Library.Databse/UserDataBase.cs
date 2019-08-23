@@ -18,21 +18,24 @@ namespace Library.Database
         public UserDataBase(LibraryContext context)
         {
             _context = context;
-            _internal = this.Load();
+            //_internal = this.Load();
         }
 
         public void Create(IUser user)
         {
-            _internal.Add(user);
-            this.Save();
+            //_internal.Add(user);
+            //this.Save();
             _context.Users.Add((User)user);
             _context.SaveChanges();
         }
 
         public void Delete(IUser user)
         {
-            user.Status = AccountStatus.Inactive;
-            this.Save();
+            var userToRemove = _context.Users.FirstOrDefault(x => x.Id == user.Id);
+            userToRemove.Status = AccountStatus.Inactive;
+            _context.SaveChanges();
+            //user.Status = AccountStatus.Inactive;
+            //this.Save();
         }
 
         public IUser Get(string username) => _context.Users.FirstOrDefault(u => u.Username == username); /*_internal.FirstOrDefault(u => u.Username == username); */
@@ -43,30 +46,6 @@ namespace Library.Database
             //userToUpdate.Update(updatedUser);
             //this.Save();
         }
-        public List<IUser> Load()
-        {
-            string content;
-            using (var reader = new StreamReader(GlobalConstants.usersFilepath))
-            {
-                content = reader.ReadToEnd();
-            }
-            return JsonConvert
-                .DeserializeObject<List<User>>(content, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                }).Cast<IUser>().ToList();
-        }
-
-
-        public void Save()
-        {
-            using (var sw = new StreamWriter(GlobalConstants.usersFilepath))
-            {
-                using (JsonWriter writer = new JsonTextWriter(sw))
-                {
-                    BookDatabase.CreateSerializer().Serialize(writer, _internal);
-                }
-            }
-        }
+        public List<User> Load() => _context.Users.ToList();
     }
 }
