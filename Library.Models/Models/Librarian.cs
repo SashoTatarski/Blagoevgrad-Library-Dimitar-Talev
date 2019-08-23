@@ -21,9 +21,11 @@ namespace Library.Models.Models
                 "Register User",
                 "Register Librarian",
                 "Remove User",
-                "Search",               
+                "Search",
                 "Travel In Time",
                 "Log Out"
             };
+
+        public int Id { get; set; }
     }
 }

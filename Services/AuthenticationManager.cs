@@ -41,20 +41,20 @@ namespace Services
             {
                 List<string> allowedCommand = (List<string>)this.CurrentAccount.AllowedCommands;
 
-                if (this.CurrentAccount.GetType() == typeof(User))
-                {
-                    var user = (IUser)this.CurrentAccount;
+                //if (this.CurrentAccount.GetType() == typeof(User))
+                //{
+                //    var user = (IUser)this.CurrentAccount;
 
-                    if (user.HasOverdueBooks())
-                    {
-                        _system.DisplayMessageForOverdueBooks(user);
+                //    if (user.HasOverdueBooks())
+                //    {
+                //        _system.DisplayMessageForOverdueBooks(user);
 
-                        allowedCommand = new List<string> { "Return Book", "Log Out" };
-                    }
+                //        allowedCommand = new List<string> { "Return Book", "Log Out" };
+                //    }
 
-                    if (user.HasOverdueReservations())
-                        _system.PurgeOverdueReservations(user);
-                }
+                //    if (user.HasOverdueReservations())
+                //        _system.PurgeOverdueReservations(user);
+                //}
                 return allowedCommand;
             }
         }

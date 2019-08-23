@@ -5,7 +5,7 @@ namespace Library.Models.Contracts
 {    
     public interface IBook
     {
-        int ID { get; }
+        int Id { get; }
 
         string Author { get; }
 
@@ -23,13 +23,13 @@ namespace Library.Models.Contracts
 
         BookStatus Status { get; }
 
-        DateTime CheckoutDate { get; }
+        //DateTime CheckoutDate { get; }
 
-        DateTime DueDate { get; }
+        //DateTime DueDate { get; }
 
-        DateTime ResevedDate { get; }
+        //DateTime ResevedDate { get; }
 
-        DateTime ResevationDueDate { get; set; }
+        //DateTime ResevationDueDate { get; set; }
 
         void Update(IBook otherBook);
 

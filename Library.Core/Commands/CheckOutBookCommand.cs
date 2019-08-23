@@ -36,7 +36,7 @@ namespace Library.Core.Commands
             var user = (IUser)_authentication.CurrentAccount;
 
             // If the User has checked out 5 books already
-            _system.CheckIfMaxQuotaReached(user.CheckedOutBooks);
+            //_system.CheckIfMaxQuotaReached(user.CheckedOutBooks);
 
             // Show all the books user can select from
             _bookManager.ListAllBooks();
@@ -52,30 +52,30 @@ namespace Library.Core.Commands
 
             // ASK: How to improve this (maybe extract it in methods?)
             // Check Book Status 
-            if (bookToCheckOut.Status == BookStatus.Available)
-            {
-                user.AddBookToCheckoutBooks(bookToCheckOut);
-                _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
-                _accountManager.UpdateUser(user);
-            }
-            else if (bookToCheckOut.Status == BookStatus.Reserved)
-            {
-                var suchBookInReservedBooks = user.ReservedBooks.Find(b => b.ID == bookToCheckOut.ID);
+            //if (bookToCheckOut.Status == BookStatus.Available)
+            //{
+            //    user.AddBookToCheckoutBooks(bookToCheckOut);
+            //    _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
+            //    _accountManager.UpdateUser(user);
+            //}
+            //else if (bookToCheckOut.Status == BookStatus.Reserved)
+            //{
+            //    var suchBookInReservedBooks = user.ReservedBooks.Find(b => b.Id == bookToCheckOut.Id);
 
-                if (suchBookInReservedBooks != null)
-                {
-                    user.AddBookToCheckoutBooks(bookToCheckOut);
-                    user.RemoveFromReservedBooks(suchBookInReservedBooks);
-                    _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
-                    _accountManager.UpdateUser(user);
-                }
-                else
-                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
+            //    if (suchBookInReservedBooks != null)
+            //    {
+            //        user.AddBookToCheckoutBooks(bookToCheckOut);
+            //        user.RemoveFromReservedBooks(suchBookInReservedBooks);
+            //        _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
+            //        _accountManager.UpdateUser(user);
+            //    }
+            //    else
+            //        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
+            //}
+            //else
+            //{
+            //    throw new ArgumentException();
+            //}
 
             return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
         }

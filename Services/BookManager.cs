@@ -30,7 +30,7 @@ namespace Library.Services
             var bookToUpdate = _database.Get(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
 
-            var updated = _factory.CreateBook(bookId, authorName, title, isbn, category, publisher, year, rack);
+            var updated = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
 
             bookToUpdate.Update(updated);
             _database.Update(bookToUpdate);
@@ -68,7 +68,7 @@ namespace Library.Services
         public int GetLastBookID()
         {
             var books = _database.Load();
-            return books.Max(b => b.ID);
+            return books.Max(b => b.Id);
         }
 
         public void ListAllBooks()
@@ -83,7 +83,7 @@ namespace Library.Services
                 if (book.Status == BookStatus.Available)
                     Console.ForegroundColor = ConsoleColor.Green;
 
-                Console.WriteLine($"\r\nID: {book.ID} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
+                Console.WriteLine($"\r\nID: {book.Id} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
 
                 Console.ResetColor();
             }
@@ -123,17 +123,17 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
-            if (user.CheckedOutBooks.Count == 0)
-            {
-                throw new ArgumentException("There are no checked out books!");
-            }
-            else
-            {
-                strBuilder.AppendLine("Books you have checked out:");
+            //if (user.CheckedOutBooks.Count == 0)
+            //{
+            //    throw new ArgumentException("There are no checked out books!");
+            //}
+            //else
+            //{
+            //    strBuilder.AppendLine("Books you have checked out:");
 
-                foreach (var book in user.CheckedOutBooks)
-                    strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-            }
+            //    foreach (var book in user.CheckedOutBooks)
+            //        strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
+            //}
             return strBuilder.ToString();
         }
 
@@ -141,8 +141,8 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
-            foreach (var book in user.OverdueBooks)
-                strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
+            //foreach (var book in user.OverdueBooks)
+            //    strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
 
             return strBuilder.ToString();
         }

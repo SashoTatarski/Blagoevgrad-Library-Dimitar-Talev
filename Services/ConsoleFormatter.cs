@@ -22,7 +22,7 @@ namespace Library.Services
         public string Format(IBook book)
         {
             var strBuilder = new StringBuilder();
-            strBuilder.AppendLine($"ID: {book.ID} || Status: {book.Status}");
+            strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
             strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
             strBuilder.AppendLine($"Genre: {book.Genre}");
             strBuilder.AppendLine($"Publisher: {book.Publisher} || Year: {book.Year} || Location: {book.Rack} rack");
@@ -33,11 +33,11 @@ namespace Library.Services
         public string Format(IUser user)
         {
             var strBuilder = new StringBuilder();
-            strBuilder.AppendLine($"Username: {user.Username}");
-            strBuilder.AppendLine($"Checked out books:");
-            strBuilder.AppendLine(this.FormatListOfBooks(user.CheckedOutBooks));
-            strBuilder.AppendLine($"Reserved books:");
-            strBuilder.AppendLine(this.FormatListOfBooks(user.ReservedBooks));
+            //strBuilder.AppendLine($"Username: {user.Username}");
+            //strBuilder.AppendLine($"Checked out books:");
+            //strBuilder.AppendLine(this.FormatListOfBooks(user.CheckedOutBooks));
+            //strBuilder.AppendLine($"Reserved books:");
+            //strBuilder.AppendLine(this.FormatListOfBooks(user.ReservedBooks));
 
             return strBuilder.ToString();
         }
@@ -59,10 +59,10 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
-            strBuilder.AppendLine($"ID: {book.ID} || Status: {book.Status}");
-            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
-            strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
+            //strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
+            //strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
+            //strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
+            //strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
 
             return strBuilder.ToString();
         }
@@ -71,10 +71,10 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
-            strBuilder.AppendLine($"ID: {book.ID} || Status: {book.Status}");
-            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            strBuilder.AppendLine($"Reservation Date: {book.ResevedDate.ToString("dd MM yyyy")}");
-            strBuilder.AppendLine($"Due Date: {book.ResevationDueDate.ToString("dd MM yyyy")}");
+            //strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
+            //strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
+            //strBuilder.AppendLine($"Reservation Date: {book.ResevedDate.ToString("dd MM yyyy")}");
+            //strBuilder.AppendLine($"Due Date: {book.ResevationDueDate.ToString("dd MM yyyy")}");
 
             return strBuilder.ToString();
         }
@@ -114,7 +114,7 @@ namespace Library.Services
 
             foreach (var user in users)
             {
-                if (user.Status != MemberStatus.Inactive)
+                if (user.Status != AccountStatus.Inactive)
                 {
                     strBuilder.Append(this.Format(user));
                     strBuilder.AppendLine(GlobalConstants.MiniDelimiter);
@@ -130,15 +130,15 @@ namespace Library.Services
             if (users.Count == 0)
                 return GlobalConstants.NoUsers;
 
-            foreach (var user in users)
-            {
-                if (user.Status != MemberStatus.Inactive)
-                    strBuilder.Append(this.FormatShort(user));
-            }
+            //foreach (var user in users)
+            //{
+            //    if (user.Status != MemberStatus.Inactive)
+            //        strBuilder.Append(this.FormatShort(user));
+            //}
 
             return strBuilder.ToString();
         }
 
-        private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
+        //private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
     }
 }

@@ -13,9 +13,11 @@ namespace Library.Database
     public class UserDataBase : IUserDataBase
     {
         private readonly IList<IUser> _internal;
+        private readonly LibraryContext _context;
 
-        public UserDataBase()
+        public UserDataBase(LibraryContext context)
         {
+            _context = context;
             _internal = this.Load();
         }
 
@@ -23,11 +25,13 @@ namespace Library.Database
         {
             _internal.Add(user);
             this.Save();
+            _context.Users.Add((User)user);
+            _context.SaveChanges();
         }
 
         public void Delete(IUser user)
         {
-            user.Status = MemberStatus.Inactive;
+            user.Status = AccountStatus.Inactive;
             this.Save();
         }
 
@@ -35,9 +39,9 @@ namespace Library.Database
 
         public void Update(IUser updatedUser)
         {
-            var userToUpdate = _internal.FirstOrDefault(u => u.Username == updatedUser.Username);
-            userToUpdate.Update(updatedUser);
-            this.Save();
+            //var userToUpdate = _internal.FirstOrDefault(u => u.Username == updatedUser.Username);
+            //userToUpdate.Update(updatedUser);
+            //this.Save();
         }
         public List<IUser> Load()
         {

@@ -39,7 +39,7 @@ namespace Library.Services
             var userToUpdate = _userDB.Get(user.Username);
             Guard.Argument(userToUpdate, nameof(userToUpdate)).NotNull(message: "User to update is null");
 
-            userToUpdate.Update(user);
+           // userToUpdate.Update(user);
             _userDB.Update(userToUpdate);
         }
 
@@ -58,7 +58,7 @@ namespace Library.Services
             var user = _userDB.Get(userName);
             var librarian = _librarianDB.Get(userName);
 
-            if (user is null || user.Status == MemberStatus.Inactive)
+            if (user is null || user.Status == AccountStatus.Inactive)
                 return librarian ?? null;
             else
                 return user;

@@ -51,7 +51,7 @@ namespace Library.Core.Commands
             var bookID = _bookManager.GetLastBookID() + 1;
 
             // Create book with given parameters
-            var bookToCreate = _factory.CreateBook(bookID, authorName, title, isbn, category, publisher, year, rack);
+            var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
 
             // Add book to Database
             _bookManager.AddBook(bookToCreate);

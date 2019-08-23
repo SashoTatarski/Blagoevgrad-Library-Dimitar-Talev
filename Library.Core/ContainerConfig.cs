@@ -23,6 +23,7 @@ namespace Library.Core
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();
 
             //DataBase
+            containerBuilder.RegisterType<LibraryContext>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<UserDataBase>().As<IUserDataBase>().SingleInstance();
             containerBuilder.RegisterType<LibrarianDataBase>().As<ILibrarianDataBase>().SingleInstance();
             containerBuilder.RegisterType<BookDatabase>().As<IBookDatabase>().SingleInstance();
@@ -47,7 +48,7 @@ namespace Library.Core
             // Commands
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");
-            containerBuilder.RegisterType<EditBookCommand>().Named<ICommand>("editbook");            
+            containerBuilder.RegisterType<EditBookCommand>().Named<ICommand>("editbook");
             containerBuilder.RegisterType<SearchBookCommand>().Named<ICommand>("search");
             containerBuilder.RegisterType<RegisterUserCommand>().Named<ICommand>("registeruser");
             containerBuilder.RegisterType<RemoveUserCommand>().Named<ICommand>("removeuser");

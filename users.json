@@ -10,12 +10,11 @@
       "Travel In Time",
       "Log Out"
     ],
+    "Id": 0,
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "OverdueReservations": [],
-    "OverdueBooks": [],
     "LateFees": 1.5,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
     "Username": "hrisi",
     "Password": "hrisi"
   },
@@ -30,12 +29,11 @@
       "Travel In Time",
       "Log Out"
     ],
+    "Id": 0,
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "OverdueReservations": [],
-    "OverdueBooks": [],
     "LateFees": 2.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
     "Username": "sasho",
     "Password": "sasho"
   },
@@ -50,12 +48,11 @@
       "Travel In Time",
       "Log Out"
     ],
+    "Id": 0,
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "OverdueReservations": [],
-    "OverdueBooks": [],
     "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
     "Username": "kiro",
     "Password": "kiro"
   },
@@ -70,13 +67,50 @@
       "Travel In Time",
       "Log Out"
     ],
+    "Id": 0,
     "Status": 0,
-    "CheckedOutBooks": [],
-    "ReservedBooks": [],
-    "OverdueReservations": [],
-    "OverdueBooks": [],
     "LateFees": 0.5,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
     "Username": "edo",
     "Password": "edo"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "kiko",
+    "Password": "kiko"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "hristina",
+    "Password": "hristina"
   }
 ]

@@ -1,10 +1,13 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models.Models
 {
     // OOP: Encapsulation - properties with private set 
+
     public class Book : IBook
     {
         private string _author;
@@ -14,10 +17,12 @@ namespace Library.Models.Models
         private string _publisher;
         private int _year;
         private int _rack;
-
-        public Book(int Id, string author, string title, string isbn, string genre, string publisher, int year, int rack)
+        public Book()
         {
-            this.ID = Id;
+
+        }
+        public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
+        {
             this.Author = author;
             this.Title = title;
             this.ISBN = isbn;
@@ -28,12 +33,12 @@ namespace Library.Models.Models
             this.Status = BookStatus.Available;
         }
 
-        public int ID { get; }
-
+        public int Id { get; set; }
+           
         public string Author
         {
             get => _author;
-            private set
+             set
             {
                 if (value.Length < 1 || value.Length > 40)
                     throw new ArgumentOutOfRangeException("The author name should be between 1 and 40 symbols!");
@@ -45,7 +50,7 @@ namespace Library.Models.Models
         public string Title
         {
             get => _title;
-            private set
+             set
             {
                 if (value.Length < 1 || value.Length > 100)
                 {
@@ -58,7 +63,7 @@ namespace Library.Models.Models
         public string ISBN
         {
             get => _isbn;
-            private set
+             set
             {
                 //if (value.Length != 10 && value.Length != 13)
                 //    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
@@ -68,11 +73,10 @@ namespace Library.Models.Models
 
         }
 
-
         public string Genre
         {
             get => _genre;
-            private set
+             set
             {
                 if (value.Length < 1 || value.Length > 40)
                     throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
@@ -84,7 +88,7 @@ namespace Library.Models.Models
         public string Publisher
         {
             get => _publisher;
-            private set
+             set
             {
                 if (value.Length < 1 || value.Length > 40)
                     throw new ArgumentOutOfRangeException("The publisher name should be between 1 and 40 symbols!");
@@ -96,7 +100,7 @@ namespace Library.Models.Models
         public int Year
         {
             get => _year;
-            private set
+             set
             {
                 // First book ever printed was in 1629
                 if (value < 1629 || value > DateTime.Now.Year)
@@ -109,7 +113,7 @@ namespace Library.Models.Models
         public int Rack
         {
             get => _rack;
-            private set
+             set
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException($"The rack cannot be zero or negative");
@@ -120,13 +124,16 @@ namespace Library.Models.Models
 
         public BookStatus Status { get; set; }
 
-        public DateTime CheckoutDate { get; set; }
+        public CheckoutBook CheckedoutBook { get; set; }
+        public ReservedBook ReservedBook { get; set; }
 
-        public DateTime DueDate { get; set; }
+        //public DateTime CheckoutDate { get; set; }
 
-        public DateTime ResevedDate { get; set; }
+        //public DateTime DueDate { get; set; }
 
-        public DateTime ResevationDueDate { get; set; }
+        //public DateTime ResevedDate { get; set; }
+
+        //public DateTime ResevationDueDate { get; set; }
 
         public void Update(IBook otherBook)
         {
@@ -138,23 +145,23 @@ namespace Library.Models.Models
             this.Year = otherBook.Year;
             this.Rack = otherBook.Rack;
             this.Status = otherBook.Status;
-            this.CheckoutDate = otherBook.CheckoutDate;
-            this.ResevedDate = otherBook.ResevedDate;
-            this.DueDate = otherBook.DueDate;
+            //this.CheckoutDate = otherBook.CheckoutDate;
+            //this.ResevedDate = otherBook.ResevedDate;
+            //this.DueDate = otherBook.DueDate;
         }
 
         public void Update(BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
-            this.Status = status;
-            this.CheckoutDate = checkoutDate;
-            this.DueDate = dueDate;
+            //this.Status = status;
+            //this.CheckoutDate = checkoutDate;
+            //this.DueDate = dueDate;
         }
 
         public void Update(BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool ifReservation)
         {
-            this.Status = status;
-            this.ResevedDate = reservationDate;
-            this.ResevationDueDate = reservationDueDate;
+            //this.Status = status;
+            //this.ResevedDate = reservationDate;
+            //this.ResevationDueDate = reservationDueDate;
         }
     }
 }

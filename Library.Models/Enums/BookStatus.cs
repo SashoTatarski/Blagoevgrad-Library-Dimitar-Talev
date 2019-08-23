@@ -2,9 +2,9 @@
 {
     public enum BookStatus
     {
-        Available,
-        CheckedOut,
-        Reserved,
-        CheckedOut_and_Reserved
+        Available = 0,
+        CheckedOut = 1,
+        Reserved = 2,
+        CheckedOut_and_Reserved = 3
     }
 }

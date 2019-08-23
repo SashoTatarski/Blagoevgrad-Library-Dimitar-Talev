@@ -30,8 +30,8 @@ namespace Library.Core.Commands
             if (userToRemove is null)
                 throw new ArgumentException(GlobalConstants.NoSuchUser);
 
-            if (userToRemove.CheckedOutBooks.Count != 0 || userToRemove.ReservedBooks.Count != 0)
-                throw new ArgumentException(GlobalConstants.RemoveUserError);
+            //if (userToRemove.CheckedOutBooks.Count != 0 || userToRemove.ReservedBooks.Count != 0)
+            //    throw new ArgumentException(GlobalConstants.RemoveUserError);
 
             _accountManager.RemoveUser(userToRemove);
 

@@ -13,9 +13,11 @@ namespace Library.Database
     public class BookDatabase : IBookDatabase
     {
         private readonly IList<IBook> _internal;
+        private readonly LibraryContext _context;
 
-        public BookDatabase()
+        public BookDatabase(LibraryContext context)
         {
+            _context = context;
             _internal = this.Load();
         }
 
@@ -23,26 +25,29 @@ namespace Library.Database
         {
             _internal.Add(book);
             this.Save();
+            _context.Books.Add((Book)book);
+            _context.SaveChanges();
+
         }
 
         public void Delete(IBook book)
         {
-            var bookToRemove = _internal.FirstOrDefault(b => b.ID == book.ID);
+            var bookToRemove = _internal.FirstOrDefault(b => b.Id == book.Id);
             _internal.Remove(bookToRemove);
             this.Save();
         }
 
-        public IBook Get(int bookId) => _internal.FirstOrDefault(b => b.ID == bookId);
+        public IBook Get(int bookId) => _internal.FirstOrDefault(b => b.Id == bookId);
 
         public void Update(IBook book)
         {
-            var bookToUpdate = _internal.FirstOrDefault(b => b.ID == book.ID);
+            var bookToUpdate = _internal.FirstOrDefault(b => b.Id == book.Id);
             bookToUpdate.Update(book);
             this.Save();
         }
 
         public List<IBook> Load()
-        {            
+        {
             string content;
             using (var reader = new StreamReader(GlobalConstants.catalogFilepath))
             {
@@ -57,7 +62,7 @@ namespace Library.Database
         }
 
         public void Save()
-        {            
+        {
             using (var sw = new StreamWriter(GlobalConstants.catalogFilepath))
             {
                 using (JsonWriter writer = new JsonTextWriter(sw))

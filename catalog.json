@@ -1,7 +1,7 @@
 [
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 1,
+    "Id": 1,
     "Author": "Jordan Peterson",
     "Title": "12 Rules For Life",
     "ISBN": "345816021",
@@ -10,14 +10,12 @@
     "Year": 2018,
     "Rack": 11,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 2,
+    "Id": 2,
     "Author": "Milo Yiannaopoulos",
     "Title": "Dangerous",
     "ISBN": "069289344X",
@@ -26,14 +24,12 @@
     "Year": 2007,
     "Rack": 22,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 3,
+    "Id": 3,
     "Author": "Jordan Peterson",
     "Title": "Maps of Meaning: The Architecture of Belief",
     "ISBN": "B00BW54XVO",
@@ -42,14 +38,12 @@
     "Year": 2019,
     "Rack": 33,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 4,
+    "Id": 4,
     "Author": "Ben Shapiro",
     "Title": "The Right Side of History",
     "ISBN": "62857908",
@@ -58,14 +52,12 @@
     "Year": 2019,
     "Rack": 44,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 5,
+    "Id": 5,
     "Author": "Sue Lilly",
     "Title": "Tree Essence",
     "ISBN": "1861630840",
@@ -74,14 +66,12 @@
     "Year": 2001,
     "Rack": 55,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 6,
+    "Id": 6,
     "Author": "Steven Kotler",
     "Title": "The Rise of Superman: Decoding the Science of Ultimate Human Performance",
     "ISBN": "B00BW54XVO",
@@ -90,14 +80,12 @@
     "Year": 2014,
     "Rack": 66,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 7,
+    "Id": 7,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book 2",
     "ISBN": "615724892",
@@ -106,14 +94,12 @@
     "Year": 2012,
     "Rack": 77,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 8,
+    "Id": 8,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book: Myths Magic Media and Mindscapes",
     "ISBN": "1463764006",
@@ -122,14 +108,12 @@
     "Year": 2011,
     "Rack": 88,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 9,
+    "Id": 9,
     "Author": "Andrew Troelsen",
     "Title": "Pro C# 7: With .NET and .NET Core",
     "ISBN": "1484230175",
@@ -138,14 +122,12 @@
     "Year": 2017,
     "Rack": 99,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 10,
+    "Id": 10,
     "Author": "Clotaire Rapaille",
     "Title": "The Culture Code: An Ingenious Way to Understand Why People Around the World Live and Buy as They Do",
     "ISBN": "767920570",
@@ -154,14 +136,12 @@
     "Year": 2007,
     "Rack": 100,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 11,
+    "Id": 11,
     "Author": "Tolkien",
     "Title": "Hobbit",
     "ISBN": "123456789X",
@@ -170,14 +150,12 @@
     "Year": 2016,
     "Rack": 11,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 12,
+    "Id": 12,
     "Author": "J.K.Rowling",
     "Title": "Harry Potter",
     "ISBN": "0987",
@@ -186,14 +164,12 @@
     "Year": 2001,
     "Rack": 12,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
   },
   {
     "$type": "Library.Models.Models.Book, Library.Models",
-    "ID": 13,
+    "Id": 13,
     "Author": "Astrid Lindgren",
     "Title": "Pippi Longstocking",
     "ISBN": "125LpokH",
@@ -202,9 +178,49 @@
     "Year": 1997,
     "Rack": 15,
     "Status": 0,
-    "CheckoutDate": "0001-01-01T00:00:00",
-    "DueDate": "0001-01-01T00:00:00",
-    "ResevedDate": "0001-01-01T00:00:00",
-    "ResevationDueDate": "0001-01-01T00:00:00"
+    "CheckedoutBook": null,
+    "ReservedBook": null
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "Id": 0,
+    "Author": "KKK",
+    "Title": "KKK",
+    "ISBN": "1234",
+    "Genre": "Kdf",
+    "Publisher": "123",
+    "Year": 2000,
+    "Rack": 12,
+    "Status": 0,
+    "CheckedoutBook": null,
+    "ReservedBook": null
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "Id": 0,
+    "Author": "Avtor",
+    "Title": "Kniga",
+    "ISBN": "12345",
+    "Genre": "KKK",
+    "Publisher": "AAA",
+    "Year": 2000,
+    "Rack": 12,
+    "Status": 0,
+    "CheckedoutBook": null,
+    "ReservedBook": null
+  },
+  {
+    "$type": "Library.Models.Models.Book, Library.Models",
+    "Id": 0,
+    "Author": "Tolkien",
+    "Title": "Hobbit",
+    "ISBN": "12345",
+    "Genre": "Drama",
+    "Publisher": "2010",
+    "Year": 2010,
+    "Rack": 12,
+    "Status": 0,
+    "CheckedoutBook": null,
+    "ReservedBook": null
   }
 ]
