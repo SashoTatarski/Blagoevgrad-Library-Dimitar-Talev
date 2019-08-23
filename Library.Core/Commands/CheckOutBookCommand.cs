@@ -62,20 +62,17 @@ namespace Library.Core.Commands
 
                 _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);               
             }
-            //else if (bookToCheckOut.Status == BookStatus.Reserved)
-            //{
-            //    var suchBookInReservedBooks = _context.ReservedBooks.FirstOrDefault(x => x.UserId == user.Id && x.BookId == bookToCheckOut.Id); // user.ReservedBooks.Find(b => b.Id == bookToCheckOut.Id);
-
-            //    if (suchBookInReservedBooks != null)
-            //    {
-            //        _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
-            //       //user.RemoveFromReservedBooks(suchBookInReservedBooks);
-            //        _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
-            //        _accountManager.UpdateUser(user);
-            //    }
-            //    else
-            //        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
-            //}
+            else if (bookToCheckOut.Status == BookStatus.Reserved)
+            {
+                if (_system.CheckIfUserReservedBook(user, bookToCheckOut) != null)
+                {
+                    _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
+                                                                          //user.RemoveFromReservedBooks(suchBookInReservedBooks);
+                    _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
+                }
+                else
+                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
+            }
             else
             {
                 throw new ArgumentException();

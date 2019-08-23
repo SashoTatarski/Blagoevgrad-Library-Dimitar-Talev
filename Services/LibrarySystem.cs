@@ -42,10 +42,35 @@ namespace Library.Services
             _context.SaveChanges();
         }
 
+        public void AddBookToReservedBooks(IBook book, IUser user)
+        {
+            var bookToAdd = new ReservedBook()
+            {
+                BookId = book.Id,
+                UserId = user.Id,
+                ReservationDate = VirtualDate.VirtualToday,
+                ReservationDueDate = VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays)
+            };
 
-    
+            _context.ReservedBooks.Add(bookToAdd);
+            _context.SaveChanges();
+        }
 
-    public void CheckForOverdueBooks()
+        public void CheckIfMaxQuotaReached(IUser user /*List<IBook> books*/)
+        {
+            var userToCheck = _context.CheckoutBooks.Where(x => x.UserId == user.Id).ToList();
+
+            if (userToCheck.Count >= GlobalConstants.MaxBookQuota)
+                throw new ArgumentException(GlobalConstants.MaxQuotaReached);
+        }
+
+        public ReservedBook CheckIfUserReservedBook(IUser user, IBook book)
+        {
+           return _context.ReservedBooks.FirstOrDefault(b => b.BookId == book.Id && b.UserId == user.Id);
+        }
+
+
+        public void CheckForOverdueBooks()
     {
         //var usersWithCheckoutBooks = _accountManager.GetAllUsers().Where(users => users.CheckedOutBooks.Any()).ToList();
 
@@ -104,11 +129,7 @@ namespace Library.Services
         //}
     }
 
-    public void CheckIfMaxQuotaReached(List<IBook> books)
-    {
-        if (books.Count == GlobalConstants.MaxBookQuota)
-            throw new ArgumentException(GlobalConstants.MaxQuotaReached);
-    }
+   
 
     public void PurgeOverdueReservations(IUser user)
     {

@@ -32,9 +32,13 @@ namespace Library.Database
 
         public void Delete(IBook book)
         {
-            var bookToRemove = _internal.FirstOrDefault(b => b.Id == book.Id);
-            _internal.Remove(bookToRemove);
-            this.Save();
+            var bookToRemove = _context.Books.FirstOrDefault(b => b.Id == book.Id);
+            _context.Books.Remove(bookToRemove);
+            _context.SaveChanges();
+
+            //var bookToRemove = _internal.FirstOrDefault(b => b.Id == book.Id);
+            //_internal.Remove(bookToRemove);
+            //this.Save();
         }
 
         public IBook GetOneBook(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
