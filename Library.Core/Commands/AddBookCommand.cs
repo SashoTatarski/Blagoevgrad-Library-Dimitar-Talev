@@ -48,7 +48,7 @@ namespace Library.Core.Commands
                 r => int.Parse(r) < 1));
 
             // Get the ID of the new book
-            var bookID = _bookManager.GetLastBookID() + 1;
+            //var bookID = _bookManager.GetLastBookID() + 1;
 
             // Create book with given parameters
             var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);

@@ -9,7 +9,8 @@ namespace Library.Models.Contracts
     {
         AccountStatus Status { get; set; }
 
-        decimal LateFees { get; set; }       
+        decimal LateFees { get; set; }
+        int Id { get; set; }
 
         //List<IBook> CheckedOutBooks { get; }
         //List<IBook> ReservedBooks { get; }       

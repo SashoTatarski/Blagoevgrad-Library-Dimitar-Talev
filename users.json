@@ -112,5 +112,24 @@
     "ReservedBooks": null,
     "Username": "hristina",
     "Password": "hristina"
+  },
+  {
+    "$type": "Library.Models.Models.User, Library.Models",
+    "AllowedCommands": [
+      "Check Out Book",
+      "Return Book",
+      "Renew Book",
+      "Reserve Book",
+      "Search",
+      "Travel In Time",
+      "Log Out"
+    ],
+    "Id": 0,
+    "Status": 0,
+    "LateFees": 0.0,
+    "CheckedoutBooks": null,
+    "ReservedBooks": null,
+    "Username": "mohamed",
+    "Password": "mohamed"
   }
 ]

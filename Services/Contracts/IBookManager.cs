@@ -28,5 +28,6 @@ namespace Library.Services.Contracts
         string GetCheckedoutBooksInfo(IUser user);
 
         string GetOverdueBooksInfo(IUser user);
+        void UpdateStatus(IBook book, BookStatus status);
     }
 }

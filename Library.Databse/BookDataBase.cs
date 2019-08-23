@@ -18,13 +18,13 @@ namespace Library.Database
         public BookDatabase(LibraryContext context)
         {
             _context = context;
-            _internal = this.Load();
+            //_internal = this.Load();
         }
 
         public void Create(IBook book)
         {
-            _internal.Add(book);
-            this.Save();
+            //_internal.Add(book);
+            //this.Save();
             _context.Books.Add((Book)book);
             _context.SaveChanges();
 
@@ -37,7 +37,7 @@ namespace Library.Database
             this.Save();
         }
 
-        public IBook Get(int bookId) => _internal.FirstOrDefault(b => b.Id == bookId);
+        public IBook GetOneBook(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
 
         public void Update(IBook book)
         {
@@ -46,19 +46,20 @@ namespace Library.Database
             this.Save();
         }
 
-        public List<IBook> Load()
+        public List<Book> Load()
         {
-            string content;
-            using (var reader = new StreamReader(GlobalConstants.catalogFilepath))
-            {
-                content = reader.ReadToEnd();
-            }
+           return  _context.Books.ToList();
+            //string content;
+            //using (var reader = new StreamReader(GlobalConstants.catalogFilepath))
+            //{
+            //    content = reader.ReadToEnd();
+            //}
 
-            return JsonConvert
-                .DeserializeObject<List<Book>>(content, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto
-                }).Cast<IBook>().ToList();
+            //return JsonConvert
+            //    .DeserializeObject<List<Book>>(content, new JsonSerializerSettings
+            //    {
+            //        TypeNameHandling = TypeNameHandling.Auto
+            //    }).Cast<IBook>().ToList();
         }
 
         public void Save()

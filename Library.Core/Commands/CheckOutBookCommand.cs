@@ -44,20 +44,20 @@ namespace Library.Core.Commands
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
 
-            // BookID validation
-            if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-                throw new ArgumentException(GlobalConstants.InvalidID);
+            //// BookID validation
+            //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
+            //    throw new ArgumentException(GlobalConstants.InvalidID);
 
             var bookToCheckOut = _bookManager.FindBook(bookID);
 
             // ASK: How to improve this (maybe extract it in methods?)
             // Check Book Status 
-            //if (bookToCheckOut.Status == BookStatus.Available)
-            //{
-            //    user.AddBookToCheckoutBooks(bookToCheckOut);
-            //    _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
-            //    _accountManager.UpdateUser(user);
-            //}
+            if (bookToCheckOut.Status == BookStatus.Available)
+            {
+                _system.AddBookToCheckoutBooks(bookToCheckOut, user);
+
+                _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);               
+            }
             //else if (bookToCheckOut.Status == BookStatus.Reserved)
             //{
             //    var suchBookInReservedBooks = user.ReservedBooks.Find(b => b.Id == bookToCheckOut.Id);
@@ -72,10 +72,10 @@ namespace Library.Core.Commands
             //    else
             //        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
             //}
-            //else
-            //{
-            //    throw new ArgumentException();
-            //}
+            else
+            {
+                throw new ArgumentException();
+            }
 
             return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
         }
