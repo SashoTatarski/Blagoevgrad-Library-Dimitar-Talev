@@ -37,6 +37,7 @@ namespace Library.Models.Utils
         public const string InvalidParameter = "Invalid parameter!";
         public const string CannotRemoveIssuedBook = "Cannot remove chechedout/reserved book!";
         public const string RemoveUserError = "Cannot remove user who has checkedout/reserved books!";
+        public const string BookToUpdateNull = "Book to update is null";
 
         //Success
         public const string CheckoutBookSuccess = "Successfully checked of the book:";

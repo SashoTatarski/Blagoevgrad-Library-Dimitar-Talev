@@ -4,6 +4,7 @@ using Library.Database.Contracts;
 using Library.Models.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factory;
 using System;
@@ -40,12 +41,12 @@ namespace Library.Services
         public void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack)
         {
             var bookToUpdate = _database.GetOneBook(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
+            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             var updated = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
 
             bookToUpdate.Update(updated);
-            _database.Update(bookToUpdate);
+            _context.SaveChanges();
         }
 
         // CheckOut Book
@@ -53,7 +54,7 @@ namespace Library.Services
         public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
             var bookToUpdate = _database.GetOneBook(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
+            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, checkoutDate, dueDate);
             _database.Update(bookToUpdate);
@@ -63,7 +64,7 @@ namespace Library.Services
         public void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation)
         {
             var bookToUpdate = _database.GetOneBook(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: "Book to update is null");
+            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, reservationDate, reservationDueDate, true);
             _database.Update(bookToUpdate);

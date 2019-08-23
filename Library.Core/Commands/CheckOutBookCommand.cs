@@ -1,6 +1,8 @@
 ﻿using Library.Core.Contracts;
+using Library.Database;
 using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
@@ -18,8 +20,9 @@ namespace Library.Core.Commands
         private readonly IAccountManager _accountManager;
         private readonly ILibrarySystem _system;
         private readonly IConsoleFormatter _formatter;
+        private readonly LibraryContext _context;
 
-        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system, IConsoleFormatter formatter)
+        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system, IConsoleFormatter formatter, LibraryContext context)
         {
             _authentication = authentication;
             _renderer = renderer;
@@ -27,6 +30,7 @@ namespace Library.Core.Commands
             _accountManager = accountManager;
             _system = system;
             _formatter = formatter;
+            _context = context;
         }
 
         public string Execute()
@@ -60,12 +64,12 @@ namespace Library.Core.Commands
             }
             //else if (bookToCheckOut.Status == BookStatus.Reserved)
             //{
-            //    var suchBookInReservedBooks = user.ReservedBooks.Find(b => b.Id == bookToCheckOut.Id);
+            //    var suchBookInReservedBooks = _context.ReservedBooks.FirstOrDefault(x => x.UserId == user.Id && x.BookId == bookToCheckOut.Id); // user.ReservedBooks.Find(b => b.Id == bookToCheckOut.Id);
 
             //    if (suchBookInReservedBooks != null)
             //    {
-            //        user.AddBookToCheckoutBooks(bookToCheckOut);
-            //        user.RemoveFromReservedBooks(suchBookInReservedBooks);
+            //        _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
+            //       //user.RemoveFromReservedBooks(suchBookInReservedBooks);
             //        _bookManager.UpdateBook(bookID, BookStatus.CheckedOut, VirtualDate.VirtualToday, VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays));
             //        _accountManager.UpdateUser(user);
             //    }
