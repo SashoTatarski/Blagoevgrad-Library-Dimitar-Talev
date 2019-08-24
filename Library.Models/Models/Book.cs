@@ -19,8 +19,8 @@ namespace Library.Models.Models
         private int _rack;
         public Book()
         {
-
         }
+
         public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
         {
             this.Author = author;
@@ -34,7 +34,11 @@ namespace Library.Models.Models
         }
 
         public int Id { get; set; }
-           
+
+        public CheckoutBook CheckedoutBook { get; set; }
+
+        public ReservedBook ReservedBook { get; set; }
+
         public string Author
         {
             get => _author;
@@ -124,16 +128,7 @@ namespace Library.Models.Models
 
         public BookStatus Status { get; set; }
 
-        public CheckoutBook CheckedoutBook { get; set; }
-        public ReservedBook ReservedBook { get; set; }
-
-        //public DateTime CheckoutDate { get; set; }
-
-        //public DateTime DueDate { get; set; }
-
-        //public DateTime ResevedDate { get; set; }
-
-        //public DateTime ResevationDueDate { get; set; }
+              
 
         public void Update(IBook otherBook)
         {

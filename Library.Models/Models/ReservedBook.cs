@@ -8,12 +8,14 @@ namespace Library.Models.Models
 {
     public class ReservedBook
     {
-
         public int UserId { get; set; }
         public int BookId { get; set; }
-        public DateTime ReservationDate { get; set; }
-        public DateTime ReservationDueDate { get; set; }
+
         public Book Book { get; set; }
         public User User { get; set; }
+
+        public DateTime ReservationDate { get; set; }
+        public DateTime ReservationDueDate { get; set; }
+        
     }
 }

@@ -56,7 +56,7 @@ namespace Library.Core.Commands
             //while (user.CheckedOutBooks.FindAll(b => b.Id == bookId).Count == 0 && user.OverdueBooks.FindAll(b => b.Id == bookId).Count == 0);
 
             //Find the book to remove
-           // var bookToReturn = _bookManager.FindBook(bookId);
+            // var bookToReturn = _bookManager.FindBook(bookId);
 
             ////Check if the book to remove is overdue, in order to know from where to delete it
             //if (user.HasOverdueBooks())
