@@ -7,10 +7,9 @@ namespace Library.Database.Contracts
     public interface IBookDatabase
     {
         void Create(IBook book);
-        IBook GetOneBook(int bookId);
+        IBook Find(int bookId);
         void Update(IBook book);
         void Delete(IBook book);
-        List<Book> Load();
-        void Save();
+        List<Book> Read();
     }
 }

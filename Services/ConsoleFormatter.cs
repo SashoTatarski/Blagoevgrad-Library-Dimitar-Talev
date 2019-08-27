@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Library.Models.Models;
+using System;
 
 namespace Library.Services
 {
@@ -47,11 +48,11 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
-            if (books.Count == 0)
-                return "There are no books!";
+            //if (books.Count == 0)
+            //    return "There are no books!";
 
-            foreach (var book in books)
-                strBuilder.AppendLine(this.Format(book));
+            //foreach (var book in books)
+            //    strBuilder.AppendLine(this.Format(book));
 
             return strBuilder.ToString();
         }
@@ -141,5 +142,13 @@ namespace Library.Services
         }
 
         //private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
+
+        public string CenterStringWithSymbols(string text, char symbol)
+        {
+            int numberOfSymbols = (GlobalConstants.MaxFieldLength - text.Length) / 2;
+            string symbols = new String(symbol, numberOfSymbols);
+            return GlobalConstants.NewLine + symbols + text + symbols + GlobalConstants.NewLine;
+        }
+
     }
 }

@@ -43,7 +43,8 @@ namespace Library.Core.Commands
 
             var searchResult = _bookManager.GetSearchResult(parameter, searchBy);
 
-            return _formatter.FormatListOfBooks(searchResult);
+            //return _formatter.FormatListOfBooks(searchResult);
+            return null;
         }
 
         private string GetSearchParameterByNumber(int number, List<string> parameters)

@@ -1,6 +1,8 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Utils;
+using Library.Services;
 using Library.Services.Contracts;
+using Library.Services.Factories.Contracts;
 using Library.Services.Factory;
 using Services.Contracts;
 using System;
@@ -14,20 +16,26 @@ namespace Library.Core
         private readonly IMenuFactory _menuFactory;
         private readonly IAuthenticationManager _authentication;
         private readonly ILibrarySystem _system;
+        private readonly IDataService _service;
+        
 
-        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system)
+        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system, IDataService service)
         {
             _renderer = renderer;
             _commandParser = commandParser;
             _menuFactory = menuFactory;
             _authentication = authentication;
             _system = system;
+            _service = service;
         }
 
         public void Start()
         {
             // ASK: Should we/ how to improve this method
             VirtualDate.StartVirtualTime();
+
+           // _service.ClearUpDatabase();
+           // _service.SeedDatabase();
 
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();

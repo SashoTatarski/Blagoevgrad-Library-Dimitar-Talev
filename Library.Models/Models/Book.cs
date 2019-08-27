@@ -2,26 +2,24 @@
 using Library.Models.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models.Models
 {
     // OOP: Encapsulation - properties with private set 
 
-    public class Book : IBook
+    public class Book
     {
-        private string _author;
         private string _title;
-        private string _isbn;
-        private string _genre;
-        private string _publisher;
         private int _year;
         private int _rack;
-        public Book()
-        {
-        }
+        //private string _author;
+        //private string _isbn;
+        //private string _genre;
+        // private string _publisher;
 
-        public Book(string author, string title, string isbn, string genre, string publisher, int year, int rack)
+        public Book() { }
+
+        public Book(Author author, string title, string isbn, List<Genre> genre, Publisher publisher, int year, int rack)
         {
             this.Author = author;
             this.Title = title;
@@ -34,27 +32,10 @@ namespace Library.Models.Models
         }
 
         public int Id { get; set; }
-
-        public CheckoutBook CheckedoutBook { get; set; }
-
-        public ReservedBook ReservedBook { get; set; }
-
-        public string Author
-        {
-            get => _author;
-             set
-            {
-                if (value.Length < 1 || value.Length > 40)
-                    throw new ArgumentOutOfRangeException("The author name should be between 1 and 40 symbols!");
-
-                _author = value;
-            }
-        }
-
         public string Title
         {
             get => _title;
-             set
+            set
             {
                 if (value.Length < 1 || value.Length > 100)
                 {
@@ -64,47 +45,49 @@ namespace Library.Models.Models
             }
         }
 
-        public string ISBN
-        {
-            get => _isbn;
-             set
-            {
-                //if (value.Length != 10 && value.Length != 13)
-                //    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
+        public Author Author;
+        
 
-                _isbn = value;
-            }
+        public string ISBN;
+        //{
+        //    get => _isbn;
+        //    set
+        //    {
+        //        //if (value.Length != 10 && value.Length != 13)
+        //        //    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
 
-        }
+        //        _isbn = value;
+        //    }
+        //}
 
-        public string Genre
-        {
-            get => _genre;
-             set
-            {
-                if (value.Length < 1 || value.Length > 40)
-                    throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
+        public List<Genre> Genre;
+        //{
+        //    get => _genre;
+        //    set
+        //    {
+        //        if (value.Length < 1 || value.Length > 40)
+        //            throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
 
-                _genre = value;
-            }
-        }
+        //        _genre = value;
+        //    }
+        //}
 
-        public string Publisher
-        {
-            get => _publisher;
-             set
-            {
-                if (value.Length < 1 || value.Length > 40)
-                    throw new ArgumentOutOfRangeException("The publisher name should be between 1 and 40 symbols!");
+        public Publisher Publisher;
+        //{
+        //    get => _publisher;
+        //    set
+        //    {
+        //        if (value.Length < 1 || value.Length > 40)
+        //            throw new ArgumentOutOfRangeException("The publisher name should be between 1 and 40 symbols!");
 
-                _publisher = value;
-            }
-        }
+        //        _publisher = value;
+        //    }
+        //}
 
         public int Year
         {
             get => _year;
-             set
+            set
             {
                 // First book ever printed was in 1629
                 if (value < 1629 || value > DateTime.Now.Year)
@@ -117,7 +100,7 @@ namespace Library.Models.Models
         public int Rack
         {
             get => _rack;
-             set
+            set
             {
                 if (value < 1)
                     throw new ArgumentOutOfRangeException($"The rack cannot be zero or negative");
@@ -127,16 +110,19 @@ namespace Library.Models.Models
         }
 
         public BookStatus Status { get; set; }
+        public List<BookGenre> BookGenres { get; set; }
+        public CheckoutBook CheckedoutBook { get; set; }
+        public ReservedBook ReservedBook { get; set; }
 
-              
+        //---- Update 
 
         public void Update(IBook otherBook)
         {
             this.Title = otherBook.Title;
-            this.Author = otherBook.Author;
+            //this.Author = otherBook.Author;
             this.ISBN = otherBook.ISBN;
-            this.Genre = otherBook.Genre;
-            this.Publisher = otherBook.Publisher;
+            //this.Genre = otherBook.Genre;
+            // this.Publisher = otherBook.Publisher;
             this.Year = otherBook.Year;
             this.Rack = otherBook.Rack;
             this.Status = otherBook.Status;

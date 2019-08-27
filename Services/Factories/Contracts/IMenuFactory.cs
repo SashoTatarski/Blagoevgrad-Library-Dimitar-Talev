@@ -1,12 +1,10 @@
 ﻿using Library.Models.Contracts;
 using System.Collections.Generic;
 
-namespace Library.Services.Factory
+namespace Library.Services.Factories.Contracts
 {
     public interface IMenuFactory
     {
-        string GenerateMenu(IAccount account);
-
         string GenerateMenu(List<string> parameters);
     }
 }

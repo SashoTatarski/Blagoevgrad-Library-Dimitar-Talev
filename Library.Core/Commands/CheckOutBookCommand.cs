@@ -35,12 +35,12 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.CheckOutBook);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.CheckOutBook, GlobalConstants.MiniDelimiterSymbol));
 
             var user = (IUser)_authentication.CurrentAccount;
 
             // If the User has checked out 5 books already
-            //_system.CheckIfMaxQuotaReached(user.CheckedOutBooks);
+            _system.CheckCheckoutBooksQuota(user);
 
             // Show all the books user can select from
             _bookManager.ListAllBooks();
@@ -56,29 +56,31 @@ namespace Library.Core.Commands
 
             // ASK: How to improve this (maybe extract it in methods?)
             // Check Book Status 
-            if (bookToCheckOut.Status == BookStatus.Available)
-            {
-                _system.AddBookToCheckoutBooks(bookToCheckOut, user);
+            //if (bookToCheckOut.Status == BookStatus.Available)
+            //{
+            //    _system.AddBookToCheckoutBooks(bookToCheckOut, user);
 
-                _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);               
-            }
-            else if (bookToCheckOut.Status == BookStatus.Reserved)
-            {
-                if (_system.ReservedByUser(user, bookToCheckOut))
-                {
-                    _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
-                                                                          //user.RemoveFromReservedBooks(suchBookInReservedBooks);
-                    _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
-                }
-                else
-                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
+            //    _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
+            //}
+            //else if (bookToCheckOut.Status == BookStatus.Reserved)
+            //{
+            //    if (_system.ReservedByUser(user, bookToCheckOut))
+            //    {
+            //        _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
+            //                                                              //user.RemoveFromReservedBooks(suchBookInReservedBooks);
+            //        _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
+            //    }
+            //    else
+            //        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
+            //}
+            //else
+            //{
+            //    throw new ArgumentException();
+            //}
 
-            return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
+            // return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
+
+            return null;
         }
     }
 }

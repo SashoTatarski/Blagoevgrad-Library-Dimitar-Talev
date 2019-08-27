@@ -1,11 +1,9 @@
 ﻿using Library.Database;
 using Library.Models.Contracts;
-using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -27,7 +25,23 @@ namespace Library.Services
             _bookManager = bookManager;
             _context = context;
         }
+        public void CheckCheckoutBooksQuota(IUser user)
+        {
+            var checkedoutBooks = _context.CheckoutBooks.Where(x => x.UserId == user.Id).ToList();
 
+            if (checkedoutBooks.Count >= GlobalConstants.MaxBookQuota)
+                throw new ArgumentException(GlobalConstants.MaxQuotaReached);
+        }
+
+        public void CheckReservedBooksQuota(IUser user)
+        {
+            var RreservedBooks = _context.ReservedBooks.Where(x => x.UserId == user.Id).ToList();
+
+            if (RreservedBooks.Count >= GlobalConstants.MaxBookQuota)
+                throw new ArgumentException(GlobalConstants.MaxQuotaReached);
+        }
+
+        // ------- Need update ↓ -------
         public void AddBookToCheckoutBooks(IBook book, IUser user)
         {
             var bookToAdd = new CheckoutBook()
@@ -56,13 +70,7 @@ namespace Library.Services
             _context.SaveChanges();
         }
 
-        public void CheckIfMaxQuotaReached(IUser user /*List<IBook> books*/)
-        {
-            var userToCheck = _context.CheckoutBooks.Where(x => x.UserId == user.Id).ToList();
-
-            if (userToCheck.Count >= GlobalConstants.MaxBookQuota)
-                throw new ArgumentException(GlobalConstants.MaxQuotaReached);
-        }
+        
 
         public bool ReservedByUser(IUser user, IBook book)
         {

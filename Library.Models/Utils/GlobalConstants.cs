@@ -5,19 +5,22 @@ namespace Library.Models.Utils
     public static class GlobalConstants
     {
         // Commandnames
-        public const string CheckOutBook = "----------CheckOut Book----------\r\n";
-        public const string AddBook = "----------Add Book----------\r\n";
-        public const string LogIn = "----------Log In----------\r\n";
-        public const string ReserveBook = "----------Reserve Book----------\r\n";
-        public const string RegisterUser = "----------Register User----------\r\n";
-        public const string RegisterLibrarian = "----------Register Librarian----------\r\n";
-        public const string ReturnBook = "----------Return Book----------\r\n";
-        public const string RemoveUser = "----------Remove User----------\r\n";
-        public const string EditBook = "----------Edit Book----------\r\n";
-        public const string RemoveBook = "----------Remove Book----------\r\n";
-        public const string Search = "----------Search For Book----------\r\n";
-        public const string Travel = "----------Travel In Time----------\r\n";
-        public const string View = "----------View Accounts----------\r\n";
+        public static string CheckOutBook = "Check Out Book";
+        public static string AddBook = "Add Book";
+        public static string LogIn = "Log In";
+        public static string ReserveBook = "Reserve Book";
+        public static string RegisterUser = "Register User";
+        public static string RegisterLibrarian = "Register Librarian";
+        public static string ReturnBook = "Return Book";
+        public static string RemoveUser = "Remove User";
+        public static string EditBook = "Edit Book";
+        public static string RemoveBook = "Remove Book";
+        public static string Search = "Search For Book";
+        public static string Travel = "Travel In Time";
+        public static string View = "View Accounts";
+
+        // Static
+        public static string NewLine = Environment.NewLine;
 
         // Commands     
         public const string NoSuchUserName = "No such username!";
@@ -65,10 +68,14 @@ namespace Library.Models.Utils
         public const int MaxBookQuota = 5;
         public const int MaxCheckoutDays = 10;
         public const int MaxReserveDays = 5;
+        public static int MaxFieldLength = 70;
 
         //Format
-        public static string Delimiter = new string('=', 70);
-        public static string MiniDelimiter = new string('-', 70);
+        public static char MiniDelimiterSymbol = '-';
+        public static char DelimiterSymbol = '=';
+
+        public static string Delimiter = new string(DelimiterSymbol, MaxFieldLength);
+        public static string MiniDelimiter = new string(MiniDelimiterSymbol, MaxFieldLength);
 
 
         //Messages
@@ -76,6 +83,8 @@ namespace Library.Models.Utils
         public const string MaxQuotaReached = "You have reached the max quota of 5 books!";
         public const string Goodbye = "Goodbye!";
         public const string DaysToSkip = "how many days you want to skip";
+
+
 
     }
 }

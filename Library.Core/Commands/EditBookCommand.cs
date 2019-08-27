@@ -55,7 +55,8 @@ namespace Library.Core.Commands
 
             var bookToEdit = _bookManager.FindBook(bookId);
 
-            return _formatter.FormatCommandMessage(GlobalConstants.EditBookSuccess, _formatter.Format(bookToEdit));
+            //return _formatter.FormatCommandMessage(GlobalConstants.EditBookSuccess, _formatter.Format(bookToEdit));
+            return null;
         }
     }
 }

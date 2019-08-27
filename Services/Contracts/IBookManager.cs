@@ -8,26 +8,18 @@ namespace Library.Services.Contracts
 {
     public interface IBookManager
     {
-        void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack);
-
-        void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation);
-
-        void UpdateBook(int bookId, BookStatus status, DateTime today, DateTime dueDate);        
-
-        void AddBook(IBook book);
-
+        Book CreateBook(Author authorName, string title, string isbn, List<Genre> genres, Publisher publisher, int year, int rack);
         void ListAllBooks();
 
-        IBook FindBook(int id);
-
-        void RemoveBook(IBook book);        
-
+        // ------- Need update ↓ -------
+        void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack);
+        void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation);
+        void UpdateBook(int bookId, BookStatus status, DateTime today, DateTime dueDate);        
+        Book FindBook(int id);
+        void RemoveBook(Book book);        
         int GetLastBookID();
-
         List<Book> GetSearchResult(string searchByParameter, string searchByText);
-
         string GetCheckedoutBooksInfo(IUser user);
-
         string GetOverdueBooksInfo(IUser user);
         void UpdateStatus(IBook book, BookStatus status);
     }

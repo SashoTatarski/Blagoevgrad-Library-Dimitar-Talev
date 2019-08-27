@@ -12,60 +12,9 @@
       "Travel In Time",
       "Log Out"
     ],
-    "Id": 0,
+    "Id": 1,
     "Username": "Librarian",
     "Password": "123"
-  },
-  {
-    "$type": "Library.Models.Models.Librarian, Library.Models",
-    "AllowedCommands": [
-      "Add Book",
-      "Edit Book",
-      "Remove Book",
-      "Register User",
-      "Register Librarian",
-      "Remove User",
-      "Search",
-      "Travel In Time",
-      "Log Out"
-    ],
-    "Id": 0,
-    "Username": "lib",
-    "Password": "lib"
-  },
-  {
-    "$type": "Library.Models.Models.Librarian, Library.Models",
-    "AllowedCommands": [
-      "Add Book",
-      "Edit Book",
-      "Remove Book",
-      "Register User",
-      "Register Librarian",
-      "Remove User",
-      "Search",
-      "Travel In Time",
-      "Log Out"
-    ],
-    "Id": 0,
-    "Username": "libr",
-    "Password": "libr"
-  },
-  {
-    "$type": "Library.Models.Models.Librarian, Library.Models",
-    "AllowedCommands": [
-      "Add Book",
-      "Edit Book",
-      "Remove Book",
-      "Register User",
-      "Register Librarian",
-      "Remove User",
-      "Search",
-      "Travel In Time",
-      "Log Out"
-    ],
-    "Id": 1,
-    "Username": "lib",
-    "Password": "lib"
   },
   {
     "$type": "Library.Models.Models.Librarian, Library.Models",
@@ -81,7 +30,7 @@
       "Log Out"
     ],
     "Id": 2,
-    "Username": "Librarian",
-    "Password": "123"
+    "Username": "lib",
+    "Password": "lib"
   }
 ]

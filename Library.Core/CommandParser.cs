@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Library.Core.Contracts;
-using Services.Contracts;
 using System;
 using System.Collections.Generic;
 

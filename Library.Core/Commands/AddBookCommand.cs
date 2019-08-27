@@ -1,7 +1,6 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Utils;
 using Library.Services.Contracts;
-using Library.Services.Factory;
 using System;
 
 namespace Library.Core.Commands
@@ -9,22 +8,20 @@ namespace Library.Core.Commands
     // SOLID: OPEN/CLOSE - We can add more commands, thus making the code open for extension
     public class AddBookCommand : ICommand
     {
-        private readonly IBookFactory _factory;
-        private readonly IConsoleRenderer _renderer;
         private readonly IBookManager _bookManager;
+        private readonly IConsoleRenderer _renderer;
         private readonly IConsoleFormatter _formatter;
 
-        public AddBookCommand(IBookFactory factory, IConsoleRenderer renderer, IBookManager bookManager, IConsoleFormatter formatter)
+        public AddBookCommand(IBookManager bookManager, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
-            _factory = factory;
-            _renderer = renderer;
             _bookManager = bookManager;
+            _renderer = renderer;
             _formatter = formatter;
         }
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.AddBook);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.AddBook, GlobalConstants.MiniDelimiterSymbol));
 
             // ASK: How to improve this since it exists also in EditBookCommand
             var authorName = _renderer.InputParameters("author name",
@@ -35,7 +32,7 @@ namespace Library.Core.Commands
 
             var isbn = _renderer.InputParameters("ISBN code");
 
-            var category = _renderer.InputParameters("genre",
+            var genres = _renderer.InputParameters("genres (split by ,)",
                 g => g.Length < 1 || g.Length > 40);
 
             var publisher = _renderer.InputParameters("publisher",
@@ -47,15 +44,11 @@ namespace Library.Core.Commands
             var rack = int.Parse(_renderer.InputParameters("rack",
                 r => int.Parse(r) < 1));
 
-            
 
-            // Create book with given parameters
-            var bookToCreate = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
+            var bookToCreate = _bookManager.CreateBook(authorName, title, isbn, genres, publisher, year, rack);
 
-            // Add book to Database
-            _bookManager.AddBook(bookToCreate);
-
-            return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));
+            // return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));
+            return null;
         }
     }
 }

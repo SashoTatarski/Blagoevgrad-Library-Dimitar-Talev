@@ -11,6 +11,5 @@ namespace Library.Database.Contracts
         void Update(IUser user);
         void Delete(IUser user);
         List<User> Load();
-        
     }
 }

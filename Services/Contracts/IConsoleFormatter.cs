@@ -25,5 +25,6 @@ namespace Library.Services.Contracts
         string FormatListOfUsers(List<IUser> users);
 
         string FormatListOfUsersShort(List<User> users);
+        string CenterStringWithSymbols(string text, char symbol);
     }
 }

@@ -1,10 +1,14 @@
-﻿using Library.Models.Contracts;
-using Library.Models.Models;
+﻿using Library.Models.Models;
+using Library.Services.Factories.Contracts;
+using System.Collections.Generic;
 
 namespace Library.Services.Factory
 {
     public class BookFactory : IBookFactory
     {
-        public IBook CreateBook(string author, string title, string isbn, string subject, string publisher, int year, int rack) => new Book(author, title, isbn, subject, publisher, year, rack);
+        public Book CreateBook(Author author, string title, string isbn, List<Genre> genres, Publisher publisher, int year, int rack)
+        {
+            return new Book(author, title, isbn, genres, publisher, year, rack);
+        }
     }
 }

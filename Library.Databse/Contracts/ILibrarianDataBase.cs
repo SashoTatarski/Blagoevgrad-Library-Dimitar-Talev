@@ -9,7 +9,5 @@ namespace Library.Database.Contracts
         ILibrarian Get(string username);
         void Update(ILibrarian librarian);
         void Delete(ILibrarian librarian);
-        List<ILibrarian> Load();
-        void Save();
     }
 }

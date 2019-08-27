@@ -1,5 +1,6 @@
 [
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 1,
     "Author": "Jordan Peterson",
     "Title": "12 Rules For Life",
@@ -13,6 +14,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 2,
     "Author": "Milo Yiannaopoulos",
     "Title": "Dangerous",
@@ -26,6 +28,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 3,
     "Author": "Jordan Peterson",
     "Title": "Maps of Meaning: The Architecture of Belief",
@@ -39,6 +42,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 4,
     "Author": "Ben Shapiro",
     "Title": "The Right Side of History",
@@ -52,6 +56,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 5,
     "Author": "Sue Lilly",
     "Title": "Tree Essence",
@@ -65,6 +70,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 6,
     "Author": "Steven Kotler",
     "Title": "The Rise of Superman: Decoding the Science of Ultimate Human Performance",
@@ -78,6 +84,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 7,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book 2",
@@ -91,6 +98,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 8,
     "Author": "Alan Abbadessa",
     "Title": "The Sync Book: Myths Magic Media and Mindscapes",
@@ -104,6 +112,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 9,
     "Author": "Andrew Troelsen",
     "Title": "Pro C# 7: With .NET and .NET Core",
@@ -117,6 +126,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 10,
     "Author": "Clotaire Rapaille",
     "Title": "The Culture Code: An Ingenious Way to Understand Why People Around the World Live and Buy as They Do",
@@ -130,6 +140,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 11,
     "Author": "Tolkien",
     "Title": "Hobbit",
@@ -143,6 +154,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 12,
     "Author": "J.K.Rowling",
     "Title": "Harry Potter",
@@ -156,6 +168,7 @@
     "ReservedBook": null
   },
   {
+    "$type": "Library.Models.Models.Book, Library.Models",
     "Id": 13,
     "Author": "Astrid Lindgren",
     "Title": "Pippi Longstocking",

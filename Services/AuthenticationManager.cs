@@ -18,11 +18,15 @@ namespace Services
             _accountManager = accountManager;
             _system = system;
         }
+
         public IAccount CurrentAccount { get; private set; }
 
         public void LogIn(IAccount account) => this.CurrentAccount = account;
-
         public void LogOut() => this.CurrentAccount = null;
+
+        // ----------- Update
+        
+
 
         public void CheckForExistingUsername(string username)
         {

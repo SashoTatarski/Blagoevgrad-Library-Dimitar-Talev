@@ -1,91 +1,77 @@
 ﻿using Library.Database.Contracts;
-using Library.Models.Contracts;
 using Library.Models.Models;
-using Library.Models.Utils;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Library.Database
 {
     // SOLID: Liskov - we can substitute JSON with another type of DB
-    public class BookDatabase : IBookDatabase
+    public class BookDatabase<Book> : IDataBase<Models.Models.Book>
     {
-        private readonly IList<IBook> _internal;
         private readonly LibraryContext _context;
 
         public BookDatabase(LibraryContext context)
         {
             _context = context;
-            //_internal = this.Load();
         }
 
-        public void Create(IBook book)
+        public void Create(Models.Models.Book book)
         {
-            //_internal.Add(book);
-            //this.Save();
-            _context.Books.Add((Book)book);
+            _context.Books.Add(book);
             _context.SaveChanges();
-
         }
+        public List<Models.Models.Book> Read() => _context.Books.ToList();
 
-        public void Delete(IBook book)
+        public void Update(Models.Models.Book book) { }
+
+        public void Delete(Models.Models.Book book)
         {
             var bookToRemove = _context.Books.FirstOrDefault(b => b.Id == book.Id);
+
             _context.Books.Remove(bookToRemove);
             _context.SaveChanges();
-
-            //var bookToRemove = _internal.FirstOrDefault(b => b.Id == book.Id);
-            //_internal.Remove(bookToRemove);
-            //this.Save();
         }
 
-        public IBook GetOneBook(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
+        public Models.Models.Book Find(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
 
-        public void Update(IBook book)
+
+
+        public Author CreateAuthor(string authorName)
         {
-            var bookToUpdate = _internal.FirstOrDefault(b => b.Id == book.Id);
-            bookToUpdate.Update(book);
-            this.Save();
-        }
-
-        public List<Book> Load()
-        {
-           return  _context.Books.ToList();
-            //string content;
-            //using (var reader = new StreamReader(GlobalConstants.catalogFilepath))
-            //{
-            //    content = reader.ReadToEnd();
-            //}
-
-            //return JsonConvert
-            //    .DeserializeObject<List<Book>>(content, new JsonSerializerSettings
-            //    {
-            //        TypeNameHandling = TypeNameHandling.Auto
-            //    }).Cast<IBook>().ToList();
-        }
-
-        public void Save()
-        {
-            using (var sw = new StreamWriter(GlobalConstants.catalogFilepath))
+            if (FindAuthor(authorName) is null)
             {
-                using (JsonWriter writer = new JsonTextWriter(sw))
-                {
-                    CreateSerializer().Serialize(writer, _internal);
-                }
+                var newAuthor = new Author { Name = authorName };
+                _context.Authors.Add(newAuthor);
+                return newAuthor;
+            }
+            else
+            {
+                return FindAuthor(authorName);
             }
         }
 
-        public static JsonSerializer CreateSerializer()
+        public Author FindAuthor(string authorName)
         {
-            return new JsonSerializer
-            {
-                Formatting = Formatting.Indented,
-                TypeNameHandling = TypeNameHandling.Objects,
-                TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple
-            };
+            return _context.Authors.FirstOrDefault(a => a.Name.ToLower() == authorName);
         }
 
+        public Publisher CreatePublisher(string publisher)
+        {
+            if (FindPublisher(publisher) is null)
+            {
+                var newPublisher = new Publisher { Name = publisher };
+                _context.Publishers.Add(newPublisher);
+                return newPublisher;
+            }
+            else
+            {
+                return FindPublisher(publisher);
+            }
+        }
+
+        public Publisher FindPublisher(string publisher)
+        {
+            return _context.Publishers.FirstOrDefault(a => a.Name.ToLower() == publisher);
+        }
     }
 }

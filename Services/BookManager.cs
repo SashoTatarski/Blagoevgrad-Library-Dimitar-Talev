@@ -16,20 +16,58 @@ namespace Library.Services
 {
     public class BookManager : IBookManager
     {
-        private readonly IBookDatabase _database;
+        private readonly IDataBase<Book> _database;
         private readonly IBookFactory _factory;
         private readonly IConsoleFormatter _formatter;
         private readonly LibraryContext _context;
-        
+        private readonly IConsoleRenderer _renderer;
 
-        public BookManager(IBookDatabase database, IBookFactory bookfactory, IConsoleFormatter formatter, LibraryContext context)
+
+        public BookManager(IDataBase<Book> database, IBookFactory bookfactory, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
         {
             _database = database;
             _factory = bookfactory;
             _formatter = formatter;
             _context = context;
+            _renderer = renderer;
+
         }
 
+        public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
+        {
+           
+            {
+                _context.Authors.Add(new Author { Name = authorName });
+            }
+
+            var book = _factory.CreateBook(authorName, title, isbn, genres, publisher, year, rack);
+
+            _database.Create(book);
+
+            return book;
+        }
+
+        public void ListAllBooks()
+        {
+            var books = _database.Read();
+
+            //foreach (var book in books)
+            //{
+            //    if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
+            //        Console.ForegroundColor = ConsoleColor.Red;
+
+            //    if (book.Status == BookStatus.Available)
+            //        Console.ForegroundColor = ConsoleColor.Green;
+
+            //    _renderer.Output(_formatter.Format(book));
+            //    _renderer.Output(_formatter.Format(book));
+
+            //   // Console.WriteLine($"\r\nID: {book.Id} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
+
+            //    Console.ResetColor();
+            //}
+        }
+        // ------- Need update ↓ -------
         public void UpdateStatus(IBook book, BookStatus status)
         {
             var bookToUpdate = _context.Books.FirstOrDefault(b => b.Id == book.Id);
@@ -40,20 +78,20 @@ namespace Library.Services
         // Edit Book
         public void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack)
         {
-            var bookToUpdate = _database.GetOneBook(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
+            //var bookToUpdate = _database.Find(bookId);
+            //Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
-            var updated = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
+            //var updated = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
 
-            bookToUpdate.Update(updated);
-            _context.SaveChanges();
+            //bookToUpdate.Update(updated);
+            //_context.SaveChanges();
         }
 
         // CheckOut Book
         // OOP: Polymorphism - method overloading static polymorphism. In static polym. identification of the overloaded method to be executed is carried out at compile time
         public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
-            var bookToUpdate = _database.GetOneBook(bookId);
+            var bookToUpdate = _database.Find(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, checkoutDate, dueDate);
@@ -63,72 +101,59 @@ namespace Library.Services
         // Reserve Book
         public void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation)
         {
-            var bookToUpdate = _database.GetOneBook(bookId);
+            var bookToUpdate = _database.Find(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, reservationDate, reservationDueDate, true);
             _database.Update(bookToUpdate);
         }
 
-        public void AddBook(IBook book) => _database.Create(book);
 
-        public void RemoveBook(IBook book) => _database.Delete(book);
+        public void RemoveBook(Book book) => _database.Delete(book);
 
-        public IBook FindBook(int id) => _database.GetOneBook(id);
+        public Book FindBook(int id) => _database.Find(id);
 
-        public List<Book> GetAllBooks() => _database.Load();
+        public List<Book> GetAllBooks()
+        {
+            //return _database.Read();
+            return null;
+        }
 
         public int GetLastBookID()
         {
-            var books = _database.Load();
+            var books = _database.Read();
             return books.Max(b => b.Id);
         }
 
-        public void ListAllBooks()
-        {
-            var books = _database.Load();
 
-            foreach (var book in books)
-            {
-                if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved)
-                    Console.ForegroundColor = ConsoleColor.Red;
-
-                if (book.Status == BookStatus.Available)
-                    Console.ForegroundColor = ConsoleColor.Green;
-
-                Console.WriteLine($"\r\nID: {book.Id} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
-
-                Console.ResetColor();
-            }
-        }
 
         public List<Book> GetSearchResult(string searchByParameter, string searchByText)
         {
-            var books = _database.Load();
+            var books = _database.Read();
             var sortedBooks = new List<Book>();
 
-            switch (searchByParameter.ToLower())
-            {
-                case "author":
-                    sortedBooks = books.Where(b => b.Author.Contains(searchByText)).ToList();
-                    break;
-                case "title":
-                    sortedBooks = books.Where(b => b.Title.Contains(searchByText)).ToList();
-                    break;
-                case "genre":
-                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-                    break;
-                case "year":
-                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-                    break;
-                case "publisher":
-                    sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-                    break;
-                case "show all":
-                    return books;
-                default:
-                    break;
-            }
+            //switch (searchByParameter.ToLower())
+            //{
+            //    case "author":
+            //        sortedBooks = books.Where(b => b.Author.Contains(searchByText)).ToList();
+            //        break;
+            //    case "title":
+            //        sortedBooks = books.Where(b => b.Title.Contains(searchByText)).ToList();
+            //        break;
+            //    case "genre":
+            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+            //        break;
+            //    case "year":
+            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+            //        break;
+            //    case "publisher":
+            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
+            //        break;
+            //    case "show all":
+            //        return books;
+            //    default:
+            //        break;
+            //}
             return sortedBooks;
         }
 
@@ -161,3 +186,4 @@ namespace Library.Services
         }
     }
 }
+
