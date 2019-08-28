@@ -1,25 +1,18 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
-using Library.Models.Utils;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
 
 namespace Library.Models.Models
 {
-    public class User : Account, IUser
+    public class User : Account, IAccount
     {
         // OOP: User class inherits Account base class
         // OOP: Encapsulation - properties with private set         
-
         public User(string username, string password) : base(username, password)
         {
             this.Status = AccountStatus.Active;            
-            this.OverdueReservations = new List<CheckoutBook>();
-            this.OverdueBooks = new List<CheckoutBook>();
         }
 
         [NotMapped]
@@ -34,8 +27,10 @@ namespace Library.Models.Models
                 "Log Out"
             };
 
+        [Key]
         public int Id { get; set; }
 
+        [Required]
         public AccountStatus Status { get; set; }
 
         public decimal LateFees { get; set; }

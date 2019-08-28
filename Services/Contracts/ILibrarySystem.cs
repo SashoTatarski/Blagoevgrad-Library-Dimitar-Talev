@@ -21,6 +21,5 @@ namespace Library.Services.Contracts
         void PurgeOverdueReservations(IUser user);
         bool UserHasCheckedoutBooks(IUser user);
         bool UserHasReservedBooks(IUser user);
-       
     }
 }

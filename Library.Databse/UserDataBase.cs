@@ -11,7 +11,6 @@ namespace Library.Database
     public class UserDataBase<User> : IDataBase<Models.Models.User>
     {
         private readonly LibraryContext _context;
-
         public UserDataBase(LibraryContext context)
         {
             _context = context;
@@ -31,13 +30,17 @@ namespace Library.Database
             _context.SaveChanges();
         }
 
+        public List<Models.Models.User> Read() => _context.Users.ToList();
+        public Models.Models.User Find(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
+
+        //Update -----
+        public Models.Models.User Find(string name)
+        {
+            throw new NotImplementedException();
+        }
         public void Update(Models.Models.User updatedUser)
         {
             throw new NotImplementedException();
         }
-
-        public List<Models.Models.User> Read() => _context.Users.ToList();
-
-        public Models.Models.User Find(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
     }
 }

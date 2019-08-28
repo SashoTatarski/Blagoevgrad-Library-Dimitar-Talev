@@ -4,14 +4,16 @@ using Library.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20190828130443_ForeignKeysUpdated")]
+    partial class ForeignKeysUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,11 +103,15 @@ namespace Library.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("BookId");
+
                     b.Property<string>("GenreName")
                         .IsRequired()
                         .HasMaxLength(40);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("Genres");
                 });
@@ -213,6 +219,13 @@ namespace Library.Database.Migrations
                         .WithMany("CheckedoutBooks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Library.Models.Models.Genre", b =>
+                {
+                    b.HasOne("Library.Models.Models.Book")
+                        .WithMany("Genre")
+                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("Library.Models.Models.ReservedBook", b =>

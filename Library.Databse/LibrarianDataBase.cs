@@ -22,6 +22,14 @@ namespace Library.Database
             _context.SaveChanges();
         }
 
+        public List<Models.Models.Librarian> Read() => _context.Librarians.ToList();
+        public Models.Models.Librarian Find(int id) => _context.Librarians.FirstOrDefault(l => l.Id == id);
+
+        // Update 
+        public Models.Models.Librarian Find(string name)
+        {
+            throw new NotImplementedException();
+        }
         public void Update(Models.Models.Librarian item)
         {
             throw new NotImplementedException();
@@ -31,9 +39,5 @@ namespace Library.Database
         {
             throw new NotImplementedException();
         }
-
-        public List<Models.Models.Librarian> Read() => _context.Librarians.ToList();
-
-        public Models.Models.Librarian Find(int id) => _context.Librarians.FirstOrDefault(l => l.Id == id);
     }
 }

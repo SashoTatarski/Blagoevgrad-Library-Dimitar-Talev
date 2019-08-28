@@ -6,9 +6,9 @@ namespace Library.Services.Contracts
 {
     public interface IConsoleFormatter
     {
-        string Format(IBook book);
+        string Format(Book book);
 
-        string Format(IUser user);
+        string Format(User user);
 
         string Format(IAccount account);
 

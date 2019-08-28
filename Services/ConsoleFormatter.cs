@@ -3,7 +3,6 @@ using Library.Models.Enums;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using System.Collections.Generic;
-
 using System.Text;
 using System.Linq;
 using Library.Models.Models;
@@ -21,18 +20,23 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string Format(IBook book)
+        public string Format(Book book)
         {
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
-            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            strBuilder.AppendLine($"Genre: {book.Genre}");
-            strBuilder.AppendLine($"Publisher: {book.Publisher} || Year: {book.Year} || Location: {book.Rack} rack");
+            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author.Name}");
+            strBuilder.Append($"Genre: ");
+            foreach (var genre in book.BookGenres)
+            {
+                strBuilder.Append($"{genre} ");
+            }
+            strBuilder.AppendLine();
+            strBuilder.AppendLine($"Publisher: {book.Publisher.Name} || Year: {book.Year} || Location: {book.Rack} rack");
 
             return strBuilder.ToString();
         }
 
-        public string Format(IUser user)
+        public string Format(User user)
         {
             var strBuilder = new StringBuilder();
             //strBuilder.AppendLine($"Username: {user.Username}");

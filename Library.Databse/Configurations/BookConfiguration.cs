@@ -15,6 +15,16 @@ namespace Library.Database.Configurations
                 .Property(b => b.Title)
                 .HasMaxLength(100)
                 .IsRequired();
+
+            builder
+                .HasOne(b => b.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId);
+
+            builder
+                .HasOne(b => b.Publisher)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.PublisherId);
         }
     }
 }

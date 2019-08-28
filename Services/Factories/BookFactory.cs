@@ -1,14 +1,26 @@
 ﻿using Library.Models.Models;
 using Library.Services.Factories.Contracts;
-using System.Collections.Generic;
 
-namespace Library.Services.Factory
+namespace Library.Services.Factories
 {
     public class BookFactory : IBookFactory
     {
-        public Book CreateBook(Author author, string title, string isbn, List<Genre> genres, Publisher publisher, int year, int rack)
+        private readonly IAuthorFactory _authorFac;
+        private readonly IGenreFactory _genreFac;
+        private readonly IPublisherFactory _publisherFac;
+        public BookFactory(IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac)
         {
-            return new Book(author, title, isbn, genres, publisher, year, rack);
+            _authorFac = authorFac;
+            _genreFac = genreFac;
+            _publisherFac = publisherFac;
+        }
+        public Book CreateBook(string author, string title, string isbn, string publisher, int year, int rack)
+        {
+            var authorType = _authorFac.CreateAuthor(author);
+            var publisherType = _publisherFac.CreatePublisher(publisher);
+            
+
+            return new Book(authorType, title, isbn, publisherType, year, rack);
         }
     }
 }

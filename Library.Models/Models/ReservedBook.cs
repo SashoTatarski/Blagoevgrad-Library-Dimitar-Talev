@@ -16,6 +16,5 @@ namespace Library.Models.Models
 
         public DateTime ReservationDate { get; set; }
         public DateTime ReservationDueDate { get; set; }
-        
     }
 }

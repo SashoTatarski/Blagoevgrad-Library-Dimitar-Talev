@@ -7,45 +7,42 @@ using System.Text;
 
 namespace Library.Database
 {
-    public class AuthorDataBase<Author> : IDataBase<Models.Models.Author>
+    public class GenreDataBase<Genre> : IDataBase<Models.Models.Genre>
     {
         private readonly LibraryContext _context;
-        public AuthorDataBase(LibraryContext context)
+        public GenreDataBase(LibraryContext context)
         {
             _context = context;
         }
 
-        public Models.Models.Author Find(string name)
+        public Models.Models.Genre Find(string name)
         {
-            return _context.Authors.FirstOrDefault(a => a.Name.ToLower() == name.ToLower());
+            return _context.Genres.FirstOrDefault(g => g.GenreName.ToLower() == name.ToLower());
         }
 
-        public void Create(Models.Models.Author item)
+        //Update 
+        public void Create(Models.Models.Genre item)
         {
-            _context.Authors.Add(item);
+            _context.Genres.Add(item);
             _context.SaveChanges();
         }
 
-        // Update----------
-
-
-        public void Delete(Models.Models.Author item)
+        public void Delete(Models.Models.Genre item)
         {
             throw new NotImplementedException();
         }
 
-
-        public List<Models.Models.Author> Read()
+        public Models.Models.Genre Find(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Models.Models.Author item)
+        public List<Models.Models.Genre> Read()
         {
             throw new NotImplementedException();
         }
 
-        public Models.Models.Author Find(int id)
+        public void Update(Models.Models.Genre item)
         {
             throw new NotImplementedException();
         }

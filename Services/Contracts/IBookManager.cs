@@ -8,7 +8,7 @@ namespace Library.Services.Contracts
 {
     public interface IBookManager
     {
-        Book CreateBook(Author authorName, string title, string isbn, List<Genre> genres, Publisher publisher, int year, int rack);
+        Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack);
         void ListAllBooks();
 
         // ------- Need update ↓ -------

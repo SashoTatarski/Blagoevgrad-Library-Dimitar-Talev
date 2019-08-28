@@ -1,7 +1,7 @@
 ﻿using Library.Models.Models;
 using Library.Services.Factories.Contracts;
 
-namespace Library.Services.Factory
+namespace Library.Services.Factories
 {
     public class UserFactory : IUserFactory
     {

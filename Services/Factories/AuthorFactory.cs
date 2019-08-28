@@ -1,17 +1,28 @@
-﻿using Library.Models.Models;
+﻿using Library.Database.Contracts;
+using Library.Models.Models;
 using Library.Services.Factories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Services.Factories
 {
     public class AuthorFactory : IAuthorFactory
     {
+        private readonly IDataBase<Author> _database;
+        public AuthorFactory(IDataBase<Author> database)
+        {
+            _database = database;
+        }
         public Author CreateAuthor(string authorName)
         {
+            var existingAuthor = _database.Find(authorName);
 
-            return new Author { Name = authorName };
+            if (existingAuthor is null)
+            {
+                var newAuthor = new Author { Name = authorName };
+                _database.Create(newAuthor);
+                return newAuthor;
+            }
+            else
+                return existingAuthor;
         }
     }
 }

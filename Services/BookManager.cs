@@ -6,7 +6,7 @@ using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
-using Library.Services.Factory;
+using Library.Services.Factories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,40 +16,50 @@ namespace Library.Services
 {
     public class BookManager : IBookManager
     {
-        private readonly IDataBase<Book> _database;
-        private readonly IBookFactory _factory;
+        private readonly IDataBase<Book> _bookDB;
+        private readonly IDataBase<Author> _authorDB;
+        private readonly IBookFactory _bookFac;
+        private readonly IAuthorFactory _authorFac;
+        private readonly IGenreFactory _genreFac;
         private readonly IConsoleFormatter _formatter;
         private readonly LibraryContext _context;
         private readonly IConsoleRenderer _renderer;
 
 
-        public BookManager(IDataBase<Book> database, IBookFactory bookfactory, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
+        public BookManager(IDataBase<Book> bookDB, IDataBase<Author> authorDB, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
         {
-            _database = database;
-            _factory = bookfactory;
+            _bookDB = bookDB;
+            _authorDB = authorDB;
+            _bookFac = bookFac;
+            _authorFac = authorFac;
+            _genreFac = genreFac;
             _formatter = formatter;
             _context = context;
             _renderer = renderer;
-
         }
 
         public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
         {
-           
-            {
-                _context.Authors.Add(new Author { Name = authorName });
-            }
+            var book = _bookFac.CreateBook(authorName, title, isbn, publisher, year, rack);
+            _bookDB.Create(book);
 
-            var book = _factory.CreateBook(authorName, title, isbn, genres, publisher, year, rack);
-
-            _database.Create(book);
-
+            var genreList = _genreFac.CreateGenreList(genres);
+            this.MapBookToGenres(book, genreList);
             return book;
+        }
+
+        private void MapBookToGenres(Book book, List<Genre> genres)
+        {
+            foreach (var genre in genres)
+            {
+                _context.BookGenre.Add(new BookGenre { BookId = book.Id, GenreId = genre.Id });
+            }
+            _context.SaveChanges();
         }
 
         public void ListAllBooks()
         {
-            var books = _database.Read();
+            var books = _bookDB.Read();
 
             //foreach (var book in books)
             //{
@@ -91,27 +101,27 @@ namespace Library.Services
         // OOP: Polymorphism - method overloading static polymorphism. In static polym. identification of the overloaded method to be executed is carried out at compile time
         public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
         {
-            var bookToUpdate = _database.Find(bookId);
+            var bookToUpdate = _bookDB.Find(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, checkoutDate, dueDate);
-            _database.Update(bookToUpdate);
+            _bookDB.Update(bookToUpdate);
         }
 
         // Reserve Book
         public void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation)
         {
-            var bookToUpdate = _database.Find(bookId);
+            var bookToUpdate = _bookDB.Find(bookId);
             Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
 
             bookToUpdate.Update(status, reservationDate, reservationDueDate, true);
-            _database.Update(bookToUpdate);
+            _bookDB.Update(bookToUpdate);
         }
 
 
-        public void RemoveBook(Book book) => _database.Delete(book);
+        public void RemoveBook(Book book) => _bookDB.Delete(book);
 
-        public Book FindBook(int id) => _database.Find(id);
+        public Book FindBook(int id) => _bookDB.Find(id);
 
         public List<Book> GetAllBooks()
         {
@@ -121,7 +131,7 @@ namespace Library.Services
 
         public int GetLastBookID()
         {
-            var books = _database.Read();
+            var books = _bookDB.Read();
             return books.Max(b => b.Id);
         }
 
@@ -129,7 +139,7 @@ namespace Library.Services
 
         public List<Book> GetSearchResult(string searchByParameter, string searchByText)
         {
-            var books = _database.Read();
+            var books = _bookDB.Read();
             var sortedBooks = new List<Book>();
 
             //switch (searchByParameter.ToLower())

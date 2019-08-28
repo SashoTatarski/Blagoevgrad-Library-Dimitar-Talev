@@ -1,7 +1,7 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Utils;
 using Library.Services.Contracts;
-using Library.Services.Factory;
+using Library.Services.Factories.Contracts;
 using Services.Contracts;
 
 namespace Library.Core.Commands
@@ -35,7 +35,7 @@ namespace Library.Core.Commands
             _authentication.CheckForExistingUsername(username);
             var newUser = _userFactory.CreateUser(username, password);
 
-            _accountManager.AddUser(newUser);
+            //_accountManager.AddUser(newUser);
 
             return _formatter.FormatCommandMessage(GlobalConstants.UserRegisterSuccess, _formatter.Format(newUser));
         }

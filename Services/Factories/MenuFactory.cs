@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Library.Services.Factory
+namespace Library.Services.Factories
 {
     public class MenuFactory : IMenuFactory
     {

@@ -20,9 +20,6 @@ namespace Library.Database
             _context.Books.Add(book);
             _context.SaveChanges();
         }
-        public List<Models.Models.Book> Read() => _context.Books.ToList();
-
-        public void Update(Models.Models.Book book) { }
 
         public void Delete(Models.Models.Book book)
         {
@@ -32,46 +29,18 @@ namespace Library.Database
             _context.SaveChanges();
         }
 
+        public List<Models.Models.Book> Read() => _context.Books.ToList();
         public Models.Models.Book Find(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
 
 
-
-        public Author CreateAuthor(string authorName)
+        // Update
+        public void Update(Models.Models.Book book)
         {
-            if (FindAuthor(authorName) is null)
-            {
-                var newAuthor = new Author { Name = authorName };
-                _context.Authors.Add(newAuthor);
-                return newAuthor;
-            }
-            else
-            {
-                return FindAuthor(authorName);
-            }
+            throw new System.NotImplementedException();
         }
-
-        public Author FindAuthor(string authorName)
+        public Models.Models.Book Find(string name)
         {
-            return _context.Authors.FirstOrDefault(a => a.Name.ToLower() == authorName);
-        }
-
-        public Publisher CreatePublisher(string publisher)
-        {
-            if (FindPublisher(publisher) is null)
-            {
-                var newPublisher = new Publisher { Name = publisher };
-                _context.Publishers.Add(newPublisher);
-                return newPublisher;
-            }
-            else
-            {
-                return FindPublisher(publisher);
-            }
-        }
-
-        public Publisher FindPublisher(string publisher)
-        {
-            return _context.Publishers.FirstOrDefault(a => a.Name.ToLower() == publisher);
+            throw new System.NotImplementedException();
         }
     }
 }

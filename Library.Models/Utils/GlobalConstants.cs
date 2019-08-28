@@ -42,6 +42,12 @@ namespace Library.Models.Utils
         public const string RemoveUserError = "Cannot remove user who has checkedout/reserved books!";
         public const string BookToUpdateNull = "Book to update is null";
         public const string UserNameTaken = "This username is already taken";
+        public const string AuthorNameLimit = "The author name should be less than 40 symbols!";
+        public const string PublisherNameLimit = "The publisher name should be less than 40 symbols!";
+        public const string BookYearLimit = "The publication year should be between 1629 and 2019";
+        public const string BookTitleLimit = "The title should be less than 40 symbols!";
+        public const string BookRackLimit = "The rack number cannot be zero or negative!";
+        public const string GenreNameLimit = "The genre name should be less than 40 symbols!";
 
         //Success
         public const string CheckoutBookSuccess = "Successfully checked of the book:";

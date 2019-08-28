@@ -1,115 +1,53 @@
 ﻿using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models.Models
 {
-    // OOP: Encapsulation - properties with private set 
-
     public class Book
     {
-        private string _title;
-        private int _year;
-        private int _rack;
-        //private string _author;
-        //private string _isbn;
-        //private string _genre;
-        // private string _publisher;
-
         public Book() { }
 
-        public Book(Author author, string title, string isbn, List<Genre> genre, Publisher publisher, int year, int rack)
+        public Book(Author author, string title, string isbn, Publisher publisher, int year, int rack)
         {
             this.Author = author;
             this.Title = title;
             this.ISBN = isbn;
-            this.Genre = genre;
             this.Publisher = publisher;
             this.Year = year;
             this.Rack = rack;
             this.Status = BookStatus.Available;
         }
 
+        [Key]
         public int Id { get; set; }
-        public string Title
-        {
-            get => _title;
-            set
-            {
-                if (value.Length < 1 || value.Length > 100)
-                {
-                    throw new ArgumentOutOfRangeException("The title should be between 1 and 100 symbols!");
-                }
-                _title = value;
-            }
-        }
 
-        public Author Author;
-        
 
-        public string ISBN;
-        //{
-        //    get => _isbn;
-        //    set
-        //    {
-        //        //if (value.Length != 10 && value.Length != 13)
-        //        //    throw new ArgumentOutOfRangeException("ISBN should be 10 or 13 characters");
+        [Required]
+        [StringLength(100, ErrorMessage = GlobalConstants.BookTitleLimit, MinimumLength = 1)]
+        public string Title { get; set; }
 
-        //        _isbn = value;
-        //    }
-        //}
 
-        public List<Genre> Genre;
-        //{
-        //    get => _genre;
-        //    set
-        //    {
-        //        if (value.Length < 1 || value.Length > 40)
-        //            throw new ArgumentOutOfRangeException("The genre should be between 1 and 40 symbols!");
+        public string ISBN { get; set; }
 
-        //        _genre = value;
-        //    }
-        //}
 
-        public Publisher Publisher;
-        //{
-        //    get => _publisher;
-        //    set
-        //    {
-        //        if (value.Length < 1 || value.Length > 40)
-        //            throw new ArgumentOutOfRangeException("The publisher name should be between 1 and 40 symbols!");
+        [Range(1629, 2019, ErrorMessage = GlobalConstants.BookYearLimit)]
+        public int Year { get; set; }
 
-        //        _publisher = value;
-        //    }
-        //}
 
-        public int Year
-        {
-            get => _year;
-            set
-            {
-                // First book ever printed was in 1629
-                if (value < 1629 || value > DateTime.Now.Year)
-                    throw new ArgumentOutOfRangeException($"The publication year should be between 1 and {DateTime.Now.Year}");
+        [Range(1, int.MaxValue, ErrorMessage = GlobalConstants.BookRackLimit)]
+        public int Rack { get; set; }
 
-                _year = value;
-            }
-        }
-
-        public int Rack
-        {
-            get => _rack;
-            set
-            {
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException($"The rack cannot be zero or negative");
-
-                _rack = value;
-            }
-        }
-
+        [Required]
         public BookStatus Status { get; set; }
+        public int AuthorId { get; set; }
+        public int PublisherId { get; set; }
+
+        public Author Author { get; set; }
+        public Publisher Publisher { get; set; }
         public List<BookGenre> BookGenres { get; set; }
         public CheckoutBook CheckedoutBook { get; set; }
         public ReservedBook ReservedBook { get; set; }
@@ -123,7 +61,7 @@ namespace Library.Models.Models
             this.ISBN = otherBook.ISBN;
             //this.Genre = otherBook.Genre;
             // this.Publisher = otherBook.Publisher;
-            this.Year = otherBook.Year;
+            // this.Year = otherBook.Year;
             this.Rack = otherBook.Rack;
             this.Status = otherBook.Status;
             //this.CheckoutDate = otherBook.CheckoutDate;

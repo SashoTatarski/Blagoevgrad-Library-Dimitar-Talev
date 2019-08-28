@@ -9,5 +9,6 @@ namespace Library.Database.Contracts
         void Update(T item);
         void Delete(T item);
         T Find(int id);
+        T Find(string name);
     }
 }

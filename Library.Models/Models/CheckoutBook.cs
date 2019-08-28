@@ -15,7 +15,5 @@ namespace Library.Models.Models
 
         public DateTime CheckoutDate { get; set; }
         public DateTime DueDate { get; set; }
-
-       
     }
 }

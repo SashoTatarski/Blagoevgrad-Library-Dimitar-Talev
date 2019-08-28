@@ -4,14 +4,16 @@ using Library.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20190828125240_PublisherName_String")]
+    partial class PublisherName_String
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,11 +42,11 @@ namespace Library.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
                     b.Property<string>("ISBN");
 
-                    b.Property<int>("PublisherId");
+                    b.Property<int?>("PublisherId");
 
                     b.Property<int>("Rack");
 
@@ -178,15 +180,13 @@ namespace Library.Database.Migrations
 
             modelBuilder.Entity("Library.Models.Models.Book", b =>
                 {
-                    b.HasOne("Library.Models.Models.Author", "Author")
+                    b.HasOne("Library.Models.Models.Author")
                         .WithMany("Books")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AuthorId");
 
-                    b.HasOne("Library.Models.Models.Publisher", "Publisher")
+                    b.HasOne("Library.Models.Models.Publisher")
                         .WithMany("Books")
-                        .HasForeignKey("PublisherId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PublisherId");
                 });
 
             modelBuilder.Entity("Library.Models.Models.BookGenre", b =>

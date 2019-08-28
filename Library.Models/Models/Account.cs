@@ -1,5 +1,5 @@
 ﻿using Library.Models.Contracts;
-using System;
+using Library.Models.Utils;
 using System.Collections.Generic;
 
 namespace Library.Models.Models
@@ -24,9 +24,7 @@ namespace Library.Models.Models
             get => _username;
             private set
             {
-                if (value.Length < 1 || value.Length > 30)
-                    throw new ArgumentException("The name should be between 1 and 30 characters");
-
+                DataValidator.ValidateMinAndMaxLength(value, 3, 20, "Username");
                 _username = value;
             }
         }
@@ -35,9 +33,7 @@ namespace Library.Models.Models
             get => _password;
             private set
             {
-                if (value.Length < 3 || value.Length > 20)
-                    throw new ArgumentException("The password should be between 3 and 20 characters");
-
+                DataValidator.ValidateMinAndMaxLength(value, 3, 20, "Password");
                 _password = value;
             }
         }

@@ -47,8 +47,7 @@ namespace Library.Core.Commands
 
             var bookToCreate = _bookManager.CreateBook(authorName, title, isbn, genres, publisher, year, rack);
 
-            // return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));
-            return null;
+            return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));
         }
     }
 }

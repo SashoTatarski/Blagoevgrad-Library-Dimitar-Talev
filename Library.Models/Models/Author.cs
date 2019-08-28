@@ -1,21 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Library.Models.Utils;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Models.Models
 {
     public class Author
     {
+        [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
-        //{
-        //    //get => _author;
-        //    //set
-        //    //{
-        //    //    if (value.Length < 1 || value.Length > 40)
-        //    //        throw new ArgumentOutOfRangeException("The author name should be between 1 and 40 symbols!");
 
-        //    //    _author = value;
-        //    //}
-        //}
+        [Required]
+        [StringLength(40, ErrorMessage = GlobalConstants.AuthorNameLimit)]
+        public string Name { get; set; }
+
         public List<Book> Books { get; set; }
     }
 }
