@@ -28,10 +28,11 @@ namespace Library.Services
             strBuilder.Append($"Genre: ");
             foreach (var genre in book.BookGenres)
             {
-                strBuilder.Append($"{genre} ");
+                strBuilder.Append($"{genre.Genre.GenreName} ");
             }
             strBuilder.AppendLine();
             strBuilder.AppendLine($"Publisher: {book.Publisher.Name} || Year: {book.Year} || Location: {book.Rack} rack");
+            strBuilder.AppendLine();
 
             return strBuilder.ToString();
         }

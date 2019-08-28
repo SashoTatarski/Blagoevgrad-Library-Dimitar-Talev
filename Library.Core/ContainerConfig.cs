@@ -4,6 +4,7 @@ using Library.Core.Contracts;
 using Library.Database;
 using Library.Database.Contracts;
 using Library.Database.JsonHandler;
+using Library.Models.Models;
 using Library.Services;
 using Library.Services.Contracts;
 using Library.Services.Factories;
@@ -24,12 +25,19 @@ namespace Library.Core
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();
             //DataBase
             containerBuilder.RegisterType<LibraryContext>().AsSelf().SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(BookDatabase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(LibrarianDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(UserDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(AuthorDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(GenreDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            containerBuilder.RegisterGeneric(typeof(PublisherDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            containerBuilder.RegisterType<BookDatabase>().As<IDataBase<Book>>().SingleInstance();
+            containerBuilder.RegisterType<LibrarianDataBase>().As<IDataBase<Librarian>>().SingleInstance();
+            containerBuilder.RegisterType<GenreDataBase>().As<IDataBase<Genre>>().SingleInstance();
+            containerBuilder.RegisterType<PublisherDataBase>().As<IDataBase<Publisher>>().SingleInstance();
+            containerBuilder.RegisterType<UserDataBase>().As<IDataBase<User>>().SingleInstance();
+            containerBuilder.RegisterType<AuthorDataBase>().As<IDataBase<Author>>().SingleInstance();
+            
+            //containerBuilder.RegisterGeneric(typeof(BookDatabase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            //containerBuilder.RegisterGeneric(typeof(LibrarianDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            //containerBuilder.RegisterGeneric(typeof(UserDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            //containerBuilder.RegisterGeneric(typeof(AuthorDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            //containerBuilder.RegisterGeneric(typeof(GenreDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            //containerBuilder.RegisterGeneric(typeof(PublisherDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();

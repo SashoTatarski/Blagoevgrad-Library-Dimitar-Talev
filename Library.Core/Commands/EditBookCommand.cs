@@ -20,7 +20,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.EditBook);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.EditBook, GlobalConstants.MiniDelimiterSymbol));
+            _renderer.Output(_formatter.CenterStringWithSymbols("Choose the book you want to edit", '.'));
 
             // Show all the books user can select from
             _bookManager.ListAllBooks();
@@ -31,6 +32,8 @@ namespace Library.Core.Commands
             // BookID validation
             //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
             //    throw new ArgumentException(GlobalConstants.InvalidID);
+
+            var boooToEdit = _bookManager.FindBook(bookId);
 
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);

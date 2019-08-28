@@ -61,22 +61,21 @@ namespace Library.Services
         {
             var books = _bookDB.Read();
 
-            //foreach (var book in books)
-            //{
-            //    if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
-            //        Console.ForegroundColor = ConsoleColor.Red;
+            foreach (var book in books)
+            {
+                if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
+                    Console.ForegroundColor = ConsoleColor.Red;
 
-            //    if (book.Status == BookStatus.Available)
-            //        Console.ForegroundColor = ConsoleColor.Green;
+                if (book.Status == BookStatus.Available)
+                    Console.ForegroundColor = ConsoleColor.Green;
 
-            //    _renderer.Output(_formatter.Format(book));
-            //    _renderer.Output(_formatter.Format(book));
-
-            //   // Console.WriteLine($"\r\nID: {book.Id} || Author: {book.Author} || Title: {book.Title} || Status: {book.Status}");
-
-            //    Console.ResetColor();
-            //}
+                _renderer.Output(_formatter.Format(book));
+                _renderer.Output("");
+                Console.ResetColor();
+            }
         }
+
+        public Book FindBook(int id) => _bookDB.Find(id);
         // ------- Need update ↓ -------
         public void UpdateStatus(IBook book, BookStatus status)
         {
@@ -121,7 +120,7 @@ namespace Library.Services
 
         public void RemoveBook(Book book) => _bookDB.Delete(book);
 
-        public Book FindBook(int id) => _bookDB.Find(id);
+        
 
         public List<Book> GetAllBooks()
         {

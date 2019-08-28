@@ -1,5 +1,4 @@
 ﻿using Library.Database.Contracts;
-using Library.Models.Contracts;
 using Library.Models.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace Library.Database
 {
-    public class LibrarianDataBase<Librarian> : IDataBase<Models.Models.Librarian>
+    public class LibrarianDataBase : IDataBase<Librarian>
     {
         private readonly LibraryContext _context;
 
@@ -16,26 +15,26 @@ namespace Library.Database
             _context = context;
         }
 
-        public void Create(Models.Models.Librarian librarian)
+        public void Create(Librarian librarian)
         {
             _context.Librarians.Add(librarian);
             _context.SaveChanges();
         }
 
-        public List<Models.Models.Librarian> Read() => _context.Librarians.ToList();
-        public Models.Models.Librarian Find(int id) => _context.Librarians.FirstOrDefault(l => l.Id == id);
+        public List<Librarian> Read() => _context.Librarians.ToList();
+        public Librarian Find(int id) => _context.Librarians.FirstOrDefault(l => l.Id == id);
 
         // Update 
-        public Models.Models.Librarian Find(string name)
+        public Librarian Find(string name)
         {
             throw new NotImplementedException();
         }
-        public void Update(Models.Models.Librarian item)
+        public void Update(Librarian item)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Models.Models.Librarian item)
+        public void Delete(Librarian item)
         {
             throw new NotImplementedException();
         }

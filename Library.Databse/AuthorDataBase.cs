@@ -3,11 +3,10 @@ using Library.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Database
 {
-    public class AuthorDataBase<Author> : IDataBase<Models.Models.Author>
+    public class AuthorDataBase : IDataBase<Author>
     {
         private readonly LibraryContext _context;
         public AuthorDataBase(LibraryContext context)
@@ -15,12 +14,12 @@ namespace Library.Database
             _context = context;
         }
 
-        public Models.Models.Author Find(string name)
+        public Author Find(string name)
         {
             return _context.Authors.FirstOrDefault(a => a.Name.ToLower() == name.ToLower());
         }
 
-        public void Create(Models.Models.Author item)
+        public void Create(Author item)
         {
             _context.Authors.Add(item);
             _context.SaveChanges();
@@ -29,23 +28,23 @@ namespace Library.Database
         // Update----------
 
 
-        public void Delete(Models.Models.Author item)
+        public void Delete(Author item)
         {
             throw new NotImplementedException();
         }
 
 
-        public List<Models.Models.Author> Read()
+        public List<Author> Read()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Models.Models.Author item)
+        public void Update(Author item)
         {
             throw new NotImplementedException();
         }
 
-        public Models.Models.Author Find(int id)
+        public Author Find(int id)
         {
             throw new NotImplementedException();
         }
