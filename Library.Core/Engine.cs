@@ -16,7 +16,7 @@ namespace Library.Core
         private readonly IAuthenticationManager _authentication;
         private readonly ILibrarySystem _system;
         private readonly IDataService _service;
-        
+
 
         public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system, IDataService service)
         {
@@ -33,8 +33,8 @@ namespace Library.Core
             // ASK: Should we/ how to improve this method
             VirtualDate.StartVirtualTime();
 
-           // _service.ClearUpDatabase();
-           // _service.SeedDatabase();
+            // _service.ClearUpDatabase();
+            // _service.SeedDatabase();
 
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();

@@ -44,7 +44,6 @@ namespace Library.Core.Commands
             var rack = int.Parse(_renderer.InputParameters("rack",
                 r => int.Parse(r) < 1));
 
-
             var bookToCreate = _bookManager.CreateBook(authorName, title, isbn, genres, publisher, year, rack);
 
             return _formatter.FormatCommandMessage(GlobalConstants.AddBookSuccess, _formatter.Format(bookToCreate));

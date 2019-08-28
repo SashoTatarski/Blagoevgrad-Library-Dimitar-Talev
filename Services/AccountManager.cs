@@ -4,6 +4,7 @@ using Library.Models.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Services.Contracts;
+using Library.Services.Factories.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,13 +15,15 @@ namespace Library.Services
     {
         private readonly IDataBase<User> _userDB;
         private readonly IDataBase<Librarian> _librarianDB;
+        private readonly IAccountFactory _accountFac;
         private readonly IConsoleRenderer _renderer;
         private readonly IConsoleFormatter _formatter;
 
-        public AccountManager(IDataBase<User> userDB, IDataBase<Librarian> librarianDB, IConsoleRenderer renderer, IConsoleFormatter formatter)
+        public AccountManager(IDataBase<User> userDB, IDataBase<Librarian> librarianDB, IAccountFactory accountFac, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
             _userDB = userDB;
             _librarianDB = librarianDB;
+            _accountFac = accountFac;
             _renderer = renderer;
             _formatter = formatter;
         }
@@ -34,6 +37,20 @@ namespace Library.Services
                 return librarian ?? null;
             else
                 return user;
+        }
+
+        public User AddUser(string username, string password)
+        {
+            var newUser = _accountFac.CreateUser(username, password);
+            _userDB.Create(newUser);
+            return newUser;
+        }
+
+        public Librarian AddLibrarian(string username, string password)
+        {
+            var newLibrarian = _accountFac.CreateLibrarian(username, password);
+            _librarianDB.Create(newLibrarian);
+            return newLibrarian;
         }
 
         //--------------Update
@@ -67,17 +84,10 @@ namespace Library.Services
             //_userDB.Delete(userToRemove);
         }
 
-        public void AddUser(IUser user)
-        {
-            //return _userDB.Create(user);
-        }
 
-        public void AddLibrarian(ILibrarian librarian)
-        {
-            //=> _librarianDB.Create(librarian);
 
-        }
 
-        
+
+
     }
 }

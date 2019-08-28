@@ -8,10 +8,9 @@ namespace Library.Services.Contracts
     public interface IAccountManager
     {
         IAccount FindAccount(string userName);
+        User AddUser(string username, string password);
+        Librarian AddLibrarian(string username, string password);
 
-        void AddLibrarian(ILibrarian librarian);
-
-        void AddUser(IUser user);
 
         List<User> GetAllUsers();
 

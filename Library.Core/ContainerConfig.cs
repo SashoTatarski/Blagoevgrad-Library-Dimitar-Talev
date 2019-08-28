@@ -33,9 +33,8 @@ namespace Library.Core
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();
-            containerBuilder.RegisterType<UserFactory>().As<IUserFactory>();
+            containerBuilder.RegisterType<AccountFactory>().As<IAccountFactory>();
             containerBuilder.RegisterType<MenuFactory>().As<IMenuFactory>();
-            containerBuilder.RegisterType<LibrarianFactory>().As<ILibrarianFactory>();
             containerBuilder.RegisterType<AuthorFactory>().As<IAuthorFactory>();
             containerBuilder.RegisterType<GenreFactory>().As<IGenreFactory>();
             containerBuilder.RegisterType<PublisherFactory>().As<IPublisherFactory>();
