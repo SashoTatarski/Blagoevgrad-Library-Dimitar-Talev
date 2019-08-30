@@ -28,5 +28,6 @@ namespace Library.Services.Contracts
         void UpdateBookRack(int bookId, int newRack);
         void UpdateBookYear(int bookId, int newYear);
         void UpdateBookPublisher(int bookId, string newPublisherName);
+        void UpdateBookGenre(int bookId, string newGenres);
     }
 }

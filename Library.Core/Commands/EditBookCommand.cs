@@ -4,6 +4,7 @@ using Library.Services.Contracts;
 using Library.Services.Factories.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Library.Core.Commands
 {
@@ -42,72 +43,56 @@ namespace Library.Core.Commands
             // Generate menu with parameters
             var parameters = new List<string> { "Author", "Title", "ISBN code", "Genre", "Publisher", "Year", "Rack" };
 
-            _renderer.Output(_menuFac.GenerateMenu(parameters, "parameter to edit:"));
+            _renderer.Output(GlobalConstants.NewLine);
+            _renderer.Output(_menuFac.GenerateMenu(parameters, $"parameter to edit:"));
 
-            var parameterNumbers = _renderer.InputParameters("parameters number (split by ,)");
+            _renderer.Output(GlobalConstants.NewLine);
+            var parameterNumbers = _renderer.InputParameters("parameters numbers (split by ',')");
 
-            var parameterNumbersList = parameterNumbers.Split(new string[] { ",", ", " }, StringSplitOptions.None);
+            var parameterNumbersList = parameterNumbers.Split(',').Select(p => p.Trim()).ToList();
 
             foreach (var parameter in parameterNumbersList)
             {
                 switch (parameter)
                 {
                     case "1":
-                        _renderer.Output($"The old author name was: {bookToEdit.Author.Name}{GlobalConstants.NewLine}");
-
                         var authorName = _renderer.InputParameters("new author name",
                     s => s.Length < 1 || s.Length > 40);
 
                         _bookManager.UpdateBookAuthor(bookId, authorName);
                         break;
-
                     case "2":
-                        _renderer.Output($"The old title was: {bookToEdit.Title}{GlobalConstants.NewLine}");
-
                         var title = _renderer.InputParameters("new title",
                             s => s.Length < 1 || s.Length > 100);
-
                         _bookManager.UpdateBookTitle(bookId, title);
                         break;
-
                     case "3":
-                        _renderer.Output($"The old ISBN was: {bookToEdit.ISBN}{GlobalConstants.NewLine}");
-
                         var isbn = _renderer.InputParameters("new ISBN code");
                         _bookManager.UpdateBookISBN(bookId, isbn);
                         break;
-
                     case "4":
+                        var genres = _renderer.InputParameters("new genre",
+                            g => g.Length < 1 || g.Length > 40);
+                        _bookManager.UpdateBookGenre(bookId, genres);
+                        break;
                     case "5":
+                        var publisher = _renderer.InputParameters("new publisher",
+                            g => g.Length < 1 || g.Length > 40);
+                        _bookManager.UpdateBookPublisher(bookId, publisher);
+                        break;
                     case "6":
+                        var year = int.Parse(_renderer.InputParameters("new year", y => int.Parse(y) < 1 || int.Parse(y) > DateTime.Now.Year));
+                        _bookManager.UpdateBookYear(bookId, year);
+                        break;
                     case "7":
+                        var rack = int.Parse(_renderer.InputParameters("new rack", r => int.Parse(r) < 1));
+                        _bookManager.UpdateBookRack(bookId, rack);
+                        break;
                     default:
                         throw new ArgumentException(GlobalConstants.InvalidParameter);
                 }
             }
-            
-
-            
-
-            //
-
-            //var genres = _renderer.InputParameters("new genre",
-            //    g => g.Length < 1 || g.Length > 40);
-
-            //var publisher = _renderer.InputParameters("new publisher",
-            //    g => g.Length < 1 || g.Length > 40);
-
-            //var year = int.Parse(_renderer.InputParameters("new year", y => int.Parse(y) < 1 || int.Parse(y) > DateTime.Now.Year));
-
-            //var rack = int.Parse(_renderer.InputParameters("new rack", r => int.Parse(r) < 1));
-
-
-          //  _bookManager.UpdateBook(bookId, authorName, title, isbn, genres, publisher, year, rack);
-
-            //var bookToEdit = _bookManager.FindBook(bookId);
-
-            //return _formatter.FormatCommandMessage(GlobalConstants.EditBookSuccess, _formatter.Format(bookToEdit));
-            return "ok";
+            return _formatter.FormatCommandMessage(GlobalConstants.EditBookSuccess, _formatter.Format(bookToEdit));
         }
     }
 }

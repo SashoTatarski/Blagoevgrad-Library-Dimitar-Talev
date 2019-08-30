@@ -32,7 +32,6 @@ namespace Library.Services
             }
             strBuilder.AppendLine();
             strBuilder.AppendLine($"Publisher: {book.Publisher.Name} || Year: {book.Year} || Location: {book.Rack} rack");
-            strBuilder.AppendLine();
 
             return strBuilder.ToString();
         }

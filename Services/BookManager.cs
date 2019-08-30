@@ -67,7 +67,7 @@ namespace Library.Services
                     Console.ForegroundColor = ConsoleColor.Green;
 
                 _renderer.Output(_formatter.Format(book));
-                _renderer.Output("");
+                _renderer.Output(GlobalConstants.NewLine);
                 Console.ResetColor();
             }
         }

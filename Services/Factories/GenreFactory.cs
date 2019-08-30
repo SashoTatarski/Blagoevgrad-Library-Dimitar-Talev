@@ -17,7 +17,7 @@ namespace Library.Services.Factories
         public List<Genre> 
             CreateGenreList(string genres)
         {
-            var genreListString = genres.Split(new string[] { ",", ", " }, System.StringSplitOptions.None).ToList();
+            var genreListString = genres.Split(',').Select(g => g.Trim()).ToList();
             List<Genre> list = new List<Genre>();
 
             foreach (var genre in genreListString)

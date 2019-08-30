@@ -1,8 +1,7 @@
 ﻿using Library.Models.Models;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Database
 {
@@ -24,7 +23,16 @@ namespace Library.Database
 
         public void Update(Book book, List<Genre> genres)
         {
-           // var x = _context.BookGenre.ToList().Remove(bg=>bg.BookId==book.Id);
+            // _context.BookGenre.ToList().RemoveAll(bg => bg.BookId == book.Id);
+            foreach (var bookGenre in _context.BookGenre)
+            {
+                if (bookGenre.BookId == book.Id)
+                {
+                    _context.BookGenre.Remove(bookGenre);
+                }
+            }
+            _context.SaveChanges();
+            this.Create(book, genres);
         }
     }
 }
