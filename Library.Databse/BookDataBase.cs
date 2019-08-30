@@ -8,7 +8,7 @@ using System.Linq;
 namespace Library.Database
 {
     // SOLID: Liskov - we can substitute JSON with another type of DB
-    public class BookDatabase : IDataBase<Book>
+    public class BookDatabase : IDatabase<Book>
     {
         private readonly LibraryContext _context;
 

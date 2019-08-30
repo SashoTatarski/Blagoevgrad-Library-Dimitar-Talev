@@ -19,7 +19,7 @@ namespace Library.Services.Contracts
         void DisplayMessageForOverdueBooks(IUser user);
         void DisplayMessageForOverdueReservations(IUser user);
         void PurgeOverdueReservations(IUser user);
-        bool UserHasCheckedoutBooks(IUser user);
-        bool UserHasReservedBooks(IUser user);
+        bool UserHasCheckedoutBooks(User user);
+        bool UserHasReservedBooks(User user);
     }
 }

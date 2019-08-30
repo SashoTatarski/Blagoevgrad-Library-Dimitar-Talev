@@ -73,8 +73,8 @@ namespace Library.Services
             return _context.ReservedBooks.Any(b => b.BookId == book.Id && b.UserId == user.Id);
         }
 
-        public bool UserHasCheckedoutBooks(IUser user) => _context.CheckoutBooks.Any(x => x.UserId == user.Id);
-        public bool UserHasReservedBooks(IUser user) => _context.ReservedBooks.Any(x => x.UserId == user.Id);
+        public bool UserHasCheckedoutBooks(User user) => _context.CheckoutBooks.Any(x => x.UserId == user.Id);
+        public bool UserHasReservedBooks(User user) => _context.ReservedBooks.Any(x => x.UserId == user.Id);
 
 
 

@@ -8,8 +8,8 @@ namespace Library.Services.Factories
 {
     public class GenreFactory : IGenreFactory
     {
-        private readonly IDataBase<Genre> _database;
-        public GenreFactory(IDataBase<Genre> database)
+        private readonly IDatabase<Genre> _database;
+        public GenreFactory(IDatabase<Genre> database)
         {
             _database = database;
         }

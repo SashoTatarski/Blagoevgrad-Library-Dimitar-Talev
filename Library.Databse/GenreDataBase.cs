@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Library.Database
 {
-    public class GenreDataBase : IDataBase<Genre>
+    public class GenreDataBase : IDatabase<Genre>
     {
         private readonly LibraryContext _context;
         public GenreDataBase(LibraryContext context)

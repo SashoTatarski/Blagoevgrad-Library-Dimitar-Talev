@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Library.Database
 {
-    public class AuthorDataBase : IDataBase<Author>
+    public class AuthorDataBase : IDatabase<Author>
     {
         private readonly LibraryContext _context;
         public AuthorDataBase(LibraryContext context)

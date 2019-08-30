@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Library.Database
 {
-    public class BookGenreDatabase : IDataBase<BookGenre>
+    public class BookGenreDatabase : IDatabase<BookGenre>
     {
         private readonly LibraryContext _context;
         public BookGenreDatabase(LibraryContext context)

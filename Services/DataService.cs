@@ -15,10 +15,10 @@ namespace Library.Services
     public class DataService : IDataService
     {
         private readonly IJsonHandler<Book> _jsonHandler;
-        private readonly IDataBase<Book> _database;
+        private readonly IDatabase<Book> _database;
         private readonly LibraryContext _context;
 
-        public DataService(IJsonHandler<Book> jsonHandler, IDataBase<Book> database, LibraryContext context)
+        public DataService(IJsonHandler<Book> jsonHandler, IDatabase<Book> database, LibraryContext context)
         {
             _jsonHandler = jsonHandler;
             _database = database;

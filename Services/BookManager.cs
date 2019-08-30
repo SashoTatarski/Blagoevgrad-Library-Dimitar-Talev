@@ -16,11 +16,11 @@ namespace Library.Services
 {
     public class BookManager : IBookManager
     {
-        private readonly IDataBase<Book> _bookDB;
-        private readonly IDataBase<Author> _authorDb;
-        private readonly IDataBase<Genre> _genreDb;
-        private readonly IDataBase<Publisher> _publisherDb;
-        private readonly IDataBase<BookGenre> _bookGenreDb;
+        private readonly IDatabase<Book> _bookDB;
+        private readonly IDatabase<Author> _authorDb;
+        private readonly IDatabase<Genre> _genreDb;
+        private readonly IDatabase<Publisher> _publisherDb;
+        private readonly IDatabase<BookGenre> _bookGenreDb;
         private readonly IBookFactory _bookFac;
         private readonly IAuthorFactory _authorFac;
         private readonly IGenreFactory _genreFac;
@@ -29,8 +29,8 @@ namespace Library.Services
         private readonly IConsoleRenderer _renderer;
 
 
-        public BookManager(IDataBase<Book> bookDB, IDataBase<Author> authorDB,
-            IDataBase<Genre> genreDb, IDataBase<Publisher> publisherDb, IDataBase<BookGenre> bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
+        public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB,
+            IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, IDatabase<BookGenre> bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
         {
             _bookDB = bookDB;
             _authorDb = authorDB;

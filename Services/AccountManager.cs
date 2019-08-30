@@ -13,13 +13,13 @@ namespace Library.Services
     // SOLID: DI principle - we program against Interfaces. High-level modules, which provide complex logic, should be easily reusable and unaffected by changes in low-level modules
     public class AccountManager : IAccountManager
     {
-        private readonly IDataBase<User> _userDB;
-        private readonly IDataBase<Librarian> _librarianDB;
+        private readonly IDatabase<User> _userDB;
+        private readonly IDatabase<Librarian> _librarianDB;
         private readonly IAccountFactory _accountFac;
         private readonly IConsoleRenderer _renderer;
         private readonly IConsoleFormatter _formatter;
 
-        public AccountManager(IDataBase<User> userDB, IDataBase<Librarian> librarianDB, IAccountFactory accountFac, IConsoleRenderer renderer, IConsoleFormatter formatter)
+        public AccountManager(IDatabase<User> userDB, IDatabase<Librarian> librarianDB, IAccountFactory accountFac, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
             _userDB = userDB;
             _librarianDB = librarianDB;
@@ -38,6 +38,9 @@ namespace Library.Services
             else
                 return user;
         }
+
+        public List<User> GetAllUsers() => _userDB.Read().ToList();
+
 
         public User AddUser(string username, string password)
         {
@@ -60,11 +63,7 @@ namespace Library.Services
             //_renderer.Output(_formatter.FormatListOfUsersShort(users));
         }
 
-        public List<User> GetAllUsers()
-        {
-            // => _userDB.Load();
-            return null;
-        }
+       
 
         // 1. Take the user from the DB -> .Get
         // 2. Update user in the User class
@@ -78,10 +77,9 @@ namespace Library.Services
             //_userDB.Update(userToUpdate);
         }
 
-        public void RemoveUser(IUser user)
+        public void RemoveUser(User user)
         {
-            //var userToRemove = _userDB.Get(user.Username);
-            //_userDB.Delete(userToRemove);
+            _userDB.Delete(user);            
         }
 
 

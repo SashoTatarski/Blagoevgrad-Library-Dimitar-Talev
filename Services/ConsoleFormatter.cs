@@ -7,11 +7,24 @@ using System.Text;
 using System.Linq;
 using Library.Models.Models;
 using System;
+using Library.Database.Contracts;
 
 namespace Library.Services
 {
     public class ConsoleFormatter : IConsoleFormatter
     {
+        private readonly IDatabase<CheckoutBook> _checkoutBooks;
+        private readonly IDatabase<ReservedBook> _reservedBooks;
+        private readonly IDatabase<Book> _books;
+
+
+        public ConsoleFormatter(IDatabase<CheckoutBook> checkoutBooks, IDatabase<ReservedBook> reservedBooks, IDatabase<Book> books)
+        {
+            _checkoutBooks = checkoutBooks;
+            _reservedBooks = reservedBooks;
+            _books = books;
+        }
+
         public string Format(IAccount account)
         {
             var strBuilder = new StringBuilder();
@@ -37,18 +50,6 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string Format(User user)
-        {
-            var strBuilder = new StringBuilder();
-            //strBuilder.AppendLine($"Username: {user.Username}");
-            //strBuilder.AppendLine($"Checked out books:");
-            //strBuilder.AppendLine(this.FormatListOfBooks(user.CheckedOutBooks));
-            //strBuilder.AppendLine($"Reserved books:");
-            //strBuilder.AppendLine(this.FormatListOfBooks(user.ReservedBooks));
-
-            return strBuilder.ToString();
-        }
-
         public string FormatListOfBooks(List<Book> books)
         {
             var strBuilder = new StringBuilder();
@@ -58,6 +59,26 @@ namespace Library.Services
 
             foreach (var book in books)
                 strBuilder.AppendLine(this.Format(book));
+
+            return strBuilder.ToString();
+
+        }
+
+        public string FormatListOfBooks(List<int> booksIds)
+        {
+            if (booksIds.Count == 0)
+                return "There are no books!";
+
+            var allbooks = _books.Read();
+
+            var strBuilder = new StringBuilder();
+            foreach (var book in from book in allbooks
+                                 from bookId in booksIds
+                                 where book.Id == bookId
+                                 select book)
+            {
+                strBuilder.AppendLine(this.Format(book));
+            }
 
             return strBuilder.ToString();
         }
@@ -112,7 +133,30 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string FormatListOfUsers(List<IUser> users)
+        public string Format(User user)
+        {
+            var chBooks = _checkoutBooks.Read();
+            var userHasCheckedBooks = chBooks.Where(x => x.UserId == user.Id)
+                                             .Select(x => x.BookId)
+                                             .ToList();
+
+            var resBooks = _reservedBooks.Read();
+            var userHasResBooks = resBooks.Where(x => x.UserId == user.Id)
+                                          .Select(x => x.BookId)
+                                          .ToList();
+
+
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine($"Username: {user.Username}");
+            strBuilder.AppendLine($"Checked out books:");
+            strBuilder.AppendLine(this.FormatListOfBooks(userHasCheckedBooks));
+            strBuilder.AppendLine($"Reserved books:");
+            strBuilder.AppendLine(this.FormatListOfBooks(userHasResBooks));
+
+            return strBuilder.ToString();
+        }
+
+        public string FormatListOfUsers(List<User> users)
         {
             var strBuilder = new StringBuilder();
 
@@ -146,7 +190,7 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        //private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.CheckedOutBooks.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
+        //private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.c.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
 
         public string CenterStringWithSymbols(string text, char symbol)
         {

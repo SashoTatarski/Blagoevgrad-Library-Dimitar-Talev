@@ -6,8 +6,8 @@ namespace Library.Services.Factories
 {
     public class AuthorFactory : IAuthorFactory
     {
-        private readonly IDataBase<Author> _database;
-        public AuthorFactory(IDataBase<Author> database)
+        private readonly IDatabase<Author> _database;
+        public AuthorFactory(IDatabase<Author> database)
         {
             _database = database;
         }

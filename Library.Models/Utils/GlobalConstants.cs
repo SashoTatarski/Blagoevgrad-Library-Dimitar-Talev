@@ -12,7 +12,7 @@ namespace Library.Models.Utils
         public static string RegisterUser = "Register User";
         public static string RegisterLibrarian = "Register Librarian";
         public static string ReturnBook = "Return Book";
-        public static string RemoveUser = "Remove User";
+        public static string RemoveUser = "Remove User\r\n";
         public static string EditBook = "Edit Book";
         public static string RemoveBook = "Remove Book";
         public static string Search = "Search For Book\r\n";
