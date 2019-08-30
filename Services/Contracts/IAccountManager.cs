@@ -12,11 +12,9 @@ namespace Library.Services.Contracts
         Librarian AddLibrarian(string username, string password);
 
 
-        List<User> GetAllUsers();
+        List<User> GetAllUsers();    
 
-        void GetListAllUsers();
-
-        void RemoveUser(IUser user);
+        void RemoveUser(User user);
 
         void UpdateUser(IUser user);
     }

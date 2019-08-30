@@ -25,13 +25,17 @@ namespace Library.Core
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();
             //DataBase
             containerBuilder.RegisterType<LibraryContext>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<BookDatabase>().As<IDataBase<Book>>().SingleInstance();
-            containerBuilder.RegisterType<LibrarianDataBase>().As<IDataBase<Librarian>>().SingleInstance();
-            containerBuilder.RegisterType<GenreDataBase>().As<IDataBase<Genre>>().SingleInstance();
-            containerBuilder.RegisterType<PublisherDataBase>().As<IDataBase<Publisher>>().SingleInstance();
-            containerBuilder.RegisterType<UserDataBase>().As<IDataBase<User>>().SingleInstance();
-            containerBuilder.RegisterType<AuthorDataBase>().As<IDataBase<Author>>().SingleInstance();
+            containerBuilder.RegisterType<BookDatabase>().As<IDatabase<Book>>().SingleInstance();
+            containerBuilder.RegisterType<LibrarianDataBase>().As<IDatabase<Librarian>>().SingleInstance();
+            containerBuilder.RegisterType<GenreDataBase>().As<IDatabase<Genre>>().SingleInstance();
+            containerBuilder.RegisterType<PublisherDataBase>().As<IDatabase<Publisher>>().SingleInstance();
+            containerBuilder.RegisterType<UserDataBase>().As<IDatabase<User>>().SingleInstance();
+            containerBuilder.RegisterType<AuthorDataBase>().As<IDatabase<Author>>().SingleInstance(); 
             containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<CheckoutBookDatabase>().As<IDatabase<CheckoutBook>>().SingleInstance();
+            containerBuilder.RegisterType<ReserveBookDatabase>().As<IDatabase<ReservedBook>>().SingleInstance();
+
+
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();

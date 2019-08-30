@@ -1,4 +1,4 @@
-﻿using Library.Models.Models;
+using Library.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +23,6 @@ namespace Library.Database
 
         public void Update(Book book, List<Genre> genres)
         {
-            // _context.BookGenre.ToList().RemoveAll(bg => bg.BookId == book.Id);
             foreach (var bookGenre in _context.BookGenre)
             {
                 if (bookGenre.BookId == book.Id)
@@ -34,5 +33,7 @@ namespace Library.Database
             _context.SaveChanges();
             this.Create(book, genres);
         }
+
+        public List<BookGenre> Read() => _context.BookGenre.ToList();
     }
 }

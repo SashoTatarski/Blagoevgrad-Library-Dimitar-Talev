@@ -1,5 +1,6 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Contracts;
+using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using System;
@@ -13,7 +14,6 @@ namespace Library.Core.Commands
         private readonly IConsoleFormatter _formatter;
         private readonly ILibrarySystem _system;
 
-
         public RemoveUserCommand(IConsoleRenderer renderer, IAccountManager accountManager, IConsoleFormatter formatter, ILibrarySystem system)
         {
             _renderer = renderer;
@@ -25,10 +25,10 @@ namespace Library.Core.Commands
         public string Execute()
         {
             _renderer.Output(GlobalConstants.RemoveUser);
+            _renderer.Output(_formatter.FormatListOfUsers(_accountManager.GetAllUsers()));
+            
 
-            _accountManager.GetListAllUsers();
-
-            var userToRemove = (IUser)_accountManager.FindAccount(_renderer.InputParameters("username"));
+            var userToRemove = (User)_accountManager.FindAccount(_renderer.InputParameters("username"));
 
             if (userToRemove is null)
                 throw new ArgumentException(GlobalConstants.NoSuchUser);

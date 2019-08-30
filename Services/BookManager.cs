@@ -16,8 +16,11 @@ namespace Library.Services
 {
     public class BookManager : IBookManager
     {
-        private readonly IDataBase<Book> _bookDB;
-        private readonly IDataBase<Author> _authorDB;
+        private readonly IDatabase<Book> _bookDB;
+        private readonly IDatabase<Author> _authorDb;
+        private readonly IDatabase<Genre> _genreDb;
+        private readonly IDatabase<Publisher> _publisherDb;
+        private readonly BookGenreDataBase _bookGenreDb;
         private readonly IBookFactory _bookFac;
         private readonly IAuthorFactory _authorFac;
         private readonly IGenreFactory _genreFac;
@@ -25,24 +28,23 @@ namespace Library.Services
         private readonly IConsoleFormatter _formatter;
         private readonly LibraryContext _context;
         private readonly IConsoleRenderer _renderer;
-        private readonly BookGenreDataBase _bookGenreDB;
 
 
-        public BookManager(IDataBase<Book> bookDB, IDataBase<Author> authorDB, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer, IPublisherFactory publisherFac, BookGenreDataBase bookGenreDB)
+        public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB,
+            IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
         {
             _bookDB = bookDB;
-            _authorDB = authorDB;
+            _authorDb = authorDB;
+            _genreDb = genreDb;
+            _publisherDb = publisherDb;
+            _bookGenreDb = bookGenreDb;
             _bookFac = bookFac;
-            _bookGenreDB = bookGenreDB;
             _authorFac = authorFac;
             _genreFac = genreFac;
-            _publisherFac = publisherFac;
             _formatter = formatter;
             _context = context;
             _renderer = renderer;
         }
-
-        public Book FindBook(int id) => _bookDB.Find(id);
 
         public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
         {
@@ -50,7 +52,7 @@ namespace Library.Services
             _bookDB.Create(book);
 
             var genreList = _genreFac.CreateGenreList(genres);
-            _bookGenreDB.Create(book, genreList);
+            _bookGenreDb.Create(book, genreList);
             return book;
         }
 
@@ -71,6 +73,8 @@ namespace Library.Services
                 Console.ResetColor();
             }
         }
+
+        public Book FindBook(int id) => _bookDB.Find(id);
 
         public void UpdateBookAuthor(int bookId, string newAuthorName)
         {
@@ -98,7 +102,7 @@ namespace Library.Services
 
             var book = _bookDB.Find(bookId);
 
-            _bookGenreDB.Update(book, updatedGenres);
+            _bookGenreDb.Update(book, updatedGenres);
             _bookDB.Update(book);
         }
 
@@ -135,7 +139,7 @@ namespace Library.Services
         }
 
         // ------- Need update ↓ -------
-        public void UpdateStatus(IBook book, BookStatus status)
+        public void UpdateStatus(Book book, BookStatus status)
         {
             var bookToUpdate = _context.Books.FirstOrDefault(b => b.Id == book.Id);
             bookToUpdate.Status = status;
@@ -178,7 +182,7 @@ namespace Library.Services
 
         public void RemoveBook(Book book) => _bookDB.Delete(book);
 
-        
+
 
         public List<Book> GetAllBooks()
         {
@@ -197,30 +201,55 @@ namespace Library.Services
         public List<Book> GetSearchResult(string searchByParameter, string searchByText)
         {
             var books = _bookDB.Read();
+            var authors = _authorDb.Read();
+            var genres = _genreDb.Read();
+            var publishers = _publisherDb.Read();
+            var bookgenres = _bookGenreDb.Read();
             var sortedBooks = new List<Book>();
 
-            //switch (searchByParameter.ToLower())
-            //{
-            //    case "author":
-            //        sortedBooks = books.Where(b => b.Author.Contains(searchByText)).ToList();
-            //        break;
-            //    case "title":
-            //        sortedBooks = books.Where(b => b.Title.Contains(searchByText)).ToList();
-            //        break;
-            //    case "genre":
-            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-            //        break;
-            //    case "year":
-            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-            //        break;
-            //    case "publisher":
-            //        sortedBooks = books.Where(b => b.Genre.Contains(searchByText)).ToList();
-            //        break;
-            //    case "show all":
-            //        return books;
-            //    default:
-            //        break;
-            //}
+            switch (searchByParameter.ToLower())
+            {
+                case "author":
+                    var authourId = authors.Where(a => a.Name == searchByText)
+                                            .Select(a => a.Id)
+                                            .FirstOrDefault();
+                    sortedBooks = books.Where(b => b.AuthorId == authourId).ToList(); break;
+
+                case "title":
+                    sortedBooks = books.Where(b => b.Title.Contains(searchByText)).ToList();
+                    break;
+                case "genre":
+
+                    var genreId = genres.Where(a => a.GenreName == searchByText)
+                                            .Select(a => a.Id)
+                                            .FirstOrDefault();
+                    var bookGenreIds = bookgenres.Where(g => g.GenreId == genreId)
+                                                .Select(g => g.BookId);
+
+                    sortedBooks.AddRange(from bookGenre in bookGenreIds
+                                         from book in books
+                                         where bookGenre == book.Id
+                                         select book);
+                    // Same as the one above
+                    //foreach (var bookGenre in bookGenreIds)
+                    //    foreach (var book in books)
+                    //        if (bookGenre == book.Id)
+                    //            sortedBooks.Add(book);
+                    break;
+                case "year":
+                    sortedBooks = books.Where(b => b.Year == int.Parse(searchByText)).ToList();
+                    break;
+                case "publisher":
+                    var publisherId = publishers.Where(a => a.Name.Contains(searchByText))
+                                                .Select(a => a.Id)
+                                                .FirstOrDefault();
+                    sortedBooks = books.Where(b => b.PublisherId == publisherId).ToList();
+                    break;
+                case "show all":
+                    return books;
+                default:
+                    break;
+            }
             return sortedBooks;
         }
 
@@ -250,6 +279,11 @@ namespace Library.Services
             //    strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
 
             return strBuilder.ToString();
+        }
+
+        public void UpdateStatus(IBook book, BookStatus status)
+        {
+            throw new NotImplementedException();
         }
     }
 }

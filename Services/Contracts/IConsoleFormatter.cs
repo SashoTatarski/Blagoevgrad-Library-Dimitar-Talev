@@ -12,7 +12,7 @@ namespace Library.Services.Contracts
 
         string Format(IAccount account);
 
-        string FormatCheckedoutBook(IBook book);
+        string FormatCheckedoutBook(Book book);
 
         string FormatListOfBooks(List<Book> books);
 
@@ -22,9 +22,10 @@ namespace Library.Services.Contracts
 
         string FormatCommandMessage(string message);
 
-        string FormatListOfUsers(List<IUser> users);
+        string FormatListOfUsers(List<User> users);
 
         string FormatListOfUsersShort(List<User> users);
         string CenterStringWithSymbols(string text, char symbol);
+        string FormatListOfBooks(List<int> booksIds);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Library.Database.Contracts
 {
-    public interface IDataBase<T>
+    public interface IDatabase<T>
     {
         void Create(T item);
         List<T> Read();

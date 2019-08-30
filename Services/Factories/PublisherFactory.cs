@@ -6,8 +6,8 @@ namespace Library.Services.Factories
 {
     public class PublisherFactory : IPublisherFactory
     {
-        private readonly IDataBase<Publisher> _database;
-        public PublisherFactory(IDataBase<Publisher> database)
+        private readonly IDatabase<Publisher> _database;
+        public PublisherFactory(IDatabase<Publisher> database)
         {
             _database = database;
         }

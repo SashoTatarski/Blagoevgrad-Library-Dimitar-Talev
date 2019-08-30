@@ -36,6 +36,7 @@ namespace Library.Models.Utils
         public const string ChooseCommand = "Choose parameter";
 
 
+
         //Errors
         public const string NoSuchUser = "No such user!";
         public const string NoUsers = "There are no users!";

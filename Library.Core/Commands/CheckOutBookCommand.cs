@@ -16,28 +16,24 @@ namespace Library.Core.Commands
     {
         private readonly IAuthenticationManager _authentication;
         private readonly IConsoleRenderer _renderer;
-        private readonly IBookManager _bookManager;
-        private readonly IAccountManager _accountManager;
+        private readonly IBookManager _bookManager;        
         private readonly ILibrarySystem _system;
-        private readonly IConsoleFormatter _formatter;
-        private readonly LibraryContext _context;
+        private readonly IConsoleFormatter _formatter;      
 
-        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system, IConsoleFormatter formatter, LibraryContext context)
+        public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, ILibrarySystem system, IConsoleFormatter formatter)
         {
             _authentication = authentication;
             _renderer = renderer;
-            _bookManager = bookManager;
-            _accountManager = accountManager;
+            _bookManager = bookManager;           
             _system = system;
-            _formatter = formatter;
-            _context = context;
+            _formatter = formatter;           
         }
 
         public string Execute()
         {
             _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.CheckOutBook, GlobalConstants.MiniDelimiterSymbol));
 
-            var user = (IUser)_authentication.CurrentAccount;
+            var user = (User)_authentication.CurrentAccount;
 
             // If the User has checked out 5 books already
             _system.CheckCheckoutBooksQuota(user);
@@ -47,40 +43,30 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
-
-            //// BookID validation
-            //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            //    throw new ArgumentException(GlobalConstants.InvalidID);
-
             var bookToCheckOut = _bookManager.FindBook(bookID);
 
-            // ASK: How to improve this (maybe extract it in methods?)
-            // Check Book Status 
-            //if (bookToCheckOut.Status == BookStatus.Available)
-            //{
-            //    _system.AddBookToCheckoutBooks(bookToCheckOut, user);
+            // ASK: How to improve this (maybe extract it in methods?)           
+            if (bookToCheckOut.Status == BookStatus.Available)
+            {
+                _system.AddBookToCheckoutBooks(bookToCheckOut, user);
+                //_bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
+            }
+            else if (bookToCheckOut.Status == BookStatus.Reserved)
+            {
+                if (_system.ReservedByUser(user, bookToCheckOut))
+                {
+                    _system.AddBookToCheckoutBooks(bookToCheckOut, user);
+                   // _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
+                }
+                else
+                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
 
-            //    _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
-            //}
-            //else if (bookToCheckOut.Status == BookStatus.Reserved)
-            //{
-            //    if (_system.ReservedByUser(user, bookToCheckOut))
-            //    {
-            //        _system.AddBookToCheckoutBooks(bookToCheckOut, user); // user.AddBookToCheckoutBooks(bookToCheckOut);
-            //                                                              //user.RemoveFromReservedBooks(suchBookInReservedBooks);
-            //        _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
-            //    }
-            //    else
-            //        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
-            //}
-            //else
-            //{
-            //    throw new ArgumentException();
-            //}
-
-            // return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
-
-            return null;
+            return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
         }
     }
 }

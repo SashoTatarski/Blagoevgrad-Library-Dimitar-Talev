@@ -33,8 +33,8 @@ namespace Library.Core
             // ASK: Should we/ how to improve this method
             VirtualDate.StartVirtualTime();
 
-             //_service.ClearUpDatabase();
-             //_service.SeedDatabase();
+            // _service.ClearUpDatabase();
+            // _service.SeedDatabase();
 
             _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();

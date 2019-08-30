@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Library.Database
 {
-    public class PublisherDataBase : IDataBase<Publisher>
+    public class PublisherDataBase : IDatabase<Publisher>
     {
         private readonly LibraryContext _context;
         public PublisherDataBase(LibraryContext context)
@@ -14,7 +14,7 @@ namespace Library.Database
             _context = context;
         }
 
-        Models.Models.Publisher IDataBase<Publisher>.Find(string name)
+        Models.Models.Publisher IDatabase<Publisher>.Find(string name)
         {
             return _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
         }
@@ -36,14 +36,12 @@ namespace Library.Database
             throw new NotImplementedException();
         }
 
-        Publisher IDataBase<Publisher>.Find(int id)
+        Publisher IDatabase<Publisher>.Find(int id)
         {
             throw new NotImplementedException();
         }
 
-        List<Publisher> IDataBase<Publisher>.Read()
-        {
-            throw new NotImplementedException();
-        }
+        List<Publisher> IDatabase<Publisher>.Read() => _context.Publishers.ToList();
+       
     }
 }

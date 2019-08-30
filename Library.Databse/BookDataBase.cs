@@ -1,4 +1,5 @@
 ﻿using Library.Database.Contracts;
+using Library.Models.Contracts;
 using Library.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 namespace Library.Database
 {
     // SOLID: Liskov - we can substitute JSON with another type of DB
-    public class BookDatabase : IDataBase<Book>
+    public class BookDatabase : IDatabase<Book>
     {
         private readonly LibraryContext _context;
 
@@ -41,22 +42,14 @@ namespace Library.Database
 
             return books;
         }
-        public Book Find(int bookId)
-        {
-            return _context.Books
-               .Include(b => b.Author)
-               .Include(b => b.Publisher)
-               .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-               .FirstOrDefault(b => b.Id == bookId);
-        }
+        public Book Find(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
 
-        public void Update(Book book)
-        {
-            _context.SaveChanges();
-        }
 
         // Update
+        public void Update(Book book)
+        {
+            throw new System.NotImplementedException();
+        }
         public Book Find(string name)
         {
             throw new System.NotImplementedException();

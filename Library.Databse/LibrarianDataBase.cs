@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Library.Database
 {
-    public class LibrarianDataBase : IDataBase<Librarian>
+    public class LibrarianDataBase : IDatabase<Librarian>
     {
         private readonly LibraryContext _context;
 
