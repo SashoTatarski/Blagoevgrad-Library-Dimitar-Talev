@@ -30,5 +30,6 @@ namespace Library.Services.Contracts
         void UpdateBookPublisher(int bookId, string newPublisherName);
         void UpdateBookGenre(int bookId, string newGenres);
         void ChangeBookStatus(Book book, BookStatus status);
+        List<int> GetBooksIDs();
     }
 }

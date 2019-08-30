@@ -38,12 +38,11 @@ namespace Library.Core.Commands
             _bookManager.ListAllBooks();
 
             // BookID Input
-            var bookID = int.Parse(_renderer.InputParameters("ID"));
+            var bookId = int.Parse(_renderer.InputParameters("ID"));
             // BookID validation
-            //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            //    throw new ArgumentException(GlobalConstants.InvalidID);
+            DataValidator.ValidateNumberInList(bookId, _bookManager.GetBooksIDs());
 
-            var bookToCheckOut = _bookManager.FindBook(bookID);
+            var bookToCheckOut = _bookManager.FindBook(bookId);
 
             _system.AddBookToCheckoutBooks(bookToCheckOut, user);
 

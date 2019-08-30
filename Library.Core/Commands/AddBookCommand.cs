@@ -11,19 +11,16 @@ namespace Library.Core.Commands
         private readonly IBookManager _bookManager;
         private readonly IConsoleRenderer _renderer;
         private readonly IConsoleFormatter _formatter;
-
         public AddBookCommand(IBookManager bookManager, IConsoleRenderer renderer, IConsoleFormatter formatter)
         {
             _bookManager = bookManager;
             _renderer = renderer;
             _formatter = formatter;
         }
-
         public string Execute()
         {
             _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.AddBook, GlobalConstants.MiniDelimiterSymbol));
 
-            // ASK: How to improve this since it exists also in EditBookCommand
             var authorName = _renderer.InputParameters("author name",
                 s => s.Length < 1 || s.Length > 40);
 

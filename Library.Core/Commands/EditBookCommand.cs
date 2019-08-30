@@ -35,8 +35,7 @@ namespace Library.Core.Commands
             var bookId = int.Parse(_renderer.InputParameters("ID"));
 
             // BookID validation
-            //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-            //    throw new ArgumentException(GlobalConstants.InvalidID);
+            DataValidator.ValidateNumberInList(bookId, _bookManager.GetBooksIDs());
 
             var bookToEdit = _bookManager.FindBook(bookId);
 

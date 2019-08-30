@@ -181,47 +181,18 @@ namespace Library.Services
                     break;
             }
         }
+
+        public List<int> GetBooksIDs()
+        {
+            var books = _bookDB.Read();
+            var list = new List<int>();
+            foreach (var book in books)
+            {
+                list.Add(book.Id);
+            }
+            return list;
+        }
         // ------- Need update ↓ -------
-        public void UpdateStatus(Book book, BookStatus status)
-        {
-            var bookToUpdate = _context.Books.FirstOrDefault(b => b.Id == book.Id);
-            bookToUpdate.Status = status;
-            _context.SaveChanges();
-        }
-
-        // Edit Book
-        public void UpdateBook(int bookId, string authorName, string title, string isbn, string category, string publisher, int year, int rack)
-        {
-            //var bookToUpdate = _database.Find(bookId);
-            //Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
-
-            //var updated = _factory.CreateBook(authorName, title, isbn, category, publisher, year, rack);
-
-            //bookToUpdate.Update(updated);
-            //_context.SaveChanges();
-        }
-
-        // CheckOut Book
-        // OOP: Polymorphism - method overloading static polymorphism. In static polym. identification of the overloaded method to be executed is carried out at compile time
-        public void UpdateBook(int bookId, BookStatus status, DateTime checkoutDate, DateTime dueDate)
-        {
-            var bookToUpdate = _bookDB.Find(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
-
-            bookToUpdate.Update(status, checkoutDate, dueDate);
-            _bookDB.Update(bookToUpdate);
-        }
-
-        // Reserve Book
-        public void UpdateBook(int bookId, BookStatus status, DateTime reservationDate, DateTime reservationDueDate, bool isReservation)
-        {
-            var bookToUpdate = _bookDB.Find(bookId);
-            Guard.Argument(bookToUpdate, nameof(bookToUpdate)).NotNull(message: GlobalConstants.BookToUpdateNull);
-
-            bookToUpdate.Update(status, reservationDate, reservationDueDate, true);
-            _bookDB.Update(bookToUpdate);
-        }
-
 
         public void RemoveBook(Book book) => _bookDB.Delete(book);
 

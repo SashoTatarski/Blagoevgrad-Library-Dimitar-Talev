@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Library.Models.Utils
 {
@@ -46,6 +47,14 @@ namespace Library.Models.Utils
             if (value.Length > max)
             {
                 throw new ArgumentException(msg);
+            }
+        }
+
+        public static void ValidateNumberInList(int number, List<int> list)
+        {
+            if (!list.Contains(number))
+            {
+                throw new ArgumentException(GlobalConstants.InvalidID);
             }
         }
     }
