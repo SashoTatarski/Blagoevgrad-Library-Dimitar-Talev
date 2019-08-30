@@ -12,7 +12,7 @@ namespace Library.Services.Contracts
 
         string Format(IAccount account);
 
-        string FormatCheckedoutBook(IBook book);
+        string FormatCheckedoutBook(Book book);
 
         string FormatListOfBooks(List<Book> books);
 

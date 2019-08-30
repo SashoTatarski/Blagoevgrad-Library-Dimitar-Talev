@@ -6,13 +6,10 @@ namespace Library.Services.Factories
 {
     public class MenuFactory : IMenuFactory
     {
-        public string GenerateMenu(List<string> parameters, string parameter)
+        public string GenerateMenu(List<string> parameters)
         {
             var strBuilder = new StringBuilder();
             var counter = 1;
-
-            strBuilder.AppendLine($"Choose {parameter}");
-            strBuilder.AppendLine();
 
             foreach (var param in parameters)
             {

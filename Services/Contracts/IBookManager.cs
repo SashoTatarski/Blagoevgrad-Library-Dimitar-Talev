@@ -21,12 +21,6 @@ namespace Library.Services.Contracts
         List<Book> GetSearchResult(string searchByParameter, string searchByText);
         string GetCheckedoutBooksInfo(IUser user);
         string GetOverdueBooksInfo(IUser user);
-        void UpdateStatus(IBook book, BookStatus status);
-        void UpdateBookAuthor(int bookId, string newAuthorName);
-        void UpdateBookTitle(int bookId, string newTitle);
-        void UpdateBookISBN(int bookId, string newISBN);
-        void UpdateBookRack(int bookId, int newRack);
-        void UpdateBookYear(int bookId, int newYear);
-        void UpdateBookPublisher(int bookId, string newPublisherName);
+        void UpdateStatus(Book book, BookStatus status);
     }
 }

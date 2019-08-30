@@ -30,8 +30,10 @@ namespace Library.Core
             containerBuilder.RegisterType<GenreDataBase>().As<IDataBase<Genre>>().SingleInstance();
             containerBuilder.RegisterType<PublisherDataBase>().As<IDataBase<Publisher>>().SingleInstance();
             containerBuilder.RegisterType<UserDataBase>().As<IDataBase<User>>().SingleInstance();
-            containerBuilder.RegisterType<AuthorDataBase>().As<IDataBase<Author>>().SingleInstance();
-            containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<AuthorDataBase>().As<IDataBase<Author>>().SingleInstance(); 
+            containerBuilder.RegisterType<BookGenreDatabase>().As<IDataBase<BookGenre>>().SingleInstance();
+
+
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();

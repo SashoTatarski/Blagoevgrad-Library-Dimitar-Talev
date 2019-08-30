@@ -41,9 +41,7 @@ namespace Library.Database
             throw new NotImplementedException();
         }
 
-        List<Publisher> IDataBase<Publisher>.Read()
-        {
-            throw new NotImplementedException();
-        }
+        List<Publisher> IDataBase<Publisher>.Read() => _context.Publishers.ToList();
+       
     }
 }

@@ -36,10 +36,7 @@ namespace Library.Database
             throw new NotImplementedException();
         }
 
-        public List<Genre> Read()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Genre> Read() => _context.Genres.ToList();
 
         public void Update(Genre item)
         {

@@ -5,6 +5,6 @@ namespace Library.Services.Factories.Contracts
 {
     public interface IMenuFactory
     {
-        string GenerateMenu(List<string> parameters, string parameter);
+        string GenerateMenu(List<string> parameters);
     }
 }

@@ -40,9 +40,7 @@ namespace Library.Core.Commands
 
             _bookManager.RemoveBook(bookToRemove);
 
-            //return _formatter.FormatCommandMessage(GlobalConstants.RemoveBookSuccess, _formatter.Format(bookToRemove));
-
-            return null;
+            return _formatter.FormatCommandMessage(GlobalConstants.RemoveBookSuccess, _formatter.Format(bookToRemove));
         }
     }
 }

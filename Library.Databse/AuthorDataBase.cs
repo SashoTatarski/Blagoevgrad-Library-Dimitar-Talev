@@ -1,5 +1,6 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,8 @@ namespace Library.Database
 
         public List<Author> Read()
         {
-            throw new NotImplementedException();
+            var authors = _context.Authors.ToList();               
+            return authors;
         }
 
         public void Update(Author item)

@@ -11,21 +11,17 @@ namespace Library.Services
 {
     public class LibrarySystem : ILibrarySystem
     {
-        private readonly IAccountManager _accountManager;
-        private readonly IConsoleFormatter _formatter;
-        private readonly IConsoleRenderer _renderer;
-        private readonly IBookManager _bookManager;
+        private readonly IAccountManager _accountManager;        
+        private readonly IConsoleRenderer _renderer;        
         private readonly LibraryContext _context;
 
-        public LibrarySystem(IAccountManager accountManager, IConsoleFormatter formatter, IConsoleRenderer renderer, IBookManager bookManager, LibraryContext context)
+        public LibrarySystem(IAccountManager accountManager, IConsoleRenderer renderer, LibraryContext context)
         {
-            _accountManager = accountManager;
-            _formatter = formatter;
-            _renderer = renderer;
-            _bookManager = bookManager;
+            _accountManager = accountManager;            
+            _renderer = renderer;           
             _context = context;
         }
-        public void CheckCheckoutBooksQuota(IUser user)
+        public void CheckCheckoutBooksQuota(User user)
         {
             var checkedoutBooks = _context.CheckoutBooks.Where(x => x.UserId == user.Id).ToList();
 
@@ -42,7 +38,7 @@ namespace Library.Services
         }
 
         // ------- Need update ↓ -------
-        public void AddBookToCheckoutBooks(IBook book, IUser user)
+        public void AddBookToCheckoutBooks(Book book, User user)
         {
             var bookToAdd = new CheckoutBook()
             {
@@ -72,7 +68,7 @@ namespace Library.Services
 
         
 
-        public bool ReservedByUser(IUser user, IBook book)
+        public bool ReservedByUser(User user, Book book)
         {
             return _context.ReservedBooks.Any(b => b.BookId == book.Id && b.UserId == user.Id);
         }

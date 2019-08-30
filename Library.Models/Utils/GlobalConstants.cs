@@ -15,7 +15,7 @@ namespace Library.Models.Utils
         public static string RemoveUser = "Remove User";
         public static string EditBook = "Edit Book";
         public static string RemoveBook = "Remove Book";
-        public static string Search = "Search For Book";
+        public static string Search = "Search For Book\r\n";
         public static string Travel = "Travel In Time";
         public static string View = "View Accounts";
 
@@ -31,9 +31,6 @@ namespace Library.Models.Utils
         public const string ReservedBookAlreadyReserved = "You have already reserved this book!";
         public const string CheckoutBookAlreadyRes = "Book is already reserved!";
         public const string CheckoutBookAlreadyChecked = "Book is already checked out!";
-        public const string ChooseBook = "Choose book by its ID";
-        public const string ChooseParameter = "Choose parameter";
-        public const string ChooseCommand = "Choose parameter";
 
 
         //Errors
