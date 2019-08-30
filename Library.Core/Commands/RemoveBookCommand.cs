@@ -30,8 +30,7 @@ namespace Library.Core.Commands
             var bookID = int.Parse(_renderer.InputParameters("ID"));
 
             // BookID validation
-            if (bookID < 1 || bookID > _bookManager.GetLastBookID())
-                throw new ArgumentException(GlobalConstants.InvalidID);
+            DataValidator.ValidateNumberInList(bookID, _bookManager.GetBooksIDs());
 
             var bookToRemove = _bookManager.FindBook(bookID);
 

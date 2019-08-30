@@ -11,17 +11,17 @@ namespace Library.Core.Commands
     {
         private readonly IAuthenticationManager _authentication;
         private readonly IConsoleRenderer _renderer;
-        private readonly IBookManager _bookManager;        
+        private readonly IBookManager _bookManager;
         private readonly ILibrarySystem _system;
-        private readonly IConsoleFormatter _formatter;      
+        private readonly IConsoleFormatter _formatter;
 
         public CheckOutBookCommand(IAuthenticationManager authentication, IConsoleRenderer renderer, IBookManager bookManager, ILibrarySystem system, IConsoleFormatter formatter)
         {
             _authentication = authentication;
             _renderer = renderer;
-            _bookManager = bookManager;           
+            _bookManager = bookManager;
             _system = system;
-            _formatter = formatter;           
+            _formatter = formatter;
         }
 
         public string Execute()
@@ -42,11 +42,9 @@ namespace Library.Core.Commands
             // BookID validation
             DataValidator.ValidateNumberInList(bookId, _bookManager.GetBooksIDs());
 
-            var bookToCheckOut = _bookManager.FindBook(bookId);
+            var checkedOutBook = _system.AddBookToCheckoutBooks(_bookManager.FindBook(bookId), user);
 
-            _system.AddBookToCheckoutBooks(bookToCheckOut, user);
-
-            return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
+            return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.Format(checkedOutBook));
         }
     }
 }

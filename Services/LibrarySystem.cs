@@ -6,6 +6,7 @@ using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -44,7 +45,7 @@ namespace Library.Services
                 throw new ArgumentException(GlobalConstants.MaxQuotaReached);
         }
         
-        public void AddBookToCheckoutBooks(Book book, User user)
+        public CheckoutBook AddBookToCheckoutBooks(Book book, User user)
         {
             var bookToAdd = new CheckoutBook()
             {
@@ -56,9 +57,24 @@ namespace Library.Services
 
             _bookManager.ChangeBookStatus(book, BookStatus.CheckedOut);
             _issuedBookDb.AddCheckedOutBook(bookToAdd);
+            return bookToAdd;
         }
 
-        public void AddBookToReservedBooks(Book book, User user)
+        public void RemoveBookFromCheckoutBooks(Book book)
+        {
+            if (book.Status== BookStatus.CheckedOut_and_Reserved)
+            {
+                _bookManager.ChangeBookStatus(book, BookStatus.Reserved);
+            }
+            else
+            {
+                _bookManager.ChangeBookStatus(book, BookStatus.Available);
+
+            }
+            _issuedBookDb.RemoveCheckedOutBook(book.Id);
+        }
+
+        public ReservedBook AddBookToReservedBooks(Book book, User user)
         {
             var bookToAdd = new ReservedBook()
             {
@@ -70,8 +86,13 @@ namespace Library.Services
 
             _bookManager.ChangeBookStatus(book, BookStatus.Reserved);
             _issuedBookDb.AddReservedBook(bookToAdd);
+            return bookToAdd;
         }
 
+        public List<CheckoutBook> GetCheckedOutBooks(User user)
+        {
+            return _issuedBookDb.GetCheckOutBooks(user);
+        }
 
         // ------- Need update ↓ -------
 

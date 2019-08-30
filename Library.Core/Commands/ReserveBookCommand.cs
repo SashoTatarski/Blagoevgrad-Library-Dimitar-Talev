@@ -40,13 +40,13 @@ namespace Library.Core.Commands
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
             // BookID validation
-            DataValidator.ValidateNumberInList(bookId, _bookManager.GetBooksIDs());
+            DataValidator.ValidateNumberInList(bookID, _bookManager.GetBooksIDs());
 
             var bookToReserve = _bookManager.FindBook(bookID);
 
-            _system.AddBookToReservedBooks(bookToReserve, user);
+            var reservedBook = _system.AddBookToReservedBooks(bookToReserve, user);
 
-            return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookSuccessMsg, _formatter.FormatReservedBook(bookToReserve));
+            return _formatter.FormatCommandMessage(GlobalConstants.ReservedBookSuccessMsg, _formatter.Format(reservedBook));
         }
     }
 }

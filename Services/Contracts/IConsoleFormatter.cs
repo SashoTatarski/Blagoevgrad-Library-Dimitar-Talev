@@ -7,9 +7,9 @@ namespace Library.Services.Contracts
     public interface IConsoleFormatter
     {
         string Format(Book book);
-        string FormatCheckedoutBook(Book book);
-        string FormatReservedBook(Book book);
-
+        string Format(CheckoutBook book);
+        string Format(ReservedBook book);
+        string FormatList(List<CheckoutBook> books);
 
 
         //Update
@@ -30,5 +30,6 @@ namespace Library.Services.Contracts
         string FormatListOfUsersShort(List<User> users);
         string CenterStringWithSymbols(string text, char symbol);
         string FormatListOfBooks(List<int> booksIds);
+        
     }
 }

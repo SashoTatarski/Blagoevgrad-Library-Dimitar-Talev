@@ -8,9 +8,10 @@ namespace Library.Services.Contracts
     {
         void CheckCheckoutBooksQuota(User user);
         void CheckReservedBooksQuota(User user);
-
-        void AddBookToCheckoutBooks(Book book, User user);
-        void AddBookToReservedBooks(Book book, User user);
+        CheckoutBook AddBookToCheckoutBooks(Book book, User user);
+        ReservedBook AddBookToReservedBooks(Book book, User user);
+        List<CheckoutBook> GetCheckedOutBooks(User user);
+        void RemoveBookFromCheckoutBooks(Book book);
 
         // ------- Need update ↓ -------
 
@@ -23,5 +24,6 @@ namespace Library.Services.Contracts
         void PurgeOverdueReservations(IUser user);
         bool UserHasCheckedoutBooks(User user);
         bool UserHasReservedBooks(User user);
+        
     }
 }
