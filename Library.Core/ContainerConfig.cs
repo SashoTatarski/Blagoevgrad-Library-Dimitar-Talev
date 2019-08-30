@@ -32,6 +32,7 @@ namespace Library.Core
             containerBuilder.RegisterType<UserDataBase>().As<IDatabase<User>>().SingleInstance();
             containerBuilder.RegisterType<AuthorDataBase>().As<IDatabase<Author>>().SingleInstance(); 
             containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
+            containerBuilder.RegisterType<IssuedBookDataBase>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<CheckoutBookDatabase>().As<IDatabase<CheckoutBook>>().SingleInstance();
             containerBuilder.RegisterType<ReserveBookDatabase>().As<IDatabase<ReservedBook>>().SingleInstance();
 

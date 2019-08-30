@@ -1,5 +1,7 @@
 ﻿using Library.Database;
+using Library.Database.Contracts;
 using Library.Models.Contracts;
+using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
@@ -14,30 +16,34 @@ namespace Library.Services
         private readonly IAccountManager _accountManager;        
         private readonly IConsoleRenderer _renderer;        
         private readonly LibraryContext _context;
+        private readonly IBookManager _bookManager;
+        private readonly IssuedBookDataBase _issuedBookDb;
 
-        public LibrarySystem(IAccountManager accountManager, IConsoleRenderer renderer, LibraryContext context)
+
+        public LibrarySystem(IAccountManager accountManager, IConsoleRenderer renderer, LibraryContext context, IBookManager bookManager, IssuedBookDataBase issuedBookDb)
         {
-            _accountManager = accountManager;            
+            _accountManager = accountManager;
+            _bookManager = bookManager;
+            _issuedBookDb = issuedBookDb;
             _renderer = renderer;           
             _context = context;
         }
         public void CheckCheckoutBooksQuota(User user)
         {
-            var checkedoutBooks = _context.CheckoutBooks.Where(x => x.UserId == user.Id).ToList();
+            var checkedoutBooks = _issuedBookDb.GetCheckOutBooks(user);
 
             if (checkedoutBooks.Count >= GlobalConstants.MaxBookQuota)
                 throw new ArgumentException(GlobalConstants.MaxQuotaReached);
         }
 
-        public void CheckReservedBooksQuota(IUser user)
+        public void CheckReservedBooksQuota(User user)
         {
-            var RreservedBooks = _context.ReservedBooks.Where(x => x.UserId == user.Id).ToList();
+            var reservedBooks = _issuedBookDb.GetReservedBooks(user);
 
-            if (RreservedBooks.Count >= GlobalConstants.MaxBookQuota)
+            if (reservedBooks.Count >= GlobalConstants.MaxBookQuota)
                 throw new ArgumentException(GlobalConstants.MaxQuotaReached);
         }
-
-        // ------- Need update ↓ -------
+        
         public void AddBookToCheckoutBooks(Book book, User user)
         {
             var bookToAdd = new CheckoutBook()
@@ -48,11 +54,11 @@ namespace Library.Services
                 DueDate = VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays)
             };
 
-            _context.CheckoutBooks.Add(bookToAdd);
-            _context.SaveChanges();
+            _bookManager.ChangeBookStatus(book, BookStatus.CheckedOut);
+            _issuedBookDb.AddCheckedOutBook(bookToAdd);
         }
 
-        public void AddBookToReservedBooks(IBook book, IUser user)
+        public void AddBookToReservedBooks(Book book, User user)
         {
             var bookToAdd = new ReservedBook()
             {
@@ -62,11 +68,14 @@ namespace Library.Services
                 ReservationDueDate = VirtualDate.VirtualToday.AddDays(GlobalConstants.MaxCheckoutDays)
             };
 
-            _context.ReservedBooks.Add(bookToAdd);
-            _context.SaveChanges();
+            _bookManager.ChangeBookStatus(book, BookStatus.Reserved);
+            _issuedBookDb.AddReservedBook(bookToAdd);
         }
 
-        
+        // ------- Need update ↓ -------
+
+
+
 
         public bool ReservedByUser(User user, Book book)
         {

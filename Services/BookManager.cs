@@ -138,6 +138,49 @@ namespace Library.Services
             _bookDB.Update(book);
         }
 
+        public void ChangeBookStatus(Book book, BookStatus status)
+        {
+            switch (status)
+            {
+                case BookStatus.Available:
+                    book.Status = status;
+                    _bookDB.Update(book);
+                    break;
+                case BookStatus.CheckedOut:
+                    if (book.Status == status || book.Status == BookStatus.CheckedOut_and_Reserved)
+                    {
+                        throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyChecked);
+                    }
+                    else if (book.Status == BookStatus.Reserved)
+                    {
+                        throw new ArgumentException(GlobalConstants.ReservedBookAlreadyReservedOther);
+                    }
+                    else
+                    {
+                        book.Status = status;
+                        _bookDB.Update(book);
+                    }
+                    break;
+                case BookStatus.Reserved:
+                    if (book.Status == BookStatus.CheckedOut)
+                    {
+                        book.Status = BookStatus.CheckedOut_and_Reserved;
+                        _bookDB.Update(book);
+                    }
+                    else if (book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
+                    {
+                        throw new ArgumentException(GlobalConstants.ReservedBookAlreadyReservedOther);
+                    }
+                    else
+                    {
+                        book.Status = status;
+                        _bookDB.Update(book);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
         // ------- Need update ↓ -------
         public void UpdateStatus(Book book, BookStatus status)
         {

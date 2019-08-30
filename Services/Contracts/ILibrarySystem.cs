@@ -7,11 +7,13 @@ namespace Library.Services.Contracts
     public interface ILibrarySystem
     {
         void CheckCheckoutBooksQuota(User user);
-        void CheckReservedBooksQuota(IUser user);
+        void CheckReservedBooksQuota(User user);
+
+        void AddBookToCheckoutBooks(Book book, User user);
+        void AddBookToReservedBooks(Book book, User user);
 
         // ------- Need update ↓ -------
-        void AddBookToCheckoutBooks(Book book, User user);
-        void AddBookToReservedBooks(IBook book, IUser user);
+
         void AssignFee(IUser user);
         void CheckForOverdueBooks();
         void CheckForOverdueReservations();

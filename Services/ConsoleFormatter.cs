@@ -25,14 +25,6 @@ namespace Library.Services
             _books = books;
         }
 
-        public string Format(IAccount account)
-        {
-            var strBuilder = new StringBuilder();
-            strBuilder.AppendLine($"Username: {account.Username}");
-
-            return strBuilder.ToString();
-        }
-
         public string Format(Book book)
         {
             var strBuilder = new StringBuilder();
@@ -48,6 +40,42 @@ namespace Library.Services
 
             return strBuilder.ToString();
         }
+
+        public string FormatCheckedoutBook(Book book)
+        {
+            var strBuilder = new StringBuilder();
+
+            strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
+            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author.Name}");
+            strBuilder.AppendLine($"CheckedOut Date: {book.CheckedoutBook.CheckoutDate.ToString("dd MM yyyy")}");
+            strBuilder.AppendLine($"Due Date: {book.CheckedoutBook.DueDate.ToString("dd MM yyyy")}");
+
+            return strBuilder.ToString();
+        }
+
+        public string FormatReservedBook(Book book)
+        {
+            var strBuilder = new StringBuilder();
+
+            strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
+            strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author.Name}");
+            strBuilder.AppendLine($"Reservation Date: {book.ReservedBook.ReservationDate.ToString("dd MM yyyy")}");
+            strBuilder.AppendLine($"Due Date: {book.ReservedBook.ReservationDueDate.ToString("dd MM yyyy")}");
+
+            return strBuilder.ToString();
+        }
+
+        //Update ---------------
+
+        public string Format(IAccount account)
+        {
+            var strBuilder = new StringBuilder();
+            strBuilder.AppendLine($"Username: {account.Username}");
+
+            return strBuilder.ToString();
+        }
+
+
 
         public string FormatListOfBooks(List<Book> books)
         {
@@ -82,29 +110,7 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string FormatCheckedoutBook(Book book)
-        {
-            var strBuilder = new StringBuilder();
 
-            //strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
-            //strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            //strBuilder.AppendLine($"CheckedOut Date: {book.CheckoutDate.ToString("dd MM yyyy")}");
-            //strBuilder.AppendLine($"Due Date: {book.DueDate.ToString("dd MM yyyy")}");
-
-            return strBuilder.ToString();
-        }
-
-        public string FormatReservedBook(IBook book)
-        {
-            var strBuilder = new StringBuilder();
-
-            //strBuilder.AppendLine($"ID: {book.Id} || Status: {book.Status}");
-            //strBuilder.AppendLine($"Title: {book.Title} || Author: {book.Author}");
-            //strBuilder.AppendLine($"Reservation Date: {book.ResevedDate.ToString("dd MM yyyy")}");
-            //strBuilder.AppendLine($"Due Date: {book.ResevationDueDate.ToString("dd MM yyyy")}");
-
-            return strBuilder.ToString();
-        }
 
         public string FormatCommandMessage(string message, string modelInfo)
         {

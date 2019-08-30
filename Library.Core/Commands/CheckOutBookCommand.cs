@@ -1,13 +1,8 @@
 ﻿using Library.Core.Contracts;
-using Library.Database;
-using Library.Models.Contracts;
-using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
-using System;
-using System.Linq;
 
 namespace Library.Core.Commands
 {
@@ -32,6 +27,7 @@ namespace Library.Core.Commands
         public string Execute()
         {
             _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.CheckOutBook, GlobalConstants.MiniDelimiterSymbol));
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.ChooseBook, '.'));
 
             var user = (User)_authentication.CurrentAccount;
 
@@ -43,28 +39,13 @@ namespace Library.Core.Commands
 
             // BookID Input
             var bookID = int.Parse(_renderer.InputParameters("ID"));
+            // BookID validation
+            //if (bookID < 1 || bookID > _bookManager.GetLastBookID())
+            //    throw new ArgumentException(GlobalConstants.InvalidID);
+
             var bookToCheckOut = _bookManager.FindBook(bookID);
 
-            // ASK: How to improve this (maybe extract it in methods?)           
-            if (bookToCheckOut.Status == BookStatus.Available)
-            {
-                _system.AddBookToCheckoutBooks(bookToCheckOut, user);
-                //_bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
-            }
-            else if (bookToCheckOut.Status == BookStatus.Reserved)
-            {
-                if (_system.ReservedByUser(user, bookToCheckOut))
-                {
-                    _system.AddBookToCheckoutBooks(bookToCheckOut, user);
-                   // _bookManager.UpdateStatus(bookToCheckOut, BookStatus.CheckedOut);
-                }
-                else
-                    throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyRes);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
+            _system.AddBookToCheckoutBooks(bookToCheckOut, user);
 
             return _formatter.FormatCommandMessage(GlobalConstants.CheckoutBookSuccess, _formatter.FormatCheckedoutBook(bookToCheckOut));
         }

@@ -7,16 +7,19 @@ namespace Library.Services.Contracts
     public interface IConsoleFormatter
     {
         string Format(Book book);
+        string FormatCheckedoutBook(Book book);
+        string FormatReservedBook(Book book);
 
+
+
+        //Update
         string Format(User user);
 
         string Format(IAccount account);
 
-        string FormatCheckedoutBook(Book book);
 
         string FormatListOfBooks(List<Book> books);
 
-        string FormatReservedBook(IBook book);
 
         string FormatCommandMessage(string message, string modelInfo);
 
