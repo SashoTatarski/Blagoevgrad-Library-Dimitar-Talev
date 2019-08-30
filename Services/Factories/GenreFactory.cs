@@ -14,9 +14,10 @@ namespace Library.Services.Factories
             _database = database;
         }
 
-        public List<Genre> CreateGenreList(string genres)
+        public List<Genre> 
+            CreateGenreList(string genres)
         {
-            var genreListString = genres.Split(',').ToList();
+            var genreListString = genres.Split(new string[] { ",", ", " }, System.StringSplitOptions.None).ToList();
             List<Genre> list = new List<Genre>();
 
             foreach (var genre in genreListString)

@@ -31,13 +31,7 @@ namespace Library.Core
             containerBuilder.RegisterType<PublisherDataBase>().As<IDataBase<Publisher>>().SingleInstance();
             containerBuilder.RegisterType<UserDataBase>().As<IDataBase<User>>().SingleInstance();
             containerBuilder.RegisterType<AuthorDataBase>().As<IDataBase<Author>>().SingleInstance();
-            
-            //containerBuilder.RegisterGeneric(typeof(BookDatabase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            //containerBuilder.RegisterGeneric(typeof(LibrarianDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            //containerBuilder.RegisterGeneric(typeof(UserDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            //containerBuilder.RegisterGeneric(typeof(AuthorDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            //containerBuilder.RegisterGeneric(typeof(GenreDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
-            //containerBuilder.RegisterGeneric(typeof(PublisherDataBase<>)).As(typeof(IDataBase<>)).SingleInstance();
+            containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();

@@ -27,7 +27,7 @@ namespace Library.Core.Commands
             _renderer.Output(GlobalConstants.Search);
 
             var searchParameters = new List<string> { "Title", "Author", "Genre", "Publisher", "Year", "Show all", "Exit" };
-            _renderer.Output(_menuFactory.GenerateMenu(searchParameters));
+            _renderer.Output(_menuFactory.GenerateMenu(searchParameters, "parameter to search by:"));
 
             var number = int.Parse(_renderer.Input());
             var parameter = this.GetSearchParameterByNumber(number, searchParameters);

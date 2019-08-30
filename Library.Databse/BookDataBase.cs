@@ -41,14 +41,22 @@ namespace Library.Database
 
             return books;
         }
-        public Book Find(int bookId) => _context.Books.FirstOrDefault(b => b.Id == bookId);
+        public Book Find(int bookId)
+        {
+            return _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+               .FirstOrDefault(b => b.Id == bookId);
+        }
 
-
-        // Update
         public void Update(Book book)
         {
-            throw new System.NotImplementedException();
+            _context.SaveChanges();
         }
+
+        // Update
         public Book Find(string name)
         {
             throw new System.NotImplementedException();

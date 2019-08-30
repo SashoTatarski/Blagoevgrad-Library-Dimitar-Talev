@@ -22,5 +22,11 @@ namespace Library.Services.Contracts
         string GetCheckedoutBooksInfo(IUser user);
         string GetOverdueBooksInfo(IUser user);
         void UpdateStatus(IBook book, BookStatus status);
+        void UpdateBookAuthor(int bookId, string newAuthorName);
+        void UpdateBookTitle(int bookId, string newTitle);
+        void UpdateBookISBN(int bookId, string newISBN);
+        void UpdateBookRack(int bookId, int newRack);
+        void UpdateBookYear(int bookId, int newYear);
+        void UpdateBookPublisher(int bookId, string newPublisherName);
     }
 }

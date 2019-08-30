@@ -21,22 +21,28 @@ namespace Library.Services
         private readonly IBookFactory _bookFac;
         private readonly IAuthorFactory _authorFac;
         private readonly IGenreFactory _genreFac;
+        private readonly IPublisherFactory _publisherFac;
         private readonly IConsoleFormatter _formatter;
         private readonly LibraryContext _context;
         private readonly IConsoleRenderer _renderer;
+        private readonly BookGenreDataBase _bookGenreDB;
 
 
-        public BookManager(IDataBase<Book> bookDB, IDataBase<Author> authorDB, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
+        public BookManager(IDataBase<Book> bookDB, IDataBase<Author> authorDB, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer, IPublisherFactory publisherFac, BookGenreDataBase bookGenreDB)
         {
             _bookDB = bookDB;
             _authorDB = authorDB;
             _bookFac = bookFac;
+            _bookGenreDB = bookGenreDB;
             _authorFac = authorFac;
             _genreFac = genreFac;
+            _publisherFac = publisherFac;
             _formatter = formatter;
             _context = context;
             _renderer = renderer;
         }
+
+        public Book FindBook(int id) => _bookDB.Find(id);
 
         public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
         {
@@ -44,17 +50,8 @@ namespace Library.Services
             _bookDB.Create(book);
 
             var genreList = _genreFac.CreateGenreList(genres);
-            this.MapBookToGenres(book, genreList);
+            _bookGenreDB.Create(book, genreList);
             return book;
-        }
-
-        private void MapBookToGenres(Book book, List<Genre> genres)
-        {
-            foreach (var genre in genres)
-            {
-                _context.BookGenre.Add(new BookGenre { BookId = book.Id, GenreId = genre.Id });
-            }
-            _context.SaveChanges();
         }
 
         public void ListAllBooks()
@@ -75,7 +72,68 @@ namespace Library.Services
             }
         }
 
-        public Book FindBook(int id) => _bookDB.Find(id);
+        public void UpdateBookAuthor(int bookId, string newAuthorName)
+        {
+            var updatedAuthor = _authorFac.CreateAuthor(newAuthorName);
+
+            var book = _bookDB.Find(bookId);
+
+            book.Author = updatedAuthor;
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookPublisher(int bookId, string newPublisherName)
+        {
+            var updatedPublisher = _publisherFac.CreatePublisher(newPublisherName);
+
+            var book = _bookDB.Find(bookId);
+
+            book.Publisher = updatedPublisher;
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookGenre(int bookId, string newGenres)
+        {
+            var updatedGenres = _genreFac.CreateGenreList(newGenres);
+
+            var book = _bookDB.Find(bookId);
+
+            _bookGenreDB.Update(book, updatedGenres);
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookTitle(int bookId, string newTitle)
+        {
+            var book = _bookDB.Find(bookId);
+
+            book.Title = newTitle;
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookISBN(int bookId, string newISBN)
+        {
+            var book = _bookDB.Find(bookId);
+
+            book.ISBN = newISBN;
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookYear(int bookId, int newYear)
+        {
+            var book = _bookDB.Find(bookId);
+
+            book.Year = newYear;
+            _bookDB.Update(book);
+        }
+
+        public void UpdateBookRack(int bookId, int newRack)
+        {
+            var book = _bookDB.Find(bookId);
+
+            book.Rack = newRack;
+            _bookDB.Update(book);
+        }
+
         // ------- Need update ↓ -------
         public void UpdateStatus(IBook book, BookStatus status)
         {

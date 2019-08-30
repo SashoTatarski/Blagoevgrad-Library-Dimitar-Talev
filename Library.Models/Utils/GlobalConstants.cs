@@ -31,6 +31,9 @@ namespace Library.Models.Utils
         public const string ReservedBookAlreadyReserved = "You have already reserved this book!";
         public const string CheckoutBookAlreadyRes = "Book is already reserved!";
         public const string CheckoutBookAlreadyChecked = "Book is already checked out!";
+        public const string ChooseBook = "Choose book by its ID";
+        public const string ChooseParameter = "Choose parameter";
+        public const string ChooseCommand = "Choose parameter";
 
 
         //Errors
