@@ -1,6 +1,5 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +8,6 @@ namespace Library.Database
     public class LibrarianDataBase : IDatabase<Librarian>
     {
         private readonly LibraryContext _context;
-
         public LibrarianDataBase(LibraryContext context)
         {
             _context = context;
@@ -20,23 +18,17 @@ namespace Library.Database
             _context.Librarians.Add(librarian);
             _context.SaveChanges();
         }
-
         public List<Librarian> Read() => _context.Librarians.ToList();
         public Librarian Find(int id) => _context.Librarians.FirstOrDefault(l => l.Id == id);
-
-        // Update 
-        public Librarian Find(string name)
+        public Librarian Find(string name) => _context.Librarians.FirstOrDefault(l => l.Username == name);
+        public void Update()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
-        public void Update(Librarian item)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(Librarian item)
         {
-            throw new NotImplementedException();
+            _context.Librarians.Remove(item);
+            _context.SaveChanges();
         }
     }
 }

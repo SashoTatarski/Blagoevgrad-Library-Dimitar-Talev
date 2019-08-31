@@ -18,7 +18,6 @@ namespace Library.Core
     {
         public IContainer Build()
         {
-            // ASK: Should we/how to impore this method so that it's not so big?
             // SOLID: Single Reponsibility
             var containerBuilder = new ContainerBuilder();
 
@@ -33,10 +32,6 @@ namespace Library.Core
             containerBuilder.RegisterType<AuthorDataBase>().As<IDatabase<Author>>().SingleInstance(); 
             containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
             containerBuilder.RegisterType<IssuedBookDataBase>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<CheckoutBookDatabase>().As<IDatabase<CheckoutBook>>().SingleInstance();
-            containerBuilder.RegisterType<ReserveBookDatabase>().As<IDatabase<ReservedBook>>().SingleInstance();
-
-
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();

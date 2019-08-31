@@ -1,5 +1,4 @@
 ﻿using Library.Database.Contracts;
-using Library.Models.Contracts;
 using Library.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -51,16 +50,20 @@ namespace Library.Database
                     .ThenInclude(bg => bg.Genre)
                .FirstOrDefault(b => b.Id == bookId);
         }
-
-
-        // Update
-        public void Update(Book book)
-        {
-            _context.SaveChanges();
-        }
+       
         public Book Find(string name)
         {
-            throw new System.NotImplementedException();
+            return _context.Books
+              .Include(b => b.Author)
+              .Include(b => b.Publisher)
+              .Include(b => b.BookGenres)
+                   .ThenInclude(bg => bg.Genre)
+              .FirstOrDefault(b => b.Title == name);
+        }
+
+        public void Update()
+        {
+            _context.SaveChanges();
         }
     }
 }

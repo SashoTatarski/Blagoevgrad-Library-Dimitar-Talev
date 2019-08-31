@@ -1,7 +1,5 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,29 +24,25 @@ namespace Library.Database
             _context.SaveChanges();
         }
 
-        // Update----------
-
-
         public void Delete(Author item)
         {
-            throw new NotImplementedException();
+            _context.Remove(item);
+            _context.SaveChanges();
         }
-
 
         public List<Author> Read()
         {
-            var authors = _context.Authors.ToList();               
-            return authors;
-        }
-
-        public void Update(Author item)
-        {
-            throw new NotImplementedException();
+            return _context.Authors.ToList();
         }
 
         public Author Find(int id)
         {
-            throw new NotImplementedException();
+            return _context.Authors.FirstOrDefault(a => a.Id == id);
+        }
+
+        public void Update()
+        {
+            _context.SaveChanges();
         }
     }
 }

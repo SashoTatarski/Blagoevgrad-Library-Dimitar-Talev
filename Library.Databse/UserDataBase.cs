@@ -1,7 +1,6 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,15 +30,10 @@ namespace Library.Database
 
         public List<User> Read() => _context.Users.ToList();
         public User Find(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
-
-        //Update -----
-        public User Find(string name)
+        public User Find(string name) => _context.Users.FirstOrDefault(u => u.Username == name);
+        public void Update()
         {
-            throw new NotImplementedException();
-        }
-        public void Update(User updatedUser)
-        {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }

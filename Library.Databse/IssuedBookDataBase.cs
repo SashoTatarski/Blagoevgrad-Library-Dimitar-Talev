@@ -1,9 +1,7 @@
 ﻿using Library.Models.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Database
 {
@@ -32,9 +30,11 @@ namespace Library.Database
             _context.CheckoutBooks.Remove(bookToRemove);
             _context.SaveChanges();
         }
-        public void RemoveReservedBook(ReservedBook book)
+        public void RemoveReservedBook(int id)
         {
-
+            var bookToRemove = _context.ReservedBooks.FirstOrDefault(b => b.BookId == id);
+            _context.ReservedBooks.Remove(bookToRemove);
+            _context.SaveChanges();
         }
 
         public List<CheckoutBook> GetCheckOutBooks(User user)

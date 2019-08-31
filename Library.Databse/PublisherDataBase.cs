@@ -1,6 +1,5 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,12 +13,10 @@ namespace Library.Database
             _context = context;
         }
 
-        Models.Models.Publisher IDatabase<Publisher>.Find(string name)
-        {
-            return _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
-        }
+        Publisher IDatabase<Publisher>.Find(string name) => _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
+        Publisher IDatabase<Publisher>.Find(int id) => _context.Publishers.FirstOrDefault(p => p.Id == id);
+        List<Publisher> IDatabase<Publisher>.Read() => _context.Publishers.ToList();
 
-        // Update ---------
         public void Create(Publisher item)
         {
             _context.Publishers.Add(item);
@@ -28,20 +25,12 @@ namespace Library.Database
 
         public void Delete(Publisher item)
         {
-            throw new NotImplementedException();
+            _context.Publishers.Remove(item);
+            _context.SaveChanges();
         }
-
-        public void Update(Publisher item)
+        public void Update()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
-
-        Publisher IDatabase<Publisher>.Find(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<Publisher> IDatabase<Publisher>.Read() => _context.Publishers.ToList();
-       
     }
 }

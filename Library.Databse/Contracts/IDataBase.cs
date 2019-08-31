@@ -6,7 +6,7 @@ namespace Library.Database.Contracts
     {
         void Create(T item);
         List<T> Read();
-        void Update(T item);
+        void Update();
         void Delete(T item);
         T Find(int id);
         T Find(string name);

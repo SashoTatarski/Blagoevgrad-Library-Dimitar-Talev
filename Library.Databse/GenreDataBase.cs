@@ -1,6 +1,5 @@
 ﻿using Library.Database.Contracts;
 using Library.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,18 +26,18 @@ namespace Library.Database
             _context.SaveChanges();
         }
 
-        //Update 
         public void Delete(Genre item)
         {
-            throw new NotImplementedException();
+            _context.Genres.Remove(item);
+            _context.SaveChanges();
         }
         public Genre Find(int id)
         {
-            throw new NotImplementedException();
+            return _context.Genres.FirstOrDefault(g => g.Id == id);
         }
-        public void Update(Genre item)
+        public void Update()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
     }
 }

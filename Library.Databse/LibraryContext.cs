@@ -35,7 +35,6 @@ namespace Library.Database
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new BookConfiguration());
             modelBuilder.ApplyConfiguration(new BookGenreConfiguration());
-            
 
             base.OnModelCreating(modelBuilder);
         }
