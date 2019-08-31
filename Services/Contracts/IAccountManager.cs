@@ -10,12 +10,7 @@ namespace Library.Services.Contracts
         IAccount FindAccount(string userName);
         User AddUser(string username, string password);
         Librarian AddLibrarian(string username, string password);
-
-
-        List<User> GetAllUsers();    
-
         void RemoveUser(User user);
-
-        void UpdateUser(IUser user);
+        List<User> GetAllUsers();
     }
 }

@@ -26,12 +26,11 @@ namespace Library.Services
         private readonly IGenreFactory _genreFac;
         private readonly IPublisherFactory _publisherFac;
         private readonly IConsoleFormatter _formatter;
-        private readonly LibraryContext _context;
         private readonly IConsoleRenderer _renderer;
 
 
         public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB,
-            IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, LibraryContext context, IConsoleRenderer renderer)
+            IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
         {
             _bookDB = bookDB;
             _authorDb = authorDB;
@@ -42,7 +41,6 @@ namespace Library.Services
             _authorFac = authorFac;
             _genreFac = genreFac;
             _formatter = formatter;
-            _context = context;
             _renderer = renderer;
         }
 
@@ -83,7 +81,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.Author = updatedAuthor;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookPublisher(int bookId, string newPublisherName)
@@ -93,7 +91,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.Publisher = updatedPublisher;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookGenre(int bookId, string newGenres)
@@ -103,7 +101,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             _bookGenreDb.Update(book, updatedGenres);
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookTitle(int bookId, string newTitle)
@@ -111,7 +109,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.Title = newTitle;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookISBN(int bookId, string newISBN)
@@ -119,7 +117,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.ISBN = newISBN;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookYear(int bookId, int newYear)
@@ -127,7 +125,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.Year = newYear;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void UpdateBookRack(int bookId, int newRack)
@@ -135,7 +133,7 @@ namespace Library.Services
             var book = _bookDB.Find(bookId);
 
             book.Rack = newRack;
-            _bookDB.Update(book);
+            _bookDB.Update();
         }
 
         public void ChangeBookStatus(Book book, BookStatus status)
@@ -144,7 +142,7 @@ namespace Library.Services
             {
                 case BookStatus.Available:
                     book.Status = status;
-                    _bookDB.Update(book);
+                    _bookDB.Update();
                     break;
                 case BookStatus.CheckedOut:
                     if (book.Status == status || book.Status == BookStatus.CheckedOut_and_Reserved)
@@ -158,14 +156,14 @@ namespace Library.Services
                     else
                     {
                         book.Status = status;
-                        _bookDB.Update(book);
+                        _bookDB.Update();
                     }
                     break;
                 case BookStatus.Reserved:
                     if (book.Status == BookStatus.CheckedOut)
                     {
                         book.Status = BookStatus.CheckedOut_and_Reserved;
-                        _bookDB.Update(book);
+                        _bookDB.Update();
                     }
                     else if (book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
                     {
@@ -174,7 +172,7 @@ namespace Library.Services
                     else
                     {
                         book.Status = status;
-                        _bookDB.Update(book);
+                        _bookDB.Update();
                     }
                     break;
                 default:

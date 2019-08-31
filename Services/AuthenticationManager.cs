@@ -20,14 +20,8 @@ namespace Services
         }
 
         public IAccount CurrentAccount { get; private set; }
-
         public void LogIn(IAccount account) => this.CurrentAccount = account;
         public void LogOut() => this.CurrentAccount = null;
-
-        // ----------- Update
-        
-
-
         public void CheckForExistingUsername(string username)
         {
             var account = _accountManager.FindAccount(username);
@@ -35,7 +29,6 @@ namespace Services
             if (account != null)
                 throw new ArgumentException(GlobalConstants.UserNameTaken);
         }
-
         public List<string> GetAllowedCommands()
         {
             if (this.CurrentAccount is null)

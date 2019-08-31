@@ -8,21 +8,20 @@ using System.Linq;
 using Library.Models.Models;
 using System;
 using Library.Database.Contracts;
+using Library.Database;
 
 namespace Library.Services
 {
     public class ConsoleFormatter : IConsoleFormatter
     {
-        private readonly IDatabase<CheckoutBook> _checkoutBooks;
-        private readonly IDatabase<ReservedBook> _reservedBooks;
-        private readonly IDatabase<Book> _books;
+        private readonly IDatabase<Book> _booksDB;
+        private readonly IssuedBookDataBase _issuedBookDB;
 
 
-        public ConsoleFormatter(IDatabase<CheckoutBook> checkoutBooks, IDatabase<ReservedBook> reservedBooks, IDatabase<Book> books)
+        public ConsoleFormatter(IDatabase<Book> booksDB, IssuedBookDataBase issuedBookDB)
         {
-            _checkoutBooks = checkoutBooks;
-            _reservedBooks = reservedBooks;
-            _books = books;
+            _booksDB = booksDB;
+            _issuedBookDB = issuedBookDB;
         }
 
         public string Format(Book book)
@@ -78,6 +77,19 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
+        public string FormatList(List<ReservedBook> books)
+        {
+            var strBuilder = new StringBuilder();
+
+            if (books.Count == 0)
+                return "There are no books!";
+
+            foreach (var book in books)
+                strBuilder.AppendLine(this.Format(book));
+
+            return strBuilder.ToString();
+        }
+
         //Update ---------------
 
         public string Format(IAccount account)
@@ -109,7 +121,7 @@ namespace Library.Services
             if (booksIds.Count == 0)
                 return "There are no books!";
 
-            var allbooks = _books.Read();
+            var allbooks = _booksDB.Read();
 
             var strBuilder = new StringBuilder();
             foreach (var book in from book in allbooks
@@ -153,23 +165,15 @@ namespace Library.Services
 
         public string Format(User user)
         {
-            var chBooks = _checkoutBooks.Read();
-            var userHasCheckedBooks = chBooks.Where(x => x.UserId == user.Id)
-                                             .Select(x => x.BookId)
-                                             .ToList();
-
-            var resBooks = _reservedBooks.Read();
-            var userHasResBooks = resBooks.Where(x => x.UserId == user.Id)
-                                          .Select(x => x.BookId)
-                                          .ToList();
-
+            var chBooks = _issuedBookDB.GetCheckOutBooks(user);
+            var resBooks = _issuedBookDB.GetReservedBooks(user);
 
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine($"Username: {user.Username}");
             strBuilder.AppendLine($"Checked out books:");
-            strBuilder.AppendLine(this.FormatListOfBooks(userHasCheckedBooks));
+            strBuilder.AppendLine(this.FormatList(chBooks));
             strBuilder.AppendLine($"Reserved books:");
-            strBuilder.AppendLine(this.FormatListOfBooks(userHasResBooks));
+            strBuilder.AppendLine(this.FormatList(resBooks));
 
             return strBuilder.ToString();
         }
