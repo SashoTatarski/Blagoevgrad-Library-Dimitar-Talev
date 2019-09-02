@@ -202,7 +202,7 @@ namespace Library.Services
             switch (searchByParameter.ToLower())
             {
                 case "author":
-                    var authourId = authors.Where(a => a.Name == searchByText)
+                    var authourId = authors.Where(a => a.Name.Contains(searchByText))
                                             .Select(a => a.Id)
                                             .FirstOrDefault();
                     sortedBooks = books.Where(b => b.AuthorId == authourId).ToList(); break;

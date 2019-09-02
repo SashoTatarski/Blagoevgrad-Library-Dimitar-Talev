@@ -13,21 +13,15 @@ using System.Text;
 namespace Library.Services
 {
     public class LibrarySystem : ILibrarySystem
-    {
-        private readonly IAccountManager _accountManager;
-        private readonly IConsoleRenderer _renderer;
-        private readonly LibraryContext _context;
+    {        
         private readonly IBookManager _bookManager;
         private readonly IssuedBookDataBase _issuedBookDb;
 
 
-        public LibrarySystem(IAccountManager accountManager, IConsoleRenderer renderer, LibraryContext context, IBookManager bookManager, IssuedBookDataBase issuedBookDb)
-        {
-            _accountManager = accountManager;
+        public LibrarySystem(IBookManager bookManager, IssuedBookDataBase issuedBookDb)
+        {           
             _bookManager = bookManager;
-            _issuedBookDb = issuedBookDb;
-            _renderer = renderer;
-            _context = context;
+            _issuedBookDb = issuedBookDb;           
         }
         public void CheckCheckoutBooksQuota(User user)
         {
@@ -124,11 +118,7 @@ namespace Library.Services
             }
             else
                 return true;
-        }
-        // ------- Need update ↓ -------
-
-       
-      
+        }       
     }
 }
 
