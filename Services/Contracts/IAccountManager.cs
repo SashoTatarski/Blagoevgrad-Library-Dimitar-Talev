@@ -12,5 +12,7 @@ namespace Library.Services.Contracts
         Librarian AddLibrarian(string username, string password);
         void RemoveUser(User user);
         List<User> GetAllUsers();
+        bool HasMessages(User user);
+        string DisplayMessages(User user);
     }
 }

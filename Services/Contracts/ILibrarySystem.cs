@@ -12,18 +12,17 @@ namespace Library.Services.Contracts
         ReservedBook AddBookToReservedBooks(Book book, User user);
         List<CheckoutBook> GetCheckedOutBooks(User user);
         void RemoveBookFromCheckoutBooks(Book book);
+        void ManageOverdueReservations();
+        bool HasIssuedBooks(User user);
 
         // ------- Need update ↓ -------
 
-        void AssignFee(IUser user);
-        void CheckForOverdueBooks();
-        void CheckForOverdueReservations();
-        bool ReservedByUser(User user, Book book);
-        void DisplayMessageForOverdueBooks(IUser user);
-        void DisplayMessageForOverdueReservations(IUser user);
-        void PurgeOverdueReservations(IUser user);
-        bool UserHasCheckedoutBooks(User user);
-        bool UserHasReservedBooks(User user);
-        
+
+        //void CheckForOverdueBooks();
+        //void CheckForOverdueReservations();
+
+        //bool UserHasCheckedoutBooks(User user);
+        //bool UserHasReservedBooks(User user);
+        //void ManageOverdueReservations();
     }
 }

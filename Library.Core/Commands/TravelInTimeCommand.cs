@@ -18,14 +18,13 @@ namespace Library.Core.Commands
         }
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.Travel);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.Travel, GlobalConstants.MiniDelimiterSymbol));
 
             var days = int.Parse(_renderer.InputParameters(GlobalConstants.DaysToSkip, d => int.Parse(d) < 1));
 
             VirtualDate.SkipDays(days);
 
-            _system.CheckForOverdueBooks();
-            _system.CheckForOverdueReservations();
+            _system.ManageOverdueReservations();
 
             return _formatter.FormatCommandMessage(GlobalConstants.TravelSuccess, VirtualDate.VirtualToday.ToString("dd-MM-yyyy") + GlobalConstants.NewLine);
         }

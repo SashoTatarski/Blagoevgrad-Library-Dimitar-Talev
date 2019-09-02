@@ -24,7 +24,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.Search);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.Search, GlobalConstants.MiniDelimiterSymbol));
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.ChooseParameter, '.'));
 
             var searchParameters = new List<string> { "Title", "Author", "Genre", "Publisher", "Year", "Show all", "Exit" };
             _renderer.Output(_menuFactory.GenerateMenu(searchParameters, "parameter to search for "));

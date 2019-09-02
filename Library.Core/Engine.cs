@@ -28,8 +28,7 @@ namespace Library.Core
         public void Start()
         {
             VirtualDate.StartVirtualTime();
-
-            _system.CheckForOverdueReservations();
+            _system.ManageOverdueReservations();
 
             _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.Welcome, GlobalConstants.DelimiterSymbol));
             string result = string.Empty;

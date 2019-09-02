@@ -1,5 +1,4 @@
 ﻿using Library.Core.Contracts;
-using Library.Models.Contracts;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
@@ -35,7 +34,7 @@ namespace Library.Core.Commands
             if (userToRemove is null)
                 throw new ArgumentException(GlobalConstants.NoSuchUser);
 
-            if (_system.UserHasCheckedoutBooks(userToRemove) || _system.UserHasReservedBooks(userToRemove))
+            if (_system.HasIssuedBooks(userToRemove))
                 throw new ArgumentException(GlobalConstants.RemoveUserError);
 
             _accountManager.RemoveUser(userToRemove);

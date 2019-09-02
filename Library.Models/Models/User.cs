@@ -13,6 +13,7 @@ namespace Library.Models.Models
         public User(string username, string password) : base(username, password)
         {
             this.Status = AccountStatus.Active;
+            this.Messages = new List<string>();
         }
 
         [NotMapped]

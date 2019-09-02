@@ -56,5 +56,25 @@ namespace Library.Database
                                         .ThenInclude(bg => bg.Genre)
               .Where(x => x.UserId == user.Id).ToList();
         }
+
+        public List<ReservedBook> GetReservedBooks()
+        {
+            return _context.ReservedBooks
+              .Include(b => b.Book).ThenInclude(b => b.Author)
+              .Include(b => b.Book).ThenInclude(b => b.Publisher)
+              .Include(b => b.Book).ThenInclude(b => b.BookGenres)
+                                        .ThenInclude(bg => bg.Genre)
+              .ToList();
+        }
+
+        public List<CheckoutBook> GetCheckOutBooks()
+        {
+            return _context.CheckoutBooks
+               .Include(b => b.Book).ThenInclude(b => b.Author)
+               .Include(b => b.Book).ThenInclude(b => b.Publisher)
+               .Include(b => b.Book).ThenInclude(b => b.BookGenres)
+                                         .ThenInclude(bg => bg.Genre)
+               .ToList();
+        }
     }
 }

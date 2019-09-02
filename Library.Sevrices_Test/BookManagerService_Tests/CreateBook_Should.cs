@@ -26,7 +26,7 @@ namespace Library.Sevrices_Test.BookManagerService_Tests
             var formatterMock = new Mock<IConsoleFormatter>();
             var rendererMock = new Mock<IConsoleRenderer>();
 
-            var sut = new BookManager(bookDBMock.Object, authorDBMock.Object, genreDBMock.Object, publisherDBMock.Object, bookGenreDBMock.Object, bookFacMock.Object, authorFacMock.Object, genreFacMock.Object, formatterMock.Object, rendererMock.Object);
+           // var sut = new BookManager(bookDBMock.Object, authorDBMock.Object, genreDBMock.Object, publisherDBMock.Object, bookGenreDBMock.Object, bookFacMock.Object, authorFacMock.Object, genreFacMock.Object, formatterMock.Object, rendererMock.Object);
 
 
         }

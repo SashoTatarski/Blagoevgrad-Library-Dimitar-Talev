@@ -1,7 +1,5 @@
-﻿using Dawn;
-using Library.Database;
+﻿using Library.Database;
 using Library.Database.Contracts;
-using Library.Models.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
@@ -10,7 +8,6 @@ using Library.Services.Factories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Library.Services
 {
@@ -29,8 +26,7 @@ namespace Library.Services
         private readonly IConsoleRenderer _renderer;
 
 
-        public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB,
-            IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
+        public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB, IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
         {
             _bookDB = bookDB;
             _authorDb = authorDB;
@@ -40,6 +36,7 @@ namespace Library.Services
             _bookFac = bookFac;
             _authorFac = authorFac;
             _genreFac = genreFac;
+            _publisherFac = publisherFac;
             _formatter = formatter;
             _renderer = renderer;
         }
@@ -190,25 +187,8 @@ namespace Library.Services
             }
             return list;
         }
-        // ------- Need update ↓ -------
 
         public void RemoveBook(Book book) => _bookDB.Delete(book);
-
-
-
-        public List<Book> GetAllBooks()
-        {
-            //return _database.Read();
-            return null;
-        }
-
-        public int GetLastBookID()
-        {
-            var books = _bookDB.Read();
-            return books.Max(b => b.Id);
-        }
-
-
 
         public List<Book> GetSearchResult(string searchByParameter, string searchByText)
         {
@@ -263,39 +243,6 @@ namespace Library.Services
                     break;
             }
             return sortedBooks;
-        }
-
-        public string GetCheckedoutBooksInfo(IUser user)
-        {
-            var strBuilder = new StringBuilder();
-
-            //if (user.CheckedOutBooks.Count == 0)
-            //{
-            //    throw new ArgumentException("There are no checked out books!");
-            //}
-            //else
-            //{
-            //    strBuilder.AppendLine("Books you have checked out:");
-
-            //    foreach (var book in user.CheckedOutBooks)
-            //        strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-            //}
-            return strBuilder.ToString();
-        }
-
-        public string GetOverdueBooksInfo(IUser user)
-        {
-            var strBuilder = new StringBuilder();
-
-            //foreach (var book in user.OverdueBooks)
-            //    strBuilder.AppendLine(_formatter.FormatCheckedoutBook(book));
-
-            return strBuilder.ToString();
-        }
-
-        public void UpdateStatus(IBook book, BookStatus status)
-        {
-            throw new NotImplementedException();
         }
     }
 }
