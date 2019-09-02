@@ -4,6 +4,7 @@ using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
 using System;
+using System.Text;
 
 namespace Library.Core.Commands
 {
@@ -37,9 +38,21 @@ namespace Library.Core.Commands
             if (loggedUser.Password != password)
                 throw new ArgumentException(GlobalConstants.InvalidPassword);
 
-            _authentication.LogIn(loggedUser);
+            var strBuilder = new StringBuilder();
 
-            return _formatter.FormatCommandMessage(GlobalConstants.SuccessLogIn, _formatter.Format(loggedUser));
+            _authentication.LogIn(loggedUser);
+            strBuilder.AppendLine(_formatter.FormatCommandMessage(GlobalConstants.SuccessLogIn, _formatter.Format(loggedUser)));
+
+
+            if (loggedUser.GetType() == typeof(User))
+            {
+                if (_accountManager.HasMessages((User)loggedUser))
+                {
+                    strBuilder.AppendLine(_accountManager.DisplayMessages((User)loggedUser));
+                }
+            }
+
+            return strBuilder.ToString();
         }
     }
 }

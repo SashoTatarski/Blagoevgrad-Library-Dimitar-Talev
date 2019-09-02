@@ -220,6 +220,5 @@ namespace Library.Services
             string symbols = new String(symbol, numberOfSymbols);
             return GlobalConstants.NewLine + symbols + text + symbols + GlobalConstants.NewLine;
         }
-
     }
 }

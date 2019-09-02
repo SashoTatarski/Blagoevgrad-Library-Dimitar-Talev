@@ -73,6 +73,7 @@ namespace Library.Services
             strBuilder.AppendLine(message);
             }
 
+            user.Messages.Clear();
             return strBuilder.ToString();
         }
     }
