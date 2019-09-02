@@ -1,6 +1,5 @@
 ﻿using Library.Core.Contracts;
 using Library.Models.Utils;
-using Library.Services;
 using Library.Services.Contracts;
 using Library.Services.Factories.Contracts;
 using Services.Contracts;
@@ -15,36 +14,29 @@ namespace Library.Core
         private readonly IMenuFactory _menuFactory;
         private readonly IAuthenticationManager _authentication;
         private readonly ILibrarySystem _system;
-        private readonly IDataService _service;
-
-
-        public Engine(IConsoleRenderer renderer, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system, IDataService service)
+        private readonly IConsoleFormatter _formatter;
+        public Engine(IConsoleRenderer renderer, IConsoleFormatter formatter, ICommandParser commandParser, IMenuFactory menuFactory, IAuthenticationManager authentication, ILibrarySystem system)
         {
             _renderer = renderer;
             _commandParser = commandParser;
             _menuFactory = menuFactory;
             _authentication = authentication;
             _system = system;
-            _service = service;
+            _formatter = formatter;
         }
 
         public void Start()
         {
-            // ASK: Should we/ how to improve this method
             VirtualDate.StartVirtualTime();
 
-            // _service.ClearUpDatabase();
-            // _service.SeedDatabase();
-
-            _system.CheckForOverdueBooks();
             _system.CheckForOverdueReservations();
 
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.Welcome, GlobalConstants.DelimiterSymbol));
             string result = string.Empty;
 
             while (result != GlobalConstants.Goodbye)
             {
                 var allowedcommands = _authentication.GetAllowedCommands();
-
                 _renderer.Output(_menuFactory.GenerateMenu(allowedcommands, "command"));
 
                 try
@@ -52,13 +44,11 @@ namespace Library.Core
                     ICommand command = _commandParser.GetCommandByNumber(int.Parse(_renderer.Input()), allowedcommands);
 
                     result = command.Execute();
-                    _renderer.Output(result);
-                    _renderer.Output("\r\n");
+                    _renderer.Output(result + GlobalConstants.NewLine);
                 }
                 catch (Exception ex)
                 {
-                    _renderer.Output(ex.Message);
-                    _renderer.Output("\r\n");
+                    _renderer.Output(_formatter.CenterStringWithSymbols(ex.Message, '_'));
                 }
             }
         }

@@ -24,7 +24,9 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.RemoveUser);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.RemoveUser, GlobalConstants.MiniDelimiterSymbol));
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.ChooseUser, '.'));
+
             _renderer.Output(_formatter.FormatListOfUsers(_accountManager.GetAllUsers()));
             
 

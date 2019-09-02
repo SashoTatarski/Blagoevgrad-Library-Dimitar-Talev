@@ -21,7 +21,8 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(GlobalConstants.RemoveBook);
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.RemoveBook, GlobalConstants.MiniDelimiterSymbol));
+            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.ChooseBook, '.'));
 
             // Show all the books user can select from
             _bookManager.ListAllBooks();

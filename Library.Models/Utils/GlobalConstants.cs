@@ -32,6 +32,7 @@ namespace Library.Models.Utils
         public const string CheckoutBookAlreadyRes = "Book is already reserved!";
         public const string CheckoutBookAlreadyChecked = "Book is already checked out!";
         public const string ChooseBook = "Choose book by its ID";
+        public const string ChooseUser = "Choose user by its username";
         public const string ChooseParameter = "Choose parameter";
 
         //Errors
@@ -89,6 +90,7 @@ namespace Library.Models.Utils
         public const string MaxQuotaReached = "You have reached the max book quota!";
         public const string Goodbye = "Goodbye!";
         public const string DaysToSkip = "how many days you want to skip";
+        public const string Welcome = "Welcome to Blagoevgrad Library - Dimitar Talev -";
 
 
 
