@@ -20,10 +20,19 @@ namespace Library.Web.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var libraryContext = _context.Books.Include(b => b.Author).Include(b => b.Publisher);
-            return View(await libraryContext.ToListAsync());
+            var books = from b in _context.Books
+                        select b;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(b => b.Title.Contains(searchString));
+            }
+
+            return View(await books.ToListAsync());
+            //var libraryContext = _context.Books.Include(b => b.Author).Include(b => b.Publisher);
+            //return View(await libraryContext.ToListAsync());
         }
 
         // GET: Books/Details/5
