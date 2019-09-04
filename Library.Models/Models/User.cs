@@ -34,8 +34,8 @@ namespace Library.Models.Models
         [Required]
         public AccountStatus Status { get; set; }
         public decimal LateFees { get; set; }
-        public IList<CheckoutBook> CheckedoutBooks { get; set; }
-        public IList<ReservedBook> ReservedBooks { get; set; }
+        public IList<CheckoutBook> CheckedoutBooks { get; }
+        public IList<ReservedBook> ReservedBooks { get; }
 
         [NotMapped]
         public List<string> Messages { get; set; }

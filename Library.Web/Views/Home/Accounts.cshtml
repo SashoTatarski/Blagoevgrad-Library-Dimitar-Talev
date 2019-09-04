@@ -1,0 +1,12 @@
+﻿@model AccountsViewModel
+@{
+    ViewData["Title"] = "Library Web Portal";
+}
+
+<div class="text-center">
+    @foreach (var user in Model.Users)
+    {
+        <p>User: @user.Username</p>
+        <p>----------</p>
+    }
+</div>

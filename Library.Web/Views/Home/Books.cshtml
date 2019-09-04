@@ -1,0 +1,14 @@
+﻿@model LibraryViewModel
+@{
+    ViewData["Title"] = "Library Web Portal";
+}
+
+    <div class="text-center">
+        @foreach (var book in Model.Books)
+        {
+            <p>ISBN: @book.ISBN</p>
+            <p>Title: @book.Title</p>
+            <p>Author: @book.Author</p>
+            <p>----------</p>
+        }
+    </div>

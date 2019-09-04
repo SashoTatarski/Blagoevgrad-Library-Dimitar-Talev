@@ -5,19 +5,19 @@ namespace Library.Models.Utils
     public static class GlobalConstants
     {
         // Commandnames
-        public static string CheckOutBook = "Check Out Book";
-        public static string AddBook = "Add Book";
-        public static string LogIn = "Log In";
-        public static string ReserveBook = "Reserve Book";
-        public static string RegisterUser = "Register User";
-        public static string RegisterLibrarian = "Register Librarian";
-        public static string ReturnBook = "Return Book";
-        public static string RemoveUser = "Remove User";
-        public static string EditBook = "Edit Book";
-        public static string RemoveBook = "Remove Book";
-        public static string Search = "Search For Book";
-        public static string Travel = "Travel In Time";
-        public static string View = "View Accounts";
+        public const string CheckOutBook = "Check Out Book";
+        public const string AddBook = "Add Book";
+        public const string LogIn = "Log In";
+        public const string ReserveBook = "Reserve Book";
+        public const string RegisterUser = "Register User";
+        public const string RegisterLibrarian = "Register Librarian";
+        public const string ReturnBook = "Return Book";
+        public const string RemoveUser = "Remove User";
+        public const string EditBook = "Edit Book";
+        public const string RemoveBook = "Remove Book";
+        public const string Search = "Search For Book";
+        public const string Travel = "Travel In Time";
+        public const string View = "View Accounts";
 
         // Static
         public static string NewLine = Environment.NewLine;
@@ -76,11 +76,11 @@ namespace Library.Models.Utils
         public const int MaxBookQuota = 5;
         public const int MaxCheckoutDays = 10;
         public const int MaxReserveDays = 5;
-        public static int MaxFieldLength = 70;
+        public const int MaxFieldLength = 70;
 
         //Format
-        public static char MiniDelimiterSymbol = '-';
-        public static char DelimiterSymbol = '=';
+        public const char MiniDelimiterSymbol = '-';
+        public const char DelimiterSymbol = '=';
 
         public static string Delimiter = new string(DelimiterSymbol, MaxFieldLength);
         public static string MiniDelimiter = new string(MiniDelimiterSymbol, MaxFieldLength);

@@ -5,6 +5,7 @@ using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factories.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,12 @@ namespace Library.Services
         private readonly IPublisherFactory _publisherFac;
         private readonly IConsoleFormatter _formatter;
         private readonly IConsoleRenderer _renderer;
+        private readonly LibraryContext _context;
 
 
-        public BookManager(IDatabase<Book> bookDB, IDatabase<Author> authorDB, IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
+        public BookManager(LibraryContext context, IDatabase<Book> bookDB, IDatabase<Author> authorDB, IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
         {
+            _context = context;
             _bookDB = bookDB;
             _authorDb = authorDB;
             _genreDb = genreDb;
@@ -39,6 +42,16 @@ namespace Library.Services
             _publisherFac = publisherFac;
             _formatter = formatter;
             _renderer = renderer;
+        }
+
+        public List<Book> GetAllBooks()
+        {
+            return _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+               .ThenInclude(bg => bg.Genre)
+               .ToList();
         }
 
         public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
@@ -57,7 +70,7 @@ namespace Library.Services
 
             foreach (var book in books)
             {
-                if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
+                if (book.Status == BookStatus.CheckedOut || book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOutAndReserved)
                     Console.ForegroundColor = ConsoleColor.Red;
 
                 if (book.Status == BookStatus.Available)
@@ -142,7 +155,7 @@ namespace Library.Services
                     _bookDB.Update();
                     break;
                 case BookStatus.CheckedOut:
-                    if (book.Status == status || book.Status == BookStatus.CheckedOut_and_Reserved)
+                    if (book.Status == status || book.Status == BookStatus.CheckedOutAndReserved)
                     {
                         throw new ArgumentException(GlobalConstants.CheckoutBookAlreadyChecked);
                     }
@@ -159,10 +172,10 @@ namespace Library.Services
                 case BookStatus.Reserved:
                     if (book.Status == BookStatus.CheckedOut)
                     {
-                        book.Status = BookStatus.CheckedOut_and_Reserved;
+                        book.Status = BookStatus.CheckedOutAndReserved;
                         _bookDB.Update();
                     }
-                    else if (book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOut_and_Reserved)
+                    else if (book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOutAndReserved)
                     {
                         throw new ArgumentException(GlobalConstants.ReservedBookAlreadyReservedOther);
                     }

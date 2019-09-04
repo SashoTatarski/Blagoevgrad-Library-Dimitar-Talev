@@ -6,6 +6,12 @@ namespace Library.Database
 {
     public class LibraryContext : DbContext
     {
+        public LibraryContext() { }
+
+        // For Tests
+        public LibraryContext(DbContextOptions options) : base(options)
+        { }
+
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
@@ -25,7 +31,10 @@ namespace Library.Database
             //const string connectionString =
             //    @"Server=tcp:blagoevgradlibrary.database.windows.net,1433;Initial Catalog=LibraryDB;Persist Security Info=False;User ID=LibraryApp;Password=Telerik2019;MultipleActiveResultSets=True;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
-            optionsBuilder.UseSqlServer(connectionString);
+            if (optionsBuilder.IsConfigured)
+            {
+            }
+                optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -56,7 +56,7 @@ namespace Library.Services
 
         public void RemoveBookFromCheckoutBooks(Book book)
         {
-            if (book.Status == BookStatus.CheckedOut_and_Reserved)
+            if (book.Status == BookStatus.CheckedOutAndReserved)
             {
                 _bookManager.ChangeBookStatus(book, BookStatus.Reserved);
             }

@@ -5,6 +5,6 @@
         Available = 0,
         CheckedOut = 1,
         Reserved = 2,
-        CheckedOut_and_Reserved = 3
+        CheckedOutAndReserved = 3
     }
 }
