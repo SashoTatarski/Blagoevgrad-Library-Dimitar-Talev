@@ -27,24 +27,16 @@ namespace Library.Web.Controllers
         {
             return View();
         }
+       
 
-        public IActionResult Books()
-        {
-            var books = _bookManager.GetAllBooks();
+        //public IActionResult Accounts()
+        //{
+        //    var users = _accountManager.GetAllUsers();
 
-            var libraryViewModel = new LibraryViewModel(books);
+        //    var accountsViewModel = new AccountsViewModel(users);
 
-            return View(libraryViewModel);
-        }
-
-        public IActionResult Accounts()
-        {
-            var users = _accountManager.GetAllUsers();
-
-            var accountsViewModel = new AccountsViewModel(users);
-
-            return View(accountsViewModel);
-        }
+        //    return View(accountsViewModel);
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
