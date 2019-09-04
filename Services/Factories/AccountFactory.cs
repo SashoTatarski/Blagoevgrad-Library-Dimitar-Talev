@@ -1,4 +1,4 @@
-﻿using Library.Database.Contracts;
+﻿using Library.Database;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Factories.Contracts;
@@ -7,12 +7,10 @@ namespace Library.Services.Factories
 {
     public class AccountFactory : IAccountFactory
     {
-        private readonly IDatabase<Librarian> _librarianDB;
-        private readonly IDatabase<User> _userDB;
-        public AccountFactory(IDatabase<Librarian> librarianDB, IDatabase<User> userDB)
+        private readonly LibraryContext _context;
+        public AccountFactory(LibraryContext context)
         {
-            _librarianDB = librarianDB;
-            _userDB = userDB;
+            _context = context;
         }
         public User CreateUser(string username, string password)
         {
@@ -20,7 +18,8 @@ namespace Library.Services.Factories
             DataValidator.ValidateMinAndMaxLength(password, 3, 20, "Password");
 
             var newUser = new User(username, password);
-            _userDB.Create(newUser);
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
             return newUser;
         }
         public Librarian CreateLibrarian(string username, string password)
@@ -29,7 +28,8 @@ namespace Library.Services.Factories
             DataValidator.ValidateMinAndMaxLength(password, 3, 20, "Password");
 
             var newLibrarian = new Librarian(username, password);
-            _librarianDB.Create(newLibrarian);
+            _context.Librarians.Add(newLibrarian);
+            _context.SaveChanges();
             return newLibrarian;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Library.Models.Contracts;
-using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
 using Services.Contracts;
@@ -11,15 +10,14 @@ namespace Services
     public class AuthenticationManager : IAuthenticationManager
     {
         private readonly IAccountManager _accountManager;
-        private readonly ILibrarySystem _system;
 
-        public AuthenticationManager(IAccountManager accountManager, ILibrarySystem system)
+        public AuthenticationManager(IAccountManager accountManager)
         {
             _accountManager = accountManager;
-            _system = system;
         }
 
         public IAccount CurrentAccount { get; private set; }
+
         public void LogIn(IAccount account) => this.CurrentAccount = account;
         public void LogOut() => this.CurrentAccount = null;
         public void CheckForExistingUsername(string username)

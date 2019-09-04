@@ -1,4 +1,4 @@
-﻿using Library.Database.Contracts;
+﻿using Library.Database;
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
 using System.Collections.Generic;
@@ -8,10 +8,10 @@ namespace Library.Services.Factories
 {
     public class GenreFactory : IGenreFactory
     {
-        private readonly IDatabase<Genre> _database;
-        public GenreFactory(IDatabase<Genre> database)
+        private readonly LibraryContext _context;
+        public GenreFactory(LibraryContext context)
         {
-            _database = database;
+            _context = context;
         }
 
         public List<Genre>
@@ -22,12 +22,14 @@ namespace Library.Services.Factories
 
             foreach (var genre in genreListString)
             {
-                var existingGenre = _database.Find(genre);
+                var existingGenre = _context.Genres.FirstOrDefault(g => g.GenreName.ToLower() == genre.ToLower()); ;
 
                 if (existingGenre is null)
                 {
                     var newGenre = new Genre { GenreName = genre };
-                    _database.Create(newGenre);
+                    _context.Genres.Add(newGenre);
+                    _context.SaveChanges();
+
                     list.Add(newGenre);
                 }
                 else

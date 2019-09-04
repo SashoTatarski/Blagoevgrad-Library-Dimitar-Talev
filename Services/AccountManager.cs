@@ -1,9 +1,11 @@
-﻿using Library.Database.Contracts;
+﻿using Library.Database;
 using Library.Models.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factories.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,21 +15,18 @@ namespace Library.Services
     // SOLID: DI principle - we program against Interfaces. High-level modules, which provide complex logic, should be easily reusable and unaffected by changes in low-level modules
     public class AccountManager : IAccountManager
     {
-        private readonly IDatabase<User> _userDB;
-        private readonly IDatabase<Librarian> _librarianDB;
+        private readonly LibraryContext _context;
         private readonly IAccountFactory _accountFac;
-
-        public AccountManager(IDatabase<User> userDB, IDatabase<Librarian> librarianDB, IAccountFactory accountFac)
+        public AccountManager(LibraryContext context, IAccountFactory accountFac)
         {
-            _userDB = userDB;
-            _librarianDB = librarianDB;
+            _context = context;
             _accountFac = accountFac;
         }
 
         public IAccount FindAccount(string username)
         {
-            var user = _userDB.Read().FirstOrDefault(u => u.Username == username);
-            var librarian = _librarianDB.Read().FirstOrDefault(l => l.Username == username);
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            var librarian = _context.Librarians.FirstOrDefault(l => l.Username == username);
 
             if (user is null || user.Status == AccountStatus.Inactive)
                 return librarian ?? null;
@@ -35,7 +34,7 @@ namespace Library.Services
                 return user;
         }
 
-        public List<User> GetAllUsers() => _userDB.Read().ToList();
+        public List<User> GetAllUsers() => _context.Users.ToList();
 
 
         public User AddUser(string username, string password)
@@ -52,11 +51,18 @@ namespace Library.Services
 
         public void RemoveUser(User user)
         {
-            _userDB.Delete(user);
+            var userToRemove = _context.Users.FirstOrDefault(x => x.Id == user.Id);
+
+            userToRemove.Status = AccountStatus.Inactive;
+            _context.SaveChanges();
         }
 
         public bool HasMessages(User user)
         {
+            if (user is null)
+            {
+                throw new ArgumentException(GlobalConstants.NoSuchUser);
+            }
             if (user.Messages.Count == 0)
             {
                 return false;
@@ -68,9 +74,14 @@ namespace Library.Services
         {
             var strBuilder = new StringBuilder();
 
+            if (user is null)
+            {
+                throw new ArgumentException(GlobalConstants.NoSuchUser);
+            }
+
             foreach (var message in user.Messages)
             {
-            strBuilder.AppendLine(message);
+                strBuilder.AppendLine(message);
             }
 
             user.Messages.Clear();

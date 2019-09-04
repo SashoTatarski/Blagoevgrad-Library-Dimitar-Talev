@@ -2,9 +2,6 @@
 using Library.Core.Commands;
 using Library.Core.Contracts;
 using Library.Database;
-using Library.Database.Contracts;
-using Library.Database.JsonHandler;
-using Library.Models.Models;
 using Library.Services;
 using Library.Services.Contracts;
 using Library.Services.Factories;
@@ -24,14 +21,6 @@ namespace Library.Core
             containerBuilder.RegisterType<Engine>().As<IEngine>().SingleInstance();
             //DataBase
             containerBuilder.RegisterType<LibraryContext>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<BookDatabase>().As<IDatabase<Book>>().SingleInstance();
-            containerBuilder.RegisterType<LibrarianDataBase>().As<IDatabase<Librarian>>().SingleInstance();
-            containerBuilder.RegisterType<GenreDataBase>().As<IDatabase<Genre>>().SingleInstance();
-            containerBuilder.RegisterType<PublisherDataBase>().As<IDatabase<Publisher>>().SingleInstance();
-            containerBuilder.RegisterType<UserDataBase>().As<IDatabase<User>>().SingleInstance();
-            containerBuilder.RegisterType<AuthorDataBase>().As<IDatabase<Author>>().SingleInstance(); 
-            containerBuilder.RegisterType<BookGenreDataBase>().AsSelf().SingleInstance();
-            containerBuilder.RegisterType<IssuedBookDataBase>().AsSelf().SingleInstance();
 
             // Factories
             containerBuilder.RegisterType<BookFactory>().As<IBookFactory>();
@@ -45,15 +34,12 @@ namespace Library.Core
             containerBuilder.RegisterType<ConsoleRenderer>().As<IConsoleRenderer>();
             containerBuilder.RegisterType<CommandParser>().As<ICommandParser>();
             containerBuilder.RegisterType<ConsoleFormatter>().As<IConsoleFormatter>();
-            containerBuilder.RegisterGeneric(typeof(UsersJsonHandler<>)).As(typeof(IJsonHandler<>));
-            containerBuilder.RegisterGeneric(typeof(LibrariansJsonHandler<>)).As(typeof(IJsonHandler<>));
-            containerBuilder.RegisterGeneric(typeof(BooksJsonHandler<>)).As(typeof(IJsonHandler<>));
+            
             // Service Managers
             containerBuilder.RegisterType<AuthenticationManager>().As<IAuthenticationManager>().SingleInstance();
             containerBuilder.RegisterType<AccountManager>().As<IAccountManager>();
             containerBuilder.RegisterType<BookManager>().As<IBookManager>();
             containerBuilder.RegisterType<LibrarySystem>().As<ILibrarySystem>();
-            containerBuilder.RegisterType<DataService>().As<IDataService>();
             // Commands
             containerBuilder.RegisterType<AddBookCommand>().Named<ICommand>("addbook");
             containerBuilder.RegisterType<RemoveBookCommand>().Named<ICommand>("removebook");

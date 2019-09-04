@@ -65,12 +65,6 @@ namespace Library.Models.Utils
         public const string AddBookSuccess = "Successfully added the book:";
         public const string TravelSuccess = "Success! Today is";
 
-
-        //Json Paths
-        public const string catalogFilepath = @"..\..\..\..\catalog.json";
-        public const string usersFilepath = @"..\..\..\..\users.json";
-        public const string librariansFilepath = @"..\..\..\..\librarians.json";
-
         //Numbers
         public const decimal Fee = 0.5m;
         public const int MaxBookQuota = 5;

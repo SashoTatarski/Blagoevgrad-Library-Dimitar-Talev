@@ -1,5 +1,4 @@
 ﻿using Library.Database;
-using Library.Database.Contracts;
 using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
@@ -14,11 +13,6 @@ namespace Library.Services
 {
     public class BookManager : IBookManager
     {
-        private readonly IDatabase<Book> _bookDB;
-        private readonly IDatabase<Author> _authorDb;
-        private readonly IDatabase<Genre> _genreDb;
-        private readonly IDatabase<Publisher> _publisherDb;
-        private readonly BookGenreDataBase _bookGenreDb;
         private readonly IBookFactory _bookFac;
         private readonly IAuthorFactory _authorFac;
         private readonly IGenreFactory _genreFac;
@@ -26,16 +20,9 @@ namespace Library.Services
         private readonly IConsoleFormatter _formatter;
         private readonly IConsoleRenderer _renderer;
         private readonly LibraryContext _context;
-
-
-        public BookManager(LibraryContext context, IDatabase<Book> bookDB, IDatabase<Author> authorDB, IDatabase<Genre> genreDb, IDatabase<Publisher> publisherDb, BookGenreDataBase bookGenreDb, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
+        public BookManager(LibraryContext context, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
         {
             _context = context;
-            _bookDB = bookDB;
-            _authorDb = authorDB;
-            _genreDb = genreDb;
-            _publisherDb = publisherDb;
-            _bookGenreDb = bookGenreDb;
             _bookFac = bookFac;
             _authorFac = authorFac;
             _genreFac = genreFac;
@@ -57,16 +44,27 @@ namespace Library.Services
         public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack)
         {
             var book = _bookFac.CreateBook(authorName, title, isbn, publisher, year, rack);
-            _bookDB.Create(book);
+            _context.Books.Add(book);
+            _context.SaveChanges();
 
             var genreList = _genreFac.CreateGenreList(genres);
-            _bookGenreDb.Create(book, genreList);
+            foreach (var genre in genreList)
+            {
+                _context.BookGenre.Add(new BookGenre { BookId = book.Id, GenreId = genre.Id });
+            }
+            _context.SaveChanges();
+
             return book;
         }
 
         public void ListAllBooks()
         {
-            var books = _bookDB.Read();
+            var books = _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+               .ThenInclude(bg => bg.Genre)
+               .ToList();
 
             foreach (var book in books)
             {
@@ -82,68 +80,94 @@ namespace Library.Services
             }
         }
 
-        public Book FindBook(int id) => _bookDB.Find(id);
+        public Book FindBook(int id)
+        {
+            return _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+               .FirstOrDefault(b => b.Id == id);
+        }
 
         public void UpdateBookAuthor(int bookId, string newAuthorName)
         {
             var updatedAuthor = _authorFac.CreateAuthor(newAuthorName);
 
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books
+                .Include(b => b.Author)
+                .FirstOrDefault(b => b.Id == bookId);
 
             book.Author = updatedAuthor;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void UpdateBookPublisher(int bookId, string newPublisherName)
         {
             var updatedPublisher = _publisherFac.CreatePublisher(newPublisherName);
 
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books
+               .Include(b => b.Publisher)
+               .FirstOrDefault(b => b.Id == bookId);
 
             book.Publisher = updatedPublisher;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void UpdateBookGenre(int bookId, string newGenres)
         {
             var updatedGenres = _genreFac.CreateGenreList(newGenres);
 
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+               .FirstOrDefault(b => b.Id == bookId);
 
-            _bookGenreDb.Update(book, updatedGenres);
-            _bookDB.Update();
+            foreach (var bookGenre in _context.BookGenre)
+            {
+                if (bookGenre.BookId == book.Id)
+                {
+                    _context.BookGenre.Remove(bookGenre);
+                }
+            }
+
+            foreach (var genre in updatedGenres)
+            {
+                _context.BookGenre.Add(new BookGenre { BookId = book.Id, GenreId = genre.Id });
+            }
+            _context.SaveChanges();
         }
 
         public void UpdateBookTitle(int bookId, string newTitle)
         {
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
 
             book.Title = newTitle;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void UpdateBookISBN(int bookId, string newISBN)
         {
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
 
             book.ISBN = newISBN;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void UpdateBookYear(int bookId, int newYear)
         {
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
 
             book.Year = newYear;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void UpdateBookRack(int bookId, int newRack)
         {
-            var book = _bookDB.Find(bookId);
+            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
 
             book.Rack = newRack;
-            _bookDB.Update();
+            _context.SaveChanges();
         }
 
         public void ChangeBookStatus(Book book, BookStatus status)
@@ -152,7 +176,7 @@ namespace Library.Services
             {
                 case BookStatus.Available:
                     book.Status = status;
-                    _bookDB.Update();
+                    _context.SaveChanges();
                     break;
                 case BookStatus.CheckedOut:
                     if (book.Status == status || book.Status == BookStatus.CheckedOutAndReserved)
@@ -166,14 +190,14 @@ namespace Library.Services
                     else
                     {
                         book.Status = status;
-                        _bookDB.Update();
+                        _context.SaveChanges();
                     }
                     break;
                 case BookStatus.Reserved:
                     if (book.Status == BookStatus.CheckedOut)
                     {
                         book.Status = BookStatus.CheckedOutAndReserved;
-                        _bookDB.Update();
+                        _context.SaveChanges();
                     }
                     else if (book.Status == BookStatus.Reserved || book.Status == BookStatus.CheckedOutAndReserved)
                     {
@@ -182,7 +206,7 @@ namespace Library.Services
                     else
                     {
                         book.Status = status;
-                        _bookDB.Update();
+                        _context.SaveChanges();
                     }
                     break;
                 default:
@@ -192,7 +216,7 @@ namespace Library.Services
 
         public List<int> GetBooksIDs()
         {
-            var books = _bookDB.Read();
+            var books = _context.Books.ToList();
             var list = new List<int>();
             foreach (var book in books)
             {
@@ -201,15 +225,26 @@ namespace Library.Services
             return list;
         }
 
-        public void RemoveBook(Book book) => _bookDB.Delete(book);
+        public void RemoveBook(Book book)
+        {
+            var bookToRemove = _context.Books.FirstOrDefault(b => b.Id == book.Id);
+
+            _context.Books.Remove(bookToRemove);
+            _context.SaveChanges();
+        }
 
         public List<Book> GetSearchResult(string searchByParameter, string searchByText)
         {
-            var books = _bookDB.Read();
-            var authors = _authorDb.Read();
-            var genres = _genreDb.Read();
-            var publishers = _publisherDb.Read();
-            var bookgenres = _bookGenreDb.Read();
+            var books = _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+               .ThenInclude(bg => bg.Genre)
+               .ToList();
+            var authors = _context.Authors;
+            var genres = _context.Genres;
+            var publishers = _context.Publishers;
+            var bookgenres = _context.BookGenre;
             var sortedBooks = new List<Book>();
 
             switch (searchByParameter.ToLower())

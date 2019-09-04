@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Database;
-using Library.Database.Contracts;
-using Library.Models.Models;
+﻿using Library.Database;
 using Library.Services;
 using Library.Services.Contracts;
 using Library.Services.Factories;
@@ -42,14 +36,6 @@ namespace Library.Web
             services.AddDbContext<LibraryContext>();
             services.AddScoped<IBookManager, BookManager>();
             services.AddScoped<IAccountManager, AccountManager>();
-            services.AddScoped<IDatabase<Book>, BookDatabase>();
-            services.AddScoped<IDatabase<Author>, AuthorDataBase>();
-            services.AddScoped<IDatabase<Genre>, GenreDataBase>();
-            services.AddScoped<IDatabase<Librarian>, LibrarianDataBase>();
-            services.AddScoped<IDatabase<User>, UserDataBase>();
-            services.AddScoped<IDatabase<Publisher>, PublisherDataBase>();
-            services.AddScoped<BookGenreDataBase>();
-            services.AddScoped<IssuedBookDataBase>();
             services.AddScoped<IBookFactory, BookFactory>();
             services.AddScoped<IAuthorFactory, AuthorFactory>();
             services.AddScoped<IPublisherFactory, PublisherFactory>();

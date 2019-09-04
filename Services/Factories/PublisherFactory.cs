@@ -1,24 +1,27 @@
-﻿using Library.Database.Contracts;
+﻿using Library.Database;
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
+using System.Linq;
 
 namespace Library.Services.Factories
 {
     public class PublisherFactory : IPublisherFactory
     {
-        private readonly IDatabase<Publisher> _database;
-        public PublisherFactory(IDatabase<Publisher> database)
+        private readonly LibraryContext _context;
+        public PublisherFactory(LibraryContext context)
         {
-            _database = database;
+            _context = context;
         }
         public Publisher CreatePublisher(string name)
         {
-            var existingPublisher = _database.Find(name);
+            var existingPublisher = _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
 
             if (existingPublisher is null)
             {
                 var newPublisher = new Publisher { Name = name };
-                _database.Create(newPublisher);
+                _context.Publishers.Add(newPublisher);
+                _context.SaveChanges();
+
                 return newPublisher;
             }
             else

@@ -1,27 +1,22 @@
-﻿using Library.Models.Contracts;
+﻿using Library.Database;
+using Library.Models.Contracts;
 using Library.Models.Enums;
+using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Library.Models.Models;
 using System;
-using Library.Database.Contracts;
-using Library.Database;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Library.Services
 {
     public class ConsoleFormatter : IConsoleFormatter
     {
-        private readonly IDatabase<Book> _booksDB;
-        private readonly IssuedBookDataBase _issuedBookDB;
-
-
-        public ConsoleFormatter(IDatabase<Book> booksDB, IssuedBookDataBase issuedBookDB)
+        private readonly LibraryContext _context;
+        public ConsoleFormatter(LibraryContext context)
         {
-            _booksDB = booksDB;
-            _issuedBookDB = issuedBookDB;
+            _context = context;
         }
 
         public string Format(Book book)
@@ -90,8 +85,6 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        //Update ---------------
-
         public string Format(IAccount account)
         {
             var strBuilder = new StringBuilder();
@@ -99,8 +92,6 @@ namespace Library.Services
 
             return strBuilder.ToString();
         }
-
-
 
         public string FormatListOfBooks(List<Book> books)
         {
@@ -116,27 +107,6 @@ namespace Library.Services
 
         }
 
-        public string FormatListOfBooks(List<int> booksIds)
-        {
-            if (booksIds.Count == 0)
-                return "There are no books!";
-
-            var allbooks = _booksDB.Read();
-
-            var strBuilder = new StringBuilder();
-            foreach (var book in from book in allbooks
-                                 from bookId in booksIds
-                                 where book.Id == bookId
-                                 select book)
-            {
-                strBuilder.AppendLine(this.Format(book));
-            }
-
-            return strBuilder.ToString();
-        }
-
-
-
         public string FormatCommandMessage(string message, string modelInfo)
         {
             var strBuilder = new StringBuilder();
@@ -151,22 +121,10 @@ namespace Library.Services
             return strBuilder.ToString();
         }
 
-        public string FormatCommandMessage(string message)
-        {
-            var strBuilder = new StringBuilder();
-
-            strBuilder.AppendLine();
-            strBuilder.AppendLine(GlobalConstants.Delimiter);
-            strBuilder.AppendLine(message);
-            strBuilder.AppendLine(GlobalConstants.Delimiter);
-
-            return strBuilder.ToString();
-        }
-
         public string Format(User user)
         {
-            var chBooks = _issuedBookDB.GetCheckOutBooks(user);
-            var resBooks = _issuedBookDB.GetReservedBooks(user);
+            var chBooks = _context.CheckoutBooks.Where(chb=>chb.UserId == user.Id).ToList();
+            var resBooks = _context.ReservedBooks.Where(chb => chb.UserId == user.Id).ToList();
 
             var strBuilder = new StringBuilder();
             strBuilder.AppendLine($"Username: {user.Username}");
@@ -195,24 +153,6 @@ namespace Library.Services
             }
             return strBuilder.ToString();
         }
-
-        public string FormatListOfUsersShort(List<User> users)
-        {
-            var strBuilder = new StringBuilder();
-
-            if (users.Count == 0)
-                return GlobalConstants.NoUsers;
-
-            //foreach (var user in users)
-            //{
-            //    if (user.Status != MemberStatus.Inactive)
-            //        strBuilder.Append(this.FormatShort(user));
-            //}
-
-            return strBuilder.ToString();
-        }
-
-        //private string FormatShort(IUser user) => $"Username: {user.Username} || CheckedOut Books: {user.c.Count} || Reserved Books: {user.ReservedBooks.Count}\r\n";
 
         public string CenterStringWithSymbols(string text, char symbol)
         {

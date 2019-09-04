@@ -7,6 +7,7 @@ namespace Library.Services.Factories
     {
         private readonly IAuthorFactory _authorFac;
         private readonly IPublisherFactory _publisherFac;
+        
         public BookFactory(IAuthorFactory authorFac, IPublisherFactory publisherFac)
         {
             _authorFac = authorFac;
