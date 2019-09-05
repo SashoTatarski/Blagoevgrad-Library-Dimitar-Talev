@@ -23,14 +23,14 @@ namespace Library.Services
             _accountFac = accountFac;
         }
 
-        public IAccount FindAccount(string username)
+        public User FindAccount(string username)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            var user = _context.Users.FirstOrDefault(u => u.UserName == username);
             var librarian = _context.Librarians.FirstOrDefault(l => l.Username == username);
 
-            if (user is null || user.Status == AccountStatus.Inactive)
-                return librarian ?? null;
-            else
+            //if (user is null || user.Status == AccountStatus.Inactive)
+            //    return librarian ?? null;
+            //else
                 return user;
         }
 

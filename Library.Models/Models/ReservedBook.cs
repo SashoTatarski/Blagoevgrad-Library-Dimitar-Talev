@@ -8,7 +8,7 @@ namespace Library.Models.Models
 {
     public class ReservedBook
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int BookId { get; set; }
 
         public Book Book { get; set; }

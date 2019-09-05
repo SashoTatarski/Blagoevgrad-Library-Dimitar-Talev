@@ -14,13 +14,15 @@ namespace Library.Services.Factories
         }
         public User CreateUser(string username, string password)
         {
-            DataValidator.ValidateMinAndMaxLength(username, 3, 20, "Username");
-            DataValidator.ValidateMinAndMaxLength(password, 3, 20, "Password");
+            //DataValidator.ValidateMinAndMaxLength(username, 3, 20, "Username");
+            //DataValidator.ValidateMinAndMaxLength(password, 3, 20, "Password");
 
-            var newUser = new User(username, password);
-            _context.Users.Add(newUser);
-            _context.SaveChanges();
-            return newUser;
+            //var newUser = new User(username, password);
+            //_context.Users.Add(newUser);
+            //_context.SaveChanges();
+            //return newUser;
+
+            return null;
         }
         public Librarian CreateLibrarian(string username, string password)
         {

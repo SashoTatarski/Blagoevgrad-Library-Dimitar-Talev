@@ -25,34 +25,34 @@ namespace Library.Core.Commands
 
         public string Execute()
         {
-            _renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.LogIn, GlobalConstants.MiniDelimiterSymbol));
+            //_renderer.Output(_formatter.CenterStringWithSymbols(GlobalConstants.LogIn, GlobalConstants.MiniDelimiterSymbol));
 
-            var username = _renderer.InputParameters("username");
-            var password = _renderer.InputParameters("password");
+            //var username = _renderer.InputParameters("username");
+            //var password = _renderer.InputParameters("password");
 
-            var loggedUser = _accountManager.FindAccount(username);
+            //var loggedUser = _accountManager.FindAccount(username);
 
-            if (loggedUser == null)
-                throw new ArgumentException(GlobalConstants.NoSuchUserName);
+            //if (loggedUser == null)
+            //    throw new ArgumentException(GlobalConstants.NoSuchUserName);
 
-            if (loggedUser.Password != password)
-                throw new ArgumentException(GlobalConstants.InvalidPassword);
+            //if (loggedUser.Password != password)
+            //    throw new ArgumentException(GlobalConstants.InvalidPassword);
 
-            var strBuilder = new StringBuilder();
+            //var strBuilder = new StringBuilder();
 
-            _authentication.LogIn(loggedUser);
-            strBuilder.AppendLine(_formatter.FormatCommandMessage(GlobalConstants.SuccessLogIn, _formatter.Format(loggedUser)));
+            //_authentication.LogIn(loggedUser);
+            //strBuilder.AppendLine(_formatter.FormatCommandMessage(GlobalConstants.SuccessLogIn, _formatter.Format(loggedUser)));
 
 
-            if (loggedUser.GetType() == typeof(User))
-            {
-                if (_accountManager.HasMessages((User)loggedUser))
-                {
-                    strBuilder.AppendLine(_accountManager.DisplayMessages((User)loggedUser));
-                }
-            }
+            //if (loggedUser.GetType() == typeof(User))
+            //{
+            //    if (_accountManager.HasMessages((User)loggedUser))
+            //    {
+            //        strBuilder.AppendLine(_accountManager.DisplayMessages((User)loggedUser));
+            //    }
+            //}
 
-            return strBuilder.ToString();
+            return null;
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Library.Services
             var resBooks = _context.ReservedBooks.Where(chb => chb.UserId == user.Id).ToList();
 
             var strBuilder = new StringBuilder();
-            strBuilder.AppendLine($"Username: {user.Username}");
+            strBuilder.AppendLine($"Username: {user.UserName}");
             strBuilder.AppendLine($"Checked out books:");
             strBuilder.AppendLine(this.FormatList(chBooks));
             strBuilder.AppendLine($"Reserved books:");
