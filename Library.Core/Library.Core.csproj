@@ -10,16 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.3" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+   
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Library.Databse\Library.Database.csproj" />
     <ProjectReference Include="..\Library.Models\Library.Models.csproj" />
-    <ProjectReference Include="..\Services\Library.Services.csproj" />
+    <ProjectReference Include="..\Library.Services\Library.Services.csproj" />
   </ItemGroup>
 
 </Project>
