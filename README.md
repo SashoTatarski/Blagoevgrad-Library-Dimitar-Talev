@@ -26,26 +26,24 @@ The Application is a **Library management system** which helps the library:
 
 The Application provides variaty of commands:
 - **LogIn** → logs in an account
-- **LogOut** → logs out an account
+- **LogOut** → logs out of an account
 - **Register User** → registers new user
 - **Register Librarian** → registers new librarian
 - **Remove User** → sets the status of a user to Inactive
 - **Add Book** → adds new book
-- **Edit Book** → by given book and parameter, modifies this parameter of the book
-- **Remove Book** → removes a book (if it is demaged)
+- **Edit Book** → modifies this parameter of the book
+- **Remove Book** → removes a book
 - **CheckOut Book** → lends book to the user who invokes the command
 - **Renew Book** → extends the return due date of lended book by 5 days
 - **Reserve Book** → reserves a book for the user
 - **Return Book** → returns checkedout book by a user
-- **Search** → searches in all books in the library by given parameter
+- **Search** → searches all books in the library by given parameter
 - **View Account** → gets the information for the current(logged in) account
 - **Travel In Time** → virtually goes given number of days ahead
 
 ---
 The Library has existing database, which data you can find in:
-- catalog.json
-- users.json
-- librarians.json
+
 ---
 
 ## **How to operate with the application:**
