@@ -18,95 +18,38 @@
 
 ### **The following project is one step further in developing the great automation system of the library.**
 
-The Application is a **Library management system** which helps the library:
+The Application is a **Web Library management system** which helps the library:
 - keep track of the books and their checkouts and reservation
 - manage users’ subscriptions and profiles
 - maintaining the database for entering new books and removing old and damaged ones
 - recording books that have been borrowed with their respective due dates
 
-The Application provides variaty of commands:
-- **LogIn** → logs in an account
-- **LogOut** → logs out an account
-- **Register User** → registers new user
-- **Register Librarian** → registers new librarian
-- **Remove User** → sets the status of a user to Inactive
-- **Add Book** → adds new book
-- **Edit Book** → by given book and parameter, modifies this parameter of the book
-- **Remove Book** → removes a book (if it is demaged)
-- **CheckOut Book** → lends book to the user who invokes the command
+---
+The Application provides variaty of functionalities divided in several sections:
+
+### Public part:
+ - **Review all books in the library**
+ - **Search for a book**
+- **Log In**
+- **Register User**
+
+### Private part (for users)
+- **CheckOut Book** → lends a book for 10 days
+- **Reserve Book** → reserves a book for 10 days
 - **Renew Book** → extends the return due date of lended book by 5 days
-- **Reserve Book** → reserves a book for the user
-- **Return Book** → returns checkedout book by a user
-- **Search** → searches in all books in the library by given parameter
-- **View Account** → gets the information for the current(logged in) account
+- **Return Book**
+- **Search**
+- **View own notifications**
+- **Rate books**
+- **LogOut**
+
+### Administation Part (for admins)
+- **Add Book**
+- **Edit Book** → by given book and parameter, modifies this parameter of the book
+- **Remove Book** 
+- **Remove User** 
+- **Bann User**
+- **View Account**
 - **Travel In Time** → virtually goes given number of days ahead
 
----
-The Library has existing database, which data you can find in:
-- catalog.json
-- users.json
-- librarians.json
----
 
-## **How to operate with the application:**
-
-## 1. In order to access the system, you have to login first.
-
-- use some of the given credentials.
- 
-    Depending on the type of account you are logged in (User or Librarian) you can perform different commands:
-
-### Common commands:
-- LogIn
-- LogOut
-- Search
-- Travel In Time
-
- ### Librarian:
- - Register User
- - Register Librarian
- - Add Book
- - Remove Book
- - Edit Book
-
- ### User:
- - CheckOut Book
- - Renew Book
- - Return Book
- - Reserve Book
-
----
-Some constraints about the parametres:
-
----
-
-**AddbookCommand:** (adds a new book with book items)
-1. Title (between 1 and 30 symbols)
-3. Author (between 1 and 50 symbols)
-4. Publisher (between 1 and 50 symbols)
-6. Genre (between 1 and 50 symbols)
-7. Location in Library (Rack)
-
-**EditBookCommand:** (modifies the parameters)
-1. Enter ID Code (unique)
-2. Enter parameter to modify (Title, Author, Genre or Publisher)
-3. Enter new Title/Author/Genre/Publisher
-
-**RemoveBookCommand:** (removes book only if its not taken or reserved)
-1. Enter ID Code
-
-**SearchCommand** (Searches through catalogue and prints out book details)
-1. Enter parameter to search by (ID, Title, Author, Genre or Publisher)
-2. Enter parameter details
-
-**RegisterUserCommand** (Registers a new user in the system)
-1. Enter new user's username
-2. Enter new user's password
-
-**RemoveUserCommand** (Cancels the registration of a user in the system)
-1. Enter user's username
-
-**ViewAccountCommand** (displays account details of the logged user)
-
-**Travel In Time Command** (skips days ahead from today)
-1. Enter days you want to skip
