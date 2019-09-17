@@ -10,7 +10,7 @@ namespace Library.Models.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(40, ErrorMessage = GlobalConstants.GenreNameLimit)]
+        [StringLength(40)]
         public string GenreName { get; set; }
         public List<BookGenre> BookGenres { get; set; }
     }

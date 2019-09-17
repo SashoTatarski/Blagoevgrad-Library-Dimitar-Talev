@@ -18,6 +18,11 @@ namespace Library.Database.Configurations
             builder
                 .HasMany(b => b.CheckedoutBooks)
                 .WithOne(u => u.User);
+
+            builder
+                .HasOne(u => u.Role)
+                .WithMany(r => r.Users)
+                .HasForeignKey(u => u.RoleId);
         }
     }
 }

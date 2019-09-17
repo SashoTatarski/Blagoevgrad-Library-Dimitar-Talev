@@ -5,6 +5,7 @@
         Available = 0,
         CheckedOut = 1,
         Reserved = 2,
-        CheckedOutAndReserved = 3
+        CheckedOutAndReserved = 3,
+        ToBeDeleted = 4
     }
 }

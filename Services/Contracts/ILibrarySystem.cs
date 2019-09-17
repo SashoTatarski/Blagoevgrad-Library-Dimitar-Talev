@@ -1,5 +1,4 @@
-﻿using Library.Models.Contracts;
-using Library.Models.Models;
+﻿using Library.Models.Models;
 using System.Collections.Generic;
 
 namespace Library.Services.Contracts
@@ -14,15 +13,5 @@ namespace Library.Services.Contracts
         void RemoveBookFromCheckoutBooks(Book book);
         void ManageOverdueReservations();
         bool HasIssuedBooks(User user);
-
-        // ------- Need update ↓ -------
-
-
-        //void CheckForOverdueBooks();
-        //void CheckForOverdueReservations();
-
-        //bool UserHasCheckedoutBooks(User user);
-        //bool UserHasReservedBooks(User user);
-        //void ManageOverdueReservations();
     }
 }

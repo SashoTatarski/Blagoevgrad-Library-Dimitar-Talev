@@ -12,13 +12,13 @@ namespace Library.Database.Configurations
                .HasKey(rb => rb.BookId);
 
             builder
-                .HasOne(b => b.Book)
-                .WithOne(rb => rb.ReservedBook);
+                .HasOne(resBook => resBook.Book)
+                .WithMany(book => book.ReservedBooks);
 
             builder
-                .HasOne(b => b.User)
+                .HasOne(resBook => resBook.User)
                 .WithMany(u => u.ReservedBooks)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(resBook => resBook.UserId);
         }
     }
 }

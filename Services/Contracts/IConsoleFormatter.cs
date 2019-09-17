@@ -1,5 +1,4 @@
-﻿using Library.Models.Contracts;
-using Library.Models.Models;
+﻿using Library.Models.Models;
 using System.Collections.Generic;
 
 namespace Library.Services.Contracts
@@ -10,8 +9,7 @@ namespace Library.Services.Contracts
         string Format(CheckoutBook book);
         string Format(ReservedBook book);
         string FormatList(List<CheckoutBook> books);
-        string Format(User user);
-        string Format(IAccount account);
+        string Format(User user);        
         string FormatListOfBooks(List<Book> books);
         string FormatCommandMessage(string message, string modelInfo);
         string FormatListOfUsers(List<User> users);

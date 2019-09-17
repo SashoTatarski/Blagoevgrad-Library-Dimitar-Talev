@@ -1,47 +1,42 @@
 ﻿using Library.Models.Enums;
 using Library.Models.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Models.Models
 {
     public class Book
     {
-        public Book() { }
-
-        public Book(Author author, string title, string isbn, Publisher publisher, int year, int rack)
-        {
-            this.Author = author;
-            this.Title = title;
-            this.ISBN = isbn;
-            this.Publisher = publisher;
-            this.Year = year;
-            this.Rack = rack;
-            this.Status = BookStatus.Available;
-        }
-
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = GlobalConstants.BookTitleLimit, MinimumLength = 1)]
+        [StringLength(100)]
         public string Title { get; set; }
         public string ISBN { get; set; }
 
-        [Range(1629, 2019, ErrorMessage = GlobalConstants.BookYearLimit)]
-        public int Year { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = GlobalConstants.BookRackLimit)]
+        [Required]
+        [Range(1629, 2019)]
+        public int Year { get; set; }   
+        
+        [Range(1, 1000)]
         public int Rack { get; set; }
 
         [Required]
         public BookStatus Status { get; set; }
-        public int AuthorId { get; set; }
-        public int PublisherId { get; set; }
+        public Guid AuthorId { get; set; }
+        public Guid PublisherId { get; set; }
+        public double Rating { get; set; }
+        public bool IsLocked { get; set; }
+
         public Author Author { get; set; }
         public Publisher Publisher { get; set; }
         public List<BookGenre> BookGenres { get; set; }
         public CheckoutBook CheckedoutBook { get; set; }
-        public ReservedBook ReservedBook { get; set; }
+        public List<ReservedBook> ReservedBooks { get; set; }
+        public List<Rating> Ratings { get; set; }
     }
 }

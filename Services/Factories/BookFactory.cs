@@ -13,12 +13,6 @@ namespace Library.Services.Factories
             _authorFac = authorFac;
             _publisherFac = publisherFac;
         }
-        public Book CreateBook(string author, string title, string isbn, string publisher, int year, int rack)
-        {
-            var authorType = _authorFac.CreateAuthor(author);
-            var publisherType = _publisherFac.CreatePublisher(publisher);
-
-            return new Book(authorType, title, isbn, publisherType, year, rack);
-        }
+       
     }
 }

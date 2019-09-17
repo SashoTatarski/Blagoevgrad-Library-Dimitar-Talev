@@ -8,8 +8,8 @@ namespace Library.Models.Models
 {
     public class ReservedBook
     {
-        public string UserId { get; set; }
-        public int BookId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid BookId { get; set; }
 
         public Book Book { get; set; }
         public User User { get; set; }
