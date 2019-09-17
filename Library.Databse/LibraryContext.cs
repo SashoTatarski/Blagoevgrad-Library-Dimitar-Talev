@@ -1,6 +1,5 @@
 ﻿using Library.Database.Configurations;
 using Library.Models.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Database
@@ -33,7 +32,6 @@ namespace Library.Database
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new BannedUserConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
-
 
             base.OnModelCreating(modelBuilder);
         }

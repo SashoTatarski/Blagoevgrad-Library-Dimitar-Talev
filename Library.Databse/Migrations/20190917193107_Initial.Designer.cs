@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20190917144436_second")]
-    partial class second
+    [Migration("20190917193107_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,20 +183,15 @@ namespace Library.Database.Migrations
 
             modelBuilder.Entity("Library.Models.Models.ReservedBook", b =>
                 {
-                    b.Property<Guid>("BookId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<Guid>("BookId");
 
-                    b.Property<Guid?>("BookId1");
+                    b.Property<Guid>("UserId");
 
                     b.Property<DateTime>("ReservationDate");
 
                     b.Property<DateTime>("ReservationDueDate");
 
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("BookId");
-
-                    b.HasIndex("BookId1");
+                    b.HasKey("BookId", "UserId");
 
                     b.HasIndex("UserId");
 
@@ -319,7 +314,8 @@ namespace Library.Database.Migrations
                 {
                     b.HasOne("Library.Models.Models.Book", "Book")
                         .WithMany("ReservedBooks")
-                        .HasForeignKey("BookId1");
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Library.Models.Models.User", "User")
                         .WithMany("ReservedBooks")

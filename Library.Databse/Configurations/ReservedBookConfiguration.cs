@@ -9,7 +9,7 @@ namespace Library.Database.Configurations
         public void Configure(EntityTypeBuilder<ReservedBook> builder)
         {
             builder
-               .HasKey(rb => rb.BookId);
+                 .HasKey(resBook => new { resBook.BookId, resBook.UserId });
 
             builder
                 .HasOne(resBook => resBook.Book)

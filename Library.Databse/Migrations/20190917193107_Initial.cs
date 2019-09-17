@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library.Database.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -234,21 +234,20 @@ namespace Library.Database.Migrations
                 name: "ReservedBooks",
                 columns: table => new
                 {
-                    BookId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    BookId1 = table.Column<Guid>(nullable: true),
+                    BookId = table.Column<Guid>(nullable: false),
                     ReservationDate = table.Column<DateTime>(nullable: false),
                     ReservationDueDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservedBooks", x => x.BookId);
+                    table.PrimaryKey("PK_ReservedBooks", x => new { x.BookId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_ReservedBooks_Books_BookId1",
-                        column: x => x.BookId1,
+                        name: "FK_ReservedBooks_Books_BookId",
+                        column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ReservedBooks_Users_UserId",
                         column: x => x.UserId,
@@ -286,11 +285,6 @@ namespace Library.Database.Migrations
                 name: "IX_Ratings_UserId",
                 table: "Ratings",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReservedBooks_BookId1",
-                table: "ReservedBooks",
-                column: "BookId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReservedBooks_UserId",

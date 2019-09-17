@@ -1,5 +1,4 @@
 ﻿using Library.Models.Enums;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,7 +27,6 @@ namespace Library.Models.Models
         public double Wallet { get; set; }
         public AccountStatus Status { get; set; }
         public int RoleId { get; set; }
-
 
         public List<CheckoutBook> CheckedoutBooks { get; }
         public List<ReservedBook> ReservedBooks { get; }        

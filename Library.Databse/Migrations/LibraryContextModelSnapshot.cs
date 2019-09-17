@@ -183,13 +183,13 @@ namespace Library.Database.Migrations
                 {
                     b.Property<Guid>("BookId");
 
+                    b.Property<Guid>("UserId");
+
                     b.Property<DateTime>("ReservationDate");
 
                     b.Property<DateTime>("ReservationDueDate");
 
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("BookId");
+                    b.HasKey("BookId", "UserId");
 
                     b.HasIndex("UserId");
 
