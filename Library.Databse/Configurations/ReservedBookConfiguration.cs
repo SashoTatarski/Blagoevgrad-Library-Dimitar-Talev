@@ -13,7 +13,8 @@ namespace Library.Database.Configurations
 
             builder
                 .HasOne(resBook => resBook.Book)
-                .WithMany(book => book.ReservedBooks);
+                .WithMany(book => book.ReservedBooks)
+                .HasForeignKey(resBook => resBook.BookId);
 
             builder
                 .HasOne(resBook => resBook.User)

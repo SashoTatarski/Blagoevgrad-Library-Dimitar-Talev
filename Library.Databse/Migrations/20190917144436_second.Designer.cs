@@ -4,14 +4,16 @@ using Library.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20190917144436_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +183,10 @@ namespace Library.Database.Migrations
 
             modelBuilder.Entity("Library.Models.Models.ReservedBook", b =>
                 {
-                    b.Property<Guid>("BookId");
+                    b.Property<Guid>("BookId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("BookId1");
 
                     b.Property<DateTime>("ReservationDate");
 
@@ -190,6 +195,8 @@ namespace Library.Database.Migrations
                     b.Property<Guid>("UserId");
 
                     b.HasKey("BookId");
+
+                    b.HasIndex("BookId1");
 
                     b.HasIndex("UserId");
 
@@ -312,8 +319,7 @@ namespace Library.Database.Migrations
                 {
                     b.HasOne("Library.Models.Models.Book", "Book")
                         .WithMany("ReservedBooks")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BookId1");
 
                     b.HasOne("Library.Models.Models.User", "User")
                         .WithMany("ReservedBooks")
