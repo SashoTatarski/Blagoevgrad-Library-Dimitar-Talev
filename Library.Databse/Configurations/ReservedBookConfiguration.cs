@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Database.Configurations
 {
-    class ReservedBookConfiguration : IEntityTypeConfiguration<ReservedBook>
+    internal class ReservedBookConfiguration : IEntityTypeConfiguration<ReservedBook>
     {
         public void Configure(EntityTypeBuilder<ReservedBook> builder)
         {

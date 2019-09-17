@@ -14,8 +14,7 @@ namespace Library.Services.Factories
             _context = context;
         }
 
-        public List<Genre>
-            CreateGenreList(string genres)
+        public List<Genre> CreateGenreList(string genres)
         {
             var genreListString = genres.Split(',').Select(g => g.Trim()).ToList();
             List<Genre> list = new List<Genre>();

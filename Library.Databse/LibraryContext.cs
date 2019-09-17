@@ -9,7 +9,7 @@ namespace Library.Database
         public LibraryContext() { }
 
         // For Tests
-        public LibraryContext(DbContextOptions options) : base(options)
+        public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
         { }
 
         public DbSet<Book> Books { get; set; }
@@ -25,7 +25,7 @@ namespace Library.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string connectionString =
-                @"Server=.\SQLEXPRESS;Database=LibraryDataBase;Trusted_Connection=True;";
+                @"Server=.\SQLEXPRESS;Database=LibraryNoAuth;Trusted_Connection=True;";
 
             //// Azure Connection
             //const string connectionString =
@@ -34,7 +34,7 @@ namespace Library.Database
             if (optionsBuilder.IsConfigured)
             {
             }
-                optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
