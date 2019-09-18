@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Library.Database;
+using Library.Services;
+using Library.Services.Contracts;
+using Library.Services.HashProvider;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +38,11 @@ namespace Library.Web
             services.AddDbContext<LibraryContext>(
                 options => options.UseSqlServer(this.Configuration.GetConnectionString("LocalConnection")));
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddScoped<IAccountManager, AccountManager>();
+            services.AddSingleton<IHasher, Hasher>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -51,6 +60,8 @@ namespace Library.Web
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

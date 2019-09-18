@@ -17,7 +17,7 @@ namespace Library.Models.Models
         public string Username { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(200)]
         public string HashPassword { get; set; }
 
         public DateTime MembershipStartDate { get; set; }

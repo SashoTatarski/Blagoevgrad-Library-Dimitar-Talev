@@ -4,6 +4,9 @@ namespace Library.Models.Utils
 {
     public static class Constants
     {
+        public const string DefaultRole = "user";
+
+        //----------------------------------
         // Commandnames
         public const string CheckOutBook = "Check Out Book";
         public const string AddBook = "Add Book";
