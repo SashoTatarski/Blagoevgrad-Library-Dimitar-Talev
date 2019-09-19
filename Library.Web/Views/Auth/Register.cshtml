@@ -22,6 +22,11 @@
             <span asp-validation-for="ComparePassword" class="text-danger">  </span>
         </div>
         <div class="form-group">
+            <label class="control-label">Membership</label>
+            <select asp-for="MembershipType" asp-items="@Model.MembershipOption" class="form-control">
+            </select>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
     </form>

@@ -1,4 +1,5 @@
 ﻿using Library.Database;
+using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
@@ -6,6 +7,7 @@ using Library.Services.HashProvider;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
@@ -20,7 +22,7 @@ namespace Library.Services
             _hasher = hasher;
         }
 
-        public User Create(string username, string password)
+        public async Task<User> CreateAsync(string username, string password, int membershipMonths)
         {
             if (_context.Users.Any(u => u.Username == username))
             {
@@ -38,11 +40,14 @@ namespace Library.Services
             {
                 Username = username,
                 HashPassword = _hasher.Hash(password),
-                Role = defaultRole
+                Role = defaultRole,
+                MembershipStartDate = DateTime.Today,
+                MembershipEndDate = DateTime.Today.AddMonths(membershipMonths),
+                Status = AccountStatus.Active
             };
 
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
 
             return user;
         }

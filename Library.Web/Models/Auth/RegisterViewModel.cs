@@ -1,9 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Library.Web.Models.Auth
 {
     public class RegisterViewModel
     {
+        public List<SelectListItem> MembershipOption { get; set; }
+
+        public int MembershipType { get; set; }
+
         [Required(ErrorMessage = "Required")]
         [MinLength(5, ErrorMessage = "Username should be at least 5 symbols")]
         [Display(Name = "Username")]

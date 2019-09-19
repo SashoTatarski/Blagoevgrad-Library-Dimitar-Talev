@@ -31,16 +31,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         @if (User.Identity.IsAuthenticated)
                         {
+                            if (User.IsInRole("admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="BookManagement" asp-action="Index">Book Management</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AccountManagement" asp-action="Index">Account Management</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("user"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserBooks" asp-action="Index">My Books</a>
+                                </li>
+                            }
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Notifications" asp-action="Index">My Notifications</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Log Out</a>
                             </li>
-
-                            <p>Hello @User.Identity.Name</p>
+                            <p class="nav-link text-dark">Hello @User.Identity.Name</p>
                         }
                         else
                         {

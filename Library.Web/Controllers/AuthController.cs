@@ -4,6 +4,7 @@ using Library.Web.Models.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -43,7 +44,7 @@ namespace Library.Web.Controllers
             try
             {
                 var user = _accountManager.Find(viewModel.Username, viewModel.Password);
-                await SignInUser(user);
+                await SignInUserAsync(user);
 
                 return BackToHome();
             }
@@ -64,21 +65,27 @@ namespace Library.Web.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            var viewModel = new RegisterViewModel() { MembershipOption = new List<SelectListItem>() };
+            viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Month - $20", Value = "1" });
+            viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Year - $200", Value = "12" });
+
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(LoginViewModel viewModel)
+        public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
             if (!this.ModelState.IsValid)
             {
                 return View(viewModel);
-            }
+            }                      
 
             try
-            {
-                var user = _accountManager.Create(viewModel.Username, viewModel.Password);
-                await SignInUser(user);
+            {             
+               User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType);
+
+                await SignInUserAsync(user);
 
                 return BackToHome();
             }
@@ -87,9 +94,9 @@ namespace Library.Web.Controllers
                 return View(viewModel);
             }
         }
-      
 
-        private async Task SignInUser(User user)
+
+        private async Task SignInUserAsync(User user)
         {
             var claims = new List<Claim>
             {
