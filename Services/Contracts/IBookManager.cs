@@ -7,21 +7,29 @@ namespace Library.Services.Contracts
 {
     public interface IBookManager
     {
-        Task<List<Author>> GetAllAuthors();
+        Task<List<Author>> GetAllAuthorsAsync();
 
-        Task<List<Publisher>> GetAllPublishers();
+        Task<List<Publisher>> GetAllPublishersAsync();
 
         Task<Author> CreateAuthorAsync(string authorName);
 
-        Task<Publisher> CreatePublisher(string publisherName);
+        Task<Publisher> CreatePublisherAsync(string publisherName);
 
-        Task<List<Genre>> CreateGenre(string genre);
+        Task<List<Genre>> CreateGenreAsync(string genre);
 
-        Task<List<Genre>> GetAllGenres();
+        Task<List<Genre>> GetAllGenresAsync();
 
         Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
 
         IReadOnlyCollection<Book> Search(string searchCriteria);
+
+        List<Book> GetAllBooks();
+
+        Task DeleteAsync(string id);
+
+
+
+
 
 
 
@@ -39,7 +47,6 @@ namespace Library.Services.Contracts
         void UpdateBookPublisher(int bookId, string newPublisherName);
         void UpdateBookGenre(int bookId, string newGenres);
         void ChangeBookStatus(Book book, BookStatus status);
-        List<Book> GetAllBooks();
         
     }
 }

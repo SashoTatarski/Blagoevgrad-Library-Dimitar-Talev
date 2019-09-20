@@ -12,6 +12,7 @@ namespace Library.Web.Mapper
         public static AddBookViewModel MapToViewModel(this Book book)
         {
             var vm = new AddBookViewModel();
+            vm.BookId = book.Id.ToString();
             vm.Title = book.Title;
             vm.Year = book.Year;
             vm.Rack = book.Rack;

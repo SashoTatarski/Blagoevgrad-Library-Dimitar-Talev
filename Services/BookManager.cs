@@ -40,6 +40,18 @@ namespace Library.Services
                 .ToList();
         }
 
+        public async Task DeleteAsync(string isbn)
+        {
+            var booksToDelete = await _context.Books.Where(book => book.ISBN.ToString() == isbn).ToListAsync();
+
+
+            foreach (var book in booksToDelete)
+            {
+                _context.Books.Remove(book);
+                await _context.SaveChangesAsync();
+            }
+        }
+
         public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
         {
             var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
@@ -48,17 +60,17 @@ namespace Library.Services
 
             await _bookFac.CreateBook(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
          }
-        public async Task<List<Author>> GetAllAuthors() => await _context.Authors.ToListAsync();
+        public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync();
 
         public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName);
 
-        public async Task<List<Publisher>> GetAllPublishers() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
+        public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
 
-        public async Task<Publisher> CreatePublisher(string publisherName) => await _publisherFac.CreatePublisher(publisherName);
+        public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisher(publisherName);
 
-        public async Task<List<Genre>> GetAllGenres() => await _context.Genres.ToListAsync();
+        public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync();
 
-        public async Task<List<Genre>> CreateGenre(string genre) => await _genreFac.CreateGenreList(genre);
+        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre);
 
 
 

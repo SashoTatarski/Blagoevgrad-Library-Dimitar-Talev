@@ -22,6 +22,19 @@ namespace Library.Web.Controllers
             return View();
         }
 
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _bookManager.DeleteAsync(id);
+
+            return RedirectToAction("Index", "SearchBooks");
+        }
+
+
         [HttpGet]
         public IActionResult AddAuthor()
         {
@@ -45,7 +58,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public IActionResult AddPublisher(AddPublisherViewModel vm)
         {
-            var author = _bookManager.CreatePublisher(vm.Name);
+            var author = _bookManager.CreatePublisherAsync(vm.Name);
 
             return RedirectToAction("AddBook", "BookManagement");
         }
@@ -59,7 +72,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public IActionResult AddGenre(AddGenreViewModel vm)
         {
-            var genre = _bookManager.CreateGenre(vm.Name);
+            var genre = _bookManager.CreateGenreAsync(vm.Name);
 
             return RedirectToAction("AddBook", "BookManagement");
         }
@@ -67,9 +80,9 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> AddBook()
         {
-            var allAuthors = await _bookManager.GetAllAuthors();
-            var allPublisher = await _bookManager.GetAllPublishers();
-            var allGenres = await _bookManager.GetAllGenres();
+            var allAuthors = await _bookManager.GetAllAuthorsAsync();
+            var allPublisher = await _bookManager.GetAllPublishersAsync();
+            var allGenres = await _bookManager.GetAllGenresAsync();
 
             if(this.BookViewModel == null)
             {
