@@ -28,20 +28,17 @@ namespace Library.Services
             _publisherFac = publisherFac;
         }
 
-        public async Task<Book> CreateBook(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds)
+        public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
         {
-            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId);
+            var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
 
-            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId);
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
 
-
-            var newBook = await _bookFac.CreateBook(title, isbn, year, rack, author, publisher, genresIds);
-
-            return newBook;
+            await _bookFac.CreateBook(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
          }
         public async Task<List<Author>> GetAllAuthors() => await _context.Authors.ToListAsync();
 
-        public async Task<Author> CreateAuthor(string authorName) => await _authorFac.CreateAuthor(authorName);
+        public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName);
 
         public async Task<List<Publisher>> GetAllPublishers() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
 

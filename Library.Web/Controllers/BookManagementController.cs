@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Services.Contracts;
+﻿using Library.Services.Contracts;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Web.Controllers
 {
@@ -31,11 +29,11 @@ namespace Library.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAuthor(AddAuthorViewModel vm)
+        public async Task<IActionResult> AddAuthor(AddAuthorViewModel vm)
         {
-            var author = _bookManager.CreateAuthor(vm.Name);
+            var author = await _bookManager.CreateAuthorAsync(vm.Name);
 
-            return Redirect("AddBook");
+            return RedirectToAction("AddBook", "BookManagement");
         }
 
         [HttpGet]
@@ -49,7 +47,7 @@ namespace Library.Web.Controllers
         {
             var author = _bookManager.CreatePublisher(vm.Name);
 
-            return Redirect("AddBook");
+            return RedirectToAction("AddBook", "BookManagement");
         }
 
         [HttpGet]
@@ -63,28 +61,31 @@ namespace Library.Web.Controllers
         {
             var genre = _bookManager.CreateGenre(vm.Name);
 
-            return Redirect("AddBook");
+            return RedirectToAction("AddBook", "BookManagement");
         }
+        private AddBookViewModel BookViewModel { get; set; }
+
         public async Task<IActionResult> AddBook()
         {
             var allAuthors = await _bookManager.GetAllAuthors();
             var allPublisher = await _bookManager.GetAllPublishers();
             var allGenres = await _bookManager.GetAllGenres();
-            var vm = new AddBookViewModel()
-            {
-                Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList(),
-                Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList(),
-                Genres = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList()
-            };
 
-            return View(vm);
+            if(this.BookViewModel == null)
+            {
+                this.BookViewModel = new AddBookViewModel();
+            }
+            this.BookViewModel.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
+            this.BookViewModel.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
+            this.BookViewModel.Genres = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
+
+            return View(this.BookViewModel);
         }
 
         [HttpPost]
-        public IActionResult AddBook(AddBookViewModel vm)
+        public async Task<IActionResult> AddBook(AddBookViewModel vm)
         {
-            var newBook = _bookManager.CreateBook(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds);
-
+            await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
             return RedirectToAction("Index", "Home");
         }
     }

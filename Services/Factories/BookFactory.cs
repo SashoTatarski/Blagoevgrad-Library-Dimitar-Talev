@@ -13,33 +13,30 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public async Task<Book> CreateBook(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genresIds)
+        public async Task CreateBook(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genresIds, int copies)
         {
-            var newBook = new Book
+            for (int i = 0; i < copies; i++)
             {
-                Title = title,
-                ISBN = isbn,
-                Year = year,
-                Rack = rack,
-                Author = author,
-                Publisher = publisher                
-            };
+                var newBook = new Book();
+                newBook.Title = title;
+                newBook.ISBN = isbn;
+                newBook.Year = year;
+                newBook.Rack = rack;
+                newBook.Author = author;
+                newBook.Publisher = publisher;
 
-            _context.Books.Add(newBook);
-            await _context.SaveChangesAsync();
+                _context.Books.Add(newBook);
 
-            foreach (var genre in genresIds)
-            {
-                _context.BookGenre.Add(new BookGenre
+                foreach (var genre in genresIds)
                 {
-                    BookId = newBook.Id,
-                    GenreId = genre
-                });
+                    _context.BookGenre.Add(new BookGenre
+                    {
+                        BookId = newBook.Id,
+                        GenreId = genre
+                    });
+                }
             }
-
             await _context.SaveChangesAsync();
-
-            return newBook;
         }
     }
 }

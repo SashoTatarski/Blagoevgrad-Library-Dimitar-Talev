@@ -11,7 +11,7 @@ namespace Library.Services.Contracts
 
         Task<List<Publisher>> GetAllPublishers();
 
-        Task<Author> CreateAuthor(string authorName);
+        Task<Author> CreateAuthorAsync(string authorName);
 
         Task<Publisher> CreatePublisher(string publisherName);
 
@@ -19,7 +19,7 @@ namespace Library.Services.Contracts
 
         Task<List<Genre>> GetAllGenres();
 
-        Task<Book> CreateBook(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds);
+        Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
 
 
         void ListAllBooks();

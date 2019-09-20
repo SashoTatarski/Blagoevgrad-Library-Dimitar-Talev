@@ -11,13 +11,15 @@
             <input asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger">  </span>
         </div>
-        <div class="form-group">            
-            <label class="control-label">Author</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddAuthor">New Author</a></p>
+        <div class="form-group">
+            <label class="control-label">Author</label>
+            <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddAuthor">Create Author</a></p>
             <select asp-for="@Model.AuthorId" asp-items="@Model.Authors" class="form-control">
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label">Publisher</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddPublisher">New Publisher</a></p>
+            <label class="control-label">Publisher</label>
+            <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddPublisher">New Publisher</a></p>
             <select asp-for="@Model.PublisherId" asp-items="@Model.Publishers" class="form-control">
             </select>
         </div>
@@ -40,7 +42,12 @@
             <label class="control-label">Rack</label>
             <input asp-for="Rack" class="form-control" />
             <span asp-validation-for="Rack" class="text-danger">  </span>
-        </div>        
+        </div>
+        <div class="form-group">
+            <label class="control-label">Book Copies</label>
+            <input asp-for="BookCopies" class="form-control" />
+            <span asp-validation-for="BookCopies" class="text-danger">  </span>
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Create</button>
         </div>

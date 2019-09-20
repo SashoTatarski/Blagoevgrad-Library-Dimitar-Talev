@@ -26,6 +26,6 @@ namespace Library.Web.Models.BookManagement
 
         public int Rack { get; set; }
 
-
+        public int BookCopies { get; set; }
     }
 }
