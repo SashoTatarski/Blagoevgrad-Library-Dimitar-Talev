@@ -1,9 +1,10 @@
 ﻿using Library.Models.Models;
+using System.Threading.Tasks;
 
 namespace Library.Services.Factories.Contracts
 {
     public interface IPublisherFactory
     {
-        Publisher CreatePublisher(string name);
+        Task<Publisher> CreatePublisher(string name);
     }
 }

@@ -1,9 +1,10 @@
 ﻿using Library.Models.Models;
+using System.Threading.Tasks;
 
 namespace Library.Services.Factories.Contracts
 {
     public interface IAuthorFactory
     {
-        Author CreateAuthor(string authorName);
+        Task<Author> CreateAuthor(string authorName);
     }
 }

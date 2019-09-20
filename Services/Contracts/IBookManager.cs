@@ -1,12 +1,27 @@
 ﻿using Library.Models.Enums;
 using Library.Models.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Library.Services.Contracts
 {
     public interface IBookManager
     {
-        Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack);
+        Task<List<Author>> GetAllAuthors();
+
+        Task<List<Publisher>> GetAllPublishers();
+
+        Task<Author> CreateAuthor(string authorName);
+
+        Task<Publisher> CreatePublisher(string publisherName);
+
+        Task<List<Genre>> CreateGenre(string genre);
+
+        Task<List<Genre>> GetAllGenres();
+
+        Task<Book> CreateBook(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds);
+
+
         void ListAllBooks();
         List<int> GetBooksIDs();
         Book FindBook(int id);
@@ -21,5 +36,6 @@ namespace Library.Services.Contracts
         void UpdateBookGenre(int bookId, string newGenres);
         void ChangeBookStatus(Book book, BookStatus status);
         List<Book> GetAllBooks();
+        
     }
 }

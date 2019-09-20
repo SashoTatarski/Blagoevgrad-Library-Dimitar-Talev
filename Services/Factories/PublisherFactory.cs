@@ -2,6 +2,7 @@
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services.Factories
 {
@@ -12,7 +13,7 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public Publisher CreatePublisher(string name)
+        public async Task<Publisher> CreatePublisher(string name)
         {
             var existingPublisher = _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
 
@@ -20,7 +21,7 @@ namespace Library.Services.Factories
             {
                 var newPublisher = new Publisher { Name = name };
                 _context.Publishers.Add(newPublisher);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return newPublisher;
             }

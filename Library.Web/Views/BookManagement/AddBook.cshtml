@@ -11,19 +11,19 @@
             <input asp-for="Title" class="form-control" />
             <span asp-validation-for="Title" class="text-danger">  </span>
         </div>
-        <div class="form-group">
-            <label class="control-label">Author</label>
-            <select asp-for="AuthorId" asp-items="@Model.Authors" class="form-control">
+        <div class="form-group">            
+            <label class="control-label">Author</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddAuthor">New Author</a></p>
+            <select asp-for="@Model.AuthorId" asp-items="@Model.Authors" class="form-control">
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label">Publisher</label>
-            <select asp-for="PublisherId" asp-items="@Model.Publishers" class="form-control">
+            <label class="control-label">Publisher</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddPublisher">New Publisher</a></p>
+            <select asp-for="@Model.PublisherId" asp-items="@Model.Publishers" class="form-control">
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label">Genres</label>
-            <select asp-for="GenresIds" asp-items="@Model.Genres" class="form-control">
+            <label class="control-label">Genres</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddGenre">New Genre</a></p>
+            <select asp-for="@Model.GenresIds" asp-items="@Model.Genres" class="form-control">
             </select>
         </div>
         <div class="form-group">

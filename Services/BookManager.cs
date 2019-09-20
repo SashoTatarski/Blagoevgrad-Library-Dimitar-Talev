@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
@@ -17,22 +18,44 @@ namespace Library.Services
         private readonly IAuthorFactory _authorFac;
         private readonly IGenreFactory _genreFac;
         private readonly IPublisherFactory _publisherFac;
-        private readonly IConsoleFormatter _formatter;
-        private readonly IConsoleRenderer _renderer;
         private readonly LibraryContext _context;
-        public BookManager(LibraryContext context, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac, IConsoleFormatter formatter, IConsoleRenderer renderer)
+        public BookManager(LibraryContext context, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac)
         {
             _context = context;
             _bookFac = bookFac;
             _authorFac = authorFac;
             _genreFac = genreFac;
             _publisherFac = publisherFac;
-            _formatter = formatter;
-            _renderer = renderer;
         }
 
+        public async Task<Book> CreateBook(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds)
+        {
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId);
+
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId);
+
+
+            var newBook = await _bookFac.CreateBook(title, isbn, year, rack, author, publisher, genresIds);
+
+            return newBook;
+         }
+        public async Task<List<Author>> GetAllAuthors() => await _context.Authors.ToListAsync();
+
+        public async Task<Author> CreateAuthor(string authorName) => await _authorFac.CreateAuthor(authorName);
+
+        public async Task<List<Publisher>> GetAllPublishers() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
+
+        public async Task<Publisher> CreatePublisher(string publisherName) => await _publisherFac.CreatePublisher(publisherName);
+
+        public async Task<List<Genre>> GetAllGenres() => await _context.Genres.ToListAsync();
+
+        public async Task<List<Genre>> CreateGenre(string genre) => await _genreFac.CreateGenreList(genre);
+
+
+
+
         public void ChangeBookStatus(Book book, BookStatus status) => throw new NotImplementedException();
-        public Book CreateBook(string authorName, string title, string isbn, string genres, string publisher, int year, int rack) => throw new NotImplementedException();
+
         public Book FindBook(int id) => throw new NotImplementedException();
         public List<Book> GetAllBooks() => throw new NotImplementedException();
         public List<int> GetBooksIDs() => throw new NotImplementedException();

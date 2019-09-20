@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Library.Database;
 using Library.Services;
 using Library.Services.Contracts;
+using Library.Services.Factories;
+using Library.Services.Factories.Contracts;
 using Library.Services.HashProvider;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +43,14 @@ namespace Library.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             services.AddScoped<IAccountManager, AccountManager>();
+            services.AddScoped<IBookManager, BookManager>();
+            services.AddScoped<IBookFactory, BookFactory>();
+            services.AddScoped<IAuthorFactory, AuthorFactory>();
+            services.AddScoped<IPublisherFactory, PublisherFactory>();
+            services.AddScoped<IGenreFactory, GenreFactory>();
+
+
+
             services.AddSingleton<IHasher, Hasher>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

@@ -3,6 +3,7 @@ using Library.Models.Models;
 using Library.Services.Factories.Contracts;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services.Factories
 {
@@ -14,21 +15,20 @@ namespace Library.Services.Factories
             _context = context;
         }
 
-        public List<Genre>
-            CreateGenreList(string genres)
+        public async Task<List<Genre>> CreateGenreList(string genres)
         {
             var genreListString = genres.Split(',').Select(g => g.Trim()).ToList();
             List<Genre> list = new List<Genre>();
 
             foreach (var genre in genreListString)
             {
-                var existingGenre = _context.Genres.FirstOrDefault(g => g.GenreName.ToLower() == genre.ToLower()); ;
+                var existingGenre = _context.Genres.FirstOrDefault(g => g.Name.ToLower() == genre.ToLower()); ;
 
                 if (existingGenre is null)
                 {
-                    var newGenre = new Genre { GenreName = genre };
+                    var newGenre = new Genre { Name = genre };
                     _context.Genres.Add(newGenre);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
 
                     list.Add(newGenre);
                 }

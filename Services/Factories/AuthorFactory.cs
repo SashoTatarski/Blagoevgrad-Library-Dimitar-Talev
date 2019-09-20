@@ -2,6 +2,7 @@
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services.Factories
 {
@@ -12,7 +13,7 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public Author CreateAuthor(string authorName)
+        public async Task<Author> CreateAuthor(string authorName)
         {
             var existingAuthor = _context.Authors.FirstOrDefault(a => a.Name.ToLower() == authorName.ToLower());
 
@@ -20,7 +21,7 @@ namespace Library.Services.Factories
             {
                 var newAuthor = new Author { Name = authorName };
                 _context.Authors.Add(newAuthor);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return newAuthor;
             }
             else

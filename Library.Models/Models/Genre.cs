@@ -11,7 +11,7 @@ namespace Library.Models.Models
 
         [Required]
         [StringLength(40)]
-        public string GenreName { get; set; }
+        public string Name { get; set; }
         public List<BookGenre> BookGenres { get; set; }
     }
 }
