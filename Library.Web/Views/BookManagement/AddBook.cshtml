@@ -25,7 +25,7 @@
         </div>
         <div class="form-group">
             <label class="control-label">Genres</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddGenre">New Genre</a></p>
-            <select asp-for="@Model.GenresIds" asp-items="@Model.Genres" class="form-control">
+            <select asp-for="@Model.GenresIds" asp-items="@Model.GenresOptions" class="form-control">
             </select>
         </div>
         <div class="form-group">

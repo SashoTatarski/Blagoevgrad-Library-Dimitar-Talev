@@ -21,6 +21,10 @@ namespace Library.Services.Contracts
 
         Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
 
+        IReadOnlyCollection<Book> Search(string searchCriteria);
+
+
+
 
         void ListAllBooks();
         List<int> GetBooksIDs();

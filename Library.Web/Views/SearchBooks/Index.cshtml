@@ -1,0 +1,46 @@
+﻿@model SearchViewModel
+@using Microsoft.Extensions.Primitives;
+@{
+    ViewData["Title"] = "SearchBooks";
+}
+
+<div class="row mt-5">
+    <form class="col-lg-6" asp-controller="SearchBooks" asp-action="Index" method="post">
+        <div class="row">
+            <div class="col-sm-9">
+                <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
+            </div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-success">Search!</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row mt-5">
+    <div class="col-lg-6">
+        @if (Model != null)
+        {
+            if (string.IsNullOrWhiteSpace(Model.SearchName) || !Model.BookSearchResults.Any())
+            {
+                <p class="alert alert-info">There are no books</p>
+            }
+            else
+            {
+                foreach (var team in Model.BookSearchResults)
+                {
+                    <partial name="_BooksPartial" model="team" />
+                }
+            }
+        }
+    </div>
+</div>
+
+<a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+@{ var referrer = this.Context.Request.Headers["Referer"]; }
+
+@if (referrer != default(StringValues))
+{
+    <a href="@referrer.ToString()" class="btn btn-default">Go Back</a>
+}
+

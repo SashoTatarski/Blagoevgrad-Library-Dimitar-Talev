@@ -77,7 +77,7 @@ namespace Library.Web.Controllers
             }
             this.BookViewModel.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
             this.BookViewModel.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
-            this.BookViewModel.Genres = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
+            this.BookViewModel.GenresOptions = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
 
             return View(this.BookViewModel);
         }
@@ -87,6 +87,11 @@ namespace Library.Web.Controllers
         {
             await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult RemoveBook()
+        {
+            return null;
         }
     }
 }

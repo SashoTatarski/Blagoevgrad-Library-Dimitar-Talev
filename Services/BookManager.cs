@@ -28,6 +28,18 @@ namespace Library.Services
             _publisherFac = publisherFac;
         }
 
+
+        public IReadOnlyCollection<Book> Search(string searchCriteria)
+        {
+            return _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)                
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)                
+                .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
+                .ToList();
+        }
+
         public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
         {
             var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
