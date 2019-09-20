@@ -35,7 +35,6 @@ namespace Library.Services.Contracts
 
 
         void ListAllBooks();
-        List<int> GetBooksIDs();
         Book FindBook(int id);
         void RemoveBook(Book book);
         List<Book> GetSearchResult(string searchByParameter, string searchByText);
@@ -47,6 +46,6 @@ namespace Library.Services.Contracts
         void UpdateBookPublisher(int bookId, string newPublisherName);
         void UpdateBookGenre(int bookId, string newGenres);
         void ChangeBookStatus(Book book, BookStatus status);
-        
+        Task<Book> GetBook(string id);
     }
 }

@@ -72,6 +72,12 @@ namespace Library.Services
 
         public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre);
 
+        public async Task<Book> GetBook(string id)
+        {
+           return await _context.Books
+                .Include(b => b.Author)                    
+                .FirstOrDefaultAsync(book => book.ISBN == id);
+        }
 
 
 
@@ -79,7 +85,7 @@ namespace Library.Services
 
         public Book FindBook(int id) => throw new NotImplementedException();
         public List<Book> GetAllBooks() => throw new NotImplementedException();
-        public List<int> GetBooksIDs() => throw new NotImplementedException();
+      
         public List<Book> GetSearchResult(string searchByParameter, string searchByText) => throw new NotImplementedException();
         public void ListAllBooks() => throw new NotImplementedException();
         public void RemoveBook(Book book) => throw new NotImplementedException();

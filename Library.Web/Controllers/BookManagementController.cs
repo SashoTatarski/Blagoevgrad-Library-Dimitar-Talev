@@ -29,7 +29,11 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
+            var bookToDelete = await _bookManager.GetBook(id);
+
             await _bookManager.DeleteAsync(id);
+            
+            TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
         }
@@ -91,7 +95,7 @@ namespace Library.Web.Controllers
             this.BookViewModel.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
             this.BookViewModel.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
             this.BookViewModel.GenresOptions = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
-
+            
             return View(this.BookViewModel);
         }
 
@@ -99,6 +103,8 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> AddBook(AddBookViewModel vm)
         {
             await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
+            
+            TempData["message"] = $"{vm.Title} has been created";
             return RedirectToAction("Index", "Home");
         }
 
