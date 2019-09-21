@@ -33,7 +33,7 @@ namespace Library.Web.Controllers
 
             await _bookManager.DeleteAsync(id);
             
-            TempData["message"] = $"{bookToDelete.Title} has been deleted";
+            TempData["message"] = $"{bookToDelete.Title} - {bookToDelete.Author.Name} has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
         }
@@ -106,11 +106,6 @@ namespace Library.Web.Controllers
             
             TempData["message"] = $"{vm.Title} has been created";
             return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult RemoveBook()
-        {
-            return null;
         }
     }
 }
