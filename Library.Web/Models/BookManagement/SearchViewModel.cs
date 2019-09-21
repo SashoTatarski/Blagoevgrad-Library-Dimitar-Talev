@@ -12,6 +12,6 @@ namespace Library.Web.Models.BookManagement
         [Required]        
         public string SearchName { get; set; }
 
-        public List<AddBookViewModel> BookSearchResults { get; set; } = new List<AddBookViewModel>();
+        public List<BookViewModel> BookSearchResults { get; set; } = new List<BookViewModel>();
     }
 }

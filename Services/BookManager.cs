@@ -33,11 +33,23 @@ namespace Library.Services
         {
             return _context.Books
                 .Include(b => b.Author)
-                .Include(b => b.Publisher)                
+                .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)                
+                    .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
                 .ToList();
+        }
+
+        public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)
+        {
+            return await _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                .Where(b => b.Author.Id.ToString() == authorId)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(string isbn)
@@ -54,12 +66,12 @@ namespace Library.Services
 
         public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
         {
-            var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
 
             var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
 
             await _bookFac.CreateBook(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
-         }
+        }
         public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync();
 
         public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName);
@@ -72,20 +84,27 @@ namespace Library.Services
 
         public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre);
 
-        public async Task<Book> GetBook(string id)
-        {
-           return await _context.Books
-                .Include(b => b.Author)                    
-                .FirstOrDefaultAsync(book => book.ISBN == id);
-        }
+        public async Task<Book> GetBookAsync(string id)
+            => await _context.Books
+                 .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                 .FirstOrDefaultAsync(book => book.Id.ToString() == id)
+                 .ConfigureAwait(false);
 
 
+        public async Task<Author> GetAuthorAsync(string id)
+            => await _context.Authors
+            .Include(a => a.Books)
+            .FirstOrDefaultAsync(a => a.Id.ToString() == id)
+            .ConfigureAwait(false);
 
         public void ChangeBookStatus(Book book, BookStatus status) => throw new NotImplementedException();
 
         public Book FindBook(int id) => throw new NotImplementedException();
         public List<Book> GetAllBooks() => throw new NotImplementedException();
-      
+
         public List<Book> GetSearchResult(string searchByParameter, string searchByText) => throw new NotImplementedException();
         public void ListAllBooks() => throw new NotImplementedException();
         public void RemoveBook(Book book) => throw new NotImplementedException();

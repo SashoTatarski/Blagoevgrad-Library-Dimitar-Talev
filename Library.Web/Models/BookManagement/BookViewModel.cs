@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Web.Models.BookManagement
 {
-    public class AddBookViewModel
+    public class BookViewModel
     {
         public string BookId { get; set; }
 

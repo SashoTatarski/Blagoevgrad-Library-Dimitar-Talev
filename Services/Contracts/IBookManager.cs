@@ -46,6 +46,8 @@ namespace Library.Services.Contracts
         void UpdateBookPublisher(int bookId, string newPublisherName);
         void UpdateBookGenre(int bookId, string newGenres);
         void ChangeBookStatus(Book book, BookStatus status);
-        Task<Book> GetBook(string id);
+        Task<Book> GetBookAsync(string id);
+        Task<List<Book>> GetBooksByAuthorAsync(string authorId);
+        Task<Author> GetAuthorAsync(string id);
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Services.Contracts;
+﻿using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Web.Controllers
 {
@@ -25,7 +23,7 @@ namespace Library.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(/*[FromQuery]*/SearchViewModel viewModel)
+        public async Task<IActionResult> Index(SearchViewModel viewModel)
         {
             var books = _bookManager
                 .Search(viewModel.SearchName)

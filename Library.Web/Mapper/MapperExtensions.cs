@@ -9,9 +9,9 @@ namespace Library.Web.Mapper
 {
     public static class MapperExtensions
     {
-        public static AddBookViewModel MapToViewModel(this Book book)
+        public static BookViewModel MapToViewModel(this Book book)
         {
-            var vm = new AddBookViewModel();
+            var vm = new BookViewModel();
             vm.BookId = book.Id.ToString();
             vm.Title = book.Title;
             vm.Year = book.Year;
