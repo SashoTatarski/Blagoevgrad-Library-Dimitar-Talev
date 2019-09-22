@@ -32,9 +32,9 @@ namespace Library.Web.Controllers
         {
             var bookToDelete = await _bookManager.GetBookAsync(id);
 
-            await _bookManager.DeleteAsync(id);
+            await _bookManager.DeleteBookAsync(id);
 
-            TempData["message"] = $"{bookToDelete.Title} - {bookToDelete.Author.Name} has been deleted";
+            TempData["message"] = $"{bookToDelete.Title}has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
         }
@@ -148,8 +148,9 @@ namespace Library.Web.Controllers
             vm.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
             vm.GenresOptions = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
 
-            vm.Authors.Where(a => a.Value == vm.Author.Id.ToString()).FirstOrDefault().Selected = true;
-            vm.Publishers.Where(p => p.Value == vm.Publisher.Id.ToString()).FirstOrDefault().Selected = true;
+            // Both are the same
+            vm.Authors.FirstOrDefault(a => a.Value == vm.Author.Id.ToString()).Selected = true;
+            vm.Publishers.Find(p => p.Value == vm.Publisher.Id.ToString()).Selected = true;
 
             foreach (var listItem in vm.GenresOptions)
             {
@@ -168,7 +169,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBook(BookViewModel vm)
         {
-
+            await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds);
 
 
             TempData["message"] = $"{vm.Title} has been editted";

@@ -21,33 +21,17 @@ namespace Library.Services.Contracts
 
         Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
 
-        IReadOnlyCollection<Book> Search(string searchCriteria);
+        IReadOnlyCollection<Book> Search(string searchCriteria);       
 
-        List<Book> GetAllBooks();
+        Task DeleteBookAsync(string id);
 
-        Task DeleteAsync(string id);
-
-
-
-
-
-
-
-
-        void ListAllBooks();
-        Book FindBook(int id);
-        void RemoveBook(Book book);
-        List<Book> GetSearchResult(string searchByParameter, string searchByText);
-        void UpdateBookAuthor(int bookId, string newAuthorName);
-        void UpdateBookTitle(int bookId, string newTitle);
-        void UpdateBookISBN(int bookId, string newISBN);
-        void UpdateBookRack(int bookId, int newRack);
-        void UpdateBookYear(int bookId, int newYear);
-        void UpdateBookPublisher(int bookId, string newPublisherName);
-        void UpdateBookGenre(int bookId, string newGenres);
-        void ChangeBookStatus(Book book, BookStatus status);
+        Task EditBookAsync(string bookId, string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds);                  
+        
         Task<Book> GetBookAsync(string id);
+
         Task<List<Book>> GetBooksByAuthorAsync(string authorId);
+
         Task<Author> GetAuthorAsync(string id);
+
     }
 }

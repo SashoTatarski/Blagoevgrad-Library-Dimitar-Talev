@@ -19,6 +19,7 @@ namespace Library.Services
         private readonly IGenreFactory _genreFac;
         private readonly IPublisherFactory _publisherFac;
         private readonly LibraryContext _context;
+
         public BookManager(LibraryContext context, IBookFactory bookFac, IAuthorFactory authorFac, IGenreFactory genreFac, IPublisherFactory publisherFac)
         {
             _context = context;
@@ -28,6 +29,60 @@ namespace Library.Services
             _publisherFac = publisherFac;
         }
 
+        public async Task EditBookAsync(string bookId, string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds)
+        {
+            var book = await _context.Books
+                .Include(a => a.Author)
+                .Where(b => b.Id.ToString() == bookId)
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+
+            if (book.Title != title)
+                book.Title = title;
+
+            if (book.ISBN != isbn)
+                book.ISBN = isbn;
+
+            if (book.Year != year)
+                book.Year = year;
+
+            if (book.Rack != rack)
+                book.Rack = rack;
+
+
+            var newAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
+            book.AuthorId = newAuthor.Id;
+
+            var newPublisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
+            book.PublisherId = newPublisher.Id;
+
+            var genres = await _context.Genres.ToListAsync().ConfigureAwait(false);
+
+            // Clean all genres for the book
+            foreach (var bookGenre in _context.BookGenre)
+            {
+                if (bookGenre.BookId == book.Id)
+                    _context.BookGenre.Remove(bookGenre);
+            }
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            // Add the genres to the clean table
+            foreach (var genre in genres)
+            {
+                foreach (var genreParam in genresIds)
+                {
+                    if (genre.Id == genreParam)                    
+                    {
+                         _context.BookGenre.Add(new BookGenre
+                        {
+                            BookId = book.Id,
+                            GenreId = genreParam
+                        });
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
 
         public IReadOnlyCollection<Book> Search(string searchCriteria)
         {
@@ -52,15 +107,15 @@ namespace Library.Services
                 .ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(string isbn)
+        public async Task DeleteBookAsync(string isbn)
         {
-            var booksToDelete = await _context.Books.Where(book => book.ISBN.ToString() == isbn).ToListAsync();
+            var booksToDelete = await _context.Books.Where(book => book.ISBN == isbn).ToListAsync().ConfigureAwait(false);
 
 
             foreach (var book in booksToDelete)
             {
                 _context.Books.Remove(book);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
             }
         }
 
@@ -99,22 +154,6 @@ namespace Library.Services
             .Include(a => a.Books)
             .FirstOrDefaultAsync(a => a.Id.ToString() == id)
             .ConfigureAwait(false);
-
-        public void ChangeBookStatus(Book book, BookStatus status) => throw new NotImplementedException();
-
-        public Book FindBook(int id) => throw new NotImplementedException();
-        public List<Book> GetAllBooks() => throw new NotImplementedException();
-
-        public List<Book> GetSearchResult(string searchByParameter, string searchByText) => throw new NotImplementedException();
-        public void ListAllBooks() => throw new NotImplementedException();
-        public void RemoveBook(Book book) => throw new NotImplementedException();
-        public void UpdateBookAuthor(int bookId, string newAuthorName) => throw new NotImplementedException();
-        public void UpdateBookGenre(int bookId, string newGenres) => throw new NotImplementedException();
-        public void UpdateBookISBN(int bookId, string newISBN) => throw new NotImplementedException();
-        public void UpdateBookPublisher(int bookId, string newPublisherName) => throw new NotImplementedException();
-        public void UpdateBookRack(int bookId, int newRack) => throw new NotImplementedException();
-        public void UpdateBookTitle(int bookId, string newTitle) => throw new NotImplementedException();
-        public void UpdateBookYear(int bookId, int newYear) => throw new NotImplementedException();
     }
 }
 
