@@ -8,5 +8,6 @@ namespace Library.Services.Contracts
     {
         Task<User> CreateAsync(string username, string password, int membershipMonths);
         User Find(string username, string password);
+        Task<List<User>> GetAllUsersAsync();
     }
 }

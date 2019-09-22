@@ -4,72 +4,72 @@
     ViewData["Title"] = "SearchBooks";
 }
 
-    <div class="row mt-5">
-        <form class="col-lg-6" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
-            <div class="row">
-                <div class="col-sm-9">
-                    <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
-                </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success">Search!</button>
-                </div>
+<div class="row mt-5">
+    <form class="col-lg-6" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+        <div class="row">
+            <div class="col-sm-9">
+                <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
             </div>
-            <p></p>
-            <p></p>
-        </form>
-        
-        <table class="table table-stripped table-bordered table-sm">
-            <tr>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Publisher</th>
-                <th>ISBN</th>
-                <th>Year</th>
-                <th>Rack</th>
-                <th>Rating</th>
-                <th class="text-center">Actions</th>
-            </tr>
-            
-            @foreach (var book in Model.AllBooks)
-            {
-                <partial name="_BooksPartial" model="book" />
-            }
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-success">Search!</button>
+            </div>
+        </div>
+        <p></p>
+        <p></p>
+    </form>
 
-        </table>
-    </div>
-    
-@*<div class="row mt-5">
-    <div class="col-lg-12">
-        @if (Model != null)
+    <table class="table table-stripped table-bordered table-sm">
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Publisher</th>
+            <th>ISBN</th>
+            <th>Year</th>
+            <th>Rack</th>
+            <th>Rating</th>
+            <th class="text-center">Actions</th>
+        </tr>
+
+        @foreach (var book in Model.AllBooks)
         {
-            if (/*string.IsNullOrWhiteSpace(Model.SearchName) || */Model.BookSearchResults.Any())
-            {
-                <p class="alert alert-info">There are no books</p>
-            }
-            else
-            {
-                <table class="table table-stripped table-bordered table-sm">
-                    <tr>
-                        <th>Author</th>
-                        <th>Title</th>
-                        <th>Publisher</th>
-                        <th>ISBN</th>
-                        <th>Year</th>
-                        <th>Rack</th>
-                        <th>Rating</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
-
-                    @foreach (var book in Model.BookSearchResults)
-                    {
-                        <partial name="_BooksPartial" model="book" />
-                    }
-
-                </table>
-            }
+            <partial name="_BooksPartial" model="book" />
         }
-    </div>
-</div>*@
+
+    </table>
+</div>
+
+@*<div class="row mt-5">
+        <div class="col-lg-12">
+            @if (Model != null)
+            {
+                if (/*string.IsNullOrWhiteSpace(Model.SearchName) || */Model.BookSearchResults.Any())
+                {
+                    <p class="alert alert-info">There are no books</p>
+                }
+                else
+                {
+                    <table class="table table-stripped table-bordered table-sm">
+                        <tr>
+                            <th>Author</th>
+                            <th>Title</th>
+                            <th>Publisher</th>
+                            <th>ISBN</th>
+                            <th>Year</th>
+                            <th>Rack</th>
+                            <th>Rating</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+
+                        @foreach (var book in Model.BookSearchResults)
+                        {
+                            <partial name="_BooksPartial" model="book" />
+                        }
+
+                    </table>
+                }
+            }
+        </div>
+    </div>*@
 
 <a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 @{ var referrer = this.Context.Request.Headers["Referer"]; }

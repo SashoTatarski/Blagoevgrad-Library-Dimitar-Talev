@@ -6,6 +6,7 @@ using Library.Services.Contracts;
 using Library.Services.HashProvider;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +22,9 @@ namespace Library.Services
             _context = context;
             _hasher = hasher;
         }
+
+        public async Task<List<User>> GetAllUsersAsync() => await _context.Users.ToListAsync();
+
 
         public async Task<User> CreateAsync(string username, string password, int membershipMonths)
         {

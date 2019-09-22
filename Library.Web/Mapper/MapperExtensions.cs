@@ -1,4 +1,5 @@
 ﻿using Library.Models.Models;
+using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,19 @@ namespace Library.Web.Mapper
             vm.Publisher = book.Publisher;
             vm.Status = book.Status;
             vm.Genres = book.BookGenres.Select(bg => bg.Genre).ToList();
+
+            return vm;
+        }
+
+        public static UserViewModel MapToViewModel(this User user)
+        {
+            var vm = new UserViewModel();
+            vm.UserId = user.Id.ToString();
+            vm.Username = user.Username;
+            vm.MembershipEndDate = user.MembershipStartDate;
+            vm.MembershipEndDate = user.MembershipEndDate;
+            vm.Status = user.Status;
+            vm.Wallet = user.Wallet;
 
             return vm;
         }

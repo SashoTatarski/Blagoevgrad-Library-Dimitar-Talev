@@ -31,8 +31,7 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
         {
             var books = await _bookManager
-                .SearchAsync(viewModel.SearchName);
-
+                .SearchAsync(viewModel.SearchName).ConfigureAwait(false);
             var booksMapped = books
                 .Select(x => x.MapToViewModel())
                 .ToList();

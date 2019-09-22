@@ -1,7 +1,47 @@
-﻿
+﻿@model AccountViewModel
+@using Microsoft.Extensions.Primitives;
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Account Management</h1>
+<div class="row mt-5">
+    @*<form class="col-lg-6" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+            <div class="row">
+                <div class="col-sm-9">
+                    <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-success">Search!</button>
+                </div>
+            </div>
+            <p></p>
+            <p></p>
+        </form>*@
+
+    <table class="table table-stripped table-bordered table-sm">
+        <tr>
+            <th>Username</th>
+            <th>Membership Start</th>
+            <th>Membership End</th>
+            <th>Wallet</th>
+            <th>Status</th>            
+            <th class="text-center">Actions</th>
+        </tr>
+
+        @foreach (var user in Model.User)
+            {
+                <partial name="_UsersPartial" model="user" />
+            }
+
+    </table>
+</div>
+
+<a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+@{ var referrer = this.Context.Request.Headers["Referer"]; }
+
+@if (referrer != default(StringValues))
+{
+    <a href="@referrer.ToString()" class="btn btn-default">Go Back</a>
+}
+
 
