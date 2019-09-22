@@ -21,7 +21,7 @@ namespace Library.Services.Contracts
 
         Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
 
-        IReadOnlyCollection<Book> Search(string searchCriteria);       
+        Task<IReadOnlyCollection<Book>> SearchAsync(string searchCriteria);
 
         Task DeleteBookAsync(string id);
 
@@ -32,6 +32,6 @@ namespace Library.Services.Contracts
         Task<List<Book>> GetBooksByAuthorAsync(string authorId);
 
         Task<Author> GetAuthorAsync(string id);
-
+        Task<List<Book>> GetAllBooks();
     }
 }

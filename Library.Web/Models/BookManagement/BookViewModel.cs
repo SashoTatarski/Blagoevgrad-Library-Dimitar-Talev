@@ -12,7 +12,7 @@ namespace Library.Web.Models.BookManagement
     {
         public string BookId { get; set; }
 
-
+        public List<Book> AllBooks { get; set; }
         public List<SelectListItem> Authors { get; set; }
         public string AuthorId { get; set; }
         public Author Author { get; set; }

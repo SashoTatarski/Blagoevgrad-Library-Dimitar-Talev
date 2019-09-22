@@ -29,6 +29,14 @@ namespace Library.Services
             _publisherFac = publisherFac;
         }
 
+        public async Task<List<Book>> GetAllBooks() => await
+            _context.Books
+            .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+            .ToListAsync().ConfigureAwait(false);
+
         public async Task EditBookAsync(string bookId, string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds)
         {
             var book = await _context.Books
@@ -84,15 +92,15 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public IReadOnlyCollection<Book> Search(string searchCriteria)
+        public async Task<IReadOnlyCollection<Book>> SearchAsync(string searchCriteria)
         {
-            return _context.Books
+            return await _context.Books
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
-                .ToList();
+                .ToListAsync();
         }
 
         public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)
