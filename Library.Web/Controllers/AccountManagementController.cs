@@ -31,11 +31,27 @@ namespace Library.Web.Controllers
             foreach (var user in usersMapped)
             {
                 vm.User.Add(user);
-            }
-            
+            }            
             
             return View(vm);
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            var accountToDelete = _accountManager.DeleteUserAsync(id);
+
+            TempData["message"] = $"Account has been deactived";
+
+            return RedirectToAction("Index", "AccountManagement");
+        }
+
+        public async Task<IActionResult> Activate(string id)
+        {
+            var accountToActivate = await _accountManager.ActivateUserAsync(id);
+
+            TempData["message"] = $"{accountToActivate.Username} has been activated";
+
+            return RedirectToAction("Index", "AccountManagement");
+        }
     }
 }

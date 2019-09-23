@@ -23,6 +23,24 @@ namespace Library.Services
             _hasher = hasher;
         }
 
+        public async Task<User> ActivateUserAsync(string id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id).ConfigureAwait(false);
+            user.Status = AccountStatus.Active;
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            return user;
+        }
+
+        public async Task DeleteUserAsync(string id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id.ToString() == id).ConfigureAwait(false);
+
+            user.Status = AccountStatus.Inactive;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task<List<User>> GetAllUsersAsync() => await _context.Users.ToListAsync();
 
 
