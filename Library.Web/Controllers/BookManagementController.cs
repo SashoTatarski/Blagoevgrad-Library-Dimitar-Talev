@@ -34,7 +34,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCopies(BookViewModel vm)
         {
-            var book = _bookManager.AddBookCopies(vm.BookId, vm.BookCopies);
+            await _bookManager.AddBookCopies(vm.BookId, vm.BookCopies).ConfigureAwait(false);
 
             TempData["message"] = $"{vm.BookCopies} copies have been added";
 

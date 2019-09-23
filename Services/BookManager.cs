@@ -144,13 +144,11 @@ namespace Library.Services
 
         public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
         {
-            var authorTemp = _context.Authors.ToList();
-            var author = authorTemp.FirstOrDefault(a => a.Id.ToString() == authorId);
+            var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
 
-            var publisherTemp = _context.Publishers.ToList();
-            var publisher = publisherTemp.FirstOrDefault(p => p.Id.ToString() == publisherId);
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
 
-            await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies);
+            await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
         }
         public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync().ConfigureAwait(false);
 
