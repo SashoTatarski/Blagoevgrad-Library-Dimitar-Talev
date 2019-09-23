@@ -35,7 +35,7 @@ namespace Library.Web.Mapper
             var vm = new UserViewModel();
             vm.UserId = user.Id.ToString();
             vm.Username = user.Username;
-            vm.MembershipEndDate = user.MembershipStartDate;
+            vm.MembershipStartDate = user.MembershipStartDate;
             vm.MembershipEndDate = user.MembershipEndDate;
             vm.Status = user.Status;
             vm.Wallet = user.Wallet;
