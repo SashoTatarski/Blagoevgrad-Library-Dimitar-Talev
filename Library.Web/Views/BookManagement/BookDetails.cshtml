@@ -1,4 +1,5 @@
 ﻿@model BookViewModel
+@using Microsoft.Extensions.Primitives;
 @{
     ViewData["Title"] = "BookDetails";
 }
@@ -14,7 +15,7 @@
     </div>
     <div>
         <a class="font-weight-bold">Publisher: </a>
-        <a asp-controller="BookManagement" asp-action="PublisherDetails" asp-route-id="@Model.Publisher.Id">@Model.Publisher.Name</a>
+        <a>@Model.Publisher.Name</a>
     </div>
     <div>
         <a class="font-weight-bold">Publication Year: </a>
@@ -35,7 +36,8 @@
         @foreach (var genre in Model.Genres)
         {
             <li>
-                <a asp-controller="BookManagement" asp-action="GenreDetails" asp-route-id="@genre.Id">@genre.Name</a>
+                @*<a asp-controller="BookManagement" asp-action="GenreDetails" asp-route-id="@genre.Id">@genre.Name</a>*@
+                <a>@genre.Name</a>
             </li>
         }
     </ul>
@@ -63,6 +65,14 @@
             }
 
         </table>
+    }
+
+    <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    @{ var referrer = this.Context.Request.Headers["Referer"]; }
+
+    @if (referrer != default(StringValues))
+    {
+        <a href="@referrer.ToString()" class="btn btn-outline-primary">Go Back</a>
     }
 </div>
 

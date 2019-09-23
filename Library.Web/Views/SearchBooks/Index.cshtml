@@ -27,12 +27,17 @@
             <th>Year</th>
             <th>Rack</th>
             <th>Rating</th>
-            <th>Copies</th>
+
             @if (User.IsInRole("admin"))
+            {
+                <th>Copies</th>
+            }
+
+            @if (User.Identity.IsAuthenticated)
             {
                 <th class="text-center">Actions</th>
             }
-            </tr>
+        </tr>
 
         @foreach (var book in Model.AllBooks)
         {

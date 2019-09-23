@@ -1,5 +1,6 @@
 ﻿@model UserViewModel
 @using Library.Models.Enums;
+@using System.Globalization;
 @{
     ViewData["Title"] = "_UsersPartial";
 }
@@ -7,9 +8,9 @@
     <tr>
         <td class="text-left"><a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"> @Model.Username</a>
         </td>
-        <td class="text-left">@Model.MembershipStartDate.ToString("dd/MM/yyyy")</td>
-        <td class="text-left">@Model.MembershipEndDate.ToString("dd/MM/yyyy")</td>
-        <td class="text-left">@Model.Wallet</td>
+        <td class="text-left">@Model.MembershipStartDate.ToString("dd.MM.yyyy")</td>
+        <td class="text-left">@Model.MembershipEndDate.ToString("dd.MM.yyyy")</td>
+        <td class="text-left">@Model.Wallet.ToString("C", CultureInfo.CurrentCulture)</td>
 
         @if (Model.Status == AccountStatus.Active)
         {

@@ -5,24 +5,34 @@
 
 <tr>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id">@Model.Author.Name</a>
+        <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" span title="All Books From @Model.Author.Name">@Model.Author.Name</a>
     </td>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId"> @Model.Title</a>
+        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
     </td>
     <td class="text-left">@Model.Publisher.Name</td>
     <td class="text-left">@Model.ISBN</td>
     <td class="text-left">@Model.Year</td>
     <td class="text-left">@Model.Rack</th>
     <td class="text-left">@Model.Rating</td>
-    <td class="text-left">@Model.BookCopies</td>
+
     @if (User.IsInRole("admin"))
     {
-        <td class="text-center">
+        <td class="text-left">@Model.BookCopies</td>
+    }
+
+    <td class="text-center">
+        @if (User.IsInRole("admin"))
+        {
             <a asp-controller="BookManagement" asp-action="Delete" asp-route-id="@Model.ISBN" class="text-danger ml-1"><i class="fa fa-trash fa-lg"></i></a>
             <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1"><i class="fas fa-edit fa-lg"></i></a>
-        </td>
-    }
-    </tr>
+        }
+        else if (User.IsInRole("user"))
+        {
+            <a class="btn btn-danger" asp-controller="Home" asp-action="Index">Check Out</a>
+            <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Reserve</a>
+        }
+    </td>
+</tr>
 
 
