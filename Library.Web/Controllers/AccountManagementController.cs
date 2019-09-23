@@ -53,5 +53,14 @@ namespace Library.Web.Controllers
 
             return RedirectToAction("Index", "AccountManagement");
         }
+
+        public async Task<IActionResult> Details(string id)
+        {
+            var user = await _accountManager.GetUser(id);
+
+            var vm = user.MapToViewModel();
+
+            return View(vm);
+        }
     }
 }

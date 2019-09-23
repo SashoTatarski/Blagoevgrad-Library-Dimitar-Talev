@@ -15,5 +15,7 @@ namespace Library.Services.Contracts
         Task DeleteUserAsync(string id);
 
         Task<User> ActivateUserAsync(string id);
+
+        Task<User> GetUser(string id);
     }
 }

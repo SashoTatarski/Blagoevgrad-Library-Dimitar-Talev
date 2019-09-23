@@ -5,9 +5,10 @@
 }
 
     <tr>
-        <td class="text-left">@Model.Username</td>
-        <td class="text-left">@Model.MembershipStartDate</td>
-        <td class="text-left">@Model.MembershipEndDate</td>
+        <td class="text-left"><a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"> @Model.Username</a>
+        </td>
+        <td class="text-left">@Model.MembershipStartDate.ToString("dd/MM/yyyy")</td>
+        <td class="text-left">@Model.MembershipEndDate.ToString("dd/MM/yyyy")</td>
         <td class="text-left">@Model.Wallet</td>
 
         @if (Model.Status == AccountStatus.Active)

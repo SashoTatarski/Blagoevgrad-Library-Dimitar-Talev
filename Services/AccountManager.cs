@@ -23,6 +23,8 @@ namespace Library.Services
             _hasher = hasher;
         }
 
+        public async Task<User> GetUser(string id) => await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id).ConfigureAwait(false);
+
         public async Task<User> ActivateUserAsync(string id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id).ConfigureAwait(false);
