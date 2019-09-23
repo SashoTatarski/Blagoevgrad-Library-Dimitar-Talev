@@ -1,11 +1,23 @@
 ﻿@model BookCopyViewModel
+@using Library.Models.Enums;
 @{
     ViewData["Title"] = "_BookCopiesPartial";
 }
 
+@if (User.IsInRole("admin"))
+{
     <tr>
         <td class="text-left">@Model.Title</td>
-        <td class="text-left">@Model.Status</td>
+
+        @if (Model.Status == BookStatus.Available.ToString())
+        {
+            <td class="text-success text-left">@Model.Status</td>
+        }
+        else
+        {
+            <td class="text-danger text-left">@Model.Status</td>
+        }
+
         @if (Model.CheckedOutBy != null)
         {
             <td class="text-left">@Model.CheckedOutBy.Username</td>
@@ -23,9 +35,9 @@
                 }
             </td>
         }
-        else   
+        else
         {
             <td class="text-danger text-left">None</td>
         }
-
     </tr>
+}

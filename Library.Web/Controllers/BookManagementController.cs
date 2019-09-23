@@ -9,7 +9,7 @@ using Library.Web.Mapper;
 
 namespace Library.Web.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, user")]
     public class BookManagementController : Controller
     {
         private readonly IBookManager _bookManager;
@@ -47,7 +47,7 @@ namespace Library.Web.Controllers
 
             await _bookManager.DeleteBookAsync(id);
 
-            TempData["message"] = $"{bookToDelete.Title}has been deleted";
+            TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
         }
@@ -65,9 +65,9 @@ namespace Library.Web.Controllers
             var author = await _bookManager.CreateAuthorAsync(vm.AuthorName);
 
             if (vm.Id == null)
-                return RedirectToAction("AddBook", "BookManagement");
+                return RedirectToAction("AddBook");
             else
-                return RedirectToAction("EditBook", "BookManagement", new { id = vm.Id });
+                return RedirectToAction("EditBook", new { id = vm.Id });
         }
 
         [HttpGet]
@@ -97,6 +97,8 @@ namespace Library.Web.Controllers
 
             return RedirectToAction("AddBook", "BookManagement");
         }
+
+        // TODO
         private BookViewModel BookViewModel { get; set; }
 
         public async Task<IActionResult> AddBook()
@@ -122,7 +124,7 @@ namespace Library.Web.Controllers
             await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
 
             TempData["message"] = $"{vm.Title} has been created";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "SearchBooks");
         }
 
         [HttpGet]
@@ -131,6 +133,11 @@ namespace Library.Web.Controllers
             var author = await _bookManager.GetAuthorAsync(vm.Id);
             var books = await _bookManager.GetBooksByAuthorAsync(vm.Id);
 
+            if(User.IsInRole("user"))
+            {
+                books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id);
+            }
+
             vm.AuthorName = author.Name;
             vm.Books = books.Select(x => x.MapToViewModel()).ToList();
 
@@ -138,6 +145,7 @@ namespace Library.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> BookDetails(string id)
         {
             var bookTemp = await _bookManager.GetBookAsync(id);

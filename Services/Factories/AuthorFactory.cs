@@ -15,13 +15,13 @@ namespace Library.Services.Factories
         }
         public async Task<Author> CreateAuthor(string authorName)
         {
-            var existingAuthor = _context.Authors.FirstOrDefault(a => a.Name.ToLower() == authorName.ToLower());
+            var existingAuthor = _context.Authors.FirstOrDefault(a => string.Equals(a.Name, authorName, System.StringComparison.CurrentCultureIgnoreCase));
 
             if (existingAuthor is null)
             {
                 var newAuthor = new Author { Name = authorName };
                 _context.Authors.Add(newAuthor);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return newAuthor;
             }
             else

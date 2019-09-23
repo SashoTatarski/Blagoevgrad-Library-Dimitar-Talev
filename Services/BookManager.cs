@@ -130,10 +130,36 @@ namespace Library.Services
                 .ConfigureAwait(false);
         }
 
+        //TODO - how to improve this shit
+        public async Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId)
+        {
+            var tempBooks = await _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                .Where(b => b.Author.Id.ToString() == authorId)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            var allBooks = new List<Book>();
+            string isbn = tempBooks[0].ISBN;
+            allBooks.Add(tempBooks[0]);
+            foreach (var book in tempBooks)
+            {
+                if (book.ISBN != isbn)
+                {
+                    allBooks.Add(book);
+                    isbn = book.ISBN;
+                }
+            }
+
+            return allBooks;
+        }
+
         public async Task DeleteBookAsync(string isbn)
         {
             var booksToDelete = await _context.Books.Where(book => book.ISBN == isbn).ToListAsync().ConfigureAwait(false);
-
 
             foreach (var book in booksToDelete)
             {
@@ -160,7 +186,7 @@ namespace Library.Services
 
         public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
 
-        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre);
+        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre).ConfigureAwait(false);
 
         public async Task<Book> GetBookAsync(string id)
             => await _context.Books
@@ -168,7 +194,7 @@ namespace Library.Services
                 .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
-                 .FirstOrDefaultAsync(book => book.Id.ToString() == id);
+                 .FirstOrDefaultAsync(book => book.Id.ToString() == id).ConfigureAwait(false);
                  
 
 

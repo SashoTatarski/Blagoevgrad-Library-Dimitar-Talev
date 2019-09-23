@@ -11,7 +11,7 @@
                 <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
             </div>
             <div class="col-sm-3">
-                <button type="submit" class="btn btn-success">Search!</button>
+                <button type="submit" class="btn btn-primary">Search!</button>
             </div>
         </div>
         <p></p>
@@ -28,8 +28,11 @@
             <th>Rack</th>
             <th>Rating</th>
             <th>Copies</th>
-            <th class="text-center">Actions</th>
-        </tr>
+            @if (User.IsInRole("admin"))
+            {
+                <th class="text-center">Actions</th>
+            }
+            </tr>
 
         @foreach (var book in Model.AllBooks)
         {
@@ -39,44 +42,11 @@
     </table>
 </div>
 
-@*<div class="row mt-5">
-        <div class="col-lg-12">
-            @if (Model != null)
-            {
-                if (/*string.IsNullOrWhiteSpace(Model.SearchName) || */Model.BookSearchResults.Any())
-                {
-                    <p class="alert alert-info">There are no books</p>
-                }
-                else
-                {
-                    <table class="table table-stripped table-bordered table-sm">
-                        <tr>
-                            <th>Author</th>
-                            <th>Title</th>
-                            <th>Publisher</th>
-                            <th>ISBN</th>
-                            <th>Year</th>
-                            <th>Rack</th>
-                            <th>Rating</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-
-                        @foreach (var book in Model.BookSearchResults)
-                        {
-                            <partial name="_BooksPartial" model="book" />
-                        }
-
-                    </table>
-                }
-            }
-        </div>
-    </div>*@
-
-<a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+<a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 @{ var referrer = this.Context.Request.Headers["Referer"]; }
 
 @if (referrer != default(StringValues))
 {
-    <a href="@referrer.ToString()" class="btn btn-default">Go Back</a>
+    <a href="@referrer.ToString()" class="btn btn-outline-primary">Go Back</a>
 }
 
