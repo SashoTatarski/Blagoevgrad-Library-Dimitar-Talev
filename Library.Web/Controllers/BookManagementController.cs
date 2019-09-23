@@ -140,9 +140,17 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> BookDetails(string id)
         {
-            var book = await _bookManager.GetBookAsync(id);
+            var bookTemp = await _bookManager.GetBookAsync(id);
+            var vm = bookTemp.MapToViewModel();
 
-            var vm = book.MapToViewModel();
+            var allBooks = await _bookManager.GetAllBooksAsync();
+            var books = allBooks.Where(a => a.ISBN == vm.ISBN).ToList();
+
+            foreach (var book in books)
+            {
+                vm.AllBookCopies.Add(book.MapToCopyViewModel());
+            }
+                      
 
             return View(vm);
         }

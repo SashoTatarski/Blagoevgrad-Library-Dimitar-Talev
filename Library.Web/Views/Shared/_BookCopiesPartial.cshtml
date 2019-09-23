@@ -1,0 +1,30 @@
+﻿@model BookCopyViewModel
+@{
+    ViewData["Title"] = "_BookCopiesPartial";
+}
+
+    <tr>
+        <td class="text-left">@Model.Title</td>
+        <td class="text-left">@Model.Status</td>
+        @if (Model.CheckedOutBy != null)
+        {
+            <td class="text-left">@Model.CheckedOutBy.Username</td>
+        }
+        else
+        {
+            <td class="text-danger text-left">None</td>
+        }
+        @if (Model.ReservedBy != null)
+        {
+            <td class="text-left">
+                @foreach (var user in Model.ReservedBy)
+                {
+                    <p>user.Username</p>
+                }
+            </td>
+        }
+        else
+        {
+            <td class="text-danger text-left">None</td>
+        }
+    </tr>

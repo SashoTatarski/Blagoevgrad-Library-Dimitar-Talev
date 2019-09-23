@@ -12,7 +12,7 @@ namespace Library.Web.Models.BookManagement
     {
         public string BookId { get; set; }
 
-        public List<Book> AllBooks { get; set; }
+        public List<BookCopyViewModel> AllBookCopies { get; set; }
         public List<SelectListItem> Authors { get; set; }
         public string AuthorId { get; set; }
         public Author Author { get; set; }
@@ -37,6 +37,7 @@ namespace Library.Web.Models.BookManagement
         public int BookCopies { get; set; }
 
         public double Rating { get; set; }
+
         public BookStatus Status { get; set; }
 
     }

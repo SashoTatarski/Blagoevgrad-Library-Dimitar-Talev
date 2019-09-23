@@ -13,6 +13,7 @@ namespace Library.Web.Mapper
         public static BookViewModel MapToViewModel(this Book book)
         {
             var vm = new BookViewModel();
+
             vm.BookId = book.Id.ToString();
             vm.Title = book.Title;
             vm.Year = book.Year;
@@ -23,6 +24,8 @@ namespace Library.Web.Mapper
             vm.Publisher = book.Publisher;
             vm.Status = book.Status;
             vm.Genres = book.BookGenres.Select(bg => bg.Genre).ToList();
+
+            vm.AllBookCopies = new List<BookCopyViewModel>();
 
             return vm;
         }
@@ -36,6 +39,27 @@ namespace Library.Web.Mapper
             vm.MembershipEndDate = user.MembershipEndDate;
             vm.Status = user.Status;
             vm.Wallet = user.Wallet;
+
+            return vm;
+        }
+
+        public static BookCopyViewModel MapToCopyViewModel(this Book book)
+        {
+            var vm = new BookCopyViewModel();
+            vm.Title = book.Title;
+            vm.Status = book.Status.ToString();
+
+            if (book.ReservedBooks != null)
+            {
+                var resUsers = new List<User>();
+                book.ReservedBooks.ForEach(x => resUsers.Add(x.User));
+                vm.ReservedBy = resUsers;
+            }
+
+            if (book.CheckedoutBook != null)
+            {
+                vm.CheckedOutBy = book.CheckedoutBook.User;
+            }
 
             return vm;
         }
