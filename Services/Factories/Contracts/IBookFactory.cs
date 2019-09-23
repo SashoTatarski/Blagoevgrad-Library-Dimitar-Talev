@@ -6,6 +6,6 @@ namespace Library.Services.Factories.Contracts
 {
     public interface IBookFactory
     {
-        Task CreateBook(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genres, int copies);
+        Task CreateBookAsync(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genres, int copies);
     }
 }

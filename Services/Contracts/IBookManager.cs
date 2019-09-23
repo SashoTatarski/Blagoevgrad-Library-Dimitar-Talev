@@ -32,6 +32,8 @@ namespace Library.Services.Contracts
         Task<List<Book>> GetBooksByAuthorAsync(string authorId);
 
         Task<Author> GetAuthorAsync(string id);
-        Task<List<Book>> GetAllBooks();
+        Task<List<Book>> GetAllBooksAsync();
+        Task<int> BookCopiesCountAsync(string Isbn);
+        Task AddBookCopies(string id, int copies);
     }
 }

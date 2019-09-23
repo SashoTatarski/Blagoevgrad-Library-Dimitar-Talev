@@ -15,9 +15,10 @@
     <td class="text-left">@Model.Year</td>
     <td class="text-left">@Model.Rack</th>
     <td class="text-left">@Model.Rating</td>
+    <td class="text-left">@Model.BookCopies</td>
     <td class="text-center">
         <a asp-controller="BookManagement" asp-action="Delete" asp-route-id="@Model.ISBN" class="text-danger ml-1"><i class="fa fa-trash fa-lg"></i></a>
-        <a asp-controller="BookManagement" asp-action="Edit" asp-route-id="@Model.ISBN" class="text-danger ml-1"><i class="fas fa-edit fa-lg"></i></a>
+        <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1"><i class="fas fa-edit fa-lg"></i></a>
 
     </td>
 </tr>

@@ -23,9 +23,22 @@ namespace Library.Web.Controllers
             return View();
         }
 
-        public IActionResult Edit()
+        [HttpGet]
+        public IActionResult AddCopies(string id)
         {
-            return View();
+            var vm = new BookViewModel();
+            vm.BookId = id;
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCopies(BookViewModel vm)
+        {
+            var book = _bookManager.AddBookCopies(vm.BookId, vm.BookCopies);
+
+            TempData["message"] = $"{vm.BookCopies} copies have been added";
+
+            return RedirectToAction("Index", "SearchBooks");
         }
 
         public async Task<IActionResult> Delete(string id)

@@ -13,7 +13,7 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public async Task CreateBook(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genresIds, int copies)
+        public async Task CreateBookAsync(string title, string isbn, int year, int rack, Author author, Publisher publisher, List<int> genresIds, int copies)
         {
             for (int i = 0; i < copies; i++)
             {

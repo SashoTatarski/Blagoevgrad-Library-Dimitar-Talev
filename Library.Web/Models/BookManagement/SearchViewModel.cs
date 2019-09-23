@@ -16,5 +16,7 @@ namespace Library.Web.Models.BookManagement
 
         public List<BookViewModel> AllBooks { get; set; } = new List<BookViewModel>();
 
+        public int BookCopies { get; set; }
+
     }
 }

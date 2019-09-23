@@ -20,10 +20,20 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(SearchViewModel searchVM)
         {
-            var allBooks = await _bookManager.GetAllBooks();
+            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
             var allBooksVM = allBooks.Select(x => x.MapToViewModel());
 
-            searchVM.AllBooks = new List<BookViewModel>(allBooksVM);
+            searchVM.AllBooks = new List<BookViewModel>();             
+
+            foreach (var book in allBooksVM)
+            {
+                if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
+                {
+                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
+                    searchVM.AllBooks.Add(book);
+                }
+            }
+
             return View(searchVM);
         }
 
