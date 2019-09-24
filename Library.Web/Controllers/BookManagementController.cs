@@ -43,9 +43,9 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var bookToDelete = await _bookManager.GetBookByISBNAsync(id);
+            var bookToDelete = await _bookManager.GetBookByISBNAsync(id).ConfigureAwait(false);
 
-            await _bookManager.DeleteBookAsync(id);
+            await _bookManager.DeleteBookAsync(id).ConfigureAwait(false);
 
             TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
@@ -103,9 +103,9 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddBook()
         {
-            var allAuthors = await _bookManager.GetAllAuthorsAsync();
-            var allPublisher = await _bookManager.GetAllPublishersAsync();
-            var allGenres = await _bookManager.GetAllGenresAsync();
+            var allAuthors = await _bookManager.GetAllAuthorsAsync().ConfigureAwait(false);
+            var allPublisher = await _bookManager.GetAllPublishersAsync().ConfigureAwait(false);
+            var allGenres = await _bookManager.GetAllGenresAsync().ConfigureAwait(false);
 
             if (this.BookViewModel == null)
             {
@@ -121,7 +121,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBook(BookViewModel vm)
         {
-            await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
+            await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies).ConfigureAwait(false);
 
             TempData["message"] = $"{vm.Title} has been created";
             return RedirectToAction("Index", "SearchBooks");
@@ -131,10 +131,9 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AuthorDetails(AuthorViewModel vm)
         {
-            var author = await _bookManager.GetAuthorAsync(vm.Id);
-            //var books = await _bookManager.GetBooksByAuthorAsync(vm.Id);
-
-            var books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id);
+            var author = await _bookManager.GetAuthorAsync(vm.Id).ConfigureAwait(false);
+           
+            var books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id).ConfigureAwait(false);
 
             vm.AuthorName = author.Name;
             vm.Books = books.Select(x => x.MapToViewModel()).ToList();
@@ -146,10 +145,10 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BookDetails(string id)
         {
-            var bookTemp = await _bookManager.GetBookByIdAsync(id);
+            var bookTemp = await _bookManager.GetBookByIdAsync(id).ConfigureAwait(false);
             var vm = bookTemp.MapToViewModel();
 
-            var allBooks = await _bookManager.GetAllBooksAsync();
+            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
             var books = allBooks.Where(a => a.ISBN == vm.ISBN).ToList();
 
             foreach (var book in books)
@@ -164,19 +163,19 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBook(string id)
         {
-            var book = await _bookManager.GetBookByIdAsync(id);
+            var book = await _bookManager.GetBookByIdAsync(id).ConfigureAwait(false);
             var vm = book.MapToViewModel();
 
-            var allAuthors = await _bookManager.GetAllAuthorsAsync();
-            var allPublisher = await _bookManager.GetAllPublishersAsync();
-            var allGenres = await _bookManager.GetAllGenresAsync();
+            var allAuthors = await _bookManager.GetAllAuthorsAsync().ConfigureAwait(false);
+            var allPublisher = await _bookManager.GetAllPublishersAsync().ConfigureAwait(false);
+            var allGenres = await _bookManager.GetAllGenresAsync().ConfigureAwait(false);
 
             vm.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
             vm.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
             vm.GenresOptions = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
 
             // Both are the same
-            vm.Authors.FirstOrDefault(a => a.Value == vm.Author.Id.ToString()).Selected = true;
+            vm.Authors.Find(a => a.Value == vm.Author.Id.ToString()).Selected = true;
             vm.Publishers.Find(p => p.Value == vm.Publisher.Id.ToString()).Selected = true;
 
             foreach (var listItem in vm.GenresOptions)

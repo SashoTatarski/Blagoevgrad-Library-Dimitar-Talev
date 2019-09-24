@@ -48,7 +48,7 @@ namespace Library.Web
             services.AddScoped<IAuthorFactory, AuthorFactory>();
             services.AddScoped<IPublisherFactory, PublisherFactory>();
             services.AddScoped<IGenreFactory, GenreFactory>();
-
+            services.AddScoped<ILibrarySystem, LibrarySystem>();
 
 
             services.AddSingleton<IHasher, Hasher>();

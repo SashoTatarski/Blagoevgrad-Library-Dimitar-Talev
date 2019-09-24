@@ -57,7 +57,7 @@ namespace Library.Services
 
             if (defaultRole is null)
             {
-                throw new InvalidOperationException("No default role in DB");
+                throw new InvalidOperationException(Constants.NoDefRoleDb);
             }
 
             var user = new User
@@ -84,7 +84,7 @@ namespace Library.Services
 
             if (user is null || !_hasher.Verify(password, user.HashPassword))
             {
-                throw new ArgumentException("username or password incorrect");
+                throw new ArgumentException(Constants.UsernamePassIncorr);
             }
 
             return user;

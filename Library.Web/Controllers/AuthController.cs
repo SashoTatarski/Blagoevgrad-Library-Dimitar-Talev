@@ -44,11 +44,11 @@ namespace Library.Web.Controllers
             try
             {
                 var user = _accountManager.Find(viewModel.Username, viewModel.Password);
-                await SignInUserAsync(user);
+                await SignInUserAsync(user).ConfigureAwait(false);
 
                 return BackToHome();
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 return View(viewModel);
             }
@@ -57,7 +57,7 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-            await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
 
             return BackToHome();
         }
@@ -83,7 +83,7 @@ namespace Library.Web.Controllers
 
             try
             {             
-               User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType);
+               User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType).ConfigureAwait(false);
 
                 await SignInUserAsync(user).ConfigureAwait(false);
 
@@ -114,7 +114,7 @@ namespace Library.Web.Controllers
                 IsPersistent = true
             };
 
-            await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+            await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties).ConfigureAwait(false);
         }
 
         private RedirectToActionResult BackToHome()

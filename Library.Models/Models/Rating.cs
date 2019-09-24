@@ -15,7 +15,6 @@ namespace Library.Models.Models
         [StringLength(300)]
         public string Comment { get; set; }
 
-
         public Book Book { get; set; }
         public User User { get; set; }
     }
