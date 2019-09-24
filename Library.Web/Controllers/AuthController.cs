@@ -85,7 +85,7 @@ namespace Library.Web.Controllers
             {             
                User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType);
 
-                await SignInUserAsync(user);
+                await SignInUserAsync(user).ConfigureAwait(false);
 
                 return BackToHome();
             }

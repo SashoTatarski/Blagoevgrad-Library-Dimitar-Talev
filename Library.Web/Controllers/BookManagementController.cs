@@ -43,7 +43,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var bookToDelete = await _bookManager.GetBookAsync(id);
+            var bookToDelete = await _bookManager.GetBookAsync(id).ConfigureAwait(false);
 
             await _bookManager.DeleteBookAsync(id);
 
@@ -128,15 +128,13 @@ namespace Library.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> AuthorDetails(AuthorViewModel vm)
         {
             var author = await _bookManager.GetAuthorAsync(vm.Id);
-            var books = await _bookManager.GetBooksByAuthorAsync(vm.Id);
+            //var books = await _bookManager.GetBooksByAuthorAsync(vm.Id);
 
-            if(User.IsInRole("user"))
-            {
-                books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id);
-            }
+            var books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id);
 
             vm.AuthorName = author.Name;
             vm.Books = books.Select(x => x.MapToViewModel()).ToList();
@@ -158,7 +156,7 @@ namespace Library.Web.Controllers
             {
                 vm.AllBookCopies.Add(book.MapToCopyViewModel());
             }
-                      
+
 
             return View(vm);
         }
@@ -198,7 +196,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBook(BookViewModel vm)
         {
-            await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds);
+            await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds).ConfigureAwait(false);
 
 
             TempData["message"] = $"{vm.Title} has been editted";

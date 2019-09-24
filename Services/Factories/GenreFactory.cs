@@ -22,13 +22,13 @@ namespace Library.Services.Factories
 
             foreach (var genre in genreListString)
             {
-                var existingGenre = _context.Genres.FirstOrDefault(g => g.Name.ToLower() == genre.ToLower()); ;
+                var existingGenre = _context.Genres.FirstOrDefault(g => string.Equals(g.Name, genre, System.StringComparison.OrdinalIgnoreCase)); ;
 
                 if (existingGenre is null)
                 {
                     var newGenre = new Genre { Name = genre };
                     _context.Genres.Add(newGenre);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
 
                     list.Add(newGenre);
                 }

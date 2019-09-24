@@ -38,11 +38,11 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var accountToDelete = _accountManager.DeleteUserAsync(id);
+            await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
 
             TempData["message"] = $"Account has been deactived";
 
-            return RedirectToAction("Index", "AccountManagement");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Activate(string id)

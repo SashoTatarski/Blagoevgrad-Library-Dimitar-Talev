@@ -115,7 +115,7 @@ namespace Library.Services
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
-                .ToListAsync();
+                .ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)

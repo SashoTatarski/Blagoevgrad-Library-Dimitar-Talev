@@ -15,13 +15,13 @@ namespace Library.Services.Factories
         }
         public async Task<Publisher> CreatePublisher(string name)
         {
-            var existingPublisher = _context.Publishers.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
+            var existingPublisher = _context.Publishers.FirstOrDefault(p => string.Equals(p.Name, name, System.StringComparison.OrdinalIgnoreCase));
 
             if (existingPublisher is null)
             {
                 var newPublisher = new Publisher { Name = name };
                 _context.Publishers.Add(newPublisher);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
 
                 return newPublisher;
             }

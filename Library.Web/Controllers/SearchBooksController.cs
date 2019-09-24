@@ -29,7 +29,7 @@ namespace Library.Web.Controllers
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
                 {
-                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
+                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN).ConfigureAwait(false);
                     searchVM.AllBooks.Add(book);
                 }
             }

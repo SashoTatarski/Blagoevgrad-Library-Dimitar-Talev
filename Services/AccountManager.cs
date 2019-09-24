@@ -43,7 +43,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<List<User>> GetAllUsersAsync() => await _context.Users.ToListAsync();
+        public async Task<List<User>> GetAllUsersAsync() => await _context.Users.ToListAsync().ConfigureAwait(false);
 
 
         public async Task<User> CreateAsync(string username, string password, int membershipMonths)
