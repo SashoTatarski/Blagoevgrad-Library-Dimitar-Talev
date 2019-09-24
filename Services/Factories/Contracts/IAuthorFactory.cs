@@ -5,6 +5,6 @@ namespace Library.Services.Factories.Contracts
 {
     public interface IAuthorFactory
     {
-        Task<Author> CreateAuthor(string authorName);
+        Task<Author> CreateAuthorAsync(string authorName);
     }
 }

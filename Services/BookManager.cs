@@ -132,7 +132,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName).ConfigureAwait(false);
+        public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthorAsync(authorName).ConfigureAwait(false);
         public async Task<Author> GetAuthorAsync(string id)
             => await _context.Authors
                 .Include(a => a.Books)

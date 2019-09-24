@@ -64,7 +64,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAuthor(AuthorViewModel vm)
         {
-            var author = await _bookManager.CreateAuthorAsync(vm.AuthorName);
+            var author = await _bookManager.CreateAuthorAsync(vm.AuthorName).ConfigureAwait(false);
 
             if (vm.Id == null)
                 return RedirectToAction("AddBook");

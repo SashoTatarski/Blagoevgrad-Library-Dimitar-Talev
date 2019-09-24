@@ -1,7 +1,7 @@
 ﻿using Library.Database;
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Library.Services.Factories
@@ -13,14 +13,14 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public async Task<Author> CreateAuthor(string authorName)
+        public async Task<Author> CreateAuthorAsync(string authorName)
         {
-            var existingAuthor = _context.Authors.FirstOrDefault(a => string.Equals(a.Name, authorName, System.StringComparison.CurrentCultureIgnoreCase));
+            var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => string.Equals(a.Name, authorName, System.StringComparison.CurrentCultureIgnoreCase)).ConfigureAwait(false);
 
             if (existingAuthor is null)
             {
                 var newAuthor = new Author { Name = authorName };
-                _context.Authors.Add(newAuthor);
+                await _context.Authors.AddAsync(newAuthor).ConfigureAwait(false);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 return newAuthor;
             }
