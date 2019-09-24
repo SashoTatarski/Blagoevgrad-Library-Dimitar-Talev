@@ -3,9 +3,11 @@ using Library.Models.Enums;
 using Library.Models.Models;
 using Library.Models.Utils;
 using Library.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
@@ -21,7 +23,35 @@ namespace Library.Services
             _context = context;
         }
 
-        public CheckoutBook AddBookToCheckoutBooks(Book book, User user) => throw new NotImplementedException();
+
+
+        public async Task AddBookToCheckoutBooksAsync(Book bookId, string userName)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == userName).ConfigureAwait(false);
+
+            var newBook = new CheckoutBook()
+            {
+                BookId = bookId.Id,
+                UserId = user.Id,
+                CheckoutDate = DateTime.Today,
+                DueDate = DateTime.Today.AddDays(Constants.MaxCheckoutDays)
+            };
+
+           await this.ChangeBookStatus(bookId.Id.ToString(), BookStatus.CheckedOut).ConfigureAwait(false);
+
+            _context.CheckoutBooks.Add(newBook);
+            await _context.SaveChangesAsync().ConfigureAwait(false);            
+        }
+
+        public async Task ChangeBookStatus(string bookId, BookStatus status)
+        {
+            var book = await _bookManager.GetBookByIdAsync(bookId).ConfigureAwait(false);
+
+            book.Status = status;
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public ReservedBook AddBookToReservedBooks(Book book, User user) => throw new NotImplementedException();
         public void CheckCheckoutBooksQuota(User user) => throw new NotImplementedException();
         public void CheckReservedBooksQuota(User user) => throw new NotImplementedException();

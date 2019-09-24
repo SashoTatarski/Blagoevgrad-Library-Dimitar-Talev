@@ -28,8 +28,8 @@ namespace Library.Models.Models
         public AccountStatus Status { get; set; }
         public int RoleId { get; set; }
 
-        public List<CheckoutBook> CheckedoutBooks { get; }
-        public List<ReservedBook> ReservedBooks { get; }        
+        public List<CheckoutBook> CheckedoutBooks { get; set; }
+        public List<ReservedBook> ReservedBooks { get; set; }        
         public Role Role { get; set; }
         public List<Notification> Notifications { get; set; }
         public BannedUser BannedUser { get; set; }

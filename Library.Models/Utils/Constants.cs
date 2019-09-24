@@ -7,7 +7,7 @@ namespace Library.Models.Utils
         public const string DefaultRole = "user";
 
         //----------------------------------
-        // Commandnames
+        // Commandnames        
         public const string CheckOutBook = "Check Out Book";
         public const string AddBook = "Add Book";
         public const string LogIn = "Log In";
@@ -39,6 +39,8 @@ namespace Library.Models.Utils
         public const string ChooseParameter = "Choose parameter";
 
         //Errors
+        public const string UsernamePassIncorr = "username or password incorrect";
+        public const string NoDefRoleDb = "No default role in DB";
         public const string NoSuchUser = "No such user!";
         public const string NoUsers = "There are no users!";
         public const string InvalidID = "Invalid ID!";
