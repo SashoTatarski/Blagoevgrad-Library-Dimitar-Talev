@@ -3,5 +3,25 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>My books</h1>
+<h3>Checked Out Books</h3>
+<table class="table table-stripped table-bordered table-sm">
+    <tr>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Publisher</th>
+        <th>ISBN</th>
+        <th>Year</th>        
+        <th>Rating</th>
 
+        @if (User.Identity.IsAuthenticated)
+        {
+            <th class="text-center">Actions</th>
+        }
+    </tr>
+
+    @*@foreach (var book in Model.AllBooks)
+    {
+        <partial name="_BooksPartial" model="book" />
+    }*@
+
+</table>

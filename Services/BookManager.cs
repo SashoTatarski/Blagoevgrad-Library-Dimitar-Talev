@@ -169,7 +169,7 @@ namespace Library.Services
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-        //TODO - how to improve this shit
+        //TODO - how to improve this
         public async Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId)
         {
             var tempBooks = await _context.Books
