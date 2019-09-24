@@ -5,6 +5,6 @@ namespace Library.Services.Factories.Contracts
 {
     public interface IPublisherFactory
     {
-        Task<Publisher> CreatePublisher(string name);
+        Task<Publisher> CreatePublisherAsync(string name);
     }
 }

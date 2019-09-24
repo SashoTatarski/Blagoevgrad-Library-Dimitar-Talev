@@ -79,9 +79,9 @@ namespace Library.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddPublisher(AddPublisherViewModel vm)
+        public async Task<IActionResult> AddPublisher(AddPublisherViewModel vm)
         {
-            var author = _bookManager.CreatePublisherAsync(vm.Name);
+            var publisher = await _bookManager.CreatePublisherAsync(vm.Name).ConfigureAwait(false);
 
             return RedirectToAction("AddBook", "BookManagement");
         }

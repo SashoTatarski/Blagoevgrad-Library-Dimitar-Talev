@@ -1,7 +1,7 @@
 ﻿using Library.Database;
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Library.Services.Factories
@@ -13,14 +13,14 @@ namespace Library.Services.Factories
         {
             _context = context;
         }
-        public async Task<Publisher> CreatePublisher(string name)
+        public async Task<Publisher> CreatePublisherAsync(string name)
         {
-            var existingPublisher = _context.Publishers.FirstOrDefault(p => string.Equals(p.Name, name, System.StringComparison.OrdinalIgnoreCase));
+            var existingPublisher = await _context.Publishers.FirstOrDefaultAsync(p => string.Equals(p.Name, name, System.StringComparison.OrdinalIgnoreCase)).ConfigureAwait(false);
 
             if (existingPublisher is null)
             {
                 var newPublisher = new Publisher { Name = name };
-                _context.Publishers.Add(newPublisher);
+                await _context.Publishers.AddAsync(newPublisher).ConfigureAwait(false);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
 
                 return newPublisher;

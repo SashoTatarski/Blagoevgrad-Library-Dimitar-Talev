@@ -140,7 +140,7 @@ namespace Library.Services
                 .ConfigureAwait(false);
         public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync().ConfigureAwait(false);
 
-        public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisher(publisherName).ConfigureAwait(false);
+        public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisherAsync(publisherName).ConfigureAwait(false);
         public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
 
         public async Task<Genre> CreateGenreAsync(string genre) => await _genreFac.CreateGenreAsync(genre).ConfigureAwait(false);
