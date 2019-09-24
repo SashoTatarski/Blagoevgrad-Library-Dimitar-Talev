@@ -53,7 +53,7 @@ namespace Library.Web.Controllers
         }
 
         // TODO
-        private BookViewModel BookViewModel { get; set; }
+        public BookViewModel BookViewModel { get; set; }
 
         [HttpGet]
         public IActionResult AddAuthor()
@@ -95,13 +95,20 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGenre(AddGenreViewModel vm)
         {
-           var genre = await _bookManager.CreateGenreAsync(vm.Name).ConfigureAwait(false);
+            var genre = await _bookManager.CreateGenreAsync(vm.Name).ConfigureAwait(false);
 
             return RedirectToAction("AddBook", "BookManagement");
         }
 
         [HttpGet]
         public async Task<IActionResult> AddBook()
+        {
+            await this.CreateSelectListItems();
+
+            return View(this.BookViewModel);
+        }
+
+        private async Task CreateSelectListItems()
         {
             var allAuthors = await _bookManager.GetAllAuthorsAsync();
             var allPublisher = await _bookManager.GetAllPublishersAsync();
@@ -111,11 +118,10 @@ namespace Library.Web.Controllers
             {
                 this.BookViewModel = new BookViewModel();
             }
-            this.BookViewModel.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
-            this.BookViewModel.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
-            this.BookViewModel.GenresOptions = allGenres.Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
 
-            return View(this.BookViewModel);
+            this.BookViewModel.Authors = allAuthors.OrderBy(a => a.Name).Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
+            this.BookViewModel.Publishers = allPublisher.OrderBy(p => p.Name).Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
+            this.BookViewModel.GenresOptions = allGenres.OrderBy(g => g.Name).Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
         }
 
         [HttpPost]
