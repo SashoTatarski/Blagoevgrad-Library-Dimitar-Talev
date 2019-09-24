@@ -40,21 +40,39 @@ namespace Library.Services
                .Include(b => b.Publisher)
                .Include(b => b.BookGenres)
                    .ThenInclude(bg => bg.Genre)
-               .FirstOrDefaultAsync(book => book.Id.ToString() == id).ConfigureAwait(false);
+               .Include(b => b.CheckedoutBook)
+                    .ThenInclude(chb => chb.User)
+                .Include(b => b.ReservedBooks)
+                    .ThenInclude(rb => rb.User)
+               .Include(b => b.Ratings)
+               .FirstOrDefaultAsync(book => book.Id.ToString() == id)
+            .ConfigureAwait(false);
+
         public async Task<Book> GetBookByISBNAsync(string isbn)
             => await _context.Books
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
+                .Include(b => b.CheckedoutBook)
+                    .ThenInclude(chb => chb.User)
+                .Include(b => b.ReservedBooks)
+                    .ThenInclude(rb => rb.User)
+                .Include(b => b.Ratings)
                 .FirstOrDefaultAsync(book => book.ISBN == isbn).ConfigureAwait(false);
-        public async Task<List<Book>> GetAllBooksAsync() => await
-           _context.Books
-           .Include(b => b.Author)
-           .Include(b => b.Publisher)
-           .Include(b => b.BookGenres)
-              .ThenInclude(bg => bg.Genre)
-           .ToListAsync().ConfigureAwait(false);
+        public async Task<List<Book>> GetAllBooksAsync() =>
+            await _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                .Include(b => b.CheckedoutBook)
+                    .ThenInclude(chb => chb.User)
+                .Include(b => b.ReservedBooks)
+                    .ThenInclude(rb => rb.User)
+                .Include(b => b.Ratings)
+           .ToListAsync()
+           .ConfigureAwait(false);
         public async Task AddBookCopies(string id, int copies)
         {
             var book = await GetBookByIdAsync(id).ConfigureAwait(false);

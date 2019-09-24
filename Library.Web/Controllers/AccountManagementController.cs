@@ -56,7 +56,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await _accountManager.GetUserAsync(id).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
 
             var vm = user.MapToViewModel();
 
