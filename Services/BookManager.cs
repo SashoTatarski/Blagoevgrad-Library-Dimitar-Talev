@@ -1,11 +1,8 @@
 ﻿using Library.Database;
-using Library.Models.Enums;
 using Library.Models.Models;
-using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Services.Factories.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,30 +26,48 @@ namespace Library.Services
             _publisherFac = publisherFac;
         }
 
+        public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
+        {
+            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
+
+            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
+
+            await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
+        }
+        public async Task<Book> GetBookByIdAsync(string id)
+           => await _context.Books
+               .Include(b => b.Author)
+               .Include(b => b.Publisher)
+               .Include(b => b.BookGenres)
+                   .ThenInclude(bg => bg.Genre)
+               .FirstOrDefaultAsync(book => book.Id.ToString() == id).ConfigureAwait(false);
+        public async Task<Book> GetBookByISBNAsync(string isbn)
+            => await _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.Publisher)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                .FirstOrDefaultAsync(book => book.ISBN == isbn).ConfigureAwait(false);
+        public async Task<List<Book>> GetAllBooksAsync() => await
+           _context.Books
+           .Include(b => b.Author)
+           .Include(b => b.Publisher)
+           .Include(b => b.BookGenres)
+              .ThenInclude(bg => bg.Genre)
+           .ToListAsync().ConfigureAwait(false);
         public async Task AddBookCopies(string id, int copies)
         {
-            var book = await GetBookAsync(id).ConfigureAwait(false);
+            var book = await GetBookByIdAsync(id).ConfigureAwait(false);
 
             List<int> genreIds = new List<int>();
             book.BookGenres.ForEach(bg => genreIds.Add(bg.GenreId));
 
             await this.CreateBookAsync(book.Title, book.ISBN, book.Year, book.Rack, book.AuthorId.ToString(), book.PublisherId.ToString(), genreIds, copies).ConfigureAwait(false);
         }
-
-        public async Task<int> BookCopiesCountAsync(string Isbn) => await _context.Books.Where(b => b.ISBN == Isbn).CountAsync().ConfigureAwait(false);
-        
-
-        public async Task<List<Book>> GetAllBooksAsync() => await
-            _context.Books
-            .Include(b => b.Author)
-            .Include(b => b.Publisher)
-            .Include(b => b.BookGenres)
-               .ThenInclude(bg => bg.Genre)
-            .ToListAsync().ConfigureAwait(false);
-
+        public async Task<int> BookCopiesCountAsync(string isbn) => await _context.Books.Where(b => b.ISBN == isbn).CountAsync().ConfigureAwait(false);
         public async Task EditBookAsync(string bookId, string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds)
         {
-            var tempBook = await GetBookAsync(bookId).ConfigureAwait(false);
+            var tempBook = await GetBookByIdAsync(bookId).ConfigureAwait(false);
 
             var allBooks = await GetAllBooksAsync().ConfigureAwait(false);
             var booksToEditIsbn = allBooks
@@ -106,8 +121,32 @@ namespace Library.Services
             }
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
+        public async Task DeleteBookAsync(string isbn)
+        {
+            var booksToDelete = await _context.Books.Where(book => book.ISBN == isbn).ToListAsync().ConfigureAwait(false);
 
-        public async Task<IReadOnlyCollection<Book>> SearchAsync(string searchCriteria)
+            foreach (var book in booksToDelete)
+            {
+                _context.Books.Remove(book);
+            }
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName).ConfigureAwait(false);
+        public async Task<Author> GetAuthorAsync(string id)
+            => await _context.Authors
+                .Include(a => a.Books)
+                .FirstOrDefaultAsync(a => a.Id.ToString() == id)
+                .ConfigureAwait(false);
+        public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync().ConfigureAwait(false);
+
+        public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisher(publisherName).ConfigureAwait(false);
+        public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
+        
+        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre).ConfigureAwait(false);
+        public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
+
+        public async Task<List<Book>> SearchAsync(string searchCriteria)
         {
             return await _context.Books
                 .Include(b => b.Author)
@@ -115,9 +154,9 @@ namespace Library.Services
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
-
         public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)
         {
             return await _context.Books
@@ -129,7 +168,6 @@ namespace Library.Services
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-
         //TODO - how to improve this shit
         public async Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId)
         {
@@ -156,53 +194,6 @@ namespace Library.Services
 
             return allBooks;
         }
-
-        public async Task DeleteBookAsync(string isbn)
-        {
-            var booksToDelete = await _context.Books.Where(book => book.ISBN == isbn).ToListAsync().ConfigureAwait(false);
-
-            foreach (var book in booksToDelete)
-            {
-                _context.Books.Remove(book);
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-            }
-        }
-
-        public async Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies)
-        {
-            var author =  await _context.Authors.FirstOrDefaultAsync(a => a.Id.ToString() == authorId).ConfigureAwait(false);
-
-            var publisher = await _context.Publishers.FirstOrDefaultAsync(p => p.Id.ToString() == publisherId).ConfigureAwait(false);
-
-            await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
-        }
-        public async Task<List<Author>> GetAllAuthorsAsync() => await _context.Authors.ToListAsync().ConfigureAwait(false);
-
-        public async Task<Author> CreateAuthorAsync(string authorName) => await _authorFac.CreateAuthor(authorName).ConfigureAwait(false);
-
-        public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
-
-        public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisher(publisherName).ConfigureAwait(false);
-
-        public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
-
-        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre).ConfigureAwait(false);
-
-        public async Task<Book> GetBookAsync(string id)
-            => await _context.Books
-                .Include(b => b.Author)
-                .Include(b => b.Publisher)
-                .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-                 .FirstOrDefaultAsync(book => book.Id.ToString() == id).ConfigureAwait(false);
-                 
-
-
-        public async Task<Author> GetAuthorAsync(string id)
-            => await _context.Authors
-            .Include(a => a.Books)
-            .FirstOrDefaultAsync(a => a.Id.ToString() == id)
-            .ConfigureAwait(false);
     }
 }
 

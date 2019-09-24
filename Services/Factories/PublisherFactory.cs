@@ -21,7 +21,7 @@ namespace Library.Services.Factories
             {
                 var newPublisher = new Publisher { Name = name };
                 _context.Publishers.Add(newPublisher);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
 
                 return newPublisher;
             }

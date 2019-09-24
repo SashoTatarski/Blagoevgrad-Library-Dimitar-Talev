@@ -43,7 +43,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var bookToDelete = await _bookManager.GetBookAsync(id);
+            var bookToDelete = await _bookManager.GetBookByISBNAsync(id);
 
             await _bookManager.DeleteBookAsync(id);
 
@@ -52,6 +52,8 @@ namespace Library.Web.Controllers
             return RedirectToAction("Index", "SearchBooks");
         }
 
+        // TODO
+        private BookViewModel BookViewModel { get; set; }
 
         [HttpGet]
         public IActionResult AddAuthor()
@@ -98,9 +100,7 @@ namespace Library.Web.Controllers
             return RedirectToAction("AddBook", "BookManagement");
         }
 
-        // TODO
-        private BookViewModel BookViewModel { get; set; }
-
+        [HttpGet]
         public async Task<IActionResult> AddBook()
         {
             var allAuthors = await _bookManager.GetAllAuthorsAsync();
@@ -148,7 +148,7 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BookDetails(string id)
         {
-            var bookTemp = await _bookManager.GetBookAsync(id);
+            var bookTemp = await _bookManager.GetBookByIdAsync(id);
             var vm = bookTemp.MapToViewModel();
 
             var allBooks = await _bookManager.GetAllBooksAsync();
@@ -166,7 +166,7 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBook(string id)
         {
-            var book = await _bookManager.GetBookAsync(id);
+            var book = await _bookManager.GetBookByIdAsync(id);
             var vm = book.MapToViewModel();
 
             var allAuthors = await _bookManager.GetAllAuthorsAsync();
