@@ -23,7 +23,21 @@ namespace Library.Services
             _hasher = hasher;
         }
 
-        public async Task<User> GetUserAsync(string id) => await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == id).ConfigureAwait(false);
+        public async Task<User> GetUserByIdAsync(string id)
+            => await _context.Users
+            .Include(u => u.ReservedBooks)
+            .Include(u => u.CheckedoutBooks)
+            .Include(u => u.Ratings)
+            .FirstOrDefaultAsync(u => u.Id.ToString() == id)
+            .ConfigureAwait(false);
+
+        public async Task<User> GetUserByUsernameAsync(string username)
+            => await _context.Users
+            .Include(u => u.ReservedBooks)
+            .Include(u => u.CheckedoutBooks)
+            .Include(u => u.Ratings)
+            .FirstOrDefaultAsync(u => u.Username == username)
+            .ConfigureAwait(false);
 
         public async Task<User> ActivateUserAsync(string id)
         {
@@ -67,7 +81,7 @@ namespace Library.Services
                 Role = defaultRole,
                 MembershipStartDate = DateTime.Today,
                 MembershipEndDate = DateTime.Today.AddMonths(membershipMonths),
-                Status = AccountStatus.Active
+                Status = AccountStatus.Active,
             };
 
             _context.Users.Add(user);

@@ -16,6 +16,7 @@ namespace Library.Services.Contracts
 
         Task<User> ActivateUserAsync(string id);
 
-        Task<User> GetUserAsync(string id);
+        Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserByUsernameAsync(string username);
     }
 }

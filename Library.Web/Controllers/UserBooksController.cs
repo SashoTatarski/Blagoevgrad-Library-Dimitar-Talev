@@ -27,10 +27,8 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> CheckoutBook(string id)
         {
             var user = User.Identity.Name;
-            var book = await _bookManager.GetBookByIdAsync(id).ConfigureAwait(false);
 
-
-            await _system.AddBookToCheckoutBooksAsync(book, user).ConfigureAwait(false);
+            await _system.AddBookToCheckoutBooksAsync(id, user).ConfigureAwait(false);
 
             return RedirectToAction("Index");
         }

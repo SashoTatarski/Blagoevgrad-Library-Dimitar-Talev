@@ -8,8 +8,7 @@ namespace Library.Services.Contracts
     public interface ILibrarySystem
     {
         Task ChangeBookStatus(string bookId, BookStatus status);
-
-        Task AddBookToCheckoutBooksAsync(Book bookId, string userName);
+        Task AddBookToCheckoutBooksAsync(string bookId, string userName);
 
 
 
