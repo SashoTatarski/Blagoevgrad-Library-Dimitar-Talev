@@ -153,7 +153,7 @@ namespace Library.Services
                 .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
-                .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(sea  rchCriteria))
+                .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
