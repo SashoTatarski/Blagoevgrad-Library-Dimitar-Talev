@@ -22,7 +22,7 @@ namespace Library.Web.Controllers
 
         public async Task <IActionResult> Index(AccountViewModel vm)
         {
-            var users = await _accountManager.GetAllUsersAsync();
+            var users = await _accountManager.GetAllUsersAsync().ConfigureAwait(false);
             
             var usersMapped = users
                 .Select(u => u.MapToViewModel())
@@ -47,7 +47,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Activate(string id)
         {
-            var accountToActivate = await _accountManager.ActivateUserAsync(id);
+            var accountToActivate = await _accountManager.ActivateUserAsync(id).ConfigureAwait(false);
 
             TempData["message"] = $"{accountToActivate.Username} has been activated";
 
@@ -56,7 +56,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await _accountManager.GetUser(id);
+            var user = await _accountManager.GetUserAsync(id).ConfigureAwait(false);
 
             var vm = user.MapToViewModel();
 

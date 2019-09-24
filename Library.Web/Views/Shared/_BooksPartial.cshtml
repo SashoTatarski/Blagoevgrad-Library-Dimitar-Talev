@@ -21,18 +21,21 @@
         <td class="text-left">@Model.BookCopies</td>
     }
 
-    <td class="text-center">
-        @if (User.IsInRole("admin"))
-        {
+
+    @if (User.IsInRole("admin"))
+    {
+        <td class="text-center">
             <a asp-controller="BookManagement" asp-action="Delete" asp-route-id="@Model.ISBN" class="text-danger ml-1"><i class="fa fa-trash fa-lg"></i></a>
             <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1"><i class="fas fa-edit fa-lg"></i></a>
-        }
-        else if (User.IsInRole("user"))
-        {
+        </td>
+    }
+    else if (User.IsInRole("user"))
+    {
+        <td class="text-center">
             <a class="btn btn-danger" asp-controller="Home" asp-action="Index">Check Out</a>
             <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Reserve</a>
-        }
-    </td>
+        </td>
+    }
 </tr>
 
 
