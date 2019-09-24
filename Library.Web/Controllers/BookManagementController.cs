@@ -93,9 +93,9 @@ namespace Library.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddGenre(AddGenreViewModel vm)
+        public async Task<IActionResult> AddGenre(AddGenreViewModel vm)
         {
-            var genre = _bookManager.CreateGenreAsync(vm.Name);
+           var genre = await _bookManager.CreateGenreAsync(vm.Name).ConfigureAwait(false);
 
             return RedirectToAction("AddBook", "BookManagement");
         }

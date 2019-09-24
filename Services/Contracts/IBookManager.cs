@@ -22,7 +22,7 @@ namespace Library.Services.Contracts
         Task<Publisher> CreatePublisherAsync(string publisherName);
         Task<List<Publisher>> GetAllPublishersAsync();
 
-        Task<List<Genre>> CreateGenreAsync(string genre);
+        Task<Genre> CreateGenreAsync(string genre);
         Task<List<Genre>> GetAllGenresAsync();
 
         Task<List<Book>> SearchAsync(string searchCriteria);

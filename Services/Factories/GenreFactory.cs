@@ -1,8 +1,7 @@
 ﻿using Library.Database;
 using Library.Models.Models;
 using Library.Services.Factories.Contracts;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Library.Services.Factories
@@ -15,28 +14,20 @@ namespace Library.Services.Factories
             _context = context;
         }
 
-        public async Task<List<Genre>> CreateGenreList(string genres)
+        public async Task<Genre> CreateGenreAsync(string genreName)
         {
-            var genreListString = genres.Split(',').Select(g => g.Trim()).ToList();
-            List<Genre> list = new List<Genre>();
+            var existingGenre = await _context.Genres.FirstOrDefaultAsync(g => g.Name.ToLower() == genreName.ToLower()).ConfigureAwait(false);
 
-            foreach (var genre in genreListString)
+            if (existingGenre is null)
             {
-                var existingGenre = _context.Genres.FirstOrDefault(g => string.Equals(g.Name, genre, System.StringComparison.OrdinalIgnoreCase)); ;
+                var newGenre = new Genre { Name = genreName };
 
-                if (existingGenre is null)
-                {
-                    var newGenre = new Genre { Name = genre };
-                    _context.Genres.Add(newGenre);
-                    await _context.SaveChangesAsync().ConfigureAwait(false);
-
-                    list.Add(newGenre);
-                }
-                else
-                    list.Add(existingGenre);
+                await _context.Genres.AddAsync(newGenre).ConfigureAwait(false);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                return newGenre;
             }
-
-            return list;
+            else
+                return existingGenre;
         }
     }
 }

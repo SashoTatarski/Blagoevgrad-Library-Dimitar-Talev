@@ -143,7 +143,8 @@ namespace Library.Services
         public async Task<Publisher> CreatePublisherAsync(string publisherName) => await _publisherFac.CreatePublisher(publisherName).ConfigureAwait(false);
         public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
 
-        public async Task<List<Genre>> CreateGenreAsync(string genre) => await _genreFac.CreateGenreList(genre).ConfigureAwait(false);
+        public async Task<Genre> CreateGenreAsync(string genre) => await _genreFac.CreateGenreAsync(genre).ConfigureAwait(false);
+
         public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
 
         public async Task<List<Book>> SearchAsync(string searchCriteria)
