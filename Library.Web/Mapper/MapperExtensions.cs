@@ -1,4 +1,5 @@
 ﻿using Library.Models.Models;
+using Library.Services.Contracts;
 using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using System;
@@ -39,6 +40,40 @@ namespace Library.Web.Mapper
             vm.MembershipEndDate = user.MembershipEndDate;
             vm.Status = user.Status;
             vm.Wallet = user.Wallet;
+
+            if (user.CheckedoutBooks != null)
+                vm.CheckedoutBooks = new List<BookIssuedViewModel>(user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList());
+
+            if (user.ReservedBooks != null)
+                vm.ReservedBooks = new List<BookIssuedViewModel>(user.ReservedBooks.Select(x => x.MapToViewModel()).ToList());
+
+            return vm;
+        }
+
+        public static BookIssuedViewModel MapToViewModel(this CheckoutBook book)
+        {
+            var vm = new BookIssuedViewModel();
+
+            vm.BookId = book.BookId.ToString();
+            vm.Author = book.Book.Author;
+            vm.StartDate = book.CheckoutDate;
+            vm.EndDate = book.DueDate;
+            vm.ISBN = book.Book.ISBN;
+            vm.Title = book.Book.Title;
+
+            return vm;
+        }
+
+        public static BookIssuedViewModel MapToViewModel(this ReservedBook book)
+        {
+            var vm = new BookIssuedViewModel();
+
+            vm.BookId = book.BookId.ToString();
+            vm.Author = book.Book.Author;
+            vm.StartDate = book.ReservationDate;
+            vm.EndDate = book.ReservationDueDate;
+            vm.ISBN = book.Book.ISBN;
+            vm.Title = book.Book.Title;
 
             return vm;
         }

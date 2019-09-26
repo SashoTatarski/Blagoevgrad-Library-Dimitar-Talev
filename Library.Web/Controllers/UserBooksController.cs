@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
+using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +16,24 @@ namespace Library.Web.Controllers
     {
         private readonly ILibrarySystem _system;
         private readonly IBookManager _bookManager;
-        public UserBooksController(ILibrarySystem system, IBookManager bookManager)
+        private readonly IAccountManager _accountManager;
+
+        public UserBooksController(ILibrarySystem system, IBookManager bookManager, IAccountManager accountManager)
         {
             _system = system;
             _bookManager = bookManager;
+            _accountManager = accountManager;
         }
 
-        public async Task<IActionResult> Index(ReservationsViewModel vm)
+        public async Task<IActionResult> Index(UserViewModel vm)
         {
-            var user = User.Identity.Name;
+            var userName = User.Identity.Name;
 
-            var chBooks = await _system.GetCheckeoutBooks(user).ConfigureAwait(false);
+            //var chBooks = await _system.GetCheckeoutBooks(user).ConfigureAwait(false);
 
-            vm.CheckedoutBooks = chBooks.Select(x => x.MapToViewModel()).ToList();
+            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
+
+            vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
 
             return View(vm);
         }
@@ -36,7 +42,7 @@ namespace Library.Web.Controllers
         {
             var user = User.Identity.Name;
 
-            await _system.ReturnBook(user, id);
+            await _system.ReturnBook(user, id).ConfigureAwait(false);
 
             TempData["message"] = $"Book Successfully returned";
 

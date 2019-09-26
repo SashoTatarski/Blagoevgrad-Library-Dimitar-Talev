@@ -14,16 +14,18 @@ namespace Library.Web.Controllers
     public class AccountManagementController : Controller
     {
         private readonly IAccountManager _accountManager;
+        private readonly IBookManager _bookManager;
 
-        public AccountManagementController(IAccountManager accountManager)
+        public AccountManagementController(IAccountManager accountManager, IBookManager bookManager)
         {
             _accountManager = accountManager;
+            _bookManager = bookManager;
         }
 
-        public async Task <IActionResult> Index(AccountViewModel vm)
+        public async Task<IActionResult> Index(AccountViewModel vm)
         {
             var users = await _accountManager.GetAllUsersAsync().ConfigureAwait(false);
-            
+
             var usersMapped = users
                 .Select(u => u.MapToViewModel())
                 .ToList();
@@ -31,8 +33,8 @@ namespace Library.Web.Controllers
             foreach (var user in usersMapped)
             {
                 vm.User.Add(user);
-            }            
-            
+            }
+
             return View(vm);
         }
 

@@ -26,7 +26,11 @@ namespace Library.Services
         public async Task<User> GetUserByIdAsync(string id)
             => await _context.Users
             .Include(u => u.ReservedBooks)
+                .ThenInclude(ch => ch.Book)
+                    .ThenInclude(x => x.Author)
             .Include(u => u.CheckedoutBooks)
+                .ThenInclude(ch => ch.Book)
+                    .ThenInclude(x => x.Author)
             .Include(u => u.Ratings)
             .FirstOrDefaultAsync(u => u.Id.ToString() == id)
             .ConfigureAwait(false);
@@ -34,7 +38,11 @@ namespace Library.Services
         public async Task<User> GetUserByUsernameAsync(string username)
             => await _context.Users
             .Include(u => u.ReservedBooks)
+                .ThenInclude(x => x.Book)
+                    .ThenInclude(x => x.Author)
             .Include(u => u.CheckedoutBooks)
+                 .ThenInclude(x => x.Book)
+                    .ThenInclude(x => x.Author)
             .Include(u => u.Ratings)
             .FirstOrDefaultAsync(u => u.Username == username)
             .ConfigureAwait(false);
@@ -57,7 +65,14 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<List<User>> GetAllUsersAsync() => await _context.Users.ToListAsync().ConfigureAwait(false);
+        public async Task<List<User>> GetAllUsersAsync() => await _context.Users
+            .Include(u => u.ReservedBooks)
+                .ThenInclude(ch => ch.Book)
+                    .ThenInclude(x => x.Author)
+            .Include(u => u.CheckedoutBooks)
+                .ThenInclude(ch => ch.Book)
+                    .ThenInclude(x => x.Author)
+            .ToListAsync().ConfigureAwait(false);
 
 
         public async Task<User> CreateAsync(string username, string password, int membershipMonths)

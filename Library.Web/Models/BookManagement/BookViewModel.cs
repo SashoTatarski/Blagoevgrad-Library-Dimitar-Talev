@@ -22,9 +22,7 @@ namespace Library.Web.Models.BookManagement
 
         public List<SelectListItem> GenresOptions { get; set; }
         public List<int> GenresIds { get; set; }
-        public List<Genre> Genres { get; set; }
-
-        public List<CheckoutBook> CheckoutBooks { get; set; }
+        public List<Genre> Genres { get; set; }        
 
         public string Title { get; set; }
         public string ISBN { get; set; }

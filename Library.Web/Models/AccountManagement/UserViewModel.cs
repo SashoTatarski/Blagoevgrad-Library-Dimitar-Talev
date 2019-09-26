@@ -1,4 +1,6 @@
 ﻿using Library.Models.Enums;
+using Library.Models.Models;
+using Library.Web.Models.BookManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,12 @@ namespace Library.Web.Models.AccountManagement
         public DateTime MembershipEndDate { get; set; }
 
         public double Wallet { get; set; }
+
         public AccountStatus Status { get; set; }
+
+        public List<BookIssuedViewModel> CheckedoutBooks { get; set; }
+
+        public List<BookIssuedViewModel> ReservedBooks { get; set; }
+
     }
 }

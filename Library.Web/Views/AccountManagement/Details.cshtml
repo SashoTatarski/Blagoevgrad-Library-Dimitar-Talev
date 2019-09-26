@@ -6,7 +6,7 @@
 }
 
 <div>
-    <h3>@Model.Username</h3>
+    <h2>@Model.Username</h2>
     <hr />
     <div>
         <div>
@@ -33,9 +33,39 @@
             }
         </div>
 
-        @*<div class="form-group">
-                <a class="btn btn-primary" asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId">Edit Book</a>
-            </div>*@
+        <table class="table table-stripped table-bordered table-sm">
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>ISBN</th>
+            </tr>
+            <hr />
+
+            <h3>Checked Out Books by @Model.Username</h3>
+            <p></p>
+            @foreach (var book in Model.CheckedoutBooks)
+            {
+                <partial name="_BooksReservations" model="book" />
+            }
+        </table>
+
+        <table class="table table-stripped table-bordered table-sm">
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>ISBN</th>
+            </tr>
+            <hr />
+
+            <h3>Reserved Books by @Model.Username</h3>
+            <p></p>
+            @foreach (var book in Model.ReservedBooks)
+            {
+                <partial name="_BooksReservations" model="book" />
+            }
+
+        </table>
+
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-﻿@model BookViewModel
+﻿@model BookIssuedViewModel
 @{
     ViewData["Title"] = "_BooksReservations";
 }
@@ -10,14 +10,7 @@
     <td class="text-left">
         <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
     </td>
-    <td class="text-left">@Model.Publisher.Name</td>
-    <td class="text-left">@Model.ISBN</td>
-    <td class="text-left">@Model.Year</td>    
-    <td class="text-left">@Model.Rating</td>
-
-    <td class="text-center">
-        <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
-        <a class="btn btn-primary" asp-controller="UserBooks" asp-action="ExtendReservation">Extend</a>
-    </td>
+    
+    <td class="text-left">@Model.ISBN</td>   
 
 </tr>
