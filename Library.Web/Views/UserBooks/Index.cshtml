@@ -1,4 +1,4 @@
-﻿
+﻿@model ReservationsViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,18 +10,14 @@
         <th>Title</th>
         <th>Publisher</th>
         <th>ISBN</th>
-        <th>Year</th>        
+        <th>Year</th>
         <th>Rating</th>
-
-        @if (User.Identity.IsAuthenticated)
-        {
-            <th class="text-center">Actions</th>
-        }
+        <th class="text-center">Actions</th>
     </tr>
 
-    @*@foreach (var book in Model.AllBooks)
+    @foreach (var book in Model.CheckedoutBooks)
     {
-        <partial name="_BooksPartial" model="book" />
-    }*@
+        <partial name="_BooksReservations" model="book" />
+    }
 
 </table>

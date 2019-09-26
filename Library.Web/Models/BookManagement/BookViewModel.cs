@@ -24,9 +24,11 @@ namespace Library.Web.Models.BookManagement
         public List<int> GenresIds { get; set; }
         public List<Genre> Genres { get; set; }
 
+        public List<CheckoutBook> CheckoutBooks { get; set; }
+
         public string Title { get; set; }
-        public string ISBN { get; set; }    
-        public int Year { get; set; }       
+        public string ISBN { get; set; }
+        public int Year { get; set; }
         public int Rack { get; set; }
         public double Rating { get; set; }
         public BookStatus Status { get; set; }
