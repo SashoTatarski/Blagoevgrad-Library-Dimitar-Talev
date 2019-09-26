@@ -35,6 +35,8 @@ namespace Library.Web.Controllers
 
             vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
 
+            vm.ReservedBooks = user.ReservedBooks.Select(x => x.MapToViewModel()).ToList();
+
             return View(vm);
         }
 

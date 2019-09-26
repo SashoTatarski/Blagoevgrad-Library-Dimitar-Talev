@@ -1,17 +1,27 @@
-﻿@model  AuthorViewModel
+﻿@model AuthorViewModel
+@using Microsoft.Extensions.Primitives
 @{
     ViewData["Title"] = "AuthorDetail";
 }
 
-    <div>
-        <h3>@Model.AuthorName</h3>
-        <hr />
-        <ul>
-            @foreach (var book in Model.Books)
-            {
-                <li>
-                    <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.BookId">@book.Title</a> 
-                </li>
-            }
-        </ul>
-    </div>
+<div>
+    <h3>@Model.AuthorName</h3>
+    <hr />
+    <ul>
+        @foreach (var book in Model.Books)
+        {
+            <li>
+                <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.BookId">@book.Title</a>
+            </li>
+        }
+    </ul>
+
+    <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+    @{ var referrer = this.Context.Request.Headers["Referer"]; }
+
+    @if (referrer != default(StringValues))
+    {
+        <a href="@referrer.ToString()" class="btn btn-outline-primary">Go Back</a>
+    }
+</div>

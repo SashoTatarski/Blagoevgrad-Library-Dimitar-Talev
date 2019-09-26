@@ -1,6 +1,7 @@
 ﻿@model UserViewModel
 @using System.Globalization;
 @using Library.Models.Enums;
+@using Microsoft.Extensions.Primitives
 @{
     ViewData["Title"] = "UserDetails";
 }
@@ -38,6 +39,9 @@
                 <th>Author</th>
                 <th>Title</th>
                 <th>ISBN</th>
+                <th>Checkout Date</th>
+                <th>Due Date</th>
+                <th class="text-center">Actions</th>
             </tr>
             <hr />
 
@@ -54,6 +58,9 @@
                 <th>Author</th>
                 <th>Title</th>
                 <th>ISBN</th>
+                <th>Checkout Date</th>
+                <th>Due Date</th>
+                <th class="text-center">Actions</th>
             </tr>
             <hr />
 
@@ -67,5 +74,13 @@
         </table>
 
     </div>
+
+    <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    @{ var referrer = this.Context.Request.Headers["Referer"]; }
+
+    @if (referrer != default(StringValues))
+    {
+        <a href="@referrer.ToString()" class="btn btn-outline-primary">Go Back</a>
+    }
 </div>
 
