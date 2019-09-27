@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Library.Models.Utils;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,12 +12,12 @@ namespace Library.Web.Models.Auth
         public int MembershipType { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [MinLength(5, ErrorMessage = "Username should be at least 5 symbols")]
+        [MinLength(5, ErrorMessage = Constants.UsernameValid)]
         [Display(Name = "Username")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Required")]
-        [MinLength(5, ErrorMessage = "Username should be at least 5 symbols")]
+        [MinLength(5, ErrorMessage = Constants.PasswordValid)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }

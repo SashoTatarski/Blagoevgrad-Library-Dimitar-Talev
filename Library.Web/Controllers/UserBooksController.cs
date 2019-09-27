@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.AccountManagement;
@@ -44,7 +45,20 @@ namespace Library.Web.Controllers
 
             await _system.ReturnBook(user, id).ConfigureAwait(false);
 
-            TempData["message"] = $"Book Successfully returned";
+            TempData["message"] = Constants.RetBookSucc;
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ReserveBook(string id)
+        {
+            var username = User.Identity.Name;
+
+            var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
+
+
+
+            TempData["message"] =Constants.ResBookSucc;
 
             return RedirectToAction("Index");
         }
@@ -59,11 +73,12 @@ namespace Library.Web.Controllers
             // TODO: We need to move this to the View, so it doesn't show the checkout button at all if user has already reserved 5 books
             if (user.CheckedoutBooks.Count == 5)
             {
-                TempData["message"] = $"You cannot checkout more than 5 books";
+                TempData["message"] = Constants.ChBookMax;
             }
             else
             {
                 await _system.AddBookToCheckoutBooksAsync(id, username).ConfigureAwait(false);
+                TempData["message"] = Constants.ChBookSucc;
             }
 
             return RedirectToAction("Index");

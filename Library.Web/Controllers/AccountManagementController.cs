@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.AccountManagement;
@@ -42,7 +43,7 @@ namespace Library.Web.Controllers
         {
             await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
 
-            TempData["message"] = $"Account has been deactived";
+            TempData["message"] = Constants.AcctDeact;
 
             return RedirectToAction("Index");
         }

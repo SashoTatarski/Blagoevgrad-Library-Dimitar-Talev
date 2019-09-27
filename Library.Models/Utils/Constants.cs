@@ -6,7 +6,6 @@ namespace Library.Models.Utils
     {
         public const string DefaultRole = "user";
 
-        //----------------------------------
         // Commandnames        
         public const string CheckOutBook = "Check Out Book";
         public const string AddBook = "Add Book";
@@ -90,8 +89,12 @@ namespace Library.Models.Utils
         public const string Goodbye = "Goodbye!";
         public const string DaysToSkip = "how many days you want to skip";
         public const string Welcome = "Welcome to Blagoevgrad Library - Dimitar Talev -";
-
-
-
+        public const string RetBookSucc = "Book Successfully Returned";
+        public const string ResBookSucc = "Book Successfully Reserved";
+        public const string ChBookSucc = "Book Successfully Checked Out!";
+        public const string ChBookMax = "You Cannot Checkout More Than 5 Books";
+        public const string AcctDeact = "Account has been deactived";
+        public const string UsernameValid = "Username should be at least 5 symbols";
+        public const string PasswordValid = "Password should be at least 5 symbols";
     }
 }
