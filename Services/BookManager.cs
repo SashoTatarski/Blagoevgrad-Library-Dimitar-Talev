@@ -190,15 +190,20 @@ namespace Library.Services
         //TODO - how to improve this
         public async Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId)
         {
-            var tempBooks = await _context.Books
+            var books = await _context.Books
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Author.Id.ToString() == authorId)
                 .ToListAsync()
-                .ConfigureAwait(false);
+                .ConfigureAwait(false);            
 
+            return GetBooksByIsbn(books);
+        }
+
+        private static List<Book> GetBooksByIsbn(List<Book> tempBooks)
+        {
             var allBooks = new List<Book>();
             string isbn = tempBooks[0].ISBN;
             allBooks.Add(tempBooks[0]);

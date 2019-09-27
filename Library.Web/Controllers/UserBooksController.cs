@@ -27,9 +27,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Index(UserViewModel vm)
         {
-            var userName = User.Identity.Name;
-
-            //var chBooks = await _system.GetCheckeoutBooks(user).ConfigureAwait(false);
+            var userName = User.Identity.Name;            
 
             var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
 
@@ -53,9 +51,20 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> CheckoutBook(string id)
         {
-            var user = User.Identity.Name;
+            var username = User.Identity.Name;
 
-            await _system.AddBookToCheckoutBooksAsync(id, user).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
+
+            // TODO: Да не може да взима книга, която вече е взел, т.е. Reserve бутона да не се показва в Search
+            // TODO: We need to move this to the View, so it doesn't show the checkout button at all if user has already reserved 5 books
+            if (user.CheckedoutBooks.Count == 5)
+            {
+                TempData["message"] = $"You cannot checkout more than 5 books";
+            }
+            else
+            {
+                await _system.AddBookToCheckoutBooksAsync(id, username).ConfigureAwait(false);
+            }
 
             return RedirectToAction("Index");
         }
