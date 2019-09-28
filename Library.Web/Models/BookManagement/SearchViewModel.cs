@@ -1,9 +1,5 @@
-﻿using Library.Models.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.Web.Models.BookManagement
 {
@@ -17,6 +13,5 @@ namespace Library.Web.Models.BookManagement
         public List<BookViewModel> AllBooks { get; set; } = new List<BookViewModel>();
 
         public int BookCopies { get; set; }
-
     }
 }

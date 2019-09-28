@@ -30,5 +30,7 @@ namespace Library.Web.Models.BookManagement
         public int Rack { get; set; }
         public double Rating { get; set; }
         public BookStatus Status { get; set; }
+
+        
     }
 }

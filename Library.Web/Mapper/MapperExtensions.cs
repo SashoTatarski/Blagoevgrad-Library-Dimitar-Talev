@@ -1,11 +1,9 @@
 ﻿using Library.Models.Models;
-using Library.Services.Contracts;
 using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
-using System;
+using Library.Web.Models.BookViewModels;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.Web.Mapper
 {
@@ -31,21 +29,42 @@ namespace Library.Web.Mapper
             return vm;
         }
 
-        public static UserViewModel MapToViewModel(this User user)
+        public static BookCopyViewModel MapToCopyViewModel(this Book book)
         {
-            var vm = new UserViewModel();
-            vm.UserId = user.Id.ToString();
-            vm.Username = user.Username;
-            vm.MembershipStartDate = user.MembershipStartDate;
-            vm.MembershipEndDate = user.MembershipEndDate;
-            vm.Status = user.Status;
-            vm.Wallet = user.Wallet;
+            var vm = new BookCopyViewModel();
+            vm.Title = book.Title;
+            vm.Status = book.Status.ToString();
 
-            if (user.CheckedoutBooks != null)
-                vm.CheckedoutBooks = new List<BookIssuedViewModel>(user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList());
+            if (book.ReservedBooks != null)
+            {
+                var resUsers = new List<User>();
+                book.ReservedBooks.ForEach(x => resUsers.Add(x.User));
+                vm.ReservedBy = resUsers;
+            }
 
-            if (user.ReservedBooks != null)
-                vm.ReservedBooks = new List<BookIssuedViewModel>(user.ReservedBooks.Select(x => x.MapToViewModel()).ToList());
+            if (book.CheckedoutBook != null)
+            {
+                vm.CheckedOutBy = book.CheckedoutBook.User;
+            }
+
+            return vm;
+        }
+
+        public static GenericBookViewModel MapToGenericViewModel(this Book book)
+        {
+            var genresAsStrings = new List<string>();
+            book.BookGenres.ForEach(bg => genresAsStrings.Add(bg.Genre.Name));
+
+            var vm = new GenericBookViewModel()
+            {
+                Title = book.Title,
+                AuthorName = book.Author.Name,
+                Genres = genresAsStrings,
+                ISBN = book.ISBN,
+                Publisher = book.Publisher.Name,
+                Rating = book.Rating,
+                Year = book.Year
+            };
 
             return vm;
         }
@@ -78,23 +97,21 @@ namespace Library.Web.Mapper
             return vm;
         }
 
-        public static BookCopyViewModel MapToCopyViewModel(this Book book)
+        public static UserViewModel MapToViewModel(this User user)
         {
-            var vm = new BookCopyViewModel();
-            vm.Title = book.Title;
-            vm.Status = book.Status.ToString();
+            var vm = new UserViewModel();
+            vm.UserId = user.Id.ToString();
+            vm.Username = user.Username;
+            vm.MembershipStartDate = user.MembershipStartDate;
+            vm.MembershipEndDate = user.MembershipEndDate;
+            vm.Status = user.Status;
+            vm.Wallet = user.Wallet;
 
-            if (book.ReservedBooks != null)
-            {
-                var resUsers = new List<User>();
-                book.ReservedBooks.ForEach(x => resUsers.Add(x.User));
-                vm.ReservedBy = resUsers;
-            }
+            if (user.CheckedoutBooks != null)
+                vm.CheckedoutBooks = new List<BookIssuedViewModel>(user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList());
 
-            if (book.CheckedoutBook != null)
-            {
-                vm.CheckedOutBy = book.CheckedoutBook.User;
-            }
+            if (user.ReservedBooks != null)
+                vm.ReservedBooks = new List<BookIssuedViewModel>(user.ReservedBooks.Select(x => x.MapToViewModel()).ToList());
 
             return vm;
         }

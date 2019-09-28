@@ -5,10 +5,10 @@
 
 <tr>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" span title="All Books From @Model.Author.Name">@Model.Author.Name</a>
+        <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" title="All Books From @Model.Author.Name">@Model.Author.Name</a>
     </td>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
+        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" title="View Book Details"> @Model.Title</a>
     </td>
     <td class="text-left">@Model.Publisher.Name</td>
     <td class="text-left">@Model.ISBN</td>
@@ -25,11 +25,34 @@
     @if (User.IsInRole("admin"))
     {
         <td class="text-center">
-            <a asp-controller="BookManagement" asp-action="Delete" asp-route-id="@Model.ISBN" class="text-danger ml-1">
-            <i class="fa fa-trash fa-lg"></i></a>
+            <!-- Modal -->
+            <div class="modal fade" id="a-@Model.BookId" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Are you sure you want to delete @Model.Title?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                No
+                            </button>
+                            <a type="button" class="btn btn-primary" asp-controller="BookManagement" asp-action="Delete" asp-route-id="@Model.ISBN">
+                                Yes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1"><i class="fas fa-edit fa-lg"></i></a>
+            <a data-toggle="modal" href="#a-@Model.BookId" class="text-danger ml-1" >
+                <i class="fa fa-trash fa-lg"></i>
+            </a>
+
+            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1">
+                <i class="fas fa-edit fa-lg"></i>
+            </a>
         </td>
+        
     }
     else if (User.IsInRole("user"))
     {
@@ -40,3 +63,5 @@
         </td>
     }
 </tr>
+
+
