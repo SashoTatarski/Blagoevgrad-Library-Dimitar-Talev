@@ -47,8 +47,7 @@ namespace Library.Services
                .Include(b => b.Ratings)
                .FirstOrDefaultAsync(book => book.Id.ToString() == id)
             .ConfigureAwait(false);
-
-        public async Task<Book> GetBookByISBNAsync(string isbn)
+        public async Task<Book> GetBookByIsbnAsync(string isbn)
             => await _context.Books
                 .Include(b => b.Author)
                 .Include(b => b.Publisher)
@@ -60,6 +59,11 @@ namespace Library.Services
                     .ThenInclude(rb => rb.User)
                 .Include(b => b.Ratings)
                 .FirstOrDefaultAsync(book => book.ISBN == isbn).ConfigureAwait(false);
+        public async Task<List<Book>> GetTopRatedBooks(int number)
+        {
+            var distinctBooks = await this.GetDistinctBooksByIsbn().ConfigureAwait(false);
+            return distinctBooks.OrderByDescending(b => b.Rating).Take(number).ToList();
+        }
         public async Task<List<Book>> GetAllBooksAsync() =>
             await _context.Books
                 .Include(b => b.Author)
@@ -73,6 +77,16 @@ namespace Library.Services
                 .Include(b => b.Ratings)
            .ToListAsync()
            .ConfigureAwait(false);
+        public async Task<List<Book>> GetDistinctBooksByIsbn()
+        {
+            var books = await this.GetAllBooksAsync().ConfigureAwait(false);
+            return books.GroupBy(b => b.ISBN).Select(g => g.First()).ToList();
+        }
+        public async Task<List<Book>> GetBooksByIsbnAsync(string isbn)
+        {
+            var books = await this.GetAllBooksAsync().ConfigureAwait(false);
+            return books.Where(b => b.ISBN == isbn).ToList();
+        }
         public async Task AddBookCopies(string id, int copies)
         {
             var book = await GetBookByIdAsync(id).ConfigureAwait(false);
@@ -197,27 +211,12 @@ namespace Library.Services
                     .ThenInclude(bg => bg.Genre)
                 .Where(b => b.Author.Id.ToString() == authorId)
                 .ToListAsync()
-                .ConfigureAwait(false);            
+                .ConfigureAwait(false);
 
-            return GetBooksByIsbn(books);
+            return await GetDistinctBooksByIsbn().ConfigureAwait(false);
         }
 
-        private static List<Book> GetBooksByIsbn(List<Book> tempBooks)
-        {
-            var allBooks = new List<Book>();
-            string isbn = tempBooks[0].ISBN;
-            allBooks.Add(tempBooks[0]);
-            foreach (var book in tempBooks)
-            {
-                if (book.ISBN != isbn)
-                {
-                    allBooks.Add(book);
-                    isbn = book.ISBN;
-                }
-            }
 
-            return allBooks;
-        }
     }
 }
 

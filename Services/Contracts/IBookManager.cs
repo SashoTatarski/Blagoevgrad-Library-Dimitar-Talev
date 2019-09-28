@@ -8,8 +8,10 @@ namespace Library.Services.Contracts
     {
         Task CreateBookAsync(string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds, int copies);
         Task<List<Book>> GetAllBooksAsync();
+        Task<List<Book>> GetDistinctBooksByIsbn();
         Task<Book> GetBookByIdAsync(string id);
-        Task<Book> GetBookByISBNAsync(string isbn);
+        Task<Book> GetBookByIsbnAsync(string isbn);
+        Task<List<Book>> GetTopRatedBooks(int number);
         Task AddBookCopies(string id, int copies);
         Task<int> BookCopiesCountAsync(string isbn);
         Task EditBookAsync(string bookId, string title, string isbn, int year, int rack, string authorId, string publisherId, List<int> genresIds);
@@ -28,5 +30,6 @@ namespace Library.Services.Contracts
         Task<List<Book>> SearchAsync(string searchCriteria);
         Task<List<Book>> GetBooksByAuthorAsync(string authorId);
         Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId);
+        Task<List<Book>> GetBooksByIsbnAsync(string isbn);
     }
 }

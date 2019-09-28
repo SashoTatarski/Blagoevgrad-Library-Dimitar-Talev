@@ -1,8 +1,40 @@
-﻿@{
+﻿@model HomeBooksViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .card {
+        margin-bottom: 30px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 80px;
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row">
+    @foreach (var book in Model.Books)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <h5 class="card-header">@book.Title</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Rating @book.Rating</h5>
+                    <p class="card-text">By @book.AuthorName</p>
+                    <p class="card-text">Publisher: @book.Publisher @book.Year</p>
+                    <a class="btn btn-primary" asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.ISBN">See more</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

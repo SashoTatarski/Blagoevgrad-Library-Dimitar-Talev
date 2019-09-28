@@ -1,11 +1,11 @@
 ﻿using Library.Services.Contracts;
+using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Threading.Tasks;
-using Library.Web.Mapper;
 
 namespace Library.Web.Controllers
 {
@@ -43,7 +43,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var bookToDelete = await _bookManager.GetBookByISBNAsync(id).ConfigureAwait(false);
+            var bookToDelete = await _bookManager.GetBookByIsbnAsync(id).ConfigureAwait(false);
 
             await _bookManager.DeleteBookAsync(id).ConfigureAwait(false);
 
@@ -138,7 +138,7 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> AuthorDetails(AuthorViewModel vm)
         {
             var author = await _bookManager.GetAuthorAsync(vm.Id).ConfigureAwait(false);
-           
+
             var books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id).ConfigureAwait(false);
 
             vm.AuthorName = author.Name;
@@ -151,17 +151,14 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BookDetails(string id)
         {
-            var bookTemp = await _bookManager.GetBookByIdAsync(id).ConfigureAwait(false);
-            var vm = bookTemp.MapToViewModel();
+            var books = await _bookManager.GetBooksByIsbnAsync(id).ConfigureAwait(false);
 
-            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
-            var books = allBooks.Where(a => a.ISBN == vm.ISBN).ToList();
+            var vm = books[0].MapToViewModel();
 
             foreach (var book in books)
             {
                 vm.AllBookCopies.Add(book.MapToCopyViewModel());
             }
-
 
             return View(vm);
         }

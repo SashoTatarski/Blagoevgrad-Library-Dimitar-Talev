@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Models.Utils;
+﻿using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.AccountManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Web.Controllers
 {
@@ -15,12 +13,10 @@ namespace Library.Web.Controllers
     public class AccountManagementController : Controller
     {
         private readonly IAccountManager _accountManager;
-        private readonly IBookManager _bookManager;
 
-        public AccountManagementController(IAccountManager accountManager, IBookManager bookManager)
+        public AccountManagementController(IAccountManager accountManager)
         {
             _accountManager = accountManager;
-            _bookManager = bookManager;
         }
 
         public async Task<IActionResult> Index(AccountViewModel vm)
