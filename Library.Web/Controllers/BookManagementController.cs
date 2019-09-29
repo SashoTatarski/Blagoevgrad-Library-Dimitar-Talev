@@ -100,14 +100,6 @@ namespace Library.Web.Controllers
             return RedirectToAction("AddBook", "BookManagement");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AddBook()
-        {
-            await this.CreateSelectListItems();
-
-            return View(this.BookViewModel);
-        }
-
         private async Task CreateSelectListItems()
         {
             var allAuthors = await _bookManager.GetAllAuthorsAsync();
@@ -124,13 +116,30 @@ namespace Library.Web.Controllers
             this.BookViewModel.GenresOptions = allGenres.OrderBy(g => g.Name).Select(genre => new SelectListItem(genre.Name, genre.Id.ToString())).ToList();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddBook()
+        {
+            await this.CreateSelectListItems();
+
+            return View(this.BookViewModel);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddBook(BookViewModel vm)
         {
-            await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies).ConfigureAwait(false);
+            if (!_bookManager.isIsbnUnique(vm.ISBN))
+            {
+                await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies).ConfigureAwait(false);
 
-            TempData["message"] = $"{vm.Title} has been created";
-            return RedirectToAction("Index", "SearchBooks");
+                TempData["message"] = $"{vm.Title} has been created";
+                return RedirectToAction("Index", "SearchBooks");
+            }
+            else
+            {
+                TempData["message"] = $"{vm.ISBN} is associated with another book!";
+                return RedirectToAction("AddBook");
+            }
         }
 
         [HttpGet]
