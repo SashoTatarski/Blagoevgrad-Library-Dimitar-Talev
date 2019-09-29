@@ -34,9 +34,6 @@ namespace Library.Services
 
             await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
         }
-
-        public bool isIsbnUnique(string isbn) => _context.Books.Any(x => x.ISBN == isbn);
-
         public async Task<Book> GetBookByIdAsync(string id)
            => await _context.Books
                .Include(b => b.Author)
@@ -179,7 +176,6 @@ namespace Library.Services
         public async Task<List<Publisher>> GetAllPublishersAsync() => await _context.Publishers.ToListAsync().ConfigureAwait(false);
 
         public async Task<Genre> CreateGenreAsync(string genre) => await _genreFac.CreateGenreAsync(genre).ConfigureAwait(false);
-
         public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
 
         public async Task<List<Book>> SearchAsync(string searchCriteria)
@@ -193,33 +189,14 @@ namespace Library.Services
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
+        //TODO - how to improve this
         public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)
         {
-            return await _context.Books
-                .Include(b => b.Author)
-                .Include(b => b.Publisher)
-                .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-                .Where(b => b.Author.Id.ToString() == authorId)
-                .ToListAsync()
-                .ConfigureAwait(false);
+            var distinctBooks = await this.GetDistinctBooksByIsbn().ConfigureAwait(false);
+
+            return distinctBooks.Where(b => b.AuthorId.ToString() == authorId).ToList();
         }
-        //TODO - how to improve this
-        public async Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId)
-        {
-            var books = await _context.Books
-                .Include(b => b.Author)
-                .Include(b => b.Publisher)
-                .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-                .Where(b => b.Author.Id.ToString() == authorId)
-                .ToListAsync()
-                .ConfigureAwait(false);
-
-            return await GetDistinctBooksByIsbn().ConfigureAwait(false);
-        }
-
-
+        public bool isIsbnUnique(string isbn) => _context.Books.Any(x => x.ISBN == isbn);
     }
 }
 

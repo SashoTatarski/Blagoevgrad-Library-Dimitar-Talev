@@ -148,7 +148,7 @@ namespace Library.Web.Controllers
         {
             var author = await _bookManager.GetAuthorAsync(vm.Id).ConfigureAwait(false);
 
-            var books = await _bookManager.GetBookByAuthorIsbnAsync(vm.Id).ConfigureAwait(false);
+            var books = await _bookManager.GetBooksByAuthorAsync(vm.Id).ConfigureAwait(false);
 
             vm.AuthorName = author.Name;
             vm.Books = books.Select(x => x.MapToViewModel()).ToList();
