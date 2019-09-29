@@ -4,30 +4,28 @@
     ViewData["Title"] = "SearchResults";
 }
 
-<form class="col-lg-6" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
-    <div class="row">
-        <div class="col-sm-9">
-            <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
-        </div>
-        <div class="col-sm-3">
-            <button type="submit" class="btn btn-success">Search!</button>
-        </div>
-    </div>
-    <p></p>
-    <p></p>
-</form>
+    <div class="row mt-5">
+        <form class="col-lg-10" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+            <div class="row">
+                <div class="col-sm-9">
+                    <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-info">Search!</button>
+                </div>
+            </div>
+            <p></p>
+            <p></p>
+        </form>
 
-<div class="row mt-5">
-    <div class="col-lg-12">
-        @if (Model != null)
+        @if (!Model.BookSearchResults.Any())
         {
-            if (/*string.IsNullOrWhiteSpace(Model.SearchName) || */!Model.BookSearchResults.Any())
-            {
-                <p class="alert alert-info">There are no books</p>
-            }
-            else
-            {
-                <table class="table table-stripped table-bordered table-sm">
+            <p class="alert alert-info">There are no books</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead class="thead-dark">
                     <tr>
                         <th>Author</th>
                         <th>Title</th>
@@ -36,24 +34,32 @@
                         <th>Year</th>
                         <th>Rack</th>
                         <th>Rating</th>
-                        <th class="text-center">Actions</th>
-                    </tr>
 
+                        @if (User.IsInRole("admin"))
+                        {
+                            <th>Copies</th>
+                        }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <th class="text-center">Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach (var book in Model.BookSearchResults)
                     {
                         <partial name="_BooksPartial" model="book" />
                     }
-
-                </table>
-            }
+                </tbody>
+            </table>
         }
     </div>
-</div>
 
-<a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-@{ var referrer = this.Context.Request.Headers["Referer"]; }
+    <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    @{ var referrer = this.Context.Request.Headers["Referer"]; }
 
-@if (referrer != default(StringValues))
-{
-    <a href="@referrer.ToString()" class="btn btn-default">Go Back</a>
-}
+    @if (referrer != default(StringValues))
+    {
+        <a href="@referrer.ToString()" class="btn btn-outline-dark">Go Back</a>
+    }

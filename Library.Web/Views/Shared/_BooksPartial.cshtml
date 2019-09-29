@@ -8,17 +8,17 @@
         <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" title="All Books From @Model.Author.Name">@Model.Author.Name</a>
     </td>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" title="View Book Details"> @Model.Title</a>
+        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.ISBN" title="View Book Details"> @Model.Title</a>
     </td>
     <td class="text-left">@Model.Publisher.Name</td>
     <td class="text-left">@Model.ISBN</td>
     <td class="text-left">@Model.Year</td>
     <td class="text-left">@Model.Rack</td>
-    <td class="text-left">@Model.Rating</td>
+    <td class="text-center">@Model.Rating</td>
 
     @if (User.IsInRole("admin"))
     {
-        <td class="text-left">@Model.BookCopies</td>
+        <td class="text-center">@Model.BookCopies</td>
     }
 
 
