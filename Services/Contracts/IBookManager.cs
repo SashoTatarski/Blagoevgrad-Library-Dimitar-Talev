@@ -29,7 +29,6 @@ namespace Library.Services.Contracts
 
         Task<List<Book>> SearchAsync(string searchCriteria);
         Task<List<Book>> GetBooksByAuthorAsync(string authorId);
-        Task<List<Book>> GetBookByAuthorIsbnAsync(string authorId);
         Task<List<Book>> GetBooksByIsbnAsync(string isbn);
         bool isIsbnUnique(string isbn);
     }

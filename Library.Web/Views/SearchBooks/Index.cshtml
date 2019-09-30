@@ -5,53 +5,56 @@
 }
 
 <div class="row mt-5">
-    <form class="col-lg-6" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+    <form class="col-lg-10" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
         <div class="row">
             <div class="col-sm-9">
                 <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
             </div>
             <div class="col-sm-3">
-                <button type="submit" class="btn btn-primary">Search!</button>
+                <button type="submit" class="btn btn-info">Search!</button>
             </div>
         </div>
         <p></p>
         <p></p>
     </form>
 
-    <table class="table table-stripped table-bordered table-sm">
-        <tr>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Publisher</th>
-            <th>ISBN</th>
-            <th>Year</th>
-            <th>Rack</th>
-            <th>Rating</th>
 
-            @if (User.IsInRole("admin"))
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>Publisher</th>
+                <th>ISBN</th>
+                <th>Year</th>
+                <th>Rack</th>
+                <th>Rating</th>
+
+                @if (User.IsInRole("admin"))
+                {
+                    <th>Copies</th>
+                }
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <th class="text-center">Actions</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.AllBooks)
             {
-                <th>Copies</th>
+                <partial name="_BooksPartial" model="book" />
             }
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <th class="text-center">Actions</th>
-            }
-        </tr>
-
-        @foreach (var book in Model.AllBooks)
-        {
-            <partial name="_BooksPartial" model="book" />
-        }
-
+        </tbody>
     </table>
 </div>
 
-<a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+<a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 @{ var referrer = this.Context.Request.Headers["Referer"]; }
 
 @if (referrer != default(StringValues))
 {
-    <a href="@referrer.ToString()" class="btn btn-outline-primary">Go Back</a>
+    <a href="@referrer.ToString()" class="btn btn-outline-dark">Go Back</a>
 }
 
