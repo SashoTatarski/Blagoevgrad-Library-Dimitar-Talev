@@ -4,31 +4,38 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="row mt-5">    
-    <table class="table table-stripped table-bordered table-sm">
-        <tr>
-            <th>Username</th>
-            <th>Membership Start</th>
-            <th>Membership End</th>
-            <th>Wallet</th>
-            <th>Status</th>            
-            <th class="text-center">Actions</th>
-        </tr>
-
-        @foreach (var user in Model.User)
+<div class="row mt-5">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Username</th>
+                <th>Membership Start</th>
+                <th>Membership End</th>
+                <th>Wallet</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.User)
             {
-                <partial name="_UsersPartial" model="user" />
+                @if (user.Username != User.Identity.Name)
+                {
+                    <partial name="_UsersPartial" model="user" />
+                }
             }
-
-    </table>
+        </tbody>
 </div>
 
-<a class="btn btn-success" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-@{ var referrer = this.Context.Request.Headers["Referer"]; }
+<div>
+    <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    @{ var referrer = this.Context.Request.Headers["Referer"]; }
 
-@if (referrer != default(StringValues))
-{
-    <a href="@referrer.ToString()" class="btn btn-default">Go Back</a>
-}
+    @if (referrer != default(StringValues))
+    {
+        <a href="@referrer.ToString()" class="btn btn-outline-dark">Go Back</a>
+    }
+</div>
+
 
 
