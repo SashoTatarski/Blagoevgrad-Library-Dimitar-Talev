@@ -19,7 +19,7 @@
     <script src="https://kit.fontawesome.com/9cb671cc82.js"></script>
 </head>
 <body>
-    @if(TempData["message"] != null)
+    @if (TempData["message"] != null)
     {
         <div class="alert alert-success">@TempData["message"]</div>
     }
@@ -61,11 +61,13 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Notifications" asp-action="Index"><i class="fa fa-bell" aria-hidden="true"></i> My Notifications</a>
                                 </li>
                             }
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
-                        
-                    </li>
-                            <p class="nav-link text-dark">Hello @User.Identity.Name</p>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="UserAccount" asp-action="Index"><i class="fa fa-user" aria-hidden="true"></i> Hello, @User.Identity.Name</a>
+                            </li>
                         }
                         else
                         {
@@ -116,6 +118,6 @@
     <script src="~/js/logger.js"></script>
 
     @RenderSection("Scripts", required: false)
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

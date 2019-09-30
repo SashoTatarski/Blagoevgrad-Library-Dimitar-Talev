@@ -43,7 +43,7 @@ namespace Library.Web.Controllers
         {
             var user = User.Identity.Name;
 
-            await _system.ReturnBook(user, id).ConfigureAwait(false);
+            await _system.ReturnCheckedBookAsync(user, id).ConfigureAwait(false);
 
             TempData["message"] = Constants.RetBookSucc;
 

@@ -5,7 +5,6 @@
     ViewData["Title"] = "_UsersPartial";
 }
 
-
 <tr>
     <td class="text-left">
         <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"><i class="fa fa-user" aria-hidden="true"></i> @Model.Username</a>
@@ -72,7 +71,7 @@
                 <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Deactivate">
                     <i class="fas fa-times text-danger"></i>
                 </a>
-                <a asp-controller="AccountManagement" asp-action="Bann" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Bann">
+                <a asp-controller="AccountManagement" asp-action="Ban" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Ban">
                     <i class="fas fa-ban text-danger"></i>
                 </a>
             }

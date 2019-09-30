@@ -94,9 +94,12 @@ namespace Library.Models.Utils
         public const string ChBookSucc = "Book Successfully Checked Out!";
         public const string ChBookMax = "You Cannot Checkout More Than 5 Books";
         public const string AcctDeact = "Account has been deactived";
-        public const string AcctBann = "Account has been banned";
+        public const string AcctBan = "Account has been banned";
         public const string UsernameValid = "Username should be at least 5 symbols";
         public const string PasswordValid = "Password should be at least 5 symbols";
         public const string LogInFailed = "Log In Failed - no permission";
+        public const string AcctCancelErr = "You have to return all books before cancelling your account";
+        public const string AcctCancel = "You have successfully cancelled your account";
+        public const string AcctCancelRetBks = "User must return all of his books";
     }
 }

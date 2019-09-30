@@ -16,12 +16,16 @@ namespace Library.Services
     {
         private readonly LibraryContext _context;
         private readonly IHasher _hasher;
+        
 
         public AccountManager(LibraryContext context, IHasher hasher)
         {
             _context = context;
-            _hasher = hasher;
+            _hasher = hasher;            
         }
+
+       
+        
 
         public async Task<User> GetUserByIdAsync(string id)
             => await _context.Users
@@ -65,7 +69,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task BannUserAsync(string id)
+        public async Task BanUserAsync(string id)
         {
             var user = await _context.Users.Where(u => u.Id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
 
