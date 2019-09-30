@@ -13,7 +13,7 @@ namespace Library.Services.Contracts
         Task<User> ActivateUserAsync(string id);
         Task<User> GetUserByIdAsync(string id);
         Task<User> GetUserByUsernameAsync(string username);
-        Task BannUserAsync(string id);
+        Task BanUserAsync(string id);
         void CheckStatus(User user);
     }
 }

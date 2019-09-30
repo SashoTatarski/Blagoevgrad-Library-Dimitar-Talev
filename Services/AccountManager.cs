@@ -23,10 +23,6 @@ namespace Library.Services
             _context = context;
             _hasher = hasher;            
         }
-
-       
-        
-
         public async Task<User> GetUserByIdAsync(string id)
             => await _context.Users
             .Include(u => u.ReservedBooks)
