@@ -44,6 +44,15 @@ namespace Library.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Bann(string id)
+        {
+            await _accountManager.BannUserAsync(id).ConfigureAwait(false);
+
+            TempData["message"] = Constants.AcctBann;
+
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Activate(string id)
         {
             var accountToActivate = await _accountManager.ActivateUserAsync(id).ConfigureAwait(false);
