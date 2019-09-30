@@ -7,82 +7,59 @@
 
 <tr>
     <td class="text-left">
-        <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"><i class="fa fa-user" aria-hidden="true"></i> @Model.Username</a>
+        <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            @Model.Username
+        </a>
     </td>
-    <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipStartDate.ToString("dd.MM.yyyy")</td>
-    <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipEndDate.ToString("dd.MM.yyyy")</td>
-    <td class="text-left">@Model.Wallet.ToString("C", CultureInfo.CurrentCulture)</td>
-
-    <tr>
-        <td class="text-left">
-            <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"> @Model.Username</a>
-        </td>
-        <td class="text-left">
-            @Model.MembershipStartDate.ToString("dd/MM/yyyy")
-        </td>
-        <td class="text-left">
-            @Model.MembershipEndDate.ToString("dd/MM/yyyy")
-        </td>
-        <td class="text-left">
-            @Model.Wallet.ToString("C", CultureInfo.CurrentCulture)
-        </td>
-
+    <td class="text-left">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        @Model.MembershipStartDate.ToString("dd.MM.yyyy")
+    </td>
+    <td class="text-left">
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+        @Model.MembershipEndDate.ToString("dd.MM.yyyy")
+    </td>
+    <td class="text-left">
+        <i class="fas fa-dollar-sign"></i>
+        @Model.Wallet.ToString("C", CultureInfo.CurrentCulture)
+    </td>
 
     @if (Model.Status == AccountStatus.Active)
     {
-        <td class="text-success ml-1 text-left">@Model.Status</td>
+        <td class="text-center" title="Active">
+            <i class="fas fa-check-circle text-success"></i>
+        </td>
     }
     else if (Model.Status == AccountStatus.Inactive)
     {
-        <td class="text-danger ml-1 text-left">@Model.Status</td>
+        <td class="text-center" title="Inactive">
+            <i class="fas fa-times-circle text-danger"></i>
+        </td>
+    }
+    else if (Model.Status == AccountStatus.Banned)
+    {
+        <td class="text-center" title="Banned">
+            <i class="fas fa-ban text-danger"></i>
+        </td>
     }
 
     <td class="text-center">
         @if (Model.Status == AccountStatus.Active)
         {
-            <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1">Deactivate</a>
-
-            <td class="text-center" title="Active">
-                <i class="fas fa-check-circle text-success"></i>
-            </td>
-
+            <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Deactivate">
+                <i class="fas fa-times text-danger icon-action"></i>
+            </a>
+            <a asp-controller="AccountManagement" asp-action="Bann" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Bann">
+                <i class="fas fa-ban text-danger icon-action"></i>
+            </a>
         }
         else
         {
-            <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1">Activate</a>
+            <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1" title="Activate">
+                <i class="fas fa-check text-success icon-action"></i>
+            </a>
         }
 
     </td>
 </tr>
-            <td class="text-center" title="Inactive">
-                <i class="fas fa-times-circle text-danger"></i>
-            </td>
-        }
-        else if (Model.Status == AccountStatus.Banned)
-        {
-            <td class="text-center" title="Banned">
-                <i class="fas fa-ban text-danger"></i>
-            </td>
-        }
-
-        <td class="text-center">
-            @if (Model.Status == AccountStatus.Active)
-            {
-                <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Deactivate">
-                    <i class="fas fa-times text-danger"></i>
-                </a>
-                <a asp-controller="AccountManagement" asp-action="Ban" asp-route-id="@Model.UserId" class="text-danger ml-1" title="Ban">
-                    <i class="fas fa-ban text-danger"></i>
-                </a>
-            }
-            else
-            {
-                <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1" title="Activate">
-                    <i class="fas fa-check text-success"></i>
-                </a>
-            }
-
-        </td>
-    </tr>
-
->>>>>>> 3ca1f85d71ade739e92d828da2636462f1ba4574
