@@ -1,55 +1,55 @@
-﻿@model  BookViewModel
+﻿@model BookViewModel
 @{
     ViewData["Title"] = "EditBook";
 }
 
-    <div class="col-md-4">
-        <h5>Edit Book</h5>
-        <form asp-action="EditBook" asp-controller="BookManagement" method="post">
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"> </label>
-                <input value="@Model.Title" asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger">  </span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Author</label>
-                <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddAuthor" asp-route-id="@Model.BookId">Create Author</a></p>
-                <select asp-for="@Model.AuthorId" asp-items="@Model.Authors" class="form-control">
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Publisher</label>
-                <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddPublisher">New Publisher</a></p>
-                <select asp-for="@Model.PublisherId" asp-items="@Model.Publishers" class="form-control">
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Genres</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddGenre">New Genre</a></p>
-                <select asp-for="@Model.GenresIds" asp-items="@Model.GenresOptions" class="form-control">
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label">ISBN</label>
-                <input asp-for="ISBN" class="form-control" />
-                <span asp-validation-for="ISBN" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Year</label>
-                <input asp-for="Year" class="form-control" />
-                <span asp-validation-for="Year" class="text-danger">  </span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Rack</label>
-                <input asp-for="Rack" class="form-control" />
-                <span asp-validation-for="Rack" class="text-danger">  </span>
-            </div>
-            <input type="hidden" asp-for="BookId" value="@Model.BookId" />
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
+<div class="col-md-4">
+    <h5>Edit Book</h5>
+    <form asp-action="EditBook" asp-controller="BookManagement" method="post">
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"> </label>
+            <input value="@Model.Title" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger">  </span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Author</label>
+            <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddAuthor" asp-route-id="@Model.BookId">Create Author</a></p>
+            <select asp-for="@Model.AuthorId" asp-items="@Model.Authors" class="form-control">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Publisher</label>
+            <p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddPublisher">New Publisher</a></p>
+            <select asp-for="@Model.PublisherId" asp-items="@Model.Publishers" class="form-control">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Genres</label><p><a class="btn btn-primary" asp-controller="BookManagement" asp-action="AddGenre">New Genre</a></p>
+            <select asp-for="@Model.GenresIds" asp-items="@Model.GenresOptions" class="form-control">
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label">ISBN</label>
+            <input asp-for="ISBN" class="form-control" />
+            <span asp-validation-for="ISBN" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Year</label>
+            <input asp-for="Year" class="form-control" />
+            <span asp-validation-for="Year" class="text-danger">  </span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Rack</label>
+            <input asp-for="Rack" class="form-control" />
+            <span asp-validation-for="Rack" class="text-danger">  </span>
+        </div>
+        <input type="hidden" asp-for="BookId" value="@Model.BookId" />
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
 
-            <partial name="_ReturnButtonsPartial" />
+        <partial name="_ReturnButtonsPartial" />
 
-        </form>
-    </div>
-    <partial name="_HomeGoBackButtonsPartial" />
+    </form>
+</div>
+<partial name="_ReturnButtonsPartial" />
