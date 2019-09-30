@@ -5,32 +5,32 @@
     ViewData["Title"] = "_UsersPartial";
 }
 
-    <tr>
-        <td class="text-left"><a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"> @Model.Username</a>
-        </td>
-        <td class="text-left">@Model.MembershipStartDate.ToString("dd.MM.yyyy")</td>
-        <td class="text-left">@Model.MembershipEndDate.ToString("dd.MM.yyyy")</td>
-        <td class="text-left">@Model.Wallet.ToString("C", CultureInfo.CurrentCulture)</td>
+<tr>
+    <td class="text-left">
+        <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"><i class="fa fa-user" aria-hidden="true"></i> @Model.Username</a>
+    </td>
+    <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipStartDate.ToString("dd.MM.yyyy")</td>
+    <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipEndDate.ToString("dd.MM.yyyy")</td>
+    <td class="text-left">@Model.Wallet.ToString("C", CultureInfo.CurrentCulture)</td>
 
+    @if (Model.Status == AccountStatus.Active)
+    {
+        <td class="text-success ml-1 text-left">@Model.Status</td>
+    }
+    else if (Model.Status == AccountStatus.Inactive)
+    {
+        <td class="text-danger ml-1 text-left">@Model.Status</td>
+    }
+
+    <td class="text-center">
         @if (Model.Status == AccountStatus.Active)
         {
-            <td class="text-success ml-1 text-left">@Model.Status</td>
+            <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1">Deactivate</a>
         }
-        else if (Model.Status == AccountStatus.Inactive)
+        else
         {
-            <td class="text-danger ml-1 text-left">@Model.Status</td>
+            <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1">Activate</a>
         }
 
-        <td class="text-center">
-            @if (Model.Status == AccountStatus.Active)
-            {
-                <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1">Deactivate</a>
-            }
-            else
-            {
-                <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1">Activate</a>
-            }
-
-        </td>
-    </tr>
-
+    </td>
+</tr>
