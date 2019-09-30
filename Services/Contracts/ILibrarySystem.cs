@@ -9,10 +9,11 @@ namespace Library.Services.Contracts
     {
         Task ChangeBookStatus(string bookId, BookStatus status);
         Task AddBookToCheckoutBooksAsync(string bookId, string userName);
-        Task<List<Book>> GetCheckeoutBooks(string userName);
-
-
-
+        Task<List<Book>> GetCheckeoutBooksAsync(string userName);
+        Task ReturnCheckedBookAsync(string userName, string bookId);
+        Task ReturnResBookAsync(string userName, string bookId);
+        Task<List<Book>> GetReservedBooksAsync(string userName);
+        Task AccountCancel(string id);
 
 
 
@@ -22,6 +23,6 @@ namespace Library.Services.Contracts
         void RemoveBookFromCheckoutBooks(Book book);
         void ManageOverdueReservations();
         bool HasIssuedBooks(User user);
-        Task ReturnBook(string user, string bookId);
+        Task<bool> HasOverdueBooks(string id);
     }
 }

@@ -97,5 +97,8 @@ namespace Library.Models.Utils
         public const string AcctBann = "Account has been banned";
         public const string UsernameValid = "Username should be at least 5 symbols";
         public const string PasswordValid = "Password should be at least 5 symbols";
+        public const string AcctCancelErr = "You have to return all books before cancelling your account";
+        public const string AcctCancel = "You have successfully cancelled your account";
+        public const string AcctCancelRetBks = "User must return all of his books";
     }
 }

@@ -16,12 +16,16 @@ namespace Library.Services
     {
         private readonly LibraryContext _context;
         private readonly IHasher _hasher;
+        
 
         public AccountManager(LibraryContext context, IHasher hasher)
         {
             _context = context;
-            _hasher = hasher;
+            _hasher = hasher;            
         }
+
+       
+        
 
         public async Task<User> GetUserByIdAsync(string id)
             => await _context.Users
