@@ -71,8 +71,6 @@ namespace Library.Services
 
             user.Status = AccountStatus.Banned;
             this.CreateBannedUser(user);
-
-           // await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         private async Task CreateBannedUser(User user)
@@ -87,6 +85,14 @@ namespace Library.Services
 
             _context.BannedUsers.Add(bannedUser);
             await _context.SaveChangesAsync().ConfigureAwait(true);
+        }
+
+        public void CheckStatus(User user)
+        {
+            if (user.Status == AccountStatus.Banned || user.Status == AccountStatus.Inactive)
+            {
+                throw new ArgumentException(Constants.LogInFailed);
+            }
         }
 
         public async Task<List<User>> GetAllUsersAsync() => await _context.Users

@@ -44,6 +44,8 @@ namespace Library.Web.Controllers
             try
             {
                 var user = _accountManager.Find(viewModel.Username, viewModel.Password);
+                _accountManager.CheckStatus(user);
+
                 await SignInUserAsync(user).ConfigureAwait(false);
 
                 return BackToHome();

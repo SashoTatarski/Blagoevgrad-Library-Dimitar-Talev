@@ -97,5 +97,6 @@ namespace Library.Models.Utils
         public const string AcctBann = "Account has been banned";
         public const string UsernameValid = "Username should be at least 5 symbols";
         public const string PasswordValid = "Password should be at least 5 symbols";
+        public const string LogInFailed = "Log In Failed - no permission";
     }
 }
