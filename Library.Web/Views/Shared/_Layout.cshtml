@@ -34,45 +34,46 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="SearchBooks" asp-action="Index">Search</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SearchBooks" asp-action="Index"><i class="fa fa-search" aria-hidden="true"></i> Search</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="BookManagement" asp-action="Index">Book Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="BookManagement" asp-action="Index"><i class="fa fa-book" aria-hidden="true"></i> Book Management</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="AccountManagement" asp-action="Index">Account Management</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="AccountManagement" asp-action="Index"><i class="fa fa-users" aria-hidden="true"></i> Account Management</a>
                                 </li>
                             }
                             else if (User.IsInRole("user"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserBooks" asp-action="Index">My Books</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserBooks" asp-action="Index"><i class="fa fa-book" aria-hidden="true"></i> My Books</a>
                                 </li>
                             }
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Notifications" asp-action="Index">My Notifications</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Notifications" asp-action="Index"><i class="fa fa-bell" aria-hidden="true"></i> My Notifications</a>
                                 </li>
                             }
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Log Out</a>
-                            </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                        
+                    </li>
                             <p class="nav-link text-dark">Hello @User.Identity.Name</p>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Log In</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a>
                             </li>
                         }
                     </ul>
@@ -112,6 +113,7 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/logger.js"></script>
 
     @RenderSection("Scripts", required: false)
     <partial name="_ValidationScriptsPartial"/>
