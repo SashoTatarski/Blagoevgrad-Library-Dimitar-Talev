@@ -65,6 +65,30 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task BannUserAsync(string id)
+        {
+            var user = await _context.Users.Where(u => u.Id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
+
+            user.Status = AccountStatus.Banned;
+            this.CreateBannedUser(user);
+
+           // await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        private async Task CreateBannedUser(User user)
+        {
+            var bannedUser = new BannedUser()
+            {
+                UserId = user.Id,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddDays(30)
+                //Description = ...
+            };
+
+            _context.BannedUsers.Add(bannedUser);
+            await _context.SaveChangesAsync().ConfigureAwait(true);
+        }
+
         public async Task<List<User>> GetAllUsersAsync() => await _context.Users
             .Include(u => u.ReservedBooks)
                 .ThenInclude(ch => ch.Book)
@@ -118,7 +142,5 @@ namespace Library.Services
 
             return user;
         }
-
-
     }
 }
