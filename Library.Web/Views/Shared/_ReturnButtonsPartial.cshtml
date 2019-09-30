@@ -3,7 +3,7 @@
     ViewData["Title"] = "_ReturnButtonsPartial";
 }
 
-<div>
+<div class="over-footer">
     <a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     @{ var referrer = this.Context.Request.Headers["Referer"]; }
 

@@ -58,9 +58,5 @@ body {
 
 .over-footer {
     position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    height: 60px;
-    line-height: 60px;
+    bottom: 80px;
 }
