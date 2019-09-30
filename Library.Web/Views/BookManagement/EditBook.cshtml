@@ -43,10 +43,13 @@
                 <input asp-for="Rack" class="form-control" />
                 <span asp-validation-for="Rack" class="text-danger">  </span>
             </div>
-            <input type="hidden" asp-for="BookId" value="@Model.BookId"/>
+            <input type="hidden" asp-for="BookId" value="@Model.BookId" />
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
+
+            <partial name="_ReturnButtonsPartial" />
+
         </form>
     </div>
     <partial name="_HomeGoBackButtonsPartial" />
