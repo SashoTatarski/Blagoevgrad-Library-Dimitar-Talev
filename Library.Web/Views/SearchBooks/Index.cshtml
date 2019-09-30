@@ -4,57 +4,54 @@
     ViewData["Title"] = "SearchBooks";
 }
 
-<div class="row mt-5">
-    <form class="col-lg-10" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
-        <div class="row">
-            <div class="col-sm-9">
-                <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
+    <div class="row mt-5">
+        <form class="col-lg-10" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+            <div class="row">
+                <div class="col-sm-9">
+                    <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="submit" class="btn btn-info">Search!</button>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <button type="submit" class="btn btn-info">Search!</button>
-            </div>
-        </div>
-        <p></p>
-        <p></p>
-    </form>
+            <p></p>
+            <p></p>
+        </form>
 
 
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th>Author</th>
-                <th>Title</th>
-                <th>Publisher</th>
-                <th>ISBN</th>
-                <th>Year</th>
-                <th>Rack</th>
-                <th>Rating</th>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>ISBN</th>
+                    <th>Year</th>
+                    <th>Rack</th>
+                    <th>Rating</th>
 
-                @if (User.IsInRole("admin"))
+                    @if (User.IsInRole("admin"))
+                    {
+                        <th>Copies</th>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <th class="text-center">Actions</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.AllBooks)
                 {
-                    <th>Copies</th>
+                    <partial name="_BooksPartial" model="book" />
                 }
+            </tbody>
+        </table>
 
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <th class="text-center">Actions</th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var book in Model.AllBooks)
-            {
-                <partial name="_BooksPartial" model="book" />
-            }
-        </tbody>
-    </table>
-</div>
+        <partial name="_ReturnButtonsPartial" />
 
-<a class="btn btn-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-@{ var referrer = this.Context.Request.Headers["Referer"]; }
+    </div>
 
-@if (referrer != default(StringValues))
-{
-    <a href="@referrer.ToString()" class="btn btn-outline-dark">Go Back</a>
-}
+
 
