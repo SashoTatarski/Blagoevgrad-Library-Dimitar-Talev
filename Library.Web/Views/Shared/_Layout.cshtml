@@ -65,9 +65,16 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
 
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="UserAccount" asp-action="Index"><i class="fa fa-user" aria-hidden="true"></i> Hello, @User.Identity.Name</a>
-                            </li>
+                            if (User.IsInRole("user"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="UserAccount" asp-action="Index"><i class="fa fa-user" aria-hidden="true"></i> Hello, @User.Identity.Name</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("admin"))
+                            {
+                                <p class="nav-link text-dark"><i class="fa fa-user-secret" aria-hidden="true"></i> Hello, @User.Identity.Name</p>
+                            }
                         }
                         else
                         {
