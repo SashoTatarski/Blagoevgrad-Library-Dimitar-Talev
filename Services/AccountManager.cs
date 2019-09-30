@@ -69,7 +69,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task BannUserAsync(string id)
+        public async Task BanUserAsync(string id)
         {
             var user = await _context.Users.Where(u => u.Id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
 

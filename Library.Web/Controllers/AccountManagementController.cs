@@ -44,11 +44,11 @@ namespace Library.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Bann(string id)
+        public async Task<IActionResult> Ban(string id)
         {
-            await _accountManager.BannUserAsync(id).ConfigureAwait(false);
+            await _accountManager.BanUserAsync(id).ConfigureAwait(false);
 
-            TempData["message"] = Constants.AcctBann;
+            TempData["message"] = Constants.AcctBan;
 
             return RedirectToAction("Index");
         }

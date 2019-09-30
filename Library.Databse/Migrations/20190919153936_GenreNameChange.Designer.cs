@@ -35,7 +35,9 @@ namespace Library.Database.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("Library.Models.Models.BannedUser", b =>
+            modelBuilder.Entity("Library.Models.Models.
+                
+                edUser", b =>
                 {
                     b.Property<Guid>("UserId");
 
