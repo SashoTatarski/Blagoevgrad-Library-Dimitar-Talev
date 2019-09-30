@@ -44,15 +44,15 @@
                 </div>
             </div>
 
-            <a data-toggle="modal" href="#a-@Model.BookId" class="text-danger ml-1" >
+            <a data-toggle="modal" href="#a-@Model.BookId" class="text-danger ml-1" title="Delete">
                 <i class="fa fa-trash fa-lg"></i>
             </a>
 
-            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-danger ml-1">
+            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-warning ml-1" title="Edit">
                 <i class="fas fa-edit fa-lg"></i>
             </a>
         </td>
-        
+
     }
     else if (User.IsInRole("user"))
     {
