@@ -5,7 +5,7 @@
     ViewData["Title"] = "_UsersPartial";
 }
 
-<<<<<<< HEAD
+
 <tr>
     <td class="text-left">
         <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"><i class="fa fa-user" aria-hidden="true"></i> @Model.Username</a>
@@ -13,7 +13,7 @@
     <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipStartDate.ToString("dd.MM.yyyy")</td>
     <td class="text-left"><i class="fa fa-calendar" aria-hidden="true"></i> @Model.MembershipEndDate.ToString("dd.MM.yyyy")</td>
     <td class="text-left">@Model.Wallet.ToString("C", CultureInfo.CurrentCulture)</td>
-=======
+
     <tr>
         <td class="text-left">
             <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId"> @Model.Username</a>
@@ -27,7 +27,7 @@
         <td class="text-left">
             @Model.Wallet.ToString("C", CultureInfo.CurrentCulture)
         </td>
->>>>>>> 3ca1f85d71ade739e92d828da2636462f1ba4574
+
 
     @if (Model.Status == AccountStatus.Active)
     {
@@ -41,23 +41,20 @@
     <td class="text-center">
         @if (Model.Status == AccountStatus.Active)
         {
-<<<<<<< HEAD
             <a asp-controller="AccountManagement" asp-action="Delete" asp-route-id="@Model.UserId" class="text-danger ml-1">Deactivate</a>
-=======
+
             <td class="text-center" title="Active">
                 <i class="fas fa-check-circle text-success"></i>
             </td>
->>>>>>> 3ca1f85d71ade739e92d828da2636462f1ba4574
+
         }
         else
         {
-<<<<<<< HEAD
             <a asp-controller="AccountManagement" asp-action="Activate" asp-route-id="@Model.UserId" class="text-success ml-1">Activate</a>
         }
 
     </td>
 </tr>
-=======
             <td class="text-center" title="Inactive">
                 <i class="fas fa-times-circle text-danger"></i>
             </td>
