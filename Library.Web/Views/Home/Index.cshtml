@@ -1,6 +1,6 @@
 ﻿@model HomeBooksViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Blagoevgrad Public Library";
 }
 
 <style>
@@ -26,10 +26,10 @@
     {
         <div class="col-md-4">
             <div class="card">
-                <h5 class="card-header">@book.Title</h5>
+                <h5><a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.ISBN" class="card-header" style="color:black"><i class="fa fa-book fa-lg" style="color:black" aria-hidden="true"></i>   @book.Title</a></h5>
                 <div class="card-body">
-                    <h5 class="card-title">Rating @book.Rating</h5>
-                    <p class="card-text">By @book.AuthorName</p>
+                    <h5 class="card-title">Rating: @book.Rating</h5>
+                    <p class="card-text">By: @book.AuthorName</p>
                     <p class="card-text">Publisher: @book.Publisher @book.Year</p>
                     <a class="btn btn-info" asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.ISBN">See more</a>
                 </div>
