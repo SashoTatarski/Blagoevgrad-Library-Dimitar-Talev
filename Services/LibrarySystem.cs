@@ -177,8 +177,6 @@ namespace Library.Services
             {
                 BookId = bookToReserve.Id,
                 UserId = user.Id,
-                ReservationDate = DateTime.Today,
-                ReservationDueDate = DateTime.Today.AddDays(Constants.MaxReserveDays)
             };
 
             await this.ChangeBookStatusAsync(bookToReserve.Id.ToString(), BookStatus.Reserved);
