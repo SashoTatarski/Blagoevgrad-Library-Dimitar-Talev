@@ -39,6 +39,7 @@ namespace Library.Web.Controllers
                 {
                     book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                     book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                    book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
                     book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN).ConfigureAwait(false);
                     searchVM.AllBooks.Add(book);
                 }

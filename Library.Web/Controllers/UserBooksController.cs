@@ -54,7 +54,7 @@ namespace Library.Web.Controllers
 
             var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
 
-
+            await _system.AddBookToReservedBooksAsync(id, user);
 
             TempData["message"] =Constants.ResBookSucc;
 
@@ -67,7 +67,7 @@ namespace Library.Web.Controllers
 
             var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
             
-                await _system.AddBookToCheckoutBooksAsync(id, username).ConfigureAwait(false);
+                await _system.AddBookToCheckoutBooksAsync(id, username);
                 TempData["message"] = Constants.ChBookSucc;
             
             return RedirectToAction("Index");

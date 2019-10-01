@@ -145,9 +145,38 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task<bool> AreAllCopiesCheckedAsync(string isbn)
+        {
+            var books = await _bookManager.GetBooksByIsbnAsync(isbn);
+
+            foreach (var book in books)
+            {
+                if (book.Status == BookStatus.Available || book.Status == BookStatus.Reserved)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public async Task AddBookToReservedBooksAsync(string bookId, User user)
+        {
+            var newBook = new ReservedBook()
+            {
+                BookId = Guid.Parse(bookId),
+                UserId = user.Id,
+                ReservationDate = DateTime.Today,
+                ReservationDueDate = DateTime.Today.AddDays(Constants.MaxReserveDays)
+            };
+
+            await this.ChangeBookStatusAsync(bookId, BookStatus.Reserved);
+
+            _context.ReservedBooks.Add(newBook);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task AddBookToCheckoutBooksAsync(string bookId, string userName)
         {
-            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var newBook = new CheckoutBook()
             {
@@ -157,20 +186,23 @@ namespace Library.Services
                 DueDate = DateTime.Today.AddDays(Constants.MaxCheckoutDays)
             };
 
-           await this.ChangeBookStatus(bookId, BookStatus.CheckedOut).ConfigureAwait(false);
+            await this.ChangeBookStatusAsync(bookId, BookStatus.CheckedOut);
 
             _context.CheckoutBooks.Add(newBook);
-            await _context.SaveChangesAsync().ConfigureAwait(false);            
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task ChangeBookStatus(string bookId, BookStatus status)
+        public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
         {
             var book = await _bookManager.GetBookByIdAsync(bookId).ConfigureAwait(false);
 
-            book.Status = status;
+            if (book.Status == BookStatus.CheckedOut && status == BookStatus.Reserved)
+                book.Status = BookStatus.CheckedOutAndReserved;
+            else
+                book.Status = status;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
-        }      
+        }
     }
 }
 
