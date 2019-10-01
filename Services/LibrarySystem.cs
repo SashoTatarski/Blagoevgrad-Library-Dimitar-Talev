@@ -119,8 +119,16 @@ namespace Library.Services
 
             _context.CheckoutBooks.Remove(chBook);
 
-            await _context.SaveChangesAsync().ConfigureAwait(false);            
+            await _context.SaveChangesAsync()
+                .ConfigureAwait(continueOnCapturedContext: false);
         }
+
+        //    _context.Notifications.Add(new Notification()
+        //    {
+        //        IsSeen = false,
+        //        Message = "Book returned",
+        //        UserId = "nekvo admin id"
+        //    });
 
         public async Task ReturnResBookAsync(string userName, string bookId)
         {
