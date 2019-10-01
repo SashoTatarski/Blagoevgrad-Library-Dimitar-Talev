@@ -15,14 +15,12 @@ namespace Library.Web.Controllers
     [Authorize(Roles = "user")]
     public class UserBooksController : Controller
     {
-        private readonly ILibrarySystem _system;
-        private readonly IBookManager _bookManager;
+        private readonly ILibrarySystem _system;        
         private readonly IAccountManager _accountManager;
 
-        public UserBooksController(ILibrarySystem system, IBookManager bookManager, IAccountManager accountManager)
+        public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
         {
-            _system = system;
-            _bookManager = bookManager;
+            _system = system;            
             _accountManager = accountManager;
         }
 
@@ -68,9 +66,6 @@ namespace Library.Web.Controllers
             var username = User.Identity.Name;
 
             var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
-
-            // TODO: Да не може да взима книга, която вече е взел, т.е. Reserve бутона да не се показва в Search
-            // TODO: We need to move this to the View, so it doesn't show the checkout button at all if user has already reserved 5 books
             
                 await _system.AddBookToCheckoutBooksAsync(id, username).ConfigureAwait(false);
                 TempData["message"] = Constants.ChBookSucc;
