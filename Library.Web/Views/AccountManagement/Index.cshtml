@@ -18,11 +18,8 @@
         </thead>
         <tbody>
             @foreach (var user in Model.User.Where(x => x.Username != "admin"))
-            {
-                @if (user.Username != User.Identity.Name)
-                {
-                    <partial name="_UsersPartial" model="user" />
-                }
+            {                
+                    <partial name="_UsersPartial" model="user" />                
             }
         </tbody>
     </table>

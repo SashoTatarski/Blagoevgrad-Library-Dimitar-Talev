@@ -57,9 +57,20 @@
     else if (User.IsInRole("user"))
     {
         <td class="text-center">
-            <a class="btn btn-danger" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.BookId">Check Out</a>
+            @if (!Model.IsBookCheckedout)
+            {
+                <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.BookId">Checkout</a>
 
-            <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Reserve</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Reserve</a>
+            }
+            else
+            {
+                <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
+
+                <a class="btn btn-primary" asp-area="" asp-controller="BookManagement" asp-action="Return">Return</a>
+            }
+
+
         </td>
     }
 </tr>

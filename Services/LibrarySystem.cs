@@ -25,6 +25,11 @@ namespace Library.Services
             _context = context;
         }
 
+
+        public bool IsBookCheckedout(User user, string isbn) => user.CheckedoutBooks.Any(x => x.Book.ISBN == isbn);
+
+        public bool IsMaxCheckedoutQuota(User user) => user.CheckedoutBooks.Count >= Constants.MaxBookQuota;
+
         public async Task AccountCancel(string id)
         {
             bool hasOverdueBooks = await this.HasOverdueBooks(id).ConfigureAwait(false);
@@ -43,8 +48,12 @@ namespace Library.Services
                 await this.ReturnResBookAsync(user.Username, user.ReservedBooks[i].BookId.ToString()).ConfigureAwait(false);
             }
 
-            await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
+            //foreach (var book in user.CheckedoutBooks)
+            //{
+            //    await this.ReturnCheckedBookAsync(user.Username, book.BookId.ToString()).ConfigureAwait(false);
+            //}
 
+            await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
         }
 
         public async Task<bool> HasOverdueBooks(string id)
@@ -153,15 +162,7 @@ namespace Library.Services
             book.Status = status;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public ReservedBook AddBookToReservedBooks(Book book, User user) => throw new NotImplementedException();
-        public void CheckCheckoutBooksQuota(User user) => throw new NotImplementedException();
-        public void CheckReservedBooksQuota(User user) => throw new NotImplementedException();
-        
-        public bool HasIssuedBooks(User user) => throw new NotImplementedException();
-        public void ManageOverdueReservations() => throw new NotImplementedException();
-        public void RemoveBookFromCheckoutBooks(Book book) => throw new NotImplementedException();
+        }      
     }
 }
 

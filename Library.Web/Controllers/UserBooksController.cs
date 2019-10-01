@@ -71,16 +71,10 @@ namespace Library.Web.Controllers
 
             // TODO: Да не може да взима книга, която вече е взел, т.е. Reserve бутона да не се показва в Search
             // TODO: We need to move this to the View, so it doesn't show the checkout button at all if user has already reserved 5 books
-            if (user.CheckedoutBooks.Count == 5)
-            {
-                TempData["message"] = Constants.ChBookMax;
-            }
-            else
-            {
+            
                 await _system.AddBookToCheckoutBooksAsync(id, username).ConfigureAwait(false);
                 TempData["message"] = Constants.ChBookSucc;
-            }
-
+            
             return RedirectToAction("Index");
         }
     }

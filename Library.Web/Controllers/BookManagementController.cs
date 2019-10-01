@@ -18,6 +18,8 @@ namespace Library.Web.Controllers
             _bookManager = bookManager;
         }
 
+        public BookViewModel BookViewModel { get; set; }
+
         public IActionResult Index()
         {
             return View();
@@ -50,11 +52,8 @@ namespace Library.Web.Controllers
             TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
-        }
-
-        // TODO
-        public BookViewModel BookViewModel { get; set; }
-
+        }      
+        
         [HttpGet]
         public IActionResult AddAuthor()
         {

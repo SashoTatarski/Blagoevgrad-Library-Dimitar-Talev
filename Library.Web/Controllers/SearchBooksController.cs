@@ -11,10 +11,15 @@ namespace Library.Web.Controllers
     public class SearchBooksController : Controller
     {
         private readonly IBookManager _bookManager;
+        private readonly IAccountManager _accountManager;
+        private readonly ILibrarySystem _system;
 
-        public SearchBooksController(IBookManager bookManager)
+
+        public SearchBooksController(IBookManager bookManager, IAccountManager accountManagager, ILibrarySystem system)
         {
             _bookManager = bookManager;
+            _accountManager = accountManagager;
+            _system = system;
         }
 
         [HttpGet]
@@ -23,12 +28,17 @@ namespace Library.Web.Controllers
             var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
             var allBooksVM = allBooks.Select(x => x.MapToViewModel());
 
-            searchVM.AllBooks = new List<BookViewModel>();             
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name).ConfigureAwait(false);
+
+            searchVM.AllBooks = new List<BookViewModel>();          
+                       
 
             foreach (var book in allBooksVM)
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
                 {
+                    book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
+                    book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
                     book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN).ConfigureAwait(false);
                     searchVM.AllBooks.Add(book);
                 }

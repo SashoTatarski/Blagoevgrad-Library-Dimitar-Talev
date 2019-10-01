@@ -76,6 +76,7 @@ namespace Library.Models.Utils
         public const int MaxReserveDays = 5;
         public const int MaxFieldLength = 70;
 
+
         //Format
         public const char MiniDelimiterSymbol = '-';
         public const char DelimiterSymbol = '=';
