@@ -70,10 +70,11 @@ namespace Library.Services
             var user = await _context.Users.Where(u => u.Id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
 
             user.Status = AccountStatus.Banned;
-            this.CreateBannedUser(user);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            await this.CreateBannedUserAsync(user);
         }
 
-        private async Task CreateBannedUser(User user)
+        private async Task CreateBannedUserAsync(User user)
         {
             var bannedUser = new BannedUser()
             {
@@ -84,7 +85,7 @@ namespace Library.Services
             };
 
             _context.BannedUsers.Add(bannedUser);
-            await _context.SaveChangesAsync().ConfigureAwait(true);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public void CheckStatus(User user)
