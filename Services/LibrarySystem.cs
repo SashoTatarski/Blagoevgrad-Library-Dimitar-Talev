@@ -161,17 +161,27 @@ namespace Library.Services
             return true;
         }
 
-        public async Task AddBookToReservedBooksAsync(string bookId, User user)
+        public async Task AddBookToReservedBooksAsync(string isbn, string userName)
         {
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+            var booksByIsbn = await _bookManager.GetBooksByIsbnAsync(isbn);
+
+            var bookToReserve = booksByIsbn.FirstOrDefault(b => b.Status != BookStatus.ToBeDeleted);
+
+            if (bookToReserve is null)
+            {
+                throw new ArgumentException(Constants.BookToBeDeleted);
+            }
+
             var newBook = new ReservedBook()
             {
-                BookId = Guid.Parse(bookId),
+                BookId = bookToReserve.Id,
                 UserId = user.Id,
                 ReservationDate = DateTime.Today,
                 ReservationDueDate = DateTime.Today.AddDays(Constants.MaxReserveDays)
             };
 
-            await this.ChangeBookStatusAsync(bookId, BookStatus.Reserved);
+            await this.ChangeBookStatusAsync(bookToReserve.Id.ToString(), BookStatus.Reserved);
 
             _context.ReservedBooks.Add(newBook);
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -209,6 +219,8 @@ namespace Library.Services
 
             if (book.Status == BookStatus.CheckedOut && status == BookStatus.Reserved)
                 book.Status = BookStatus.CheckedOutAndReserved;
+            else if ((book.Status == BookStatus.CheckedOutAndReserved || book.Status == BookStatus.Reserved) && status == BookStatus.Reserved)
+            { }
             else if (book.Status == BookStatus.CheckedOutAndReserved)
                 book.Status = BookStatus.Reserved;
             else

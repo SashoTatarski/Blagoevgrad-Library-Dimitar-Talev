@@ -20,7 +20,9 @@
 
         @if (Model.CheckedOutBy != null)
         {
-            <td class="text-left"><a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.CheckedOutBy.Id"> @Model.CheckedOutBy.Username</a></td>
+            <td class="text-left">
+                <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.CheckedOutBy.Id"> @Model.CheckedOutBy.Username</a>
+            </td>
 
         }
         else
@@ -32,7 +34,9 @@
             <td class="text-left">
                 @foreach (var user in Model.ReservedBy)
                 {
-                    <p>user.Username</p>
+                    <p>
+                    <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@user.Id">@user.Username</a>
+                    </p>
                 }
             </td>
         }

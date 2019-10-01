@@ -54,13 +54,15 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> ReserveBook(string id)
         {
-            var username = User.Identity.Name;
-
-            var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
-
-            await _system.AddBookToReservedBooksAsync(id, user);
-
-            TempData["message"] =Constants.ResBookSucc;
+            try
+            {
+                await _system.AddBookToReservedBooksAsync(id, User.Identity.Name).ConfigureAwait(false);
+                TempData["message"] = Constants.ResBookSucc;
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex;
+            }
 
             return RedirectToAction("Index");
         }
