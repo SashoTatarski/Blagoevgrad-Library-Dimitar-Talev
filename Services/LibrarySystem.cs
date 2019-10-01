@@ -107,20 +107,23 @@ namespace Library.Services
             return booksToReturn;
         }
 
-        public async Task ReturnCheckedBookAsync(string userName, string bookId)
+        public async Task ReturnCheckedBookAsync(string isbn, string userName)
         {
-            var booksCheckedByUser = await this.GetCheckeoutBooksAsync(userName).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+            var booksByIsbn = await _bookManager.GetBooksByIsbnAsync(isbn);
 
-            var book = booksCheckedByUser.FirstOrDefault(x => x.Id.ToString() == bookId);
+            var bookToReturn = booksByIsbn.Where(b => b.CheckedoutBook != null).FirstOrDefault(b => b.CheckedoutBook.UserId == user.Id);
 
-            book.Status = BookStatus.Available;
+            if (bookToReturn is null)
+            {
+                throw new ArgumentException(Constants.NotCheckedOutThisBook);
+            }
 
-            var chBook = await _context.CheckoutBooks.FirstOrDefaultAsync(x => x.BookId.ToString() == bookId).ConfigureAwait(false);
+            await this.ChangeBookStatusAsync(bookToReturn.Id.ToString(), BookStatus.Available);
 
-            _context.CheckoutBooks.Remove(chBook);
-
-            await _context.SaveChangesAsync()
-                .ConfigureAwait(continueOnCapturedContext: false);
+            var checkedoutBookToReturn = await _context.CheckoutBooks.FirstOrDefaultAsync(b => b.BookId == bookToReturn.Id).ConfigureAwait(false);
+            _context.CheckoutBooks.Remove(checkedoutBookToReturn);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
         //    _context.Notifications.Add(new Notification()
@@ -206,6 +209,8 @@ namespace Library.Services
 
             if (book.Status == BookStatus.CheckedOut && status == BookStatus.Reserved)
                 book.Status = BookStatus.CheckedOutAndReserved;
+            else if (book.Status == BookStatus.CheckedOutAndReserved)
+                book.Status = BookStatus.Reserved;
             else
                 book.Status = status;
 

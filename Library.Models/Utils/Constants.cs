@@ -103,5 +103,6 @@ namespace Library.Models.Utils
         public const string AcctCancel = "You have successfully cancelled your account";
         public const string AcctCancelRetBks = "User must return all of his books";
         public const string NoAvailableBooks = "There are no available book copies at the moment";
+        public const string NotCheckedOutThisBook = "You are trying to return a book you have not checked out";
     }
 }

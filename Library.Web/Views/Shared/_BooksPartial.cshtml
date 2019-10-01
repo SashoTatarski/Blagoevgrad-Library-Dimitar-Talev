@@ -61,7 +61,7 @@
             {
                 <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
 
-                <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="Return" asp-route-id="@Model.ISBN">Return</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
 
             }
             else if (Model.AreAllCopiesChecked)

@@ -39,11 +39,15 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> ReturnBook(string id)
         {
-            var user = User.Identity.Name;
-
-            await _system.ReturnCheckedBookAsync(user, id).ConfigureAwait(false);
-
-            TempData["message"] = Constants.RetBookSucc;
+            try
+            {
+                await _system.ReturnCheckedBookAsync(id, User.Identity.Name).ConfigureAwait(false);
+                TempData["message"] = Constants.RetBookSucc;
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex;
+            }
 
             return RedirectToAction("Index");
         }

@@ -19,7 +19,7 @@
         @if (User.IsInRole("user"))
         {
         <td class="text-center">
-            <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
+            <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
             <a class="btn btn-primary" asp-controller="UserBooks" asp-action="ExtendReservation">Extend</a>
         </td>
         }
