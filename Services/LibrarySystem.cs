@@ -174,19 +174,27 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task AddBookToCheckoutBooksAsync(string bookId, string userName)
+        public async Task AddBookToCheckoutBooksAsync(string isbn, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
+            var booksByIsbn = await _bookManager.GetBooksByIsbnAsync(isbn);
+
+            var bookToTake = booksByIsbn.FirstOrDefault(b => b.Status == BookStatus.Available);
+
+            if (bookToTake is null)
+            {
+                throw new ArgumentException(Constants.NoAvailableBooks);
+            }
 
             var newBook = new CheckoutBook()
             {
-                BookId = Guid.Parse(bookId),
+                BookId = bookToTake.Id,
                 UserId = user.Id,
                 CheckoutDate = DateTime.Today,
                 DueDate = DateTime.Today.AddDays(Constants.MaxCheckoutDays)
             };
 
-            await this.ChangeBookStatusAsync(bookId, BookStatus.CheckedOut);
+            await this.ChangeBookStatusAsync(bookToTake.Id.ToString(), BookStatus.CheckedOut);
 
             _context.CheckoutBooks.Add(newBook);
             await _context.SaveChangesAsync().ConfigureAwait(false);

@@ -102,5 +102,6 @@ namespace Library.Models.Utils
         public const string AcctCancelErr = "You have to return all books before cancelling your account";
         public const string AcctCancel = "You have successfully cancelled your account";
         public const string AcctCancelRetBks = "User must return all of his books";
+        public const string NoAvailableBooks = "There are no available book copies at the moment";
     }
 }

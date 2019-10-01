@@ -67,16 +67,15 @@
             else if (Model.AreAllCopiesChecked)
             {
                 <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
+
                 <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
             }
             else
             {
-                <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.BookId">Checkout</a>
+                <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.ISBN">Checkout</a>
 
                 <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
             }
-
-
         </td>
     }
 </tr>

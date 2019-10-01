@@ -63,13 +63,16 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> CheckoutBook(string id)
         {
-            var username = User.Identity.Name;
-
-            var user = await _accountManager.GetUserByUsernameAsync(username).ConfigureAwait(false);
-            
-                await _system.AddBookToCheckoutBooksAsync(id, username);
+            try
+            {
+                await _system.AddBookToCheckoutBooksAsync(id, User.Identity.Name);
                 TempData["message"] = Constants.ChBookSucc;
-            
+            }
+            catch (Exception ex)
+            {
+                TempData["message"] = ex;
+            }
+
             return RedirectToAction("Index");
         }
     }
