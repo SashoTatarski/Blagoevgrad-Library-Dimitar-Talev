@@ -177,6 +177,8 @@ namespace Library.Services
             {
                 BookId = bookToReserve.Id,
                 UserId = user.Id,
+                ReservationDate = null,
+                ReservationDueDate = null
             };
 
             await this.ChangeBookStatusAsync(bookToReserve.Id.ToString(), BookStatus.Reserved);

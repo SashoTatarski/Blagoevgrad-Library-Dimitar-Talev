@@ -79,6 +79,8 @@ namespace Library.Web.Mapper
             vm.EndDate = book.DueDate;
             vm.ISBN = book.Book.ISBN;
             vm.Title = book.Book.Title;
+            vm.Status = book.Book.Status.ToString();
+            vm.IsReserved = false;
 
             return vm;
         }
@@ -93,6 +95,8 @@ namespace Library.Web.Mapper
             vm.EndDate = book.ReservationDueDate;
             vm.ISBN = book.Book.ISBN;
             vm.Title = book.Book.Title;
+            vm.Status = book.Book.Status.ToString();
+            vm.IsReserved = true;
 
             return vm;
         }

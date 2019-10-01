@@ -3,26 +3,41 @@
     ViewData["Title"] = "_BooksReservations";
 }
 
-    <tr>
-        <td class="text-left">
-            <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" span title="All Books From @Model.Author.Name">@Model.Author.Name</a>
-        </td>
-        <td class="text-left">
-            <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
-        </td>
+<tr>
+    <td class="text-left">
+        <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" span title="All Books From @Model.Author.Name">@Model.Author.Name</a>
+    </td>
+    <td class="text-left">
+        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
+    </td>
 
-        <td class="text-left">@Model.ISBN</td>
-        <td class="text-left">@Model.StartDate.ToString("dd.MM.yyyy")</td>
+    <td class="text-left">@Model.ISBN</td>
+    <td class="text-left">@Model.StartDate?.ToString("dd.MM.yyyy")</td>
 
-        <td class="text-left">@Model.EndDate.ToString("dd.MM.yyyy")</td>
+    <td class="text-left">@Model.EndDate?.ToString("dd.MM.yyyy")</td>
 
-        @if (User.IsInRole("user"))
-        {
+    @if (User.IsInRole("user"))
+    {
         <td class="text-center">
-            <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
-            <a class="btn btn-primary" asp-controller="UserBooks" asp-action="ExtendReservation">Extend</a>
+            @*when the book is reserved*@
+            @if (Model.IsReserved)
+            {
+                <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="CancelReservation" asp-route-id="@Model.ISBN">Cancel Reservation</a>
+            }
+            @*when the book is only checkedout*@
+            else
+            {
+                @if (Model.Status == "CheckedOutAndReserved")
+                {
+                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
+                    <a class="btn btn-info disabled" role="button" aria-disabled="true">Extend</a>
+                }
+                else if (Model.Status == "CheckedOut")
+                {
+                    <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
+                    <a class="btn btn-primary" asp-controller="UserBooks" asp-action="ExtendReservation">Extend</a>
+                }
+            }
         </td>
-        }
-
-
-    </tr>
+    }
+</tr>

@@ -1,8 +1,5 @@
 ﻿using Library.Models.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.Web.Models.BookManagement
 {
@@ -16,9 +13,12 @@ namespace Library.Web.Models.BookManagement
 
         public Author Author { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
+        public string Status { get; set; }
+
+        public bool IsReserved { get; set; }
     }
 }
