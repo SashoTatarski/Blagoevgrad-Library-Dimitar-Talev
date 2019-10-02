@@ -109,5 +109,7 @@ namespace Library.Models.Utils
         public const string BookToBeDeleted = "This book will be removed soon";
         public const string NotEnoughMoney = "You do not have enough money in the wallet";
         public const string ExtendSuccess = "You have successfully extended the due date";
+        public const string CancelReservationSuccess = "You have successfully cancel the reservation";
+        public const string MembershipExpirationWarning = "Your membership is about to expire";
     }
 }

@@ -84,7 +84,14 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> ExtendDueDate(string id)
         {
-            TempData["message"] = await _system.ExtendCheckOutPeriod(id, User.Identity.Name);
+            TempData["message"] = await _system.ExtendBookDueDate(id, User.Identity.Name);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> CancelReservation(string id)
+        {
+            TempData["message"] = await _system.CancelReservation(id, User.Identity.Name);
 
             return RedirectToAction("Index");
         }

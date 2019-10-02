@@ -229,7 +229,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<string> ExtendCheckOutPeriod(string id, string userName)
+        public async Task<string> ExtendBookDueDate(string id, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
             var bookToExtend = await _bookManager.GetBookByIdAsync(id);
@@ -241,7 +241,7 @@ namespace Library.Services
 
             var newDueDate = bookToExtend.CheckedoutBook.DueDate.AddDays(Constants.ExtendPeriod);
 
-            if (newDueDate> bookToExtend.CheckedoutBook.DueDate)
+            if (newDueDate > bookToExtend.CheckedoutBook.DueDate)
             {
                 return Constants.MembershipExpirationWarning;
             }
@@ -251,6 +251,21 @@ namespace Library.Services
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
             return Constants.ExtendSuccess;
+
+            //TODO add notification
+        }
+
+        public async Task<string> CancelReservation(string id, string userName)
+        {
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+
+            var reservatedBookToCancel = await _context.ReservedBooks
+                .FirstOrDefaultAsync(resBook => resBook.BookId.ToString() == id && resBook.UserId == user.Id)
+                .ConfigureAwait(false);
+
+             _context.ReservedBooks.Remove(reservatedBookToCancel);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return Constants.CancelReservationSuccess;
 
             //TODO add notification
         }
