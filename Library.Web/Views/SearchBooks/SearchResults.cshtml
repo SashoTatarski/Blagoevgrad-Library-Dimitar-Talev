@@ -45,22 +45,22 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Author</th>
-                        <th>Title</th>
-                        <th>Publisher</th>
+                        <th style="width: 140px">Author</th>
+                        <th style="width: 280px">Title</th>
+                        <th style="width: 140px">Publisher</th>
                         <th>ISBN</th>
-                        <th>Year</th>
-                        <th>Rack</th>
-                        <th>Rating</th>
+                        <th class="text-center">Year</th>
+                        <th class="text-center">Rack</th>
+                        <th class="text-center">Rating</th>
 
                         @if (User.IsInRole("admin"))
                         {
-                            <th>Copies</th>
+                            <th class="text-center">Copies</th>
                         }
 
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <th class="text-center">Actions</th>
+                            <th class="text-center" style="width: 213px">Actions</th>
                         }
                     </tr>
                 </thead>

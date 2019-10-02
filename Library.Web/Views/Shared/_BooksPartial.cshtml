@@ -11,9 +11,9 @@
         <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.ISBN" title="View Book Details"> @Model.Title</a>
     </td>
     <td class="text-left">@Model.Publisher.Name</td>
-    <td class="text-left">@Model.ISBN</td>
-    <td class="text-left">@Model.Year</td>
-    <td class="text-left">@Model.Rack</td>
+    <td class="text-center">@Model.ISBN</td>
+    <td class="text-center">@Model.Year</td>
+    <td class="text-center">@Model.Rack</td>
     <td class="text-center">@Model.Rating</td>
 
     @if (User.IsInRole("admin"))
@@ -35,7 +35,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body text-left" >
+                        <div class="modal-body text-left">
                             Are you sure you want to delete @Model.Title?
                         </div>
                         <div class="modal-footer">
@@ -50,12 +50,12 @@
                 </div>
             </div>
 
-            <a data-toggle="modal" href="#a-@Model.BookId" class="text-danger ml-1" title="Delete">
-                <i class="fa fa-trash fa-lg"></i>
+            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-warning ml-1" title="Edit">
+                <i class="fas fa-edit fa-lg icon-action"></i>
             </a>
 
-            <a asp-controller="BookManagement" asp-action="EditBook" asp-route-id="@Model.BookId" class="text-warning ml-1" title="Edit">
-                <i class="fas fa-edit fa-lg"></i>
+            <a data-toggle="modal" href="#a-@Model.BookId" class="text-danger ml-1" title="Delete">
+                <i class="fa fa-trash fa-lg icon-action"></i>
             </a>
         </td>
 
