@@ -53,7 +53,10 @@ namespace Library.Services
             //    await this.ReturnCheckedBookAsync(user.Username, book.BookId.ToString()).ConfigureAwait(false);
             //}
 
-            await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
+            await _accountManager.DeleteUserAsync(id);
+
+            var message = string.Format(Constants.CancelMembershipNotif, user.Username);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task<bool> HasOverdueBooks(string id)
@@ -124,14 +127,10 @@ namespace Library.Services
             var checkedoutBookToReturn = await _context.CheckoutBooks.FirstOrDefaultAsync(b => b.BookId == bookToReturn.Id).ConfigureAwait(false);
             _context.CheckoutBooks.Remove(checkedoutBookToReturn);
             await _context.SaveChangesAsync().ConfigureAwait(false);
-        }
 
-        //    _context.Notifications.Add(new Notification()
-        //    {
-        //        IsSeen = false,
-        //        Message = "Book returned",
-        //        UserId = "nekvo admin id"
-        //    });
+            var message = string.Format(Constants.ReturnBookNotification, user.Username, checkedoutBookToReturn.Book.Title, checkedoutBookToReturn.BookId);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+        }
 
         public async Task ReturnResBookAsync(string userName, string bookId)
         {
@@ -211,6 +210,9 @@ namespace Library.Services
 
             _context.CheckoutBooks.Add(newBook);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            var message = string.Format(Constants.CheckoutBookNotification, user.Username, newBook.Book.Title, newBook.BookId);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
@@ -277,7 +279,6 @@ namespace Library.Services
             return Constants.CancelReservationSuccess;
         }
 
-
         public async Task AddNotificationAsync(string message, User user)
         {
             var notification = new Notification
@@ -291,6 +292,7 @@ namespace Library.Services
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
+
     }
 }
 

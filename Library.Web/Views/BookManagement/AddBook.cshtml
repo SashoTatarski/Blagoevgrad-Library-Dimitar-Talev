@@ -4,6 +4,9 @@
 }
 
 <div class="col-md-4">
+    <style>.input-validation-error {border-color:red; background-color:#fee ; }</style>
+       
+    
     <h5>Add Book</h5>
     <form asp-action="AddBook" asp-controller="BookManagement" method="post">
         <div class="form-group">
@@ -53,4 +56,6 @@
         </div>
     </form>
 </div>
+<br />
+<br />
     <partial name="_ReturnButtonsPartial" />
