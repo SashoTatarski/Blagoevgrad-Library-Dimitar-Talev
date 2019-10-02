@@ -239,12 +239,20 @@ namespace Library.Services
                 return Constants.NotEnoughMoney;
             }
 
-            user.Wallet = user.Wallet - Constants.ExtendCost;
             var newDueDate = bookToExtend.CheckedoutBook.DueDate.AddDays(Constants.ExtendPeriod);
+
+            if (newDueDate> bookToExtend.CheckedoutBook.DueDate)
+            {
+                return Constants.MembershipExpirationWarning;
+            }
+
+            user.Wallet = user.Wallet - Constants.ExtendCost;
             bookToExtend.CheckedoutBook.DueDate = newDueDate;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
             return Constants.ExtendSuccess;
+
+            //TODO add notification
         }
     }
 }
