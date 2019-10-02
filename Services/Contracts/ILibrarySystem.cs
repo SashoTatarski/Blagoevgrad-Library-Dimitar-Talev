@@ -24,5 +24,6 @@ namespace Library.Services.Contracts
         Task<string> CancelReservation(string id, string userName);
         Task AddNotificationAsync(string message, User user);
         Task<List<Notification>> GetAllNotificationsAsync();
+        Task MarkNotificationSeen(string notifId);
     }
 }
