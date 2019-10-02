@@ -23,5 +23,6 @@ namespace Library.Services.Contracts
         Task<string> ExtendBookDueDate(string id, string userName);
         Task<string> CancelReservation(string id, string userName);
         Task AddNotificationAsync(string message, User user);
+        Task<List<Notification>> GetAllNotificationsAsync();
     }
 }

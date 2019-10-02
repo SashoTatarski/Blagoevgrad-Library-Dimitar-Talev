@@ -25,7 +25,13 @@ namespace Library.Services
             _context = context;
         }
 
-
+        public async Task<List<Notification>> GetAllNotificationsAsync()
+        {
+           return await _context.Notifications
+                .Include(x => x.User)
+                .ToListAsync()
+                .ConfigureAwait(false);
+        }
         public bool IsBookCheckedout(User user, string isbn) => user.CheckedoutBooks.Any(x => x.Book.ISBN == isbn);
 
         public bool IsMaxCheckedoutQuota(User user) => user.CheckedoutBooks.Count >= Constants.MaxBookQuota;
@@ -56,7 +62,7 @@ namespace Library.Services
             await _accountManager.DeleteUserAsync(id);
 
             var message = string.Format(Constants.CancelMembershipNotif, user.Username);
-            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+            await this.AddNotificationAsync(message, user);
         }
 
         public async Task<bool> HasOverdueBooks(string id)
@@ -129,7 +135,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.ReturnBookNotification, user.Username, checkedoutBookToReturn.Book.Title, checkedoutBookToReturn.BookId);
-            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+            await this.AddNotificationAsync(message, user);
         }
 
         public async Task ReturnResBookAsync(string userName, string bookId)
@@ -212,7 +218,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.CheckoutBookNotification, user.Username, newBook.Book.Title, newBook.BookId);
-            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+            await this.AddNotificationAsync(message, user);
         }
 
         public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
@@ -273,8 +279,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
-            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
-            
+            await this.AddNotificationAsync(message, user);            
 
             return Constants.CancelReservationSuccess;
         }

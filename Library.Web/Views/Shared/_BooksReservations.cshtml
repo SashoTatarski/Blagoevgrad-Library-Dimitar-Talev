@@ -29,12 +29,12 @@
             {
                 @if (Model.Status == "CheckedOutAndReserved")
                 {
-                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
+                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
                     <a class="btn btn-info disabled" role="button" aria-disabled="true">Extend</a>
                 }
                 else if (Model.Status == "CheckedOut")
                 {
-                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
+                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
                     <a class="btn btn-info" asp-controller="UserBooks" asp-action="ExtendDueDate" asp-route-id="@Model.BookId">Extend</a>
                 }
             }

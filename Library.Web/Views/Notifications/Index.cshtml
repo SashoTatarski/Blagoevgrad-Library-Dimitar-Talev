@@ -1,8 +1,28 @@
-﻿
+﻿@model NotificationsViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Notifications</h1>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">User</th>
+            <th scope="col">Message</th>
+            <th scope="col">Seen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.DateSent.ToString("dd.MM.yyyy")</td></td>
+            <td>@Model.User.Username</td>
+            <td>@Model.Message</td>
+            <td>@Model.IsSeen</td>
+        </tr>
+    </tbody>
+</table>
+
 
 <partial name="_ReturnButtonsPartial" />
