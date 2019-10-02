@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20190919083816_III")]
-    partial class III
+    [Migration("20191002121443_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,7 +36,7 @@ namespace Library.Database.Migrations
                 });
 
             modelBuilder.Entity("Library.Models.Models.BannedUser", b =>
-            {
+                {
                     b.Property<Guid>("UserId");
 
                     b.Property<string>("Description")
@@ -121,7 +121,7 @@ namespace Library.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("GenreName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(40);
 
@@ -187,9 +187,9 @@ namespace Library.Database.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.Property<DateTime>("ReservationDate");
+                    b.Property<DateTime?>("ReservationDate");
 
-                    b.Property<DateTime>("ReservationDueDate");
+                    b.Property<DateTime?>("ReservationDueDate");
 
                     b.HasKey("BookId", "UserId");
 

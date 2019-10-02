@@ -26,7 +26,7 @@ namespace Library.Database.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    GenreName = table.Column<string>(maxLength: 40, nullable: false)
+                    Name = table.Column<string>(maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +96,7 @@ namespace Library.Database.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Username = table.Column<string>(maxLength: 20, nullable: false),
-                    HashPassword = table.Column<string>(maxLength: 20, nullable: false),
+                    HashPassword = table.Column<string>(maxLength: 200, nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
                     Wallet = table.Column<double>(nullable: false),
@@ -236,8 +236,8 @@ namespace Library.Database.Migrations
                 {
                     UserId = table.Column<Guid>(nullable: false),
                     BookId = table.Column<Guid>(nullable: false),
-                    ReservationDate = table.Column<DateTime>(nullable: false),
-                    ReservationDueDate = table.Column<DateTime>(nullable: false)
+                    ReservationDate = table.Column<DateTime>(nullable: true),
+                    ReservationDueDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {

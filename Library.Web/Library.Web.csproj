@@ -10,13 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetOpenAuth.Core" Version="4.3.4.13329" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.DependencyValidation.Analyzers" Version="0.10.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
-
 
   <ItemGroup>
     <ProjectReference Include="..\Library.Databse\Library.Database.csproj" />
