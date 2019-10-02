@@ -23,40 +23,54 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var vm = new NotificationsViewModel();
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+
+            
+            var listVM = new ListNotificationsViewModel();
+
+            var notifications = user.Notifications;
+
             if (User.IsInRole("admin"))
             {
-                var allNotifications = await _system.GetAllNotificationsAsync();
-
-                foreach (var notification in allNotifications)
+                foreach (var notification in notifications)
                 {
+                    string username = notification.Message.Substring(0, notification.Message.IndexOf(" "));
+                    var userWhenAdmin = await _accountManager.GetUserByUsernameAsync(username);
+                    var vm = new NotificationsViewModel();
+
                     vm.Id = notification.Id.ToString();
                     vm.Message = notification.Message;
                     vm.UserId = notification.User.Id.ToString();
                     vm.IsSeen = notification.IsSeen;
                     vm.DateSent = notification.SentOn;
-                    vm.User = notification.User;
+                    vm.User = userWhenAdmin;
 
-                    vm.NotificationsList.Add(vm);
+                    listVM.NotificationsList.Add(vm);
                 }
             }
-            else
-            {
-                var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
-
-                foreach (var notification in user.Notifications)
+            else if (User.IsInRole("user"))
+            {                
+                foreach (var notification in notifications)
                 {
+                    var vm = new NotificationsViewModel();
+
                     vm.Id = notification.Id.ToString();
                     vm.Message = notification.Message;
                     vm.UserId = notification.User.Id.ToString();
                     vm.IsSeen = notification.IsSeen;
-                    vm.DateSent = notification.SentOn;
-                    vm.User = notification.User;
+                    vm.DateSent = notification.SentOn;                    
 
-                    vm.NotificationsList.Add(vm);
+                    listVM.NotificationsList.Add(vm);
                 }
             }
-            return View(vm);
+            return View(listVM);
+        }
+
+        public async Task<IActionResult> MarkSeen(string id)
+        {
+            await _system.MarkNotificationSeen(id);
+
+            return RedirectToAction("Index");
         }
     }
 }

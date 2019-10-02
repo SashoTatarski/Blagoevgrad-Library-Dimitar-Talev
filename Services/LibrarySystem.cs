@@ -25,6 +25,16 @@ namespace Library.Services
             _context = context;
         }
 
+        public async Task MarkNotificationSeen(string notifId)
+        {
+           var notif = await _context.Notifications
+                .FirstOrDefaultAsync(n => n.Id.ToString() == notifId)
+                .ConfigureAwait(false);
+            notif.IsSeen = true;
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task<List<Notification>> GetAllNotificationsAsync()
         {
            return await _context.Notifications
@@ -43,7 +53,7 @@ namespace Library.Services
                 throw new Exception(Constants.AcctCancelRetBks);
 
             var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
-            // It has to be "for" and not foreach because of await
+            
             for (var i = 0; user.CheckedoutBooks.Count > 0;)
             {
                 await this.ReturnCheckedBookAsync(user.Username, user.CheckedoutBooks[i].BookId.ToString()).ConfigureAwait(false);
@@ -135,12 +145,14 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.ReturnBookNotification, user.Username, checkedoutBookToReturn.Book.Title, checkedoutBookToReturn.BookId);
-            await this.AddNotificationAsync(message, user);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task ReturnResBookAsync(string userName, string bookId)
         {
             var booksResByUser = await this.GetReservedBooksAsync(userName).ConfigureAwait(false);
+
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var book = booksResByUser.Find(x => x.Id.ToString() == bookId);
 
@@ -151,6 +163,9 @@ namespace Library.Services
             _context.ReservedBooks.Remove(chBook);
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            var message = string.Format(Constants.ReturnBookNotification, user.Username, book.Title, book.Id);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task<bool> AreAllCopiesCheckedAsync(string isbn)
@@ -190,6 +205,9 @@ namespace Library.Services
 
             _context.ReservedBooks.Add(newBook);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            var message = string.Format(Constants.ReserveBookNotification, user.Username, bookToReserve.Title, bookToReserve.Id);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task AddBookToCheckoutBooksAsync(string isbn, string userName)
@@ -218,7 +236,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.CheckoutBookNotification, user.Username, newBook.Book.Title, newBook.BookId);
-            await this.AddNotificationAsync(message, user);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
         public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
@@ -279,7 +297,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
-            await this.AddNotificationAsync(message, user);            
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());            
 
             return Constants.CancelReservationSuccess;
         }

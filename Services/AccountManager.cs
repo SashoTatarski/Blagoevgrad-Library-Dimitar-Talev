@@ -44,6 +44,7 @@ namespace Library.Services
                  .ThenInclude(x => x.Book)
                     .ThenInclude(x => x.Author)
             .Include(u => u.Ratings)
+            .Include(u => u.Notifications)
             .FirstOrDefaultAsync(u => u.Username == username)
             .ConfigureAwait(false);
 
