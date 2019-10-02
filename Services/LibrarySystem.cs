@@ -241,7 +241,7 @@ namespace Library.Services
 
             var newDueDate = bookToExtend.CheckedoutBook.DueDate.AddDays(Constants.ExtendPeriod);
 
-            if (newDueDate > bookToExtend.CheckedoutBook.DueDate)
+            if (newDueDate > user.MembershipEndDate)
             {
                 return Constants.MembershipExpirationWarning;
             }
