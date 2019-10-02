@@ -265,9 +265,27 @@ namespace Library.Services
 
              _context.ReservedBooks.Remove(reservatedBookToCancel);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+
+            
             return Constants.CancelReservationSuccess;
 
             //TODO add notification
+        }
+
+        public Notification CreateNotification(string message, User user)
+        {
+            return new Notification
+            {
+                SentOn = DateTime.Now,
+                IsSeen = false,
+                Message = message,
+                UserId = user.Id
+            };
+        }
+        public async Task AddNotification(Notification notification)
+        {
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }
