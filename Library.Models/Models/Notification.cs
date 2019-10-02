@@ -12,6 +12,9 @@ namespace Library.Models.Models
         public Guid UserId { get; set; }
         [StringLength(300)]
         public string Message { get; set; }
+
+        
+        public DateTime SentOn { get; set; }
         public bool IsSeen { get; set; }
 
         public User User { get; set; }

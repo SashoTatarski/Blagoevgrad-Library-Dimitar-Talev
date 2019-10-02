@@ -4,14 +4,16 @@ using Library.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Database.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20191002121759_Notifications-SentOn-Property-Add")]
+    partial class NotificationsSentOnPropertyAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,9 +140,7 @@ namespace Library.Database.Migrations
                     b.Property<string>("Message")
                         .HasMaxLength(300);
 
-                    b.Property<DateTime>("SentOn")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(1, 1, 1, 1, 1, 1, 0, DateTimeKind.Unspecified));
+                    b.Property<DateTime>("SentOn");
 
                     b.Property<Guid>("UserId");
 
