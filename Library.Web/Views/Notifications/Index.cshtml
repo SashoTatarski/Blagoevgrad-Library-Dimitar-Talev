@@ -19,8 +19,13 @@
         @foreach (var item in Model.NotificationsList)
         {
             <tr>
-                <td scope="row">@item.DateSent.ToString("dd.MM.yyyy")</td>
-                <td>@item.User.Username</td>
+                <td scope="row">@item.DateSent.ToString("dd.MM.yyyy")</td>                            
+                <td>
+                    <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@Model.UserId">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        @item.User.Username
+                    </a>
+                </td>
                 <td>@item.Message</td>
                 <td>@item.IsSeen</td>
             </tr>
