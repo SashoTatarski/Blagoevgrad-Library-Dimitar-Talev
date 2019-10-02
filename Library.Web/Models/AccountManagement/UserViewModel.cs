@@ -25,6 +25,7 @@ namespace Library.Web.Models.AccountManagement
         public List<BookIssuedViewModel> CheckedoutBooks { get; set; }
 
         public List<BookIssuedViewModel> ReservedBooks { get; set; }
+        public string BanDescription { get; set; }
 
     }
 }
