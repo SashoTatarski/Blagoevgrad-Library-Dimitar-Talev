@@ -149,5 +149,13 @@ namespace Library.Services
 
             return user;
         }
+
+        public async Task<User> GetAdminAccountAsync()
+        {
+            return await _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Role.RoleName == "admin")
+                .ConfigureAwait(false);
+        }
     }
 }

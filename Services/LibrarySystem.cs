@@ -260,30 +260,35 @@ namespace Library.Services
             var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var reservatedBookToCancel = await _context.ReservedBooks
+                .Include(rb=>rb.Book)
                 .FirstOrDefaultAsync(resBook => resBook.BookId.ToString() == id && resBook.UserId == user.Id)
                 .ConfigureAwait(false);
 
-             _context.ReservedBooks.Remove(reservatedBookToCancel);
+            _context.ReservedBooks.Remove(reservatedBookToCancel);
+
+            var text = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
+            var admin =  await _accountManager.GetAdminAccountAsync();
+            await this.AddNotificationAsync(text, admin);
+
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            
+
             return Constants.CancelReservationSuccess;
 
             //TODO add notification
         }
 
-        public Notification CreateNotification(string message, User user)
+
+        public async Task AddNotificationAsync(string message, User user)
         {
-            return new Notification
+            var notification = new Notification
             {
                 SentOn = DateTime.Now,
                 IsSeen = false,
                 Message = message,
                 UserId = user.Id
             };
-        }
-        public async Task AddNotification(Notification notification)
-        {
+
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }

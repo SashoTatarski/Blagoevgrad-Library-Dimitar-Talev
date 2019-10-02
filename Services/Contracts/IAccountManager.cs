@@ -15,5 +15,6 @@ namespace Library.Services.Contracts
         Task<User> GetUserByUsernameAsync(string username);
         Task BanUserAsync(string id);
         void CheckStatus(User user);
+        Task<User> GetAdminAccountAsync();
     }
 }

@@ -111,5 +111,8 @@ namespace Library.Models.Utils
         public const string ExtendSuccess = "You have successfully extended the due date";
         public const string CancelReservationSuccess = "You have successfully cancel the reservation";
         public const string MembershipExpirationWarning = "Your membership is about to expire";
+
+        public static string ExtendBookNotification = "User {0} has extended the due date of {1} with id {2}";
+        public static string CancelReservationNotification = "User {0} has cancelled the reservation of {1} with id {2}";
     }
 }
