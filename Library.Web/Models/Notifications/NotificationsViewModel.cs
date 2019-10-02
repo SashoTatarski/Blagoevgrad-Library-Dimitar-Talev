@@ -19,5 +19,7 @@ namespace Library.Web.Models.Notifications
         public bool IsSeen { get; set; }
 
         public DateTime DateSent { get; set; }
+
+        public List<NotificationsViewModel> NotificationsList { get; set; } = new List<NotificationsViewModel>();
     }
 }

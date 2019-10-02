@@ -21,8 +21,9 @@ namespace Library.Web.Controllers
             _system = system;
         }
 
-        public async Task<IActionResult> Index(NotificationsViewModel vm)
+        public async Task<IActionResult> Index()
         {
+            var vm = new NotificationsViewModel();
             if (User.IsInRole("admin"))
             {
                 var allNotifications = await _system.GetAllNotificationsAsync();
@@ -35,6 +36,8 @@ namespace Library.Web.Controllers
                     vm.IsSeen = notification.IsSeen;
                     vm.DateSent = notification.SentOn;
                     vm.User = notification.User;
+
+                    vm.NotificationsList.Add(vm);
                 }
             }
             else
@@ -49,6 +52,8 @@ namespace Library.Web.Controllers
                     vm.IsSeen = notification.IsSeen;
                     vm.DateSent = notification.SentOn;
                     vm.User = notification.User;
+
+                    vm.NotificationsList.Add(vm);
                 }
             }
             return View(vm);

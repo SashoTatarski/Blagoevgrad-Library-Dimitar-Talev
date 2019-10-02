@@ -15,12 +15,17 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Model.DateSent.ToString("dd.MM.yyyy")</td></td>
-            <td>@Model.User.Username</td>
-            <td>@Model.Message</td>
-            <td>@Model.IsSeen</td>
-        </tr>
+
+        @foreach (var item in Model.NotificationsList)
+        {
+            <tr>
+                <td scope="row">@item.DateSent.ToString("dd.MM.yyyy")</td>
+                <td>@item.User.Username</td>
+                <td>@item.Message</td>
+                <td>@item.IsSeen</td>
+            </tr>
+        }
+
     </tbody>
 </table>
 
