@@ -228,6 +228,24 @@ namespace Library.Services
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
+
+        public async Task<string> ExtendCheckOutPeriod(string id, string userName)
+        {
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+            var bookToExtend = await _bookManager.GetBookByIdAsync(id);
+
+            if (user.Wallet - Constants.ExtendCost < 0)
+            {
+                return Constants.NotEnoughMoney;
+            }
+
+            user.Wallet = user.Wallet - Constants.ExtendCost;
+            var newDueDate = bookToExtend.CheckedoutBook.DueDate.AddDays(Constants.ExtendPeriod);
+            bookToExtend.CheckedoutBook.DueDate = newDueDate;
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return Constants.ExtendSuccess;
+        }
     }
 }
 

@@ -15,18 +15,18 @@ namespace Library.Web.Controllers
     [Authorize(Roles = "user")]
     public class UserBooksController : Controller
     {
-        private readonly ILibrarySystem _system;        
+        private readonly ILibrarySystem _system;
         private readonly IAccountManager _accountManager;
 
         public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
         {
-            _system = system;            
+            _system = system;
             _accountManager = accountManager;
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
         {
-            var userName = User.Identity.Name;            
+            var userName = User.Identity.Name;
 
             var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
 
@@ -78,6 +78,13 @@ namespace Library.Web.Controllers
             {
                 TempData["message"] = ex;
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ExtendDueDate(string id)
+        {
+            TempData["message"] = await _system.ExtendCheckOutPeriod(id, User.Identity.Name);
 
             return RedirectToAction("Index");
         }

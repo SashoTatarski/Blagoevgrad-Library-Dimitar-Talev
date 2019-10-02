@@ -22,20 +22,20 @@
             @*when the book is reserved*@
             @if (Model.IsReserved)
             {
-                <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="CancelReservation" asp-route-id="@Model.ISBN">Cancel Reservation</a>
+                <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="CancelReservation" asp-route-id="@Model.BookId">Cancel Reservation</a>
             }
             @*when the book is only checkedout*@
             else
             {
                 @if (Model.Status == "CheckedOutAndReserved")
                 {
-                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
+                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
                     <a class="btn btn-info disabled" role="button" aria-disabled="true">Extend</a>
                 }
                 else if (Model.Status == "CheckedOut")
                 {
-                    <a class="btn btn-danger" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
-                    <a class="btn btn-primary" asp-controller="UserBooks" asp-action="ExtendReservation">Extend</a>
+                    <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
+                    <a class="btn btn-info" asp-controller="UserBooks" asp-action="ExtendDueDate" asp-route-id="@Model.BookId">Extend</a>
                 }
             }
         </td>

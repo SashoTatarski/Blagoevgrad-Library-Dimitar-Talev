@@ -75,6 +75,8 @@ namespace Library.Models.Utils
         public const int MaxCheckoutDays = 10;
         public const int MaxReserveDays = 5;
         public const int MaxFieldLength = 70;
+        public const int ExtendPeriod = 5;
+        public const int ExtendCost = 5;
 
 
         //Format
@@ -105,5 +107,7 @@ namespace Library.Models.Utils
         public const string NoAvailableBooks = "There are no available book copies at the moment";
         public const string NotCheckedOutThisBook = "You are trying to return a book you have not checked out";
         public const string BookToBeDeleted = "This book will be removed soon";
+        public const string NotEnoughMoney = "You do not have enough money in the wallet";
+        public const string ExtendSuccess = "You have successfully extended the due date";
     }
 }

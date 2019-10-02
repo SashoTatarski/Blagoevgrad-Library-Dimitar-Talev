@@ -20,5 +20,6 @@ namespace Library.Services.Contracts
         Task AddBookToReservedBooksAsync(string isbn, string userName);
 
         Task<bool> AreAllCopiesCheckedAsync(string isbn);
+        Task<string> ExtendCheckOutPeriod(string id, string userName);
     }
 }
