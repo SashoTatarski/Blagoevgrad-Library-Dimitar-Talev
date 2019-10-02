@@ -246,13 +246,16 @@ namespace Library.Services
                 return Constants.MembershipExpirationWarning;
             }
 
-            user.Wallet = user.Wallet - Constants.ExtendCost;
+            user.Wallet -= Constants.ExtendCost;
             bookToExtend.CheckedoutBook.DueDate = newDueDate;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
-            return Constants.ExtendSuccess;
 
-            //TODO add notification
+            var message = string.Format(Constants.ExtendBookNotification, user.Username, bookToExtend.Title, bookToExtend.Id);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+
+            return Constants.ExtendSuccess;
+            
         }
 
         public async Task<string> CancelReservation(string id, string userName)
@@ -260,22 +263,18 @@ namespace Library.Services
             var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var reservatedBookToCancel = await _context.ReservedBooks
-                .Include(rb=>rb.Book)
+                .Include(rb => rb.Book)
                 .FirstOrDefaultAsync(resBook => resBook.BookId.ToString() == id && resBook.UserId == user.Id)
                 .ConfigureAwait(false);
 
             _context.ReservedBooks.Remove(reservatedBookToCancel);
-
-            var text = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
-            var admin =  await _accountManager.GetAdminAccountAsync();
-            await this.AddNotificationAsync(text, admin);
-
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
+            var message = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+            
 
             return Constants.CancelReservationSuccess;
-
-            //TODO add notification
         }
 
 

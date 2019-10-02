@@ -6,7 +6,7 @@ namespace Library.Models.Utils
     {
         public const string DefaultRole = "user";
 
-        // Commandnames        
+        // Command names        
         public const string CheckOutBook = "Check Out Book";
         public const string AddBook = "Add Book";
         public const string LogIn = "Log In";
@@ -111,8 +111,23 @@ namespace Library.Models.Utils
         public const string ExtendSuccess = "You have successfully extended the due date";
         public const string CancelReservationSuccess = "You have successfully cancel the reservation";
         public const string MembershipExpirationWarning = "Your membership is about to expire";
-
         public static string ExtendBookNotification = "User {0} has extended the due date of {1} with id {2}";
         public static string CancelReservationNotification = "User {0} has cancelled the reservation of {1} with id {2}";
+
+        // Attribute messages
+        public const string BookCopiesReqErr = "You must select number of copies";
+        public const string BookCopiesReqRange = "You must select between 1 or 100 copies!";
+        public const string AuthorsReqErr = "You must select an author";
+        public const string PublishsReqErr = "You must select a publisher";
+        public const string GenresReqErr = "You must select at least one genre";
+        public const string TitleReqErr = "You must enter a title";
+        public const string IsbnReqErr = "You must enter an ISBN";
+        public const string YearReqErr = "You must select a valid year";
+
+
+
+
+
+
     }
 }
