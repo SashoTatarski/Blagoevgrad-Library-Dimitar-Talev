@@ -30,16 +30,19 @@ namespace Library.Web.Controllers
 
             var vm = new HomeBooksViewModel()
             {
-                Books = new List<GenericBookViewModel>()                               
+                Books = new List<GenericBookViewModel>()
             };
 
             topRatedBooks.ForEach(b => vm.Books.Add(b.MapToGenericViewModel()));
 
-            foreach (var book in vm.Books)
+            if (user != null)
             {
-                book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
-                book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
-                book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                foreach (var book in vm.Books)
+                {
+                    book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
+                    book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
+                    book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                }
             }
 
             return View(vm);

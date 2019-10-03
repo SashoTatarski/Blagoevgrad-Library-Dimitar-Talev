@@ -23,6 +23,8 @@ namespace Library.Web.Models.BookManagement
 
         public bool IsReserved { get; set; }
 
-        public List<SelectListItem> Rating { get; set; }
+        public List<SelectListItem> RatingList { get; set; }
+
+        public string Rate { get; set; }
     }
 }

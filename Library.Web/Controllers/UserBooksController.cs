@@ -39,7 +39,7 @@ namespace Library.Web.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> RateBook(string id)
+        public async Task<IActionResult> RateBook(BookIssuedViewModel vm)
         {
 
 

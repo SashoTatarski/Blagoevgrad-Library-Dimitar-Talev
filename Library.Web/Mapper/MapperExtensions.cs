@@ -89,7 +89,7 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = false;
-            vm.Rating = list;
+            vm.RatingList = list;
 
             return vm;
         }
@@ -112,7 +112,7 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = true;
-            vm.Rating = list;
+            vm.RatingList = list;
 
             return vm;
         }
