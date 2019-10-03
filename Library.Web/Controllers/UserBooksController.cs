@@ -9,6 +9,7 @@ using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Library.Web.Controllers
 {
@@ -33,8 +34,18 @@ namespace Library.Web.Controllers
             vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
 
             vm.ReservedBooks = user.ReservedBooks.Select(x => x.MapToViewModel()).ToList();
-
+             
             return View(vm);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> RateBook(string id)
+        {
+
+
+            TempData["message"] = Constants.BookReview;
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ReturnBook(string id)

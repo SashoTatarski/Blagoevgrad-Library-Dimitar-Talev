@@ -1,5 +1,7 @@
 ﻿using Library.Models.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections.Generic;
 
 namespace Library.Web.Models.BookManagement
 {
@@ -20,5 +22,7 @@ namespace Library.Web.Models.BookManagement
         public string Status { get; set; }
 
         public bool IsReserved { get; set; }
+
+        public List<SelectListItem> Rating { get; set; }
     }
 }

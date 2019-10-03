@@ -16,8 +16,7 @@ namespace Library.Web.Models.BookManagement
         [Required(ErrorMessage = Constants.BookCopiesReqErr)]
         [Range(1, 100, ErrorMessage = Constants.BookCopiesReqRange)]
         public int BookCopies { get; set; }
-
-        //TODO why it doesn't show?
+                
         [Required(ErrorMessage = Constants.AuthorsReqErr)]
         public List<SelectListItem> Authors { get; set; }
 

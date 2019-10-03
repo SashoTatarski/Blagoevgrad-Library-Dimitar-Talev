@@ -117,7 +117,7 @@ namespace Library.Models.Utils
         public static string ReturnBookNotification = "{0} has returned {1} with id {2}";
         public static string CancelMembershipNotif = "{0} has cancelled his/her membership";
         public static string ReserveBookNotification = "{0} has reserved {1} with id {2}";
-
+        public static string BookReview = "You have successfuuly reviewed your book";
 
 
 

@@ -2,6 +2,7 @@
 using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using Library.Web.Models.BookViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -72,6 +73,12 @@ namespace Library.Web.Mapper
 
         public static BookIssuedViewModel MapToViewModel(this CheckoutBook book)
         {
+            var list = new List<SelectListItem>();
+            for (int i = 1; i <= 10; i++)
+            {
+                list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            }
+
             var vm = new BookIssuedViewModel();
 
             vm.BookId = book.BookId.ToString();
@@ -82,12 +89,19 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = false;
+            vm.Rating = list;
 
             return vm;
         }
 
         public static BookIssuedViewModel MapToViewModel(this ReservedBook book)
         {
+            var list = new List<SelectListItem>();
+            for (int i = 1; i <= 10; i++)
+            {
+                list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            }
+
             var vm = new BookIssuedViewModel();
 
             vm.BookId = book.BookId.ToString();
@@ -98,6 +112,7 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = true;
+            vm.Rating = list;
 
             return vm;
         }
