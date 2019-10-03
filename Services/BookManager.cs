@@ -61,7 +61,7 @@ namespace Library.Services
                 .FirstOrDefaultAsync(book => book.ISBN == isbn).ConfigureAwait(false);
         public async Task<List<Book>> GetTopRatedBooks(int number)
         {
-            var distinctBooks = await this.GetDistinctBooksByIsbn().ConfigureAwait(false);
+            var distinctBooks = await this.GetDistinctBooksByIsbnAsync().ConfigureAwait(false);
             return distinctBooks.OrderByDescending(b => b.Rating).Take(number).ToList();
         }
         public async Task<List<Book>> GetAllBooksAsync() =>
@@ -77,7 +77,7 @@ namespace Library.Services
                 .Include(b => b.Ratings)
            .ToListAsync()
            .ConfigureAwait(false);
-        public async Task<List<Book>> GetDistinctBooksByIsbn()
+        public async Task<List<Book>> GetDistinctBooksByIsbnAsync()
         {
             var books = await this.GetAllBooksAsync().ConfigureAwait(false);
             return books.GroupBy(b => b.ISBN).Select(g => g.First()).ToList();
@@ -178,21 +178,59 @@ namespace Library.Services
         public async Task<Genre> CreateGenreAsync(string genre) => await _genreFac.CreateGenreAsync(genre).ConfigureAwait(false);
         public async Task<List<Genre>> GetAllGenresAsync() => await _context.Genres.ToListAsync().ConfigureAwait(false);
 
-        public async Task<List<Book>> SearchAsync(string searchCriteria)
+        public async Task<List<Book>> SearchAsync(string searchCriteria, bool byTitle, bool byAuthor, bool byPublisher, bool byGenre)
         {
-            return await _context.Books
-                .Include(b => b.Author)
-                .Include(b => b.Publisher)
-                .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-                .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
-                .ToListAsync()
-                .ConfigureAwait(false);
+            var searchResult = new List<Book>();
+            var allBooks = await this.GetDistinctBooksByIsbnAsync();
+
+            if (byTitle)
+            {
+                searchResult.AddRange(allBooks.Where(b => b.Title.ToLower().Contains(searchCriteria)));
+            }
+            if (byAuthor)
+            {
+                searchResult.AddRange(allBooks.Where(b => b.Author.Name.ToLower().Contains(searchCriteria)));
+            }
+            if (byPublisher)
+            {
+                searchResult.AddRange(allBooks.Where(b => b.Publisher.Name.ToLower().Contains(searchCriteria)));
+            }
+            if (byGenre)
+            {
+                foreach (var book in allBooks)
+                {
+                    foreach (var bookGenre in book.BookGenres)
+                    {
+                        if (bookGenre.Genre.Name.ToLower().Contains(searchCriteria))
+                        {
+                            searchResult.Add(book);
+                        }
+                    }
+                }
+            }
+            if (!byTitle && !byAuthor && !byPublisher && !byGenre)
+            {
+                return allBooks
+                    .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
+                .ToList();
+            }
+            else
+            {
+                return searchResult.GroupBy(b => b.ISBN).Select(g => g.First()).ToList();
+            }
+            ////return await _context.Books
+            //    .Include(b => b.Author)
+            //    .Include(b => b.Publisher)
+            //    .Include(b => b.BookGenres)
+            //        .ThenInclude(bg => bg.Genre)
+            //    .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
+            //    .ToListAsync()
+            //    .ConfigureAwait(false);
         }
-       
+
         public async Task<List<Book>> GetBooksByAuthorAsync(string authorId)
         {
-            var distinctBooks = await this.GetDistinctBooksByIsbn().ConfigureAwait(false);
+            var distinctBooks = await this.GetDistinctBooksByIsbnAsync().ConfigureAwait(false);
 
             return distinctBooks.Where(b => b.AuthorId.ToString() == authorId).ToList();
         }
