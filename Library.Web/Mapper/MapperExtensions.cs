@@ -54,7 +54,7 @@ namespace Library.Web.Mapper
         {
             var genresAsStrings = new List<string>();
             book.BookGenres.ForEach(bg => genresAsStrings.Add(bg.Genre.Name));
-
+            
             var vm = new GenericBookViewModel()
             {
                 Title = book.Title,
@@ -63,7 +63,7 @@ namespace Library.Web.Mapper
                 ISBN = book.ISBN,
                 Publisher = book.Publisher.Name,
                 Rating = book.Rating,
-                Year = book.Year
+                Year = book.Year,
             };
 
             return vm;
