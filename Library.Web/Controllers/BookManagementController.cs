@@ -13,9 +13,13 @@ namespace Library.Web.Controllers
     public class BookManagementController : Controller
     {
         private readonly IBookManager _bookManager;
-        public BookManagementController(IBookManager bookManager)
+        private readonly IAccountManager _accountManager;
+        private readonly ILibrarySystem _system;
+        public BookManagementController(IBookManager bookManager, IAccountManager accountManager, ILibrarySystem system)
         {
             _bookManager = bookManager;
+            _accountManager = accountManager;
+            _system = system;
         }
 
         public BookViewModel BookViewModel { get; set; }
@@ -52,8 +56,8 @@ namespace Library.Web.Controllers
             TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
             return RedirectToAction("Index", "SearchBooks");
-        }      
-        
+        }
+
         [HttpGet]
         public IActionResult AddAuthor()
         {
@@ -159,7 +163,8 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> BookDetails(string id)
         {
-            var books = await _bookManager.GetBooksByIsbnAsync(id).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+            var books = await _bookManager.GetBooksByIsbnAsync(id);
 
             var vm = books[0].MapToViewModel();
 
@@ -167,6 +172,11 @@ namespace Library.Web.Controllers
             {
                 vm.AllBookCopies.Add(book.MapToCopyViewModel());
             }
+
+            vm.IsBookCheckedout = _system.IsBookCheckedout(user, vm.ISBN);
+            vm.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(vm.ISBN);
+            vm.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+
 
             return View(vm);
         }

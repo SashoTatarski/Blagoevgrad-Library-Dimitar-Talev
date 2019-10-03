@@ -34,6 +34,7 @@ namespace Library.Web.Mapper
             var vm = new BookCopyViewModel();
             vm.Title = book.Title;
             vm.Status = book.Status.ToString();
+            vm.Isbn = book.ISBN;
 
             if (book.ReservedBooks != null)
             {

@@ -8,7 +8,7 @@
         <a asp-controller="BookManagement" asp-action="AuthorDetails" asp-route-id="@Model.Author.Id" span title="All Books From @Model.Author.Name">@Model.Author.Name</a>
     </td>
     <td class="text-left">
-        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.BookId" span title="View Book Details"> @Model.Title</a>
+        <a asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@Model.ISBN" span title="View Book Details"> @Model.Title</a>
     </td>
 
     <td class="text-left">@Model.ISBN</td>

@@ -53,7 +53,6 @@ namespace Library.Web.Models.BookManagement
         public BookStatus Status { get; set; }
         public bool IsBookCheckedout { get; set; }
         public bool IsChBooksMaxQuota { get; set; }
-
         public bool AreAllCopiesChecked { get; set; }
     }
 }
