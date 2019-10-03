@@ -50,6 +50,8 @@ namespace Library.Web
             services.AddScoped<IGenreFactory, GenreFactory>();
             services.AddScoped<ILibrarySystem, LibrarySystem>();
 
+            services.AddHostedService<BackgroundService>();
+
 
             services.AddSingleton<IHasher, Hasher>();
 
