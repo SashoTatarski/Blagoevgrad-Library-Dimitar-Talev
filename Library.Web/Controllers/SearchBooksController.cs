@@ -56,7 +56,7 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
         {
             var books = await _bookManager
-                .SearchAsync(viewModel.SearchName).ConfigureAwait(false);
+                .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre).ConfigureAwait(false);
             var booksMapped = books
                 .Select(x => x.MapToViewModel())
                 .ToList();
@@ -69,6 +69,7 @@ namespace Library.Web.Controllers
                 }
             }
 
+            
             return View(viewModel);
         }
     }
