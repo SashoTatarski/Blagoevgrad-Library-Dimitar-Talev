@@ -1,4 +1,5 @@
-﻿using Library.Services.Contracts;
+﻿using Library.Models.Enums;
+using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Mvc;
@@ -37,8 +38,11 @@ namespace Library.Web.Controllers
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
                 {
-                    book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
-                    book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                    if (User.Identity.IsAuthenticated || user.Status == AccountStatus.Restricted)
+                    {
+                        book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
+                        book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                    }
                     book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
                     book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN).ConfigureAwait(false);
                     searchVM.AllBooks.Add(book);

@@ -13,21 +13,34 @@ namespace Library.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IBookManager _bookManager;
+        private readonly ILibrarySystem _system;
+        private readonly IAccountManager _accountManager;
 
-        public HomeController(IBookManager bookManager)
+        public HomeController(IBookManager bookManager, ILibrarySystem system, IAccountManager accountManager)
         {
             _bookManager = bookManager;
+            _system = system;
+            _accountManager = accountManager;
         }
         public async Task<IActionResult> Index()
         {
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+
             var topRatedBooks = await _bookManager.GetTopRatedBooks(6).ConfigureAwait(false);
 
             var vm = new HomeBooksViewModel()
             {
-                Books = new List<GenericBookViewModel>()
+                Books = new List<GenericBookViewModel>()                               
             };
 
             topRatedBooks.ForEach(b => vm.Books.Add(b.MapToGenericViewModel()));
+
+            foreach (var book in vm.Books)
+            {
+                book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
+                book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
+                book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+            }
 
             return View(vm);
         }

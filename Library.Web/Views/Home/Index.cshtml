@@ -32,6 +32,17 @@
                     <p class="card-text">By: @book.AuthorName</p>
                     <p class="card-text">Publisher: @book.Publisher @book.Year</p>
                     <a class="btn btn-info" asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.ISBN">See more</a>
+                    @if (User.IsInRole("user"))
+                    {
+                        if (book.IsBookCheckedout || book.AreAllCopiesChecked || book.IsChBooksMaxQuota)
+                        {
+                            <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@book.ISBN">Checkout</a>
+                        }
+                    }
                 </div>
             </div>
         </div>
