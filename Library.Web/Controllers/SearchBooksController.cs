@@ -1,4 +1,5 @@
-﻿using Library.Services.Contracts;
+﻿using Library.Models.Enums;
+using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Mvc;
