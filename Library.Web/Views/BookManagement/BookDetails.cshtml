@@ -42,6 +42,14 @@
         }
     </ul>
     <hr />
+    @if (User.IsInRole("user"))
+    {
+        if ((!Model.IsBookCheckedout && !Model.AreAllCopiesChecked && !Model.IsChBooksMaxQuota))
+        {
+            <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.ISBN">Checkout</a>
+        }
+    }
+
     @if (User.IsInRole("admin"))
     {
         <div class="form-group">
