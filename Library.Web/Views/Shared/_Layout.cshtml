@@ -16,7 +16,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="https://kit.fontawesome.com/9cb671cc82.js"></script>
+
 </head>
 <body>
     @if (TempData["message"] != null)
@@ -106,6 +106,8 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+
+
     </environment>
     <environment exclude="Development">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -122,8 +124,8 @@
         </script>
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/logger.js"></script>
 
+    <script src="https://kit.fontawesome.com/9cb671cc82.js"></script>
     @RenderSection("Scripts", required: false)
     <partial name="_ValidationScriptsPartial" />
 </body>

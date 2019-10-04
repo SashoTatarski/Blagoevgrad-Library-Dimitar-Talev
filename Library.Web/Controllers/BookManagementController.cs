@@ -75,6 +75,14 @@ namespace Library.Web.Controllers
                 return RedirectToAction("EditBook", new { id = vm.Id });
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddAuthorRest(string authorName)
+        {
+            var author = await _bookManager.CreateAuthorAsync(authorName).ConfigureAwait(false);
+
+            return Json(new { author.Id, author.Name});
+        }
+
         [HttpGet]
         public IActionResult AddPublisher()
         {
@@ -87,6 +95,15 @@ namespace Library.Web.Controllers
             var publisher = await _bookManager.CreatePublisherAsync(vm.Name).ConfigureAwait(false);
 
             return RedirectToAction("AddBook", "BookManagement");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddPublisherRest(string publisherName)
+        {
+            var publisher = await _bookManager.CreatePublisherAsync(publisherName).ConfigureAwait(false);
+
+            return Json(new { publisher.Id, publisher.Name });
         }
 
         [HttpGet]
