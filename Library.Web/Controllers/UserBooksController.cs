@@ -18,11 +18,14 @@ namespace Library.Web.Controllers
     {
         private readonly ILibrarySystem _system;
         private readonly IAccountManager _accountManager;
+        private readonly IBookManager _bookManager;
 
-        public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
+
+        public UserBooksController(ILibrarySystem system, IAccountManager accountManager, IBookManager bookManager)
         {
             _system = system;
             _accountManager = accountManager;
+            _bookManager = bookManager;
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
@@ -41,7 +44,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> RateBook(BookIssuedViewModel vm)
         {
-
+            await _system.RateBook(User.Identity.Name, vm.ISBN, vm.Rate);
 
             TempData["message"] = Constants.BookReview;
 

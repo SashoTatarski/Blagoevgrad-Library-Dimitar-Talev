@@ -25,5 +25,7 @@ namespace Library.Services.Contracts
         Task AddNotificationAsync(string message, User user);
         Task<List<Notification>> GetAllNotificationsAsync();
         Task MarkNotificationSeen(string notifId);
+        Task RateBook(string userName, string isbn, string newRating);
+        Task<double> RecalculateRating(string isbn, int newRating);
     }
 }

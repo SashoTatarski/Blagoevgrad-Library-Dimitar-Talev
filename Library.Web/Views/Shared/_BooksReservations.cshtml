@@ -41,8 +41,8 @@
 
                 <div class="form-group">
                     <form asp-action="RateBook" asp-controller="UserBooks" method="post">
-                        <input type="hidden" asp-for="BookId" value="@Model.BookId" />
-                        <select asp-for="@Model.Rate" asp-items="@Model.RatingList" class="form-control">
+                        <input type="hidden" asp-for="ISBN" value="@Model.ISBN" />
+                        <select asp-for="@Model.Rate" asp-items="@Model.RatingList" class="form-control" style="width:50px">
                         </select>
                         <button type="submit" class="btn btn-info">Rate</button>
                     </form>

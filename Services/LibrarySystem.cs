@@ -25,6 +25,40 @@ namespace Library.Services
             _context = context;
         }
 
+        public async Task RateBook(string userName, string isbn, string newRating)
+        {
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+
+            var calculatedRating = await RecalculateRating(isbn, int.Parse(newRating));
+
+            var books = await _bookManager.GetBooksByIsbnAsync(isbn);
+            foreach (var book in books)
+            {
+                var rating = new Rating
+                {
+                     BookId = book.Id,
+                     UserId = user.Id,
+                     Rate =  int.Parse(newRating)
+                };
+                _context.Ratings.Add(rating);
+                book.Rating = calculatedRating;
+            }
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<double> RecalculateRating(string isbn, int newRating)
+        {
+            var bookRatings = await _context.Ratings
+                .Include(x => x.Book)
+                .Where(x => x.Book.ISBN == isbn)
+                .GroupBy(x => x.UserId)
+                .Select(x => x.First())
+                .ToListAsync().ConfigureAwait(false);
+
+            return (double)(bookRatings.Sum(x => x.Rate) + newRating) / (double)(bookRatings.Count() + 1);
+        }
+
         public async Task MarkNotificationSeen(string notifId)
         {
            var notif = await _context.Notifications
