@@ -31,9 +31,15 @@ namespace Library.Web.Controllers
 
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-            searchVM.AllBooks = new List<BookViewModel>();          
-                       
+            searchVM.AllBooks = new List<BookViewModel>();
 
+            await SearchViewModelMapper(searchVM, allBooksVM, user);
+
+            return View(searchVM);
+        }
+
+        private async Task SearchViewModelMapper(SearchViewModel searchVM, IEnumerable<BookViewModel> allBooksVM, Library.Models.Models.User user)
+        {
             foreach (var book in allBooksVM)
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
@@ -48,8 +54,6 @@ namespace Library.Web.Controllers
                     searchVM.AllBooks.Add(book);
                 }
             }
-
-            return View(searchVM);
         }
 
         [HttpPost]
