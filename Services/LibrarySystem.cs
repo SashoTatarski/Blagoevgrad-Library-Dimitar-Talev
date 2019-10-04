@@ -61,7 +61,8 @@ namespace Library.Services
                 .Where(x => x.Book.ISBN == isbn)
                 .GroupBy(x => x.UserId)
                 .Select(x => x.First())
-                .ToListAsync().ConfigureAwait(false);
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return (double)(bookRatings.Sum(x => x.Rate) + newRating) / (double)(bookRatings.Count() + 1);
         }
@@ -73,7 +74,8 @@ namespace Library.Services
                  .ConfigureAwait(false);
             notif.IsSeen = true;
 
-            await _context.SaveChangesAsync().ConfigureAwait(false);
+            await _context.SaveChangesAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<List<Notification>> GetAllNotificationsAsync()
@@ -89,25 +91,25 @@ namespace Library.Services
 
         public async Task AccountCancel(string id)
         {
-            bool hasOverdueBooks = await this.HasOverdueBooks(id).ConfigureAwait(false);
+            bool hasOverdueBooks = await this.HasOverdueBooks(id);
             if (hasOverdueBooks)
                 throw new Exception(Constants.AcctCancelRetBks);
 
-            var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByIdAsync(id);
 
             for (var i = 0; user.CheckedoutBooks.Count > 0;)
             {
-                await this.ReturnCheckedBookAsync(user.Username, user.CheckedoutBooks[i].BookId.ToString()).ConfigureAwait(false);
+                await this.ReturnCheckedBookAsync(user.Username, user.CheckedoutBooks[i].BookId.ToString());
             }
 
             for (var i = 0; user.ReservedBooks.Count > 0;)
             {
-                await this.ReturnResBookAsync(user.Username, user.ReservedBooks[i].BookId.ToString()).ConfigureAwait(false);
+                await this.ReturnResBookAsync(user.Username, user.ReservedBooks[i].BookId.ToString());
             }
 
             //foreach (var book in user.CheckedoutBooks)
             //{
-            //    await this.ReturnCheckedBookAsync(user.Username, book.BookId.ToString()).ConfigureAwait(false);
+            //    await this.ReturnCheckedBookAsync(user.Username, book.BookId.ToString());
             //}
 
             await _accountManager.DeleteUserAsync(id);
@@ -118,7 +120,7 @@ namespace Library.Services
 
         public async Task<bool> HasOverdueBooks(string id)
         {
-            var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByIdAsync(id);
 
             return (from book in user.CheckedoutBooks
                     where book.DueDate < DateTime.Today
@@ -127,11 +129,11 @@ namespace Library.Services
 
         public async Task<List<Book>> GetCheckeoutBooksAsync(string userName)
         {
-            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var checkedoutBooks = await _context.CheckoutBooks.Where(u => u.UserId == user.Id).ToListAsync().ConfigureAwait(false);
 
-            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
+            var allBooks = await _bookManager.GetAllBooksAsync();
 
             List<Book> booksToReturn = new List<Book>();
             foreach (var book in allBooks)
@@ -148,11 +150,11 @@ namespace Library.Services
 
         public async Task<List<Book>> GetReservedBooksAsync(string userName)
         {
-            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
 
             var reservedBooks = await _context.ReservedBooks.Where(u => u.UserId == user.Id).ToListAsync().ConfigureAwait(false);
 
-            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
+            var allBooks = await _bookManager.GetAllBooksAsync();
 
             List<Book> booksToReturn = new List<Book>();
             foreach (var book in allBooks)
@@ -191,7 +193,7 @@ namespace Library.Services
 
         public async Task ReturnResBookAsync(string userName, string bookId)
         {
-            var booksResByUser = await this.GetReservedBooksAsync(userName).ConfigureAwait(false);
+            var booksResByUser = await this.GetReservedBooksAsync(userName);
 
             var user = await _accountManager.GetUserByUsernameAsync(userName);
 
@@ -282,7 +284,7 @@ namespace Library.Services
 
         public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
         {
-            var book = await _bookManager.GetBookByIdAsync(bookId).ConfigureAwait(false);
+            var book = await _bookManager.GetBookByIdAsync(bookId);
 
             if (book.Status == BookStatus.CheckedOut && status == BookStatus.Reserved)
                 book.Status = BookStatus.CheckedOutAndReserved;
@@ -356,7 +358,6 @@ namespace Library.Services
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
-
     }
 }
 

@@ -22,7 +22,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
             var vm = user.MapToViewModel();
 
@@ -31,14 +31,14 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> CancelAccount(string id)
         {
-            bool hasOverdueBooks = await _system.HasOverdueBooks(id).ConfigureAwait(false);
+            bool hasOverdueBooks = await _system.HasOverdueBooks(id);
             if (hasOverdueBooks)
             {
                 TempData["message"] = Constants.AcctCancelRetBks;
                 return RedirectToAction("Index", "UserBooks");
             }
 
-            await _system.AccountCancel(id).ConfigureAwait(false);
+            await _system.AccountCancel(id);
             TempData["message"] = Constants.AcctCancel;
 
             return RedirectToAction("Logout", "Auth");

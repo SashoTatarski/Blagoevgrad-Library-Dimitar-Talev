@@ -78,7 +78,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAuthorRest(string authorName)
         {
-            var author = await _bookManager.CreateAuthorAsync(authorName).ConfigureAwait(false);
+            var author = await _bookManager.CreateAuthorAsync(authorName);
 
             return Json(new { author.Id, author.Name});
         }
@@ -101,7 +101,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPublisherRest(string publisherName)
         {
-            var publisher = await _bookManager.CreatePublisherAsync(publisherName).ConfigureAwait(false);
+            var publisher = await _bookManager.CreatePublisherAsync(publisherName);
 
             return Json(new { publisher.Id, publisher.Name });
         }
@@ -214,9 +214,9 @@ namespace Library.Web.Controllers
             var book = await _bookManager.GetBookByIdAsync(id);
             var vm = book.MapToViewModel();
 
-            var allAuthors = await _bookManager.GetAllAuthorsAsync().ConfigureAwait(false);
-            var allPublisher = await _bookManager.GetAllPublishersAsync().ConfigureAwait(false);
-            var allGenres = await _bookManager.GetAllGenresAsync().ConfigureAwait(false);
+            var allAuthors = await _bookManager.GetAllAuthorsAsync();
+            var allPublisher = await _bookManager.GetAllPublishersAsync();
+            var allGenres = await _bookManager.GetAllGenresAsync();
 
             vm.Authors = allAuthors.Select(author => new SelectListItem(author.Name, author.Id.ToString())).ToList();
             vm.Publishers = allPublisher.Select(pub => new SelectListItem(pub.Name, pub.Id.ToString())).ToList();
@@ -243,7 +243,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBook(BookViewModel vm)
         {
-            await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds).ConfigureAwait(false);
+            await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds);
 
 
             TempData["message"] = $"{vm.Title} has been editted";

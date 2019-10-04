@@ -54,7 +54,7 @@ namespace Library.Web.Controllers
         {
             try
             {
-                await _system.ReturnCheckedBookAsync(id, User.Identity.Name).ConfigureAwait(false);
+                await _system.ReturnCheckedBookAsync(id, User.Identity.Name);
                 TempData["message"] = Constants.RetBookSucc;
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace Library.Web.Controllers
         {
             try
             {
-                await _system.AddBookToReservedBooksAsync(id, User.Identity.Name).ConfigureAwait(false);
+                await _system.AddBookToReservedBooksAsync(id, User.Identity.Name);
                 TempData["message"] = Constants.ResBookSucc;
             }
             catch (Exception ex)
