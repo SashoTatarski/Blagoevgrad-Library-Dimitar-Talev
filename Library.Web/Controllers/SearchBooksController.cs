@@ -38,7 +38,7 @@ namespace Library.Web.Controllers
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
                 {
-                    if (User.Identity.IsAuthenticated || user.Status == AccountStatus.Restricted)
+                    if (User.Identity.IsAuthenticated)
                     {
                         book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                         book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
