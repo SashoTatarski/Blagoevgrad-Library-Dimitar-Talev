@@ -26,7 +26,7 @@ namespace Library.Web.Controllers
         {
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-            var topRatedBooks = await _bookManager.GetTopRatedBooks(6).ConfigureAwait(false);
+            var topRatedBooks = await _bookManager.GetTopRatedBooks(6);
 
             var vm = new HomeBooksViewModel()
             {

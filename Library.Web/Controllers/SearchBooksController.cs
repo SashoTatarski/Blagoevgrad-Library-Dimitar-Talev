@@ -26,10 +26,10 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(SearchViewModel searchVM)
         {
-            var allBooks = await _bookManager.GetAllBooksAsync().ConfigureAwait(false);
+            var allBooks = await _bookManager.GetAllBooksAsync();
             var allBooksVM = allBooks.Select(x => x.MapToViewModel());
 
-            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
             searchVM.AllBooks = new List<BookViewModel>();          
                        
@@ -44,7 +44,7 @@ namespace Library.Web.Controllers
                         book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
                     }
                     book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
-                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN).ConfigureAwait(false);
+                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
                     searchVM.AllBooks.Add(book);
                 }
             }
@@ -56,7 +56,7 @@ namespace Library.Web.Controllers
         public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
         {
             var books = await _bookManager
-                .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre).ConfigureAwait(false);
+                .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre);
             var booksMapped = books
                 .Select(x => x.MapToViewModel())
                 .ToList();
