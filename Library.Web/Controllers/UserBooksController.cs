@@ -29,15 +29,17 @@ namespace Library.Web.Controllers
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
-        {
-            var userName = User.Identity.Name;
-
-            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
-
+        {            
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+           
             vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
-
             vm.ReservedBooks = user.ReservedBooks.Select(x => x.MapToViewModel()).ToList();
-             
+
+            foreach (var book in vm.CheckedoutBooks)
+            {
+                book.IsBookRatedByUser = await _system.IsBookRatedByUser(book.ISBN, user.Id.ToString());
+            }
+
             return View(vm);
         }
         

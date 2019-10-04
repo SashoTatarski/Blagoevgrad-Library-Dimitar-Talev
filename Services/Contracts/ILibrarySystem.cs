@@ -27,5 +27,6 @@ namespace Library.Services.Contracts
         Task MarkNotificationSeen(string notifId);
         Task RateBook(string userName, string isbn, string newRating);
         Task<double> RecalculateRating(string isbn, int newRating);
+        Task<bool> IsBookRatedByUser(string isbn, string userId);
     }
 }

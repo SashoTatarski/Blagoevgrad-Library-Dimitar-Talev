@@ -26,5 +26,7 @@ namespace Library.Web.Models.BookManagement
         public List<SelectListItem> RatingList { get; set; }
 
         public string Rate { get; set; }
+
+        public bool IsBookRatedByUser { get; set; }
     }
 }
