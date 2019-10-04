@@ -40,7 +40,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCopies(BookViewModel vm)
         {
-            await _bookManager.AddBookCopies(vm.BookId, vm.BookCopies).ConfigureAwait(false);
+            await _bookManager.AddBookCopies(vm.BookId, vm.BookCopies);
 
             TempData["message"] = $"{vm.BookCopies} copies have been added";
 
@@ -49,9 +49,9 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            var bookToDelete = await _bookManager.GetBookByIsbnAsync(id).ConfigureAwait(false);
+            var bookToDelete = await _bookManager.GetBookByIsbnAsync(id);
 
-            await _bookManager.DeleteBookAsync(id).ConfigureAwait(false);
+            await _bookManager.DeleteBookAsync(id);
 
             TempData["message"] = $"{bookToDelete.Title} has been deleted";
 
@@ -67,7 +67,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAuthor(AuthorViewModel vm)
         {
-            var author = await _bookManager.CreateAuthorAsync(vm.AuthorName).ConfigureAwait(false);
+            var author = await _bookManager.CreateAuthorAsync(vm.AuthorName);
 
             if (vm.Id == null)
                 return RedirectToAction("AddBook");
@@ -84,7 +84,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPublisher(AddPublisherViewModel vm)
         {
-            var publisher = await _bookManager.CreatePublisherAsync(vm.Name).ConfigureAwait(false);
+            await _bookManager.CreatePublisherAsync(vm.Name);
 
             return RedirectToAction("AddBook", "BookManagement");
         }
@@ -98,7 +98,7 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddGenre(AddGenreViewModel vm)
         {
-            var genre = await _bookManager.CreateGenreAsync(vm.Name).ConfigureAwait(false);
+            var genre = await _bookManager.CreateGenreAsync(vm.Name);
 
             return RedirectToAction("AddBook", "BookManagement");
         }
@@ -133,7 +133,7 @@ namespace Library.Web.Controllers
         {
             if (!_bookManager.isIsbnUnique(vm.ISBN))
             {
-                await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies).ConfigureAwait(false);
+                await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
 
                 TempData["message"] = $"{vm.Title} has been created";
                 return RedirectToAction("Index", "SearchBooks");
@@ -149,9 +149,9 @@ namespace Library.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AuthorDetails(AuthorViewModel vm)
         {
-            var author = await _bookManager.GetAuthorAsync(vm.Id).ConfigureAwait(false);
+            var author = await _bookManager.GetAuthorAsync(vm.Id);
 
-            var books = await _bookManager.GetBooksByAuthorAsync(vm.Id).ConfigureAwait(false);
+            var books = await _bookManager.GetBooksByAuthorAsync(vm.Id);
 
             vm.AuthorName = author.Name;
             vm.Books = books.Select(x => x.MapToViewModel()).ToList();
@@ -184,7 +184,7 @@ namespace Library.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBook(string id)
         {
-            var book = await _bookManager.GetBookByIdAsync(id).ConfigureAwait(false);
+            var book = await _bookManager.GetBookByIdAsync(id);
             var vm = book.MapToViewModel();
 
             var allAuthors = await _bookManager.GetAllAuthorsAsync().ConfigureAwait(false);

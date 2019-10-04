@@ -17,15 +17,12 @@ namespace Library.Web.Controllers
     public class UserBooksController : Controller
     {
         private readonly ILibrarySystem _system;
-        private readonly IAccountManager _accountManager;
-        private readonly IBookManager _bookManager;
+        private readonly IAccountManager _accountManager;        
 
-
-        public UserBooksController(ILibrarySystem system, IAccountManager accountManager, IBookManager bookManager)
+        public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
         {
             _system = system;
-            _accountManager = accountManager;
-            _bookManager = bookManager;
+            _accountManager = accountManager;            
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
