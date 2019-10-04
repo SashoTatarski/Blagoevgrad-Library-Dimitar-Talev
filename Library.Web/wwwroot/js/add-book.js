@@ -24,7 +24,7 @@ $('#create-author').click(function () {
 
 
 $('#add-publisher').click(function () {
-   
+
     $('#create-publisher-modal').modal('show');
 });
 
@@ -37,18 +37,35 @@ $('#create-publisher').click(function () {
         data: { publisherName: authorPublisherValue },
         success: function (response) {
 
-            console.log(response);
-
             $('#create-publisher-modal').modal('hide');
 
             const option1 = $(`<option value="${response.id}">${response.name}</option>`);
-
             $('#publisher-selectlist').append(option1);
 
             option1.attr('selected', 'selected');
-
-            console.log('success');
         }
     });
 });
 
+$('#add-genre').click(function () {
+    $('#create-genre-modal').modal('show');
+});
+
+$('#create-genre').click(function () {
+    const genreValue = $('#new-genre-name').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/bookmanagement/addgenrerest',
+        data: { genreName: genreValue },
+        success: function (response) {
+
+            $('#create-genre-modal').modal('hide');
+
+            const option1 = $(`<option value="${response.id}">${response.name}</option>`);
+            $('#genre-selectlist').append(option1);
+
+            option1.attr('selected', 'selected');
+        }
+    });
+});

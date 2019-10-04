@@ -106,6 +106,8 @@ namespace Library.Web.Controllers
             return Json(new { publisher.Id, publisher.Name });
         }
 
+
+
         [HttpGet]
         public IActionResult AddGenre()
         {
@@ -118,6 +120,14 @@ namespace Library.Web.Controllers
             var genre = await _bookManager.CreateGenreAsync(vm.Name);
 
             return RedirectToAction("AddBook", "BookManagement");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGenreRest(string genreName)
+        {
+            var genre = await _bookManager.CreateGenreAsync(genreName);
+
+            return Json(new {genre.Id, genre.Name });
         }
 
         private async Task CreateSelectListItems()
