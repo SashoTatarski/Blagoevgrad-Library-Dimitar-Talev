@@ -23,7 +23,7 @@ else
 
         @foreach (var book in Model.CheckedoutBooks)
         {
-            <partial name="_BooksReservations" model="book" />
+            <partial name="_BooksReservationsPartial" model="book" />
         }
 
     </table>
@@ -47,7 +47,7 @@ else
 
         @foreach (var book in Model.ReservedBooks)
         {
-            <partial name="_BooksReservations" model="book" />
+            <partial name="_BooksReservationsPartial" model="book" />
         }
 
     </table>

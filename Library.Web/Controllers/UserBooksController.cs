@@ -17,31 +17,33 @@ namespace Library.Web.Controllers
     public class UserBooksController : Controller
     {
         private readonly ILibrarySystem _system;
-        private readonly IAccountManager _accountManager;
+        private readonly IAccountManager _accountManager;        
 
         public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
         {
             _system = system;
-            _accountManager = accountManager;
+            _accountManager = accountManager;            
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
-        {
-            var userName = User.Identity.Name;
-
-            var user = await _accountManager.GetUserByUsernameAsync(userName).ConfigureAwait(false);
-
+        {            
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+           
             vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
-
             vm.ReservedBooks = user.ReservedBooks.Select(x => x.MapToViewModel()).ToList();
-             
+
+            foreach (var book in vm.CheckedoutBooks)
+            {
+                book.IsBookRatedByUser = await _system.IsBookRatedByUser(book.ISBN, user.Id.ToString());
+            }
+
             return View(vm);
         }
         
         [HttpPost]
         public async Task<IActionResult> RateBook(BookIssuedViewModel vm)
         {
-
+            await _system.RateBook(User.Identity.Name, vm.ISBN, vm.Rate);
 
             TempData["message"] = Constants.BookReview;
 

@@ -34,6 +34,7 @@ namespace Library.Services
 
             await _bookFac.CreateBookAsync(title, isbn, year, rack, author, publisher, genresIds, copies).ConfigureAwait(false);
         }
+       
         public async Task<Book> GetBookByIdAsync(string id)
            => await _context.Books
                .Include(b => b.Author)

@@ -25,11 +25,52 @@ namespace Library.Services
             _context = context;
         }
 
+        public async Task RateBook(string userName, string isbn, string newRating)
+        {
+            var user = await _accountManager.GetUserByUsernameAsync(userName);
+            var calculatedRating = await RecalculateRating(isbn, int.Parse(newRating));
+
+            var books = await _bookManager.GetBooksByIsbnAsync(isbn);
+            foreach (var book in books)
+            {
+                var rating = new Rating
+                {
+                    BookId = book.Id,
+                    UserId = user.Id,
+                    Rate = int.Parse(newRating)
+                };
+                _context.Ratings.Add(rating);
+                book.Rating = calculatedRating;
+            }
+
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsBookRatedByUser(string isbn, string userId)
+        {
+           return await _context.Ratings
+                .Include(x => x.Book)
+                .AnyAsync(x => x.UserId.ToString() == userId && x.Book.ISBN == isbn)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<double> RecalculateRating(string isbn, int newRating)
+        {
+            var bookRatings = await _context.Ratings
+                .Include(x => x.Book)
+                .Where(x => x.Book.ISBN == isbn)
+                .GroupBy(x => x.UserId)
+                .Select(x => x.First())
+                .ToListAsync().ConfigureAwait(false);
+
+            return (double)(bookRatings.Sum(x => x.Rate) + newRating) / (double)(bookRatings.Count() + 1);
+        }
+
         public async Task MarkNotificationSeen(string notifId)
         {
-           var notif = await _context.Notifications
-                .FirstOrDefaultAsync(n => n.Id.ToString() == notifId)
-                .ConfigureAwait(false);
+            var notif = await _context.Notifications
+                 .FirstOrDefaultAsync(n => n.Id.ToString() == notifId)
+                 .ConfigureAwait(false);
             notif.IsSeen = true;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -37,10 +78,10 @@ namespace Library.Services
 
         public async Task<List<Notification>> GetAllNotificationsAsync()
         {
-           return await _context.Notifications
-                .Include(x => x.User)
-                .ToListAsync()
-                .ConfigureAwait(false);
+            return await _context.Notifications
+                 .Include(x => x.User)
+                 .ToListAsync()
+                 .ConfigureAwait(false);
         }
         public bool IsBookCheckedout(User user, string isbn) => user.CheckedoutBooks.Any(x => x.Book.ISBN == isbn);
 
@@ -53,7 +94,7 @@ namespace Library.Services
                 throw new Exception(Constants.AcctCancelRetBks);
 
             var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
-            
+
             for (var i = 0; user.CheckedoutBooks.Count > 0;)
             {
                 await this.ReturnCheckedBookAsync(user.Username, user.CheckedoutBooks[i].BookId.ToString()).ConfigureAwait(false);
@@ -281,7 +322,7 @@ namespace Library.Services
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
 
             return Constants.ExtendSuccess;
-            
+
         }
 
         public async Task<string> CancelReservation(string id, string userName)
@@ -297,7 +338,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
             var message = string.Format(Constants.CancelReservationNotification, user.Username, reservatedBookToCancel.Book.Title, reservatedBookToCancel.BookId);
-            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());            
+            await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
 
             return Constants.CancelReservationSuccess;
         }

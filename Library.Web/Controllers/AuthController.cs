@@ -46,7 +46,7 @@ namespace Library.Web.Controllers
                 var user = _accountManager.Find(viewModel.Username, viewModel.Password);
                 _accountManager.CheckStatus(user);
 
-                await SignInUserAsync(user).ConfigureAwait(false);
+                await SignInUserAsync(user);
 
                 return BackToHome();
             }
@@ -85,9 +85,9 @@ namespace Library.Web.Controllers
 
             try
             {             
-               User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType).ConfigureAwait(false);
+               User user = await _accountManager.CreateAsync(viewModel.Username, viewModel.Password, viewModel.MembershipType);
 
-                await SignInUserAsync(user).ConfigureAwait(false);
+                await SignInUserAsync(user);
 
                 return BackToHome();
             }

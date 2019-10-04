@@ -21,7 +21,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Index(AccountViewModel vm)
         {
-            var users = await _accountManager.GetAllUsersAsync().ConfigureAwait(false);
+            var users = await _accountManager.GetAllUsersAsync();
 
             var usersMapped = users
                 .Select(u => u.MapToViewModel())
@@ -37,7 +37,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Delete(string id)
         {
-            await _accountManager.DeleteUserAsync(id).ConfigureAwait(false);
+            await _accountManager.DeleteUserAsync(id);
 
             TempData["message"] = Constants.AcctDeact;
 
@@ -46,7 +46,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Ban(string id)
         {
-            await _accountManager.BanUserAsync(id).ConfigureAwait(false);
+            await _accountManager.BanUserAsync(id);
 
             TempData["message"] = Constants.AcctBan;
 
@@ -55,7 +55,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Activate(string id)
         {
-            var accountToActivate = await _accountManager.ActivateUserAsync(id).ConfigureAwait(false);
+            var accountToActivate = await _accountManager.ActivateUserAsync(id);
 
             TempData["message"] = $"{accountToActivate.Username} has been activated";
 
@@ -64,7 +64,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> Details(string id)
         {
-            var user = await _accountManager.GetUserByIdAsync(id).ConfigureAwait(false);
+            var user = await _accountManager.GetUserByIdAsync(id);
 
             var vm = user.MapToViewModel();
 
