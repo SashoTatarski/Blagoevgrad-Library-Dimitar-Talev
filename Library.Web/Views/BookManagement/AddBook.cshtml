@@ -11,7 +11,6 @@
         }
     </style>
 
-    @*asp-controller="BookManagement" asp-action="AddAuthor"*@
     <h5>Add Book</h5>
     <form asp-action="AddBook" asp-controller="BookManagement" method="post">
         <div class="form-group">
@@ -21,19 +20,19 @@
         </div>
         <div class="form-group">
             <label class="control-label">Author</label>
-            <button class="btn btn-primary" id="add-author">Create Author</button>
+            <button class="btn btn-primary" id="add-author" type="button">Create Author</button>
             <select asp-for="@Model.AuthorId" asp-items="@Model.Authors" class="form-control" id="authors-selectlist">
             </select>
         </div>
         <div class="form-group">
             <label class="control-label">Publisher</label>
-            <button class="btn btn-primary" id="add-publisher">Create Publisher</button>
+            <button class="btn btn-primary" id="add-publisher" type="button">Create Publisher</button>
             <select asp-for="@Model.PublisherId" asp-items="@Model.Publishers" class="form-control" id="publisher-selectlist">
             </select>
         </div>
         <div class="form-group">
             <label class="control-label">Genres</label>
-            <button class="btn btn-primary" id="add-genre">Create Genre</button>
+            <button class="btn btn-primary" id="add-genre" type="button">Create Genre</button>
             <select asp-for="@Model.GenresIds" asp-items="@Model.GenresOptions" class="form-control" id="genre-selectlist">
             </select>
         </div>
@@ -165,10 +164,7 @@
     </div>
 </div>
 
-
-
 <partial name="_ReturnButtonsPartial" />
-
 
 @section Scripts {
     <script src="~/js/add-book.js"></script>

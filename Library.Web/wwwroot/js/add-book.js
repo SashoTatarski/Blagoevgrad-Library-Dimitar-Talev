@@ -12,11 +12,15 @@ $('#create-author').click(function () {
         success: function (response) {
             $('#create-author-modal').modal('hide');
 
-            const option = $(`<option value="${response.id}">${response.name}</option>`);
+            const presentOption = Array.from($('#authors-selectlist')[0].children).find(o => o.value === response.id);
 
-            $('#authors-selectlist').append(option);
-
-            option.attr('selected', 'selected');
+            if (presentOption) {
+                $(presentOption).attr('selected', 'selected');
+            } else {
+                const option = $(`<option value="${response.id}">${response.name}</option>`);
+                $('#authors-selectlist').append(option);
+                option.attr('selected', 'selected');
+            }
         }
     });
 });
@@ -36,13 +40,17 @@ $('#create-publisher').click(function () {
         url: '/bookmanagement/addpublisherrest',
         data: { publisherName: authorPublisherValue },
         success: function (response) {
-
             $('#create-publisher-modal').modal('hide');
 
-            const option1 = $(`<option value="${response.id}">${response.name}</option>`);
-            $('#publisher-selectlist').append(option1);
+            const presentOption = Array.from($('#publisher-selectlist')[0].children).find(o => o.value === response.id);
 
-            option1.attr('selected', 'selected');
+            if (presentOption) {
+                $(presentOption).attr('selected', 'selected');
+            } else {
+                const option = $(`<option value="${response.id}">${response.name}</option>`);
+                $('#publisher-selectlist').append(option);
+                option.attr('selected', 'selected');
+            }
         }
     });
 });
@@ -59,13 +67,20 @@ $('#create-genre').click(function () {
         url: '/bookmanagement/addgenrerest',
         data: { genreName: genreValue },
         success: function (response) {
-
             $('#create-genre-modal').modal('hide');
 
-            const option1 = $(`<option value="${response.id}">${response.name}</option>`);
-            $('#genre-selectlist').append(option1);
+            const presentOption = Array.from($('#genre-selectlist')[0].children).find(o => o.value === response.id.toString());
 
-            option1.attr('selected', 'selected');
+            console.log($('#genre-selectlist')[0].children);
+            console.log(presentOption);
+
+            if (presentOption) {
+                $(presentOption).attr('selected', 'selected');
+            } else {
+                const option = $(`<option value="${response.id}">${response.name}</option>`);
+                $('#genre-selectlist').append(option);
+                option.attr('selected', 'selected');
+            }
         }
     });
 });
