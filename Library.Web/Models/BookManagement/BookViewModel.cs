@@ -48,7 +48,7 @@ namespace Library.Web.Models.BookManagement
         public int Year { get; set; }
 
         public int Rack { get; set; }
-        public double Rating { get; set; }
+        public string Rating { get; set; }
         public BookStatus Status { get; set; }
         public bool IsBookCheckedout { get; set; }
         public bool IsChBooksMaxQuota { get; set; }

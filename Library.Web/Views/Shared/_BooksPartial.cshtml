@@ -62,31 +62,33 @@
     }
     else if (User.IsInRole("user"))
     {
-        <td class="text-center">
-            @if (Model.StatusLoggedUser=="Restricted")
-            {
-                <p class="text-danger">Restricted</p>
-            }
-            else if (Model.IsBookCheckedout)
-            {
-                <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
+<td class="text-center">
+    @if (Model.StatusLoggedUser == "Restricted")
+    {
+        <p class="text-danger">Restricted</p>
+    }
+    else if (Model.IsBookCheckedout)
+    {
+        <a class="btn btn-outline-info" asp-controller="UserBooks" asp-action="ExtendDueDate" asp-route-id="@Model.ISBN">Extend</a>
+        <a class="btn btn-info" asp-area="" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
 
-                <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.BookId">Return</a>
-
-            }
-            else if (Model.AreAllCopiesChecked)
-            {
-                <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
-
-                <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
-            }
-            else
-            {
-                <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.ISBN">Checkout</a>
-
-                <a class="btn btn-primary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
-            }
-        </td>
+    }
+    else if (Model.AreAllCopiesChecked)
+    {
+        <a class="btn btn-outline-info disabled" role="button" aria-disabled="true">Checkedout</a>
+        <a class="btn btn-secondary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
+    }
+    else if (Model.IsChBooksMaxQuota)
+    {
+        <a class="btn btn-outline-info disabled" role="button" aria-disabled="true">Checkout</a>
+        <a class="btn btn-secondary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
+    }
+    else
+    {
+        <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.ISBN">Checkout</a>
+        <a class="btn btn-secondary" asp-area="" asp-controller="UserBooks" asp-action="ReserveBook" asp-route-id="@Model.ISBN">Reserve</a>
+    }
+</td>
     }
 </tr>
 

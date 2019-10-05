@@ -9,7 +9,7 @@ namespace Library.Services.Contracts
     {
         Task AddBookToCheckoutBooksAsync(string bookId, string userName);
         bool IsBookCheckedout(User user, string isbn);
-        Task ReturnCheckedBookAsync(string isbn, string userName);
+        Task<string> ReturnCheckedBookAsync(string isbn, string userName);
         Task ReturnResBookAsync(string userName, string bookId);
         Task<List<Book>> GetReservedBooksAsync(string userName);
         Task AccountCancel(string id);
@@ -19,7 +19,7 @@ namespace Library.Services.Contracts
         Task AddBookToReservedBooksAsync(string isbn, string userName);
 
         Task<bool> AreAllCopiesCheckedAsync(string isbn);
-        Task<string> ExtendBookDueDate(string id, string userName);
+        Task<string> ExtendBookDueDate(string isbn, string userName);
         Task<string> CancelReservation(string id, string userName);
         Task AddNotificationAsync(string message, User user);
         Task<List<Notification>> GetAllNotificationsAsync();

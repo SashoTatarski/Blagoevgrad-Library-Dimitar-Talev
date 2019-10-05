@@ -169,10 +169,10 @@ namespace Library.Services
             return booksToReturn;
         }
 
-        public async Task ReturnCheckedBookAsync(string id, string userName)
+        public async Task<string> ReturnCheckedBookAsync(string isbn, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
-            var bookToReturn = user.CheckedoutBooks.FirstOrDefault(b => b.BookId.ToString() == id);
+            var bookToReturn = user.CheckedoutBooks.FirstOrDefault(b => b.Book.ISBN == isbn);
 
             if (bookToReturn is null)
             {
@@ -187,6 +187,8 @@ namespace Library.Services
             await this.IfUserRestrictedWhenReturning(user);
             var message = string.Format(Constants.ReturnBookNotification, user.Username, bookToReturn.Book.Title, bookToReturn.BookId);
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+
+            return Constants.ResBookSucc;
         }
 
         private async Task IfUserRestrictedWhenReturning(User user)
@@ -329,17 +331,17 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<string> ExtendBookDueDate(string id, string userName)
+        public async Task<string> ExtendBookDueDate(string isbn, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
-            var bookToExtend = await _bookManager.GetBookByIdAsync(id);
+            var bookToExtend = user.CheckedoutBooks.FirstOrDefault(b => b.Book.ISBN == isbn);
 
             if (user.Wallet - Constants.ExtendCost < 0)
             {
                 return Constants.NotEnoughMoney;
             }
 
-            var newDueDate = bookToExtend.CheckedoutBook.DueDate.AddDays(Constants.ExtendPeriod);
+            var newDueDate = bookToExtend.DueDate.AddDays(Constants.ExtendPeriod);
 
             if (newDueDate > user.MembershipEndDate)
             {
@@ -347,11 +349,11 @@ namespace Library.Services
             }
 
             user.Wallet -= Constants.ExtendCost;
-            bookToExtend.CheckedoutBook.DueDate = newDueDate;
+            bookToExtend.DueDate = newDueDate;
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            var message = string.Format(Constants.ExtendBookNotification, user.Username, bookToExtend.Title, bookToExtend.Id);
+            var message = string.Format(Constants.ExtendBookNotification, user.Username, bookToExtend.Book.Title, bookToExtend.BookId);
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
 
             return Constants.ExtendSuccess;

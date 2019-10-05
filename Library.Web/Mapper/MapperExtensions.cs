@@ -3,6 +3,7 @@ using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using Library.Web.Models.BookViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,7 @@ namespace Library.Web.Mapper
             vm.Year = book.Year;
             vm.Rack = book.Rack;
             vm.ISBN = book.ISBN;
-            vm.Rating = book.Rating;
+            vm.Rating = String.Format("{0:0.00}", book.Rating);
             vm.Author = book.Author;
             vm.Publisher = book.Publisher;
             vm.Status = book.Status;
@@ -64,7 +65,7 @@ namespace Library.Web.Mapper
                 Genres = genresAsStrings,
                 ISBN = book.ISBN,
                 Publisher = book.Publisher.Name,
-                Rating = book.Rating,
+                Rating = String.Format("{0:0.00}", book.Rating),
                 Year = book.Year,
             };
 
@@ -73,10 +74,10 @@ namespace Library.Web.Mapper
 
         public static BookIssuedViewModel MapToViewModel(this CheckoutBook book)
         {
-            var list = new List<SelectListItem>();
+            var selectListItems = new List<SelectListItem>();
             for (int i = 1; i <= 10; i++)
             {
-                list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                selectListItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
 
             var vm = new BookIssuedViewModel();
@@ -89,17 +90,17 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = false;
-            vm.RatingList = list;
+            vm.RatingList = selectListItems;
 
             return vm;
         }
 
         public static BookIssuedViewModel MapToViewModel(this ReservedBook book)
         {
-            var list = new List<SelectListItem>();
+            var selectListItems = new List<SelectListItem>();
             for (int i = 1; i <= 10; i++)
             {
-                list.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                selectListItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
 
             var vm = new BookIssuedViewModel();
@@ -112,7 +113,7 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = true;
-            vm.RatingList = list;
+            vm.RatingList = selectListItems;
 
             return vm;
         }

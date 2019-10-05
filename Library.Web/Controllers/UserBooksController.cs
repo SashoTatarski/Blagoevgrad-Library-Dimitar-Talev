@@ -15,18 +15,18 @@ namespace Library.Web.Controllers
     public class UserBooksController : Controller
     {
         private readonly ILibrarySystem _system;
-        private readonly IAccountManager _accountManager;        
+        private readonly IAccountManager _accountManager;
 
         public UserBooksController(ILibrarySystem system, IAccountManager accountManager)
         {
             _system = system;
-            _accountManager = accountManager;            
+            _accountManager = accountManager;
         }
 
         public async Task<IActionResult> Index(UserViewModel vm)
-        {            
+        {
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
-           
+
             vm.CheckedoutBooks = user.CheckedoutBooks.Select(x => x.MapToViewModel()).ToList();
             vm.ReservedBooks = user.ReservedBooks.Select(x => x.MapToViewModel()).ToList();
 
@@ -38,7 +38,7 @@ namespace Library.Web.Controllers
 
             return View(vm);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> RateBook(BookIssuedViewModel vm)
         {
@@ -51,15 +51,7 @@ namespace Library.Web.Controllers
 
         public async Task<IActionResult> ReturnBook(string id)
         {
-            try
-            {
-                await _system.ReturnCheckedBookAsync(id, User.Identity.Name);
-                TempData["message"] = Constants.RetBookSucc;
-            }
-            catch (Exception ex)
-            {
-                TempData["message"] = ex;
-            }
+            TempData["message"] = await _system.ReturnCheckedBookAsync(id, User.Identity.Name);
 
             return RedirectToAction("Index");
         }
