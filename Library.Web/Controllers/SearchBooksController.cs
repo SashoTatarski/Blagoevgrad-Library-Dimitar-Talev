@@ -1,4 +1,5 @@
 ﻿using Library.Models.Enums;
+using Library.Models.Models;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
@@ -24,23 +25,27 @@ namespace Library.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(SearchViewModel searchVM)
+        public async Task<IActionResult> Index()
         {
             var allBooks = await _bookManager.GetAllBooksAsync();
             var allBooksVM = allBooks.Select(x => x.MapToViewModel());
 
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-            searchVM.AllBooks = new List<BookViewModel>();
+            var searchVM = new SearchViewModel()
+            {
+                AllBooks = new List<BookViewModel>(),
+                BookSearchResults = new List<BookViewModel>()
+            };
 
             await SearchViewModelMapper(searchVM, allBooksVM, user);
 
             return View(searchVM);
         }
 
-        private async Task SearchViewModelMapper(SearchViewModel searchVM, IEnumerable<BookViewModel> allBooksVM, Library.Models.Models.User user)
+        private async Task SearchViewModelMapper(SearchViewModel searchVM, IEnumerable<BookViewModel> allBookCopies, User user)
         {
-            foreach (var book in allBooksVM)
+            foreach (var book in allBookCopies)
             {
                 if (!searchVM.AllBooks.Any(x => x.ISBN == book.ISBN))
                 {
@@ -48,10 +53,32 @@ namespace Library.Web.Controllers
                     {
                         book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                         book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                        book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
                     }
-                    book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
+
                     book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
+                    book.StatusLoggedUser = user.Status.ToString();
                     searchVM.AllBooks.Add(book);
+                }
+            }
+        }
+
+        private async Task SearchResultViewModelMapper(SearchViewModel searchVM, IEnumerable<BookViewModel> searchResult, User user)
+        {
+            foreach (var book in searchResult)
+            {
+                if (!searchVM.BookSearchResults.Any(x => x.ISBN == book.ISBN))
+                {
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
+                        book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                        book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
+                    }
+
+                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
+                    book.StatusLoggedUser = user.Status.ToString();
+                    searchVM.BookSearchResults.Add(book);
                 }
             }
         }
@@ -59,21 +86,15 @@ namespace Library.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
         {
-            var books = await _bookManager
+            var bookResult = await _bookManager
                 .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre);
-            var booksMapped = books
+            var booksMapped = bookResult
                 .Select(x => x.MapToViewModel())
                 .ToList();
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-            foreach (var book in booksMapped)
-            {
-                if (!viewModel.BookSearchResults.Any(x => x.ISBN == book.ISBN))
-                {
-                    viewModel.BookSearchResults.Add(book);
-                }
-            }
+            await this.SearchResultViewModelMapper(viewModel, booksMapped, user);
 
-            
             return View(viewModel);
         }
     }

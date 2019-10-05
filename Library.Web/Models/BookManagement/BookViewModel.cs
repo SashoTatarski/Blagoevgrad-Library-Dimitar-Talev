@@ -16,13 +16,13 @@ namespace Library.Web.Models.BookManagement
         [Required(ErrorMessage = Constants.BookCopiesReqErr)]
         [Range(1, 100, ErrorMessage = Constants.BookCopiesReqRange)]
         public int BookCopies { get; set; }
-                
+
         [Required(ErrorMessage = Constants.AuthorsReqErr)]
         public List<SelectListItem> Authors { get; set; }
 
         public string AuthorId { get; set; }
         public Author Author { get; set; }
-        
+
 
         [Required(ErrorMessage = Constants.PublishsReqErr)]
         public string PublisherId { get; set; }
@@ -53,5 +53,7 @@ namespace Library.Web.Models.BookManagement
         public bool IsBookCheckedout { get; set; }
         public bool IsChBooksMaxQuota { get; set; }
         public bool AreAllCopiesChecked { get; set; }
+
+        public string StatusLoggedUser { get; set; }
     }
 }

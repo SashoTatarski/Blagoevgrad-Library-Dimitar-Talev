@@ -426,11 +426,11 @@ namespace Library.Services
             }
 
             var usersWithOverdueMembershipAfterOneDay = await _context.Users
-               .Where(u => u.MembershipEndDate == DateTime.Today.AddDays(3))
+               .Where(u => u.MembershipEndDate == DateTime.Today.AddDays(1))
                .ToListAsync()
                .ConfigureAwait(false);
 
-            foreach (var user in usersWithOverdueMembershipAfterThreeDays)
+            foreach (var user in usersWithOverdueMembershipAfterOneDay)
             {
                 var notification = string.Format(Constants.OverDueMembershipAfterOneDayNotification);
                 await this.AddNotificationAsync(notification, user);

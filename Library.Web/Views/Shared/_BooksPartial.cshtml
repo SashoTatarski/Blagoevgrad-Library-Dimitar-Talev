@@ -63,7 +63,11 @@
     else if (User.IsInRole("user"))
     {
         <td class="text-center">
-            @if (Model.IsBookCheckedout)
+            @if (Model.StatusLoggedUser=="Restricted")
+            {
+                <p class="text-danger">Restricted</p>
+            }
+            else if (Model.IsBookCheckedout)
             {
                 <a class="btn btn-info disabled" role="button" aria-disabled="true">Checkedout</a>
 
