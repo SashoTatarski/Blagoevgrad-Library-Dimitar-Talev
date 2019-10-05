@@ -17,5 +17,7 @@ namespace Library.Web.Models.BookViewModels
         public bool IsChBooksMaxQuota { get; set; }
 
         public bool AreAllCopiesChecked { get; set; }
+
+        public string StatusLoggedUser { get; set; }
     }
 }

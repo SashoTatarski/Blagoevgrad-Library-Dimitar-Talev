@@ -203,7 +203,7 @@ namespace Library.Web.Controllers
             vm.IsBookCheckedout = _system.IsBookCheckedout(user, vm.ISBN);
             vm.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(vm.ISBN);
             vm.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
-
+            vm.StatusLoggedUser = user.Status.ToString();
 
             return View(vm);
         }

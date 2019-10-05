@@ -44,7 +44,7 @@
     <hr />
     @if (User.IsInRole("user"))
     {
-        if ((!Model.IsBookCheckedout && !Model.AreAllCopiesChecked && !Model.IsChBooksMaxQuota))
+        @if ((!Model.IsBookCheckedout && !Model.AreAllCopiesChecked && !Model.IsChBooksMaxQuota && Model.StatusLoggedUser != "Restricted"))
         {
             <a class="btn btn-info" asp-controller="UserBooks" asp-action="CheckoutBook" asp-route-id="@Model.ISBN">Checkout</a>
         }

@@ -169,26 +169,43 @@ namespace Library.Services
             return booksToReturn;
         }
 
-        public async Task ReturnCheckedBookAsync(string isbn, string userName)
+        public async Task ReturnCheckedBookAsync(string id, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
-            var booksByIsbn = await _bookManager.GetBooksByIsbnAsync(isbn);
-
-            var bookToReturn = booksByIsbn.Where(b => b.CheckedoutBook != null).FirstOrDefault(b => b.CheckedoutBook.UserId == user.Id);
+            var bookToReturn = user.CheckedoutBooks.FirstOrDefault(b => b.BookId.ToString() == id);
 
             if (bookToReturn is null)
             {
                 throw new ArgumentException(Constants.NotCheckedOutThisBook);
             }
 
-            await this.ChangeBookStatusAsync(bookToReturn.Id.ToString(), BookStatus.Available);
+            await this.ChangeBookStatusAsync(bookToReturn.Book.Id.ToString(), BookStatus.Available);
 
-            var checkedoutBookToReturn = await _context.CheckoutBooks.FirstOrDefaultAsync(b => b.BookId == bookToReturn.Id).ConfigureAwait(false);
-            _context.CheckoutBooks.Remove(checkedoutBookToReturn);
+            _context.CheckoutBooks.Remove(bookToReturn);
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            var message = string.Format(Constants.ReturnBookNotification, user.Username, checkedoutBookToReturn.Book.Title, checkedoutBookToReturn.BookId);
+            await this.IfUserRestrictedWhenReturning(user);
+            var message = string.Format(Constants.ReturnBookNotification, user.Username, bookToReturn.Book.Title, bookToReturn.BookId);
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
+        }
+
+        private async Task IfUserRestrictedWhenReturning(User user)
+        {
+            if (user.Status == AccountStatus.Restricted)
+            {
+                var overdueBooks = await this.GetUserOverdueBooks(user);
+                if (overdueBooks.Count == 0)
+                {
+                    user.Status = AccountStatus.Active;
+                }
+            }
+        }
+
+        private async Task<List<CheckoutBook>> GetUserOverdueBooks(User user)
+        {
+            return await _context.CheckoutBooks
+                .Where(b => b.UserId == user.Id && b.DueDate < DateTime.Today)
+                .ToListAsync();
         }
 
         public async Task ReturnResBookAsync(string userName, string bookId)

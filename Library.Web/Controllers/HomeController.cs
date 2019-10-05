@@ -42,6 +42,7 @@ namespace Library.Web.Controllers
                     book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                     book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
                     book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                    book.StatusLoggedUser = user.Status.ToString();
                 }
             }
 

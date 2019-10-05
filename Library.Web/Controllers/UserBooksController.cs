@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Library.Models.Utils;
+﻿using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.AccountManagement;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Web.Controllers
 {
@@ -35,6 +33,7 @@ namespace Library.Web.Controllers
             foreach (var book in vm.CheckedoutBooks)
             {
                 book.IsBookRatedByUser = await _system.IsBookRatedByUser(book.ISBN, user.Id.ToString());
+                book.StatusLoggedUser = user.Status.ToString();
             }
 
             return View(vm);
