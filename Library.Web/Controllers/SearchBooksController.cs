@@ -1,5 +1,4 @@
-﻿using Library.Models.Enums;
-using Library.Models.Models;
+﻿using Library.Models.Models;
 using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
@@ -15,7 +14,6 @@ namespace Library.Web.Controllers
         private readonly IBookManager _bookManager;
         private readonly IAccountManager _accountManager;
         private readonly ILibrarySystem _system;
-
 
         public SearchBooksController(IBookManager bookManager, IAccountManager accountManagager, ILibrarySystem system)
         {
@@ -41,6 +39,21 @@ namespace Library.Web.Controllers
             await SearchViewModelMapper(searchVM, allBooksVM, user);
 
             return View(searchVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
+        {
+            var bookResult = await _bookManager
+                .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre);
+            var booksMapped = bookResult
+                .Select(x => x.MapToViewModel())
+                .ToList();
+            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
+
+            await this.SearchResultViewModelMapper(viewModel, booksMapped, user);
+
+            return View(viewModel);
         }
 
         private async Task SearchViewModelMapper(SearchViewModel searchVM, IEnumerable<BookViewModel> allBookCopies, User user)
@@ -81,21 +94,6 @@ namespace Library.Web.Controllers
                     searchVM.BookSearchResults.Add(book);
                 }
             }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
-        {
-            var bookResult = await _bookManager
-                .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre);
-            var booksMapped = bookResult
-                .Select(x => x.MapToViewModel())
-                .ToList();
-            var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
-
-            await this.SearchResultViewModelMapper(viewModel, booksMapped, user);
-
-            return View(viewModel);
         }
     }
 }
