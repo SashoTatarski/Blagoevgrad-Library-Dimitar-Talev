@@ -48,10 +48,10 @@ namespace Library.Services
 
         public async Task<bool> IsBookRatedByUser(string isbn, string userId)
         {
-           return await _context.Ratings
-                .Include(x => x.Book)
-                .AnyAsync(x => x.UserId.ToString() == userId && x.Book.ISBN == isbn)
-                .ConfigureAwait(false);
+            return await _context.Ratings
+                 .Include(x => x.Book)
+                 .AnyAsync(x => x.UserId.ToString() == userId && x.Book.ISBN == isbn)
+                 .ConfigureAwait(false);
         }
 
         public async Task<double> RecalculateRating(string isbn, int newRating)
@@ -357,6 +357,84 @@ namespace Library.Services
 
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task CheckForOverdueBooks()
+        {
+            var overdueBooks = await _context.CheckoutBooks
+                .Include(b => b.User)
+                .Include(b => b.Book)
+                .Where(b => b.DueDate < DateTime.Today)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            foreach (var book in overdueBooks)
+            {
+                book.User.Status = AccountStatus.Restricted;
+
+                if (!HasNotificationAboutThisBookToday(book.User, book.Book.Title))
+                {
+                    var notification = string.Format(Constants.OverDueBookNotification, book.Book.Title, (DateTime.Today - book.DueDate).TotalDays);
+                    await this.AddNotificationAsync(notification, book.User);
+                }
+            }
+        }
+
+        private bool HasNotificationAboutThisBookToday(User user, string title)
+        {
+            return _context.Notifications.Any(n => n.UserId == user.Id && n.SentOn.Date == DateTime.Today && n.Message.Contains(title));
+        }
+
+        public async Task CheckForOverdueMemberships()
+        {
+            var usersWithOverdueMembership = await _context.Users
+                .Where(u => u.MembershipEndDate < DateTime.Today && u.Status != AccountStatus.Restricted)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            foreach (var user in usersWithOverdueMembership)
+            {
+                user.Status = AccountStatus.Restricted;
+
+                var notification = string.Format(Constants.OverDueMembershipNotification, user.MembershipEndDate.ToShortDateString());
+                await this.AddNotificationAsync(notification, user);
+            }
+        }
+
+        public async Task CheckForSoonOverdueMemberships()
+        {
+            var usersWithOverdueMembershipAfterThreeDays = await _context.Users
+                .Where(u => u.MembershipEndDate == DateTime.Today.AddDays(3))
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            foreach (var user in usersWithOverdueMembershipAfterThreeDays)
+            {
+                var notification = string.Format(Constants.OverDueMembershipAfterThreeDaysNotification);
+                await this.AddNotificationAsync(notification, user);
+            }
+
+            var usersWithOverdueMembershipAfterTwoDays = await _context.Users
+               .Where(u => u.MembershipEndDate == DateTime.Today.AddDays(2))
+               .ToListAsync()
+               .ConfigureAwait(false);
+
+            foreach (var user in usersWithOverdueMembershipAfterTwoDays)
+            {
+                var notification = string.Format(Constants.OverDueMembershipAfterTwoDaysNotification);
+                await this.AddNotificationAsync(notification, user);
+            }
+
+            var usersWithOverdueMembershipAfterOneDay = await _context.Users
+               .Where(u => u.MembershipEndDate == DateTime.Today.AddDays(3))
+               .ToListAsync()
+               .ConfigureAwait(false);
+
+            foreach (var user in usersWithOverdueMembershipAfterThreeDays)
+            {
+                var notification = string.Format(Constants.OverDueMembershipAfterOneDayNotification);
+                await this.AddNotificationAsync(notification, user);
+            }
         }
     }
 }

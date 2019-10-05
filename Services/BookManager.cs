@@ -212,8 +212,9 @@ namespace Library.Services
             }
             if (!byTitle && !byAuthor && !byPublisher && !byGenre)
             {
+
                 return allBooks
-                    .Where(b => b.Title.Contains(searchCriteria) || b.Author.Name.Contains(searchCriteria) || b.Publisher.Name.Contains(searchCriteria) || b.ISBN.Contains(searchCriteria))
+                    .Where(b => b.Title.ToLower().Contains(searchCriteria) || b.Author.Name.ToLower().Contains(searchCriteria) || b.Publisher.Name.ToLower().Contains(searchCriteria) || b.ISBN.ToLower().Contains(searchCriteria))
                 .ToList();
             }
             else

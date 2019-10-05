@@ -21,19 +21,20 @@ namespace Library.Web
         public Task StartAsync(CancellationToken stoppingToken)
         {
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                TimeSpan.FromSeconds(5));
+                TimeSpan.FromDays(1));
 
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWork(object state)
         {
             using (IServiceScope scope = serviceProvider.CreateScope())
             {
-                //var context = scope.ServiceProvider.GetRequiredService<LibraryContext>();
-                var sercice = scope.ServiceProvider.GetRequiredService<IBookManager>();
-               
-                // services
+                var systemService = scope.ServiceProvider.GetRequiredService<ILibrarySystem>();
+
+                await systemService.CheckForOverdueBooks();
+                await systemService.CheckForOverdueMemberships();
+                await systemService.CheckForSoonOverdueMemberships();
             }
         }
 

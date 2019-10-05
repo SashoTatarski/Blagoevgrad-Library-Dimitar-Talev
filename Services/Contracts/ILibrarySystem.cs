@@ -28,5 +28,8 @@ namespace Library.Services.Contracts
         Task RateBook(string userName, string isbn, string newRating);
         Task<double> RecalculateRating(string isbn, int newRating);
         Task<bool> IsBookRatedByUser(string isbn, string userId);
+        Task CheckForOverdueBooks();
+        Task CheckForOverdueMemberships();
+        Task CheckForSoonOverdueMemberships();
     }
 }
