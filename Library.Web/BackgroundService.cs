@@ -35,6 +35,7 @@ namespace Library.Web
                 await systemService.CheckForOverdueBooks();
                 await systemService.CheckForOverdueMemberships();
                 await systemService.CheckForSoonOverdueMemberships();
+                await systemService.CheckForOverdueReservations();
             }
         }
 

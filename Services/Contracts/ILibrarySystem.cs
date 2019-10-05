@@ -7,7 +7,6 @@ namespace Library.Services.Contracts
 {
     public interface ILibrarySystem
     {
-        Task ChangeBookStatusAsync(string bookId, BookStatus status);
         Task AddBookToCheckoutBooksAsync(string bookId, string userName);
         bool IsBookCheckedout(User user, string isbn);
         Task ReturnCheckedBookAsync(string isbn, string userName);
@@ -31,5 +30,6 @@ namespace Library.Services.Contracts
         Task CheckForOverdueBooks();
         Task CheckForOverdueMemberships();
         Task CheckForSoonOverdueMemberships();
+        Task CheckForOverdueReservations();
     }
 }

@@ -210,21 +210,17 @@ namespace Library.Services
 
         public async Task ReturnResBookAsync(string userName, string bookId)
         {
-            var booksResByUser = await this.GetReservedBooksAsync(userName);
-
             var user = await _accountManager.GetUserByUsernameAsync(userName);
 
-            var book = booksResByUser.Find(x => x.Id.ToString() == bookId);
+            var resBook = await _context.ReservedBooks
+                .Include(b => b.Book)
+                .FirstOrDefaultAsync(b => b.UserId == user.Id && b.BookId.ToString() == bookId).ConfigureAwait(false);
 
-            book.Status = BookStatus.Available;
-
-            var chBook = await _context.ReservedBooks.FirstOrDefaultAsync(x => x.BookId.ToString() == bookId).ConfigureAwait(false);
-
-            _context.ReservedBooks.Remove(chBook);
-
+            _context.ReservedBooks.Remove(resBook);
             await _context.SaveChangesAsync().ConfigureAwait(false);
+            await this.ChangeStatusCancelReservation(resBook.BookId.ToString());
 
-            var message = string.Format(Constants.ReturnBookNotification, user.Username, book.Title, book.Id);
+            var message = string.Format(Constants.ReturnBookNotification, user.Username, resBook.Book.Title, resBook.BookId);
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
@@ -299,7 +295,25 @@ namespace Library.Services
             await this.AddNotificationAsync(message, await _accountManager.GetAdminAccountAsync());
         }
 
-        public async Task ChangeBookStatusAsync(string bookId, BookStatus status)
+        private async Task ChangeStatusCancelReservation(string bookId)
+        {
+            var book = await _bookManager.GetBookByIdAsync(bookId);
+            if (book.Status == BookStatus.Reserved)
+            {
+                book.Status = BookStatus.Available;
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            else if (book.Status == BookStatus.CheckedOutAndReserved)
+            {
+                var otherReservations = await _context.ReservedBooks.Where(b => b.BookId.ToString() == bookId).ToListAsync().ConfigureAwait(false);
+                if (otherReservations.Count == 0)
+                {
+                    book.Status = BookStatus.CheckedOut;
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
+                }
+            }
+        }
+        private async Task ChangeBookStatusAsync(string bookId, BookStatus status)
         {
             var book = await _bookManager.GetBookByIdAsync(bookId);
 
@@ -418,6 +432,25 @@ namespace Library.Services
             }
         }
 
+        public async Task CheckForOverdueReservations()
+        {
+            var overdueReservations = await _context.ReservedBooks
+                .Include(b => b.User)
+                .Include(b => b.Book)
+                .Where(b => b.ReservationDueDate < DateTime.Today)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            foreach (var book in overdueReservations)
+            {
+                _context.ReservedBooks.Remove(book);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this.ChangeStatusCancelReservation(book.BookId.ToString());
+                var notification = string.Format(Constants.OverdueReservation, book.Book.Title);
+                await this.AddNotificationAsync(notification, book.User);
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+        }
         public async Task CheckForSoonOverdueMemberships()
         {
             var usersWithOverdueMembershipAfterThreeDays = await _context.Users

@@ -138,6 +138,7 @@ namespace Library.Models.Utils
         public const string OverDueMembershipAfterThreeDaysNotification = "Your membership will expire in 3 days";
         public const string OverDueMembershipAfterTwoDaysNotification = "Your membership will expire in 2 days";
         public const string OverDueMembershipAfterOneDayNotification = "Your membership will expire in 1 day";
+        public const string OverdueReservation = "You have overdue reservation of book with title {0}. This book is no longer reserved by you.";
 
 
 
