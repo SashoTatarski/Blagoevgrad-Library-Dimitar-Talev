@@ -242,9 +242,7 @@ namespace Library.Services
         public async Task AddBookToReservedBooksAsync(string isbn, string userName)
         {
             var user = await _accountManager.GetUserByUsernameAsync(userName);
-            var booksByIsbn = await _bookManager.GetBooksByIsbnAsync(isbn);
-
-            var bookToReserve = booksByIsbn.FirstOrDefault(b => b.Status != BookStatus.ToBeDeleted);
+            var bookToReserve = await this.ReserveTheMostSuitableBookAsync(isbn);
 
             if (bookToReserve is null)
             {
@@ -497,6 +495,41 @@ namespace Library.Services
                     await this.AddNotificationAsync(notification, user);
                 }
             }
+        }
+
+        private async Task<Book> ReserveTheMostSuitableBookAsync(string isbn)
+        {
+            var allbooks = await _bookManager.GetBooksByIsbnAsync(isbn);
+
+            var availableBook = allbooks.FirstOrDefault(b => b.Status == BookStatus.Available);
+            if (availableBook != null)
+            {
+                return availableBook;
+            }
+
+            var onlyCheckedoutBook = allbooks.FirstOrDefault(b => b.Status == BookStatus.CheckedOut);
+            if (onlyCheckedoutBook != null)
+            {
+                return onlyCheckedoutBook;
+            }
+
+            var checkedoutAndReservedBooks = allbooks.Where(b => b.Status == BookStatus.CheckedOutAndReserved).ToList();
+
+            if (checkedoutAndReservedBooks.Count > 0)
+            {
+                var bookToReserve = checkedoutAndReservedBooks[0];
+
+                foreach (var book in checkedoutAndReservedBooks)
+                {
+                    if (bookToReserve.ReservedBooks.Count > book.ReservedBooks.Count)
+                    {
+                        bookToReserve = book;
+                    }
+                }
+
+                return bookToReserve;
+            }
+            else return null;
         }
     }
 }
