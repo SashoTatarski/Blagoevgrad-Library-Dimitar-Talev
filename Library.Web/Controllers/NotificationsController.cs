@@ -25,14 +25,12 @@ namespace Library.Web.Controllers
         {
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-            
-            var listVM = new ListNotificationsViewModel();
 
-            var notifications = user.Notifications;
+            var listVM = new ListNotificationsViewModel();
 
             if (User.IsInRole("admin"))
             {
-                foreach (var notification in notifications)
+                foreach (var notification in user.Notifications)
                 {
                     string username = notification.Message.Substring(0, notification.Message.IndexOf(" "));
                     var userWhenAdmin = await _accountManager.GetUserByUsernameAsync(username);
@@ -49,8 +47,8 @@ namespace Library.Web.Controllers
                 }
             }
             else if (User.IsInRole("user"))
-            {                
-                foreach (var notification in notifications)
+            {
+                foreach (var notification in user.Notifications)
                 {
                     var vm = new NotificationsViewModel();
 
@@ -58,11 +56,13 @@ namespace Library.Web.Controllers
                     vm.Message = notification.Message;
                     vm.UserId = notification.User.Id.ToString();
                     vm.IsSeen = notification.IsSeen;
-                    vm.DateSent = notification.SentOn;                    
+                    vm.DateSent = notification.SentOn;
 
                     listVM.NotificationsList.Add(vm);
                 }
             }
+
+            listVM.NotificationsList = listVM.NotificationsList.OrderByDescending(n => n.DateSent).ToList();
             return View(listVM);
         }
 

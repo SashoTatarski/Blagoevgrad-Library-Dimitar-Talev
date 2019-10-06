@@ -24,9 +24,9 @@
             if (User.IsInRole("admin"))
             {
                 <tr>
-                    <td scope="row">@item.DateSent.ToString("dd.MM.yyyy")</td>
+                    <td scope="row">@item.DateSent.ToShortDateString() @item.DateSent.ToShortTimeString()</td>
                     <td>
-                        <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@item.UserId">
+                        <a asp-controller="AccountManagement" asp-action="Details" asp-route-id="@item.User.Id">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             @item.User.Username
                         </a>
@@ -36,32 +36,32 @@
                     {
                         <td>
                             <a asp-controller="Notifications" asp-action="MarkSeen" asp-route-id="@item.Id">
-                                <i class="fas fa-times text-danger icon-action" title="Click to mark as Seen"></i>
+                                <i class="text-center fas fa-eye-slash text-danger icon-action" title="Click to mark as Seen"></i>
                             </a>
                         </td>
                     }
                     else
                     {
-                        <td><i class="fas fa-check-circle text-success" aria-hidden="true"></i></td>
+                        <td><i class="text-center fas fa-check-circle text-success" style="font-size: 20px" aria-hidden="true"></i></td>
                     }
                 </tr>
             }
             else if (User.IsInRole("user"))
             {
                 <tr>
-                    <td scope="row">@item.DateSent.ToString("dd.MM.yyyy")</td>
+                    <td scope="row">@item.DateSent.ToShortDateString() @item.DateSent.ToShortTimeString()</td>
                     <td>@item.Message</td>
                     @if (!item.IsSeen)
                     {
                         <td>
                             <a asp-controller="Notifications" asp-action="MarkSeen" asp-route-id="@item.Id">
-                                <i class="fas fa-times text-danger icon-action" title="Click to mark as Seen"></i>
+                                <i class="text-center fas fa-eye-slash text-danger icon-action" title="Click to mark as Seen"></i>
                             </a>
                         </td>
                     }
                     else
                     {
-                        <td><i class="fas fa-check-circle text-success" aria-hidden="true"></i></td>
+                        <td><i class="text-center fas fa-check-circle text-success" style="font-size: 20px" aria-hidden="true"></i></td>
                     }
                 </tr>
             }
