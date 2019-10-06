@@ -463,7 +463,11 @@ namespace Library.Services
             foreach (var user in usersWithOverdueMembershipAfterThreeDays)
             {
                 var notification = string.Format(Constants.OverDueMembershipAfterThreeDaysNotification);
-                await this.AddNotificationAsync(notification, user);
+
+                if (!_context.Notifications.Any(n => n.Message == notification && n.SentOn == DateTime.Today))
+                {
+                    await this.AddNotificationAsync(notification, user);
+                }
             }
 
             var usersWithOverdueMembershipAfterTwoDays = await _context.Users
@@ -474,7 +478,10 @@ namespace Library.Services
             foreach (var user in usersWithOverdueMembershipAfterTwoDays)
             {
                 var notification = string.Format(Constants.OverDueMembershipAfterTwoDaysNotification);
-                await this.AddNotificationAsync(notification, user);
+                if (!_context.Notifications.Any(n => n.Message == notification && n.SentOn == DateTime.Today))
+                {
+                    await this.AddNotificationAsync(notification, user);
+                }
             }
 
             var usersWithOverdueMembershipAfterOneDay = await _context.Users
@@ -485,7 +492,10 @@ namespace Library.Services
             foreach (var user in usersWithOverdueMembershipAfterOneDay)
             {
                 var notification = string.Format(Constants.OverDueMembershipAfterOneDayNotification);
-                await this.AddNotificationAsync(notification, user);
+                if (!_context.Notifications.Any(n => n.Message == notification && n.SentOn == DateTime.Today))
+                {
+                    await this.AddNotificationAsync(notification, user);
+                }
             }
         }
     }
