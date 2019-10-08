@@ -200,10 +200,13 @@ namespace Library.Web.Controllers
                 vm.AllBookCopies.Add(book.MapToCopyViewModel());
             }
 
-            vm.IsBookCheckedout = _system.IsBookCheckedout(user, vm.ISBN);
-            vm.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(vm.ISBN);
-            vm.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
-            vm.UserStatus = user.Status.ToString();
+            if (User.IsInRole("user"))
+            {
+                vm.IsBookCheckedout = _system.IsBookCheckedout(user, vm.ISBN);
+                vm.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(vm.ISBN);
+                vm.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
+                vm.UserStatus = user.Status.ToString();
+            }
 
             return View(vm);
         }
