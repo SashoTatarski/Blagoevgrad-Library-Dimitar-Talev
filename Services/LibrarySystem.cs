@@ -420,8 +420,7 @@ namespace Library.Services
         {
             var usersWithOverdueMembership = await _context.Users
                 .Where(u => u.MembershipEndDate < DateTime.Today && u.Status != AccountStatus.Restricted)
-                .ToListAsync()
-                .ConfigureAwait(false);
+                .ToListAsync();
 
             foreach (var user in usersWithOverdueMembership)
             {
@@ -445,7 +444,9 @@ namespace Library.Services
             {
                 _context.ReservedBooks.Remove(book);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
+
                 await this.ChangeStatusCancelReservation(book.BookId.ToString());
+
                 var notification = string.Format(Constants.OverdueReservation, book.Book.Title);
                 await this.AddNotificationAsync(notification, book.User);
                 await _context.SaveChangesAsync().ConfigureAwait(false);

@@ -74,10 +74,10 @@ namespace Library.Web.Mapper
 
         public static BookIssuedViewModel MapToViewModel(this CheckoutBook book)
         {
-            var selectListItems = new List<SelectListItem>();
+            var selectItems = new List<SelectListItem>();
             for (int i = 1; i <= 10; i++)
             {
-                selectListItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                selectItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
 
             var vm = new BookIssuedViewModel();
@@ -90,17 +90,17 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = false;
-            vm.RatingList = selectListItems;
+            vm.RatingList = selectItems;
 
             return vm;
         }
 
         public static BookIssuedViewModel MapToViewModel(this ReservedBook book)
         {
-            var selectListItems = new List<SelectListItem>();
+            var selectItems = new List<SelectListItem>();
             for (int i = 1; i <= 10; i++)
             {
-                selectListItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                selectItems.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
 
             var vm = new BookIssuedViewModel();
@@ -113,7 +113,7 @@ namespace Library.Web.Mapper
             vm.Title = book.Book.Title;
             vm.Status = book.Book.Status.ToString();
             vm.IsReserved = true;
-            vm.RatingList = selectListItems;
+            vm.RatingList = selectItems;
 
             return vm;
         }
