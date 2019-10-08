@@ -133,7 +133,7 @@ namespace Library.Models.Utils
 
 
 
-        public static string OverDueBookNotification = "You have overdue book with title {0}. You have overdue it by {1} days.";
+        public static string OverDueBookNotification = "You have an overdue book with title {0}. You are {1} day(s) overdue.";
         public static string OverDueMembershipNotification = "Your membership has expired on {0}";
         public const string OverDueMembershipAfterThreeDaysNotification = "Your membership will expire in 3 days";
         public const string OverDueMembershipAfterTwoDaysNotification = "Your membership will expire in 2 days";

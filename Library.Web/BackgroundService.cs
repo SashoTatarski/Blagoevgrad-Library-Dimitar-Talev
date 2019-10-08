@@ -10,12 +10,12 @@ namespace Library.Web
 {
     public class BackgroundService : IHostedService, IDisposable
     {
-        private readonly IServiceProvider serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
         private Timer _timer;
 
         public BackgroundService(ILogger<BackgroundService> logger, IServiceProvider serviceProvider)
         {
-            this.serviceProvider = serviceProvider;
+            _serviceProvider = serviceProvider;
         }
 
         public Task StartAsync(CancellationToken stoppingToken)
@@ -28,7 +28,7 @@ namespace Library.Web
 
         private async void DoWork(object state)
         {
-            using (IServiceScope scope = serviceProvider.CreateScope())
+            using (IServiceScope scope = _serviceProvider.CreateScope())
             {
                 var systemService = scope.ServiceProvider.GetRequiredService<ILibrarySystem>();
 
