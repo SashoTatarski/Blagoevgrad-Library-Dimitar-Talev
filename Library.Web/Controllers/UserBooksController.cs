@@ -33,7 +33,7 @@ namespace Library.Web.Controllers
             foreach (var book in vm.CheckedoutBooks)
             {
                 book.IsBookRatedByUser = await _system.IsBookRatedByUser(book.ISBN, user.Id.ToString());
-                book.StatusLoggedUser = user.Status.ToString();
+                book.UserStatus = user.Status.ToString();
             }
 
             return View(vm);

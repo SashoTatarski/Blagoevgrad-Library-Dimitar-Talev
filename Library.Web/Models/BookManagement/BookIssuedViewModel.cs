@@ -28,6 +28,6 @@ namespace Library.Web.Models.BookManagement
         public string Rate { get; set; }
 
         public bool IsBookRatedByUser { get; set; }
-        public string StatusLoggedUser { get; set; }
+        public string UserStatus { get; set; }
     }
 }

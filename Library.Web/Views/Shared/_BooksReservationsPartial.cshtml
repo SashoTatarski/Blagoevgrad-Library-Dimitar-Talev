@@ -27,7 +27,7 @@
             @*when the book is only checkedout*@
             else
             {
-                @if (Model.Status == "CheckedOutAndReserved" || Model.StatusLoggedUser == "Restricted")
+                @if (Model.Status == "CheckedOutAndReserved" || Model.UserStatus == "Restricted")
                 {
                     <a class="btn btn-secondary" asp-controller="UserBooks" asp-action="ReturnBook" asp-route-id="@Model.ISBN">Return</a>
                     <a class="btn btn-info disabled" role="button" aria-disabled="true">Extend</a>

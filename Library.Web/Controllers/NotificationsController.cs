@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Library.Models.Models;
 using Library.Services.Contracts;
 using Library.Web.Models.Notifications;
 using Microsoft.AspNetCore.Authorization;
@@ -25,45 +26,44 @@ namespace Library.Web.Controllers
         {
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
 
-
             var listVM = new ListNotificationsViewModel();
 
             if (User.IsInRole("admin"))
             {
-                foreach (var notification in user.Notifications)
-                {
-                    string username = notification.Message.Substring(0, notification.Message.IndexOf(" "));
-                    var userWhenAdmin = await _accountManager.GetUserByUsernameAsync(username);
-                    var vm = new NotificationsViewModel();
-
-                    vm.Id = notification.Id.ToString();
-                    vm.Message = notification.Message;
-                    vm.UserId = notification.User.Id.ToString();
-                    vm.IsSeen = notification.IsSeen;
-                    vm.DateSent = notification.SentOn;
-                    vm.User = userWhenAdmin;
-
-                    listVM.NotificationsList.Add(vm);
-                }
+                await NotificationsMapper(user, listVM);
             }
             else if (User.IsInRole("user"))
             {
-                foreach (var notification in user.Notifications)
-                {
-                    var vm = new NotificationsViewModel();
-
-                    vm.Id = notification.Id.ToString();
-                    vm.Message = notification.Message;
-                    vm.UserId = notification.User.Id.ToString();
-                    vm.IsSeen = notification.IsSeen;
-                    vm.DateSent = notification.SentOn;
-
-                    listVM.NotificationsList.Add(vm);
-                }
+                await NotificationsMapper(user, listVM);
             }
 
             listVM.NotificationsList = listVM.NotificationsList.OrderByDescending(n => n.DateSent).ToList();
             return View(listVM);
+        }
+
+        private async Task NotificationsMapper(User user, ListNotificationsViewModel listVM)
+        {
+            foreach (var notification in user.Notifications)
+            {
+                User username = null;
+                if (User.IsInRole("admin"))
+                {
+                    string usernameFromNotif = notification.Message.Substring(0, notification.Message.IndexOf(" "));
+                    username = await _accountManager.GetUserByUsernameAsync(usernameFromNotif);
+                }
+
+                var vm = new NotificationsViewModel();
+
+                vm.Id = notification.Id.ToString();
+                vm.Message = notification.Message;
+                vm.UserId = notification.User.Id.ToString();
+                vm.IsSeen = notification.IsSeen;
+                vm.DateSent = notification.SentOn;
+                if (User.IsInRole("admin"))
+                    vm.User = username;
+
+                listVM.NotificationsList.Add(vm);
+            }
         }
 
         public async Task<IActionResult> MarkSeen(string id)

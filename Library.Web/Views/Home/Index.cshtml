@@ -34,7 +34,7 @@
                     <a class="btn btn-info" asp-controller="BookManagement" asp-action="BookDetails" asp-route-id="@book.ISBN">See more</a>
                     @if (User.IsInRole("user"))
                     {
-                        @if (book.StatusLoggedUser == "Restricted")
+                        @if (book.UserStatus == "Restricted")
                         {
                         }
                         else if (book.IsBookCheckedout || book.AreAllCopiesChecked || book.IsChBooksMaxQuota)

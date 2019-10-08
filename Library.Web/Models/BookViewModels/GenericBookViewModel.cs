@@ -18,6 +18,6 @@ namespace Library.Web.Models.BookViewModels
 
         public bool AreAllCopiesChecked { get; set; }
 
-        public string StatusLoggedUser { get; set; }
+        public string UserStatus { get; set; }
     }
 }
