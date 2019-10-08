@@ -67,10 +67,10 @@ namespace Library.Web.Controllers
                         book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                         book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
                         book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
-                        book.StatusLoggedUser = user.Status.ToString();
+                        book.UserStatus = user.Status.ToString();
                     }
 
-                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);                    
+                    book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
                     searchVM.AllBooks.Add(book);
                 }
             }
@@ -87,10 +87,10 @@ namespace Library.Web.Controllers
                         book.IsBookCheckedout = _system.IsBookCheckedout(user, book.ISBN);
                         book.IsChBooksMaxQuota = _system.IsMaxCheckedoutQuota(user);
                         book.AreAllCopiesChecked = await _system.AreAllCopiesCheckedAsync(book.ISBN);
+                        book.UserStatus = user.Status.ToString();
                     }
 
                     book.BookCopies = await _bookManager.BookCopiesCountAsync(book.ISBN);
-                    book.StatusLoggedUser = user.Status.ToString();
                     searchVM.BookSearchResults.Add(book);
                 }
             }

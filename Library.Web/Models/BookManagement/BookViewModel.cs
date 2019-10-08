@@ -28,8 +28,7 @@ namespace Library.Web.Models.BookManagement
         public string PublisherId { get; set; }
         public List<SelectListItem> Publishers { get; set; }
         public Publisher Publisher { get; set; }
-
-        //TODO why it doesn't show?
+        
         [Required(ErrorMessage = Constants.GenresReqErr)]
         public List<int> GenresIds { get; set; }
         public List<SelectListItem> GenresOptions { get; set; }
@@ -54,6 +53,6 @@ namespace Library.Web.Models.BookManagement
         public bool IsChBooksMaxQuota { get; set; }
         public bool AreAllCopiesChecked { get; set; }
 
-        public string StatusLoggedUser { get; set; }
+        public string UserStatus { get; set; }
     }
 }
