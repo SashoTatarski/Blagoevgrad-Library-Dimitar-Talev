@@ -6,7 +6,7 @@
 
 <div class="row mt-5">
 
-    <form class="row col-sm-12" asp-controller="SearchBooks" asp-action="SearchResults" method="post">
+    <form id="search-index-form" class="row col-sm-12" asp-controller="SearchBooks" asp-action="SearchResults" method="post"> 
 
         <div class="col-sm-7" style="padding-left: 0">
             <input asp-for="@Model.SearchName" placeholder="Search..." class="form-control" />
