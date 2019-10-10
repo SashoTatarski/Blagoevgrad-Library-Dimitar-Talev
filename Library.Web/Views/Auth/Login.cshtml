@@ -3,6 +3,16 @@
     ViewData["Title"] = "Login";
 }
 
+@{ var statusMessage = TempData["Status"]?.ToString(); }
+
+@if(!string.IsNullOrWhiteSpace(statusMessage))
+{
+    <div class="alert alert-danger">
+        @statusMessage
+    </div>
+}
+
+
 <div class="col-md-4">
     <h5 id="login-header">Login </h5>
     <form asp-action="Login" asp-controller="Auth">

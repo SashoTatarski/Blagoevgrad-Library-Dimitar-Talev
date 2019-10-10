@@ -65,7 +65,7 @@ namespace Library.Web.Controllers
                 listVM.NotificationsList.Add(vm);
             }
         }
-
+                
         public async Task<IActionResult> MarkSeen(string id)
         {
             await _system.MarkNotificationSeen(id);

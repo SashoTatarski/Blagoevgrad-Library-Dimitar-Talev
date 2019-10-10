@@ -64,6 +64,7 @@ namespace Library.Web.Controllers
             return View();
         }
 
+        //TODO check this method and delete it if it doesn't do nothing
         [HttpPost]
         public async Task<IActionResult> AddAuthor(AuthorViewModel vm)
         {
@@ -162,6 +163,7 @@ namespace Library.Web.Controllers
             {
                 await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
 
+                // TODO: Move to constants
                 TempData["message"] = $"{vm.Title} has been created";
                 return RedirectToAction("Index", "SearchBooks");
             }

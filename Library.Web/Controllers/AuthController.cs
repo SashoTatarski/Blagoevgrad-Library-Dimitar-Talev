@@ -43,15 +43,18 @@ namespace Library.Web.Controllers
 
             try
             {
-                var user = _accountManager.Find(viewModel.Username, viewModel.Password);
+                var user = _accountManager.Find(viewModel.Username, viewModel.Password);                
+                
                 _accountManager.CheckStatus(user);
 
                 await SignInUserAsync(user);
 
                 return BackToHome();
             }
-            catch (ArgumentException)
+            catch (Exception ex)
             {
+                TempData["Status"] = ex.Message;                
+
                 return View(viewModel);
             }
         }
@@ -70,7 +73,6 @@ namespace Library.Web.Controllers
             var viewModel = new RegisterViewModel() { MembershipOption = new List<SelectListItem>() };
             viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Month - $20", Value = "1" });
             viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Year - $200", Value = "12" });
-
 
             return View(viewModel);
         }

@@ -38,7 +38,8 @@ namespace Library.Models.Utils
         public const string ChooseParameter = "Choose parameter";
 
         //Errors
-        public const string UsernamePassIncorr = "username or password incorrect";
+        public const string UsernamePassIncorr = "Wrong username or password!";
+        public const string UserIsBanned = "Your account has been banned!";
         public const string NoDefRoleDb = "No default role in DB";
         public const string NoSuchUser = "No such user!";
         public const string NoUsers = "There are no users!";
@@ -100,7 +101,7 @@ namespace Library.Models.Utils
         public const string AcctBan = "Account has been banned";
         public const string UsernameValid = "Username should be at least 5 symbols";
         public const string PasswordValid = "Password should be at least 5 symbols";
-        public const string LogInFailed = "Log In Failed - no permission";
+        public const string AcctDeactivated = "Your account has been deleted!";
         public const string AcctCancelErr = "You have to return all books before cancelling your account";
         public const string AcctCancel = "You have successfully cancelled your account";
         public const string AcctCancelRetBks = "User must return all of his books";

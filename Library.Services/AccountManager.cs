@@ -66,6 +66,7 @@ namespace Library.Services
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        // TODO fix banned users
         public async Task BanUserAsync(string id)
         {
             var user = await _context.Users.Where(u => u.Id.ToString() == id).FirstOrDefaultAsync().ConfigureAwait(false);
@@ -91,9 +92,14 @@ namespace Library.Services
 
         public void CheckStatus(User user)
         {
-            if (user.Status == AccountStatus.Banned || user.Status == AccountStatus.Inactive)
+            if (user.Status == AccountStatus.Banned)
             {
-                throw new ArgumentException(Constants.LogInFailed);
+                throw new ArgumentException(Constants.UserIsBanned);
+            }
+
+            if (user.Status == AccountStatus.Inactive)
+            {
+                throw new ArgumentException(Constants.AcctDeactivated);
             }
         }
 
@@ -146,7 +152,7 @@ namespace Library.Services
             if (user is null || !_hasher.Verify(password, user.HashPassword))
             {
                 throw new ArgumentException(Constants.UsernamePassIncorr);
-            }
+            }           
 
             return user;
         }
