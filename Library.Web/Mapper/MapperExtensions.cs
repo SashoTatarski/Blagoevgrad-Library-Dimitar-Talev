@@ -65,7 +65,7 @@ namespace Library.Web.Mapper
                 Genres = genresAsStrings,
                 ISBN = book.ISBN,
                 Publisher = book.Publisher.Name,
-                Rating = String.Format("{0:0.00}", book.Rating),
+                Rating = String.Format("{0:0.0}", book.Rating),
                 Year = book.Year,
             };
 
