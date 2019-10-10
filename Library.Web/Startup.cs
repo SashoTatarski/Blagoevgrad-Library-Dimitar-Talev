@@ -8,6 +8,7 @@ using Library.Services.Contracts;
 using Library.Services.Factories;
 using Library.Services.Factories.Contracts;
 using Library.Services.HashProvider;
+using Library.Web.Middlewares;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,7 +76,7 @@ namespace Library.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            app.UseMiddleware<ErrorMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

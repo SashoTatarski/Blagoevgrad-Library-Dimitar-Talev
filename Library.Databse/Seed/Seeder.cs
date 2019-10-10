@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Library.Database.Seed
 {
-    public class Seeder
+    public static class Seeder
     {
         public static void Init(LibraryContext context)
         {
