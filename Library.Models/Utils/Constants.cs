@@ -6,6 +6,7 @@ namespace Library.Models.Utils
     {
         public const string DefaultRole = "user";
 
+        // TODO: clean useless constants
         // Command names        
         public const string CheckOutBook = "Check Out Book";
         public const string AddBook = "Add Book";
