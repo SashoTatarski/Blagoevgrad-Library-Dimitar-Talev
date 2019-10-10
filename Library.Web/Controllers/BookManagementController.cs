@@ -1,4 +1,5 @@
-﻿using Library.Services.Contracts;
+﻿using Library.Models.Utils;
+using Library.Services.Contracts;
 using Library.Web.Mapper;
 using Library.Web.Models.BookManagement;
 using Microsoft.AspNetCore.Authorization;
@@ -44,13 +45,12 @@ namespace Library.Web.Controllers
             {
                 await _bookManager.CreateBookAsync(vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds, vm.BookCopies);
 
-                // TODO: Move to constants
-                TempData["message"] = $"{vm.Title} has been created";
+                TempData["message"] = string.Format(Constants.BookCreated, vm.Title);
                 return RedirectToAction("Index", "SearchBooks");
             }
             else
             {
-                TempData["message"] = $"{vm.ISBN} is associated with another book!";
+                TempData["message"] = string.Format(Constants.BookWrongIsbn, vm.ISBN);
                 return RedirectToAction("AddBook");
             }
         }
@@ -68,7 +68,7 @@ namespace Library.Web.Controllers
         {
             await _bookManager.AddBookCopies(vm.BookId, vm.BookCopies);
 
-            TempData["message"] = $"{vm.BookCopies} copies have been added";
+            TempData["message"] = string.Format(Constants.BookCopiesAdded, vm.BookCopies);
 
             return RedirectToAction("Index", "SearchBooks");
         }
@@ -79,7 +79,7 @@ namespace Library.Web.Controllers
 
             await _bookManager.DeleteBookAsync(id);
 
-            TempData["message"] = $"{bookToDelete.Title} has been deleted";
+            TempData["message"] = string.Format(Constants.BookDeleted, bookToDelete.Title);
 
             return RedirectToAction("Index", "SearchBooks");
         }                
@@ -201,7 +201,7 @@ namespace Library.Web.Controllers
             await _bookManager.EditBookAsync(vm.BookId, vm.Title, vm.ISBN, vm.Year, vm.Rack, vm.AuthorId, vm.PublisherId, vm.GenresIds);
 
 
-            TempData["message"] = $"{vm.Title} has been editted";
+            TempData["message"] = string.Format(Constants.BookEdited, vm.Title);
             return RedirectToAction("Index", "SearchBooks");
         }
     }

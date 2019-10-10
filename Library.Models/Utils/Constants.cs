@@ -90,6 +90,13 @@ namespace Library.Models.Utils
 
 
         //Messages
+        public const string SubscrOneMonth = "1 Month - $20";
+        public const string SubscrOneYear = "1 Year - $200";
+        public const string BookCreated = "{0} has been created!";
+        public const string BookWrongIsbn = "{0} is associated with another book!";
+        public const string BookCopiesAdded = "{0} copies have been added";
+        public const string BookDeleted = "{0} has been deleted";
+        public const string BookEdited = "{0} has been editted";
         public const string MaxQuotaReached = "You have reached the max book quota!";
         public const string Goodbye = "Goodbye!";
         public const string DaysToSkip = "how many days you want to skip";
@@ -102,6 +109,7 @@ namespace Library.Models.Utils
         public const string AcctBan = "Account has been banned";
         public const string UsernameValid = "Username should be at least 5 symbols";
         public const string PasswordValid = "Password should be at least 5 symbols";
+        public const string AcctActivated = "{0} has been activated";
         public const string AcctDeactivated = "Your account has been deleted!";
         public const string AcctCancelErr = "You have to return all books before cancelling your account";
         public const string AcctCancel = "You have successfully cancelled your account";

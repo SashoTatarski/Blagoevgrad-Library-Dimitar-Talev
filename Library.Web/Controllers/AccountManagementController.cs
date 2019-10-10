@@ -57,9 +57,9 @@ namespace Library.Web.Controllers
         {
             var accountToActivate = await _accountManager.ActivateUserAsync(id);
 
-            TempData["message"] = $"{accountToActivate.Username} has been activated";
+            TempData["message"] = string.Format(Constants.AcctActivated, accountToActivate.Username);
 
-            return RedirectToAction("Index", "AccountManagement");
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Details(string id)

@@ -1,4 +1,5 @@
 ﻿using Library.Models.Models;
+using Library.Models.Utils;
 using Library.Services.Contracts;
 using Library.Web.Models.Auth;
 using Microsoft.AspNetCore.Authentication;
@@ -71,8 +72,8 @@ namespace Library.Web.Controllers
         public IActionResult Register()
         {
             var viewModel = new RegisterViewModel() { MembershipOption = new List<SelectListItem>() };
-            viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Month - $20", Value = "1" });
-            viewModel.MembershipOption.Add(new SelectListItem { Text = "1 Year - $200", Value = "12" });
+            viewModel.MembershipOption.Add(new SelectListItem { Text = Constants.SubscrOneMonth, Value = "1" });
+            viewModel.MembershipOption.Add(new SelectListItem { Text = Constants.SubscrOneYear, Value = "12" });
 
             return View(viewModel);
         }

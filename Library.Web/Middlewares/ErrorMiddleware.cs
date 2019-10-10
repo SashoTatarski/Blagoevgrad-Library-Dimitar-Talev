@@ -21,7 +21,7 @@ namespace Library.Web.Middlewares
 
             if(httpContext.Response.StatusCode == 404)
             {
-                httpContext.Response.Redirect("/home/error");
+                httpContext.Response.Redirect("/Home/Error");
             }
         }
     }

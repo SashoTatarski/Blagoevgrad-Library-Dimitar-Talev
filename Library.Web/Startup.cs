@@ -67,8 +67,7 @@ namespace Library.Web
                 app.UseDeveloperExceptionPage();
             }
             else
-            {
-                // TODO: Implement Error page
+            {                
                 app.UseExceptionHandler("/Home/Error");
             }
 
