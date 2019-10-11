@@ -23,9 +23,35 @@ namespace Library.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
             var allBooks = await _bookManager.GetAllBooksAsync();
+
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.TitleSortParm = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.YearSortParm = string.IsNullOrEmpty(sortOrder) ? "year_desc" : "";
+            ViewBag.RatingSortParm = string.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    allBooks = allBooks.OrderByDescending(b => b.Author.Name).ToList();
+                    break;
+                case "title_desc":
+                    allBooks = allBooks.OrderByDescending(b => b.Title).ToList();
+                    break;
+                case "year_desc":
+                    allBooks = allBooks.OrderByDescending(b => b.Year).ToList();
+                    break;
+                case "rating_desc":
+                    allBooks = allBooks.OrderByDescending(b => b.Rating).ToList();
+                    break;
+                default:
+                    allBooks = allBooks.OrderBy(b => b.Author.Name).ToList();
+                    break;
+            }
+
             var allBooksVM = allBooks.Select(x => x.MapToViewModel());
 
             var user = await _accountManager.GetUserByUsernameAsync(User.Identity.Name);
@@ -42,10 +68,36 @@ namespace Library.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchResults(SearchViewModel viewModel)
+        public async Task<IActionResult> SearchResults(SearchViewModel viewModel/*, string sortOrder*/)
         {
             var bookResult = await _bookManager
                 .SearchAsync(viewModel.SearchName.ToLower(), viewModel.ByTitle, viewModel.ByAuthor, viewModel.ByPublisher, viewModel.ByGenre);
+
+            //ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewBag.TitleSortParm = string.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            //ViewBag.YearSortParm = string.IsNullOrEmpty(sortOrder) ? "year_desc" : "";
+            //ViewBag.RatingSortParm = string.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+
+
+            //switch (viewModel.SortOrder)
+            //{
+            //    case "name_desc":
+            //        bookResult = bookResult.OrderByDescending(b => b.Author.Name).ToList();
+            //        break;
+            //    case "title_desc":
+            //        bookResult = bookResult.OrderByDescending(b => b.Title).ToList();
+            //        break;
+            //    case "year_desc":
+            //        bookResult = bookResult.OrderByDescending(b => b.Year).ToList();
+            //        break;
+            //    case "rating_desc":
+            //        bookResult = bookResult.OrderByDescending(b => b.Rating).ToList();
+            //        break;
+            //    default:
+            //        bookResult = bookResult.OrderBy(b => b.Author.Name).ToList();
+            //        break;
+            //}
+
             var booksMapped = bookResult
                 .Select(x => x.MapToViewModel())
                 .ToList();

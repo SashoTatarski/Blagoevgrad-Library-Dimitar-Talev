@@ -39,13 +39,21 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th style="width: 140px">Author</th>
-                    <th style="width: 280px">Title</th>
+                    <th style="width: 140px">
+                        @Html.ActionLink("Author Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                    </th>                    
+                    <th style="width: 280px">
+                        @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSortParm})
+                    </th>
                     <th style="width: 140px">Publisher</th>
                     <th>ISBN</th>
-                    <th class="text-center">Year</th>
+                    <th class="text-center">
+                        @Html.ActionLink("Year", "Index", new { sortOrder = ViewBag.YearSortParm })
+                    </th>
                     <th class="text-center">Rack</th>
-                    <th class="text-center">Rating</th>
+                    <th class="text-center">
+                        @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParm })
+                    </th>
 
                     @if (User.IsInRole("admin"))
                     {
