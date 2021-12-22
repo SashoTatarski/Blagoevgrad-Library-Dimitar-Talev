@@ -1,7 +1,10 @@
 ﻿# Regional Library in Blagoevgrad, Bulgaria
 
+![image](https://user-images.githubusercontent.com/49935435/147073713-16cb0c02-b6a7-41fa-a99a-cced1c932c07.png)
+
+
 ## Team project of **South-West**
-### **TeamLead:** Aleksandar Tatarski
+### **Team Lead:** Aleksandar Tatarski
 ### **Team Members:** Hristina Stanoeva and Aleksandar Tatarski
 ---
 ### Link to Trello Board: https://trello.com/b/7QyCeeWB
